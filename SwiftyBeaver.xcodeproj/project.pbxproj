@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		9E4BBDFC1C09EB7F00220716 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 9E4BBDFA1C09EB7F00220716 /* .gitignore */; };
 		9E4BBDFD1C09EB7F00220716 /* License.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9E4BBDFB1C09EB7F00220716 /* License.txt */; };
-		9E4BBDFF1C0A01D000220716 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 9E4BBDFE1C0A01D000220716 /* README.md */; };
 		9EDCE3EF1C09D211002FA4A7 /* SwiftyBeaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EDCE3E41C09D211002FA4A7 /* SwiftyBeaver.framework */; };
 		9EDCE3F41C09D211002FA4A7 /* SwiftyBeaverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDCE3F31C09D211002FA4A7 /* SwiftyBeaverTests.swift */; };
 		9EDCE4011C09D253002FA4A7 /* SwiftyBeaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDCE4001C09D253002FA4A7 /* SwiftyBeaver.swift */; };
@@ -204,7 +203,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9E4BBDFF1C0A01D000220716 /* README.md in Sources */,
 				9EDCE4011C09D253002FA4A7 /* SwiftyBeaver.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
