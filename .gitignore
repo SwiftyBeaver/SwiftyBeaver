@@ -1,0 +1,40 @@
+# for Xcode
+###########
+
+.DS_Store
+.DS_Store?
+Icon?
+
+# copied & dump files
+_*
+*copy*
+
+# CocoaPods
+Pods/
+
+# Carthage
+Carthage/
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+# Xcode
+build/*
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+*.xcworkspace
+!default.xcworkspace
+xcuserdata
+*xcuserdata
+*xcuserdata/*
+*.pbxproj
+
+*.xcodeproj/xcuserdata
+*.xcodeproj/project.xcworkspace
