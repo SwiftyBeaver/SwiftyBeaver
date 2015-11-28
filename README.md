@@ -128,5 +128,5 @@ If you have questions please contact me via Twitter [@skreutzb](https://twitter.
 Thanks for testing, sharing, staring & contributing - Happy Logging!
 
 ## License
-Carthage is released under the [MIT License](https://github.com/skreutzberger/SwiftyBeaver/blob/master/License.txt).
+SwiftyBeaver is released under the [MIT License](https://github.com/skreutzberger/SwiftyBeaver/blob/master/License.txt).
 
