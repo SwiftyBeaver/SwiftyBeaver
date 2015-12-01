@@ -22,7 +22,7 @@ class SwiftyBeaverTests: XCTestCase {
         super.tearDown()
     }
     
-    func testFormattedDate () {
+    func testFormattedDate() {
         // empty format
         var str = SwiftyBeaver.formattedDate("")
         XCTAssertEqual(str, "")
@@ -32,6 +32,23 @@ class SwiftyBeaverTests: XCTestCase {
         // year
         str = SwiftyBeaver.formattedDate("yyyy")
         XCTAssertGreaterThanOrEqual(Int(str)!, 2015)
+    }
+    
+    func testQuickIntegration() {
+        // quick test if logging output works
+        // to console and file
+        let log = SwiftyBeaver.self
+    
+        log.Options.Console.active = true
+        log.Options.File.active = true
+        log.Options.File.minLevel = log.Level.Verbose
+        log.Options.File.logFileURL = NSURL(string: "file:///tmp/testSwiftyBeaver.log")!
+        
+        log.verbose("not so important")
+        log.debug("something to debug")
+        log.info("a nice information")
+        log.warning("oh no, that won’t be good")
+        log.error("ouch, an error did occur!")
     }
     
 }
