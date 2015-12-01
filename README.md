@@ -1,5 +1,12 @@
 # SwiftyBeaver 
 
+<img src="https://img.shields.io/badge/Platform-iOS%208%2B-blue.svg" alt="Platform iOS8+">
+<img src="https://img.shields.io/badge/Platform-Mac%20OS%20X%2010.9%2B-blue.svg" alt="Platform iOS8+">
+<a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/Language-Swift%202-orange.svg" alt="Language: Swift 2" /></a>
+<a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-brightgreen.svg" alt="Carthage compatible" /></a>
+<a href="https://github.com/skreutzberger/SwiftyBeaver/blob/master/License.txt"><img src="http://img.shields.io/badge/License-MIT-lightgrey.svg?style=flat" alt="License: MIT" /></a>
+
+
 SwiftyBeaver is a **new**, fast & very **lightweight** logger, with a unique combination of great features. 
 
 It is written in Swift 2 and was released on November 28, 2015 by Sebastian Kreutzberger (Twitter: [@skreutzb](https://twitter.com/skreutzb)).
@@ -18,7 +25,7 @@ It is written in Swift 2 and was released on November 28, 2015 by Sebastian Kreu
 1. Simple installation via Carthage or copy & paste of a single source file
 1. Has just ~300 lines of source code, easy to understand
 
-## Color?!
+## Colors!
 
 Before we start, 2 screenshots of colored example output.
 
@@ -40,7 +47,7 @@ While tailing the log file.
 
 ## Requirements
 
-- iOS 7.0+ / Mac OS X 10.9+
+- iOS 8.0+ / Mac OS X 10.9+
 - Xcode 7
 
 ## Installation
@@ -121,6 +128,17 @@ log.Options.File.minLevel = Level.Verbose  //  any level below that priority is 
 log.Options.File.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"  // dateformat including milliseconds
 log.Options.File.logFileURL = documentsURL.URLByAppendingPathComponent("swiftybeaver.log", isDirectory: false)
 ```
+
+## No Colors?!
+If Xcode does not show the log level word in color and you activated that option then you still may need the additional  [Xcode-Colors](https://github.com/robbiehanson/XcodeColors) plugin. 
+
+Simple installation of the plugin:
+
+1. Download the file [XcodeColors.xcplugin.zip](https://github.com/skreutzberger/SwiftyBeaver/raw/master/Assets/XcodeColors.xcplugin.zip)
+2. Unzip it to "~/Library/Application Support/Developer/Shared/Xcode/Plug-ins/"
+3. Restart Xcode & allow the plugin
+
+Now it should work. If not then please create an issue.
 
 ## Contact & Contribute
 If you have questions please contact me via Twitter [@skreutzb](https://twitter.com/skreutzb). Feature requests or bugs are better reported and discussed as Github Issue.
