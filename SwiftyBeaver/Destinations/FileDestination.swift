@@ -16,7 +16,7 @@ public class FileDestination: BaseDestination {
     override var defaultHashValue: Int {return 2}
     let fileManager = NSFileManager.defaultManager()
     
-    override init() {
+    public override init() {
         if let url = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first {
             logFileURL = url.URLByAppendingPathComponent("swiftybeaver.log", isDirectory: false)
         } else {

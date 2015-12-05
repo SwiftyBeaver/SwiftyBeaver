@@ -149,7 +149,7 @@ log.addDestination(file) // add to SwiftyBeaver to use destination
 
 // the second file with different properties and custom filename
 let file2 = FileDestination()
-file.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
+file2.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
 file2.minLevel = Level.Info
 file2.logFileURL = NSURL(string: "file:///tmp/app_info.log")!
 log.addDestination(file2)

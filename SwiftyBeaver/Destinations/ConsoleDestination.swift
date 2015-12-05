@@ -12,7 +12,11 @@ import Foundation
 public class ConsoleDestination: BaseDestination {
     
     override var defaultHashValue: Int {return 1}
-        
+    
+    public override init() {
+        super.init()
+    }
+    
     // print to Xcode Console. uses full base class functionality
     override func send(level: SwiftyBeaver.Level, msg: String, path: String, function: String, line: Int) -> String? {
         let formattedString = super.send(level, msg: msg, path: path, function: function, line: line)
