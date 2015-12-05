@@ -14,11 +14,10 @@ class SwiftyBeaverTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        SwiftyBeaver.removeAllDestinations()
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
     
@@ -46,7 +45,7 @@ class SwiftyBeaverTests: XCTestCase {
         XCTAssertTrue(log.addDestination(file))
         XCTAssertEqual(log.countDestinations(), 3)
     }
-
+    
     func testRemoveDestination() {
         let log = SwiftyBeaver.self
         
@@ -77,34 +76,74 @@ class SwiftyBeaverTests: XCTestCase {
         XCTAssertEqual(log.countDestinations(), 0)
     }
     
-    /*
-    func testFormattedDate() {
-        // empty format
-        var str = SwiftyBeaver.formattedDate("")
-        XCTAssertEqual(str, "")
-        // no time format
-        str = SwiftyBeaver.formattedDate("--")
-        XCTAssertGreaterThanOrEqual(str, "--")
-        // year
-        str = SwiftyBeaver.formattedDate("yyyy")
-        XCTAssertGreaterThanOrEqual(Int(str)!, 2015)
-    }
-    
-    func testQuickIntegration() {
-        // quick test if logging output works
-        // to console and file
+    func testLoggingWithoutDestination() {
         let log = SwiftyBeaver.self
+        // no destination was set, yet
+        log.verbose("Where do I log to?")
+    }
+
+    func testDestinationIntegration() {
+        let log = SwiftyBeaver.self
+        log.verbose("that should lead to nowhere")
+        
+        // add console
+        let console = ConsoleDestination()
+        log.addDestination(console)
+        log.verbose("the default console destination")
+        // add another console and set it to be less chatty
+        let console2 = ConsoleDestination()
+        log.addDestination(console2)
+        XCTAssertEqual(log.countDestinations(), 2)
+        console2.detailOutput = false
+        console2.dateFormat = "HH:mm:ss.SSS"
+        console2.minLevel = SwiftyBeaver.Level.Debug
+        log.verbose("a verbose hello from hopefully just 1 console!")
+        log.debug("a debug hello from 2 different consoles!")
+        
+        // add file
+        let file = FileDestination()
+        file.logFileURL = NSURL(string: "file:///tmp/testSwiftyBeaver.log")!
+        log.addDestination(file)
+        XCTAssertEqual(log.countDestinations(), 3)
+        log.verbose("default file msg 1")
+        log.verbose("default file msg 2")
+        log.verbose("default file msg 3")
+        
+        // log to another file
+        let file2 = FileDestination()
+        file2.logFileURL = NSURL(string: "file:///tmp/testSwiftyBeaver2.log")!
+        file2.detailOutput = false
+        file2.dateFormat = "HH:mm:ss.SSS"
+        file2.minLevel = SwiftyBeaver.Level.Debug
+        log.addDestination(file2)
+        XCTAssertEqual(log.countDestinations(), 4)
+        log.verbose("this should be in file 1")
+        log.debug("this should be in both files, msg 1")
+        log.info("this should be in both files, msg 2")
+    }
+
     
-        log.Options.Console.active = true
-        log.Options.File.active = true
-        log.Options.File.minLevel = log.Level.Verbose
-        log.Options.File.logFileURL = NSURL(string: "file:///tmp/testSwiftyBeaver.log")!
+    func testColors() {
+        let log = SwiftyBeaver.self
+        log.verbose("that should lead to nowhere")
+        
+        // add console
+        let console = ConsoleDestination()
+        log.addDestination(console)
+        let file = FileDestination()
+        file.logFileURL = NSURL(string: "file:///tmp/testSwiftyBeaver.log")!
+        file.detailOutput = false
+        file.dateFormat = "HH:mm:ss.SSS"
+        log.addDestination(file)
+        
+        XCTAssertTrue(console.colored)
+        XCTAssertTrue(file.colored)
         
         log.verbose("not so important")
         log.debug("something to debug")
         log.info("a nice information")
         log.warning("oh no, that won’t be good")
         log.error("ouch, an error did occur!")
-    }*/
-    
+        XCTAssertEqual(log.countDestinations(), 2)
+    }
 }

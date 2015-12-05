@@ -22,10 +22,6 @@ public class SwiftyBeaver {
     // a set of active destinations
     static var destinations = Set<BaseDestination>() //[BaseDestination]()
     
-    // SwiftyBeaver has an own serial queue to ensure serial output
-    // GCD gives it a prioritization between User Initiated and Utility
-    static var queue = dispatch_queue_create("swiftybeaver-serial-queue", nil)
-
     
     // MARK: Destination Handling
     
@@ -34,6 +30,7 @@ public class SwiftyBeaver {
         let dest = destination as? BaseDestination
         
         if let dest = dest {
+            //print("insert hashValue \(dest.hashValue)")
             destinations.insert(dest)  // if not already in (it’s a set)
             return true
         } else {
@@ -54,6 +51,11 @@ public class SwiftyBeaver {
             return false
         }
     }
+
+    /// if you need to start fresh
+    public class func removeAllDestinations() {
+        destinations.removeAll()
+    }
     
     /// returns the amount of destinations
     public class func countDestinations() -> Int {
@@ -67,91 +69,69 @@ public class SwiftyBeaver {
         let level = Level.Verbose
         
         for dest in destinations {
-            if dest.Options.minLevel.rawValue <= level.rawValue {
+            if let queue = dest.queue {
+                if dest.minLevel.rawValue <= level.rawValue && dest.queue != nil {
+                    dispatch_async(queue, {
+                        dest.send(level, msg: msg, path: path, function: function, line: line)
+                    })
+                }
             }
         }
     }
 
-    /*
-    public class func verbose(msg: String = "", _ path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
-        let level = Level.Verbose
-        
-        if (Options.Console.active && Options.Console.minLevel.rawValue <= level.rawValue) {
-            dispatch_async(queue, {
-                output(level, toFile: false, msg: msg, path: path, function: function, line: line)
-            })
-        }
-        
-        if (Options.File.active && Options.File.minLevel.rawValue <= level.rawValue) {
-            dispatch_async(queue, {
-                output(level, toFile: true, msg: msg, path: path, function: function, line: line)
-            })
-        }
-    }
-    
     public class func debug(msg: String = "", _ path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
         let level = Level.Debug
         
-        if (Options.Console.active && Options.Console.minLevel.rawValue <= level.rawValue) {
-            dispatch_async(queue, {
-                output(level, toFile: false, msg: msg, path: path, function: function, line: line)
-            })
-        }
-        
-        if (Options.File.active && Options.File.minLevel.rawValue <= level.rawValue) {
-            dispatch_async(queue, {
-                output(level, toFile: true, msg: msg, path: path, function: function, line: line)
-            })
+        for dest in destinations {
+            if let queue = dest.queue {
+                if dest.minLevel.rawValue <= level.rawValue && dest.queue != nil {
+                    dispatch_async(queue, {
+                        dest.send(level, msg: msg, path: path, function: function, line: line)
+                    })
+                }
+            }
         }
     }
     
     public class func info(msg: String = "", _ path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
         let level = Level.Info
         
-        if (Options.Console.active && Options.Console.minLevel.rawValue <= level.rawValue) {
-            dispatch_async(queue, {
-                output(level, toFile: false, msg: msg, path: path, function: function, line: line)
-            })
-        }
-        
-        if (Options.File.active && Options.File.minLevel.rawValue <= level.rawValue) {
-            dispatch_async(queue, {
-                output(level, toFile: true, msg: msg, path: path, function: function, line: line)
-            })
+        for dest in destinations {
+            if let queue = dest.queue {
+                if dest.minLevel.rawValue <= level.rawValue && dest.queue != nil {
+                    dispatch_async(queue, {
+                        dest.send(level, msg: msg, path: path, function: function, line: line)
+                    })
+                }
+            }
         }
     }
     
     public class func warning(msg: String = "", _ path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
         let level = Level.Warning
         
-        if (Options.Console.active && Options.Console.minLevel.rawValue <= level.rawValue) {
-            dispatch_async(queue, {
-                output(level, toFile: false, msg: msg, path: path, function: function, line: line)
-            })
-        }
-        
-        if (Options.File.active && Options.File.minLevel.rawValue <= level.rawValue) {
-            dispatch_async(queue, {
-                output(level, toFile: true, msg: msg, path: path, function: function, line: line)
-            })
+        for dest in destinations {
+            if let queue = dest.queue {
+                if dest.minLevel.rawValue <= level.rawValue && dest.queue != nil {
+                    dispatch_async(queue, {
+                        dest.send(level, msg: msg, path: path, function: function, line: line)
+                    })
+                }
+            }
         }
     }
     
     public class func error(msg: String = "", _ path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
         let level = Level.Error
         
-        if (Options.Console.active && Options.Console.minLevel.rawValue <= level.rawValue) {
-            dispatch_async(queue, {
-                output(level, toFile: false, msg: msg, path: path, function: function, line: line)
-            })
-        }
-        
-        if (Options.File.active && Options.File.minLevel.rawValue <= level.rawValue) {
-            dispatch_async(queue, {
-                output(level, toFile: true, msg: msg, path: path, function: function, line: line)
-            })
+        for dest in destinations {
+            if let queue = dest.queue {
+                if dest.minLevel.rawValue <= level.rawValue && dest.queue != nil {
+                    dispatch_async(queue, {
+                        dest.send(level, msg: msg, path: path, function: function, line: line)
+                    })
+                }
+            }
         }
     }
-    */
-    
 }

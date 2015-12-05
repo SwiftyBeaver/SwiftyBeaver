@@ -11,34 +11,44 @@ import Foundation
 
 public class FileDestination: BaseDestination {
     
+    public var logFileURL: NSURL
+
     override var defaultHashValue: Int {return 2}
+    let fileManager = NSFileManager.defaultManager()
     
-    public struct Options {
-        // use BaseDestination’s defaults
-        public static var detailOutput = BaseDestination.Options.detailOutput
-        public static var colored = BaseDestination.Options.colored
-        public static var minLevel = BaseDestination.Options.minLevel
-        public static var dateFormat = BaseDestination.Options.dateFormat
-        public static var logFileURL = documentsURL.URLByAppendingPathComponent("swiftybeaver.log", isDirectory: false)
+    override init() {
+        if let url = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first {
+            logFileURL = url.URLByAppendingPathComponent("swiftybeaver.log", isDirectory: false)
+        } else {
+            logFileURL = NSURL()
+        }
+        super.init()
+        
+        // bash font color, first value is intensity, second is color
+        // see http://bit.ly/1Otu3Zr to learn more
+        blue = "0;34m"  // replace first 0 with 1 to make it bold
+        green = "0;32m"
+        yellow = "0;33m"
+        red = "0;31m"
+        magenta = "0;35m"
+        cyan = "0;36m"
+        silver = "0;37m"
+        reset = "\u{001b}[0m"
     }
     
-    static let fileManager = NSFileManager.defaultManager()
-    static let documentsURL = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
-    
-    
     // print to Xcode Console. uses full base class functionality
-    override class func send(level: SwiftyBeaver.Level, msg: String, path: String, function: String, line: Int) -> String? {
+    override func send(level: SwiftyBeaver.Level, msg: String, path: String, function: String, line: Int) -> String? {
         let formattedString = super.send(level, msg: msg, path: path, function: function, line: line)
         
         if let str = formattedString {
-            saveToFile(str, url: Options.logFileURL)
+            saveToFile(str, url: logFileURL)
         }
         return formattedString
     }
 
     /// appends a string as line to a file.
     /// returns boolean about success
-    class func saveToFile(str: String, url: NSURL) -> Bool {
+    func saveToFile(str: String, url: NSURL) -> Bool {
         do {
             if fileManager.fileExistsAtPath(url.path!) == false {
                 // create file if not existing

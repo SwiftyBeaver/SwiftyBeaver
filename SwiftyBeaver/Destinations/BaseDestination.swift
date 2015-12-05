@@ -11,52 +11,57 @@ import Foundation
 
 public class BaseDestination: Hashable, Equatable {
     
-    public struct Options {
-        //public static var active = true
-        public static var detailOutput = true
-        public static var colored = true
-        public static var minLevel = SwiftyBeaver.Level.Verbose
-        public static var dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
-    }
+    public var detailOutput = true
+    public var colored = true
+    public var minLevel = SwiftyBeaver.Level.Verbose
+    public var dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
     
-    public var x = 1
-    
-    static let formatter = NSDateFormatter()
+    let formatter = NSDateFormatter()
 
     // For a colored log level word in a logged line
-    struct Colors {
-        // XCode RGB colors
-        static var blue = "fg0,0,255;"
-        static var green = "fg0,255,0;"
-        static var yellow = "fg255,255,0;"
-        static var red = "fg255,0,0;"
-        static var magenta = "fg255,0,255;"
-        static var cyan = "fg0,255,255;"
-        static var silver = "fg200,200,200;"
-        static var reset = "\u{001b}[;"
-        static var escape = "\u{001b}["
-    }
+    // XCode RGB colors
+    var blue = "fg0,0,255;"
+    var green = "fg0,255,0;"
+    var yellow = "fg255,255,0;"
+    var red = "fg255,0,0;"
+    var magenta = "fg255,0,255;"
+    var cyan = "fg0,255,255;"
+    var silver = "fg200,200,200;"
+    var reset = "\u{001b}[;"
+    var escape = "\u{001b}["
 
-    //public let hashValue = 0
+
+    // each destination class must have an own hashValue Int
     lazy public var hashValue: Int = self.defaultHashValue
     var defaultHashValue: Int {return 0}
-
+    
+    // each destination instance must have an own serial queue to ensure serial output
+    // GCD gives it a prioritization between User Initiated and Utility
+    var queue: dispatch_queue_t?
+    
+    init() {
+        let uuid = NSUUID().UUIDString
+        let queueLabel = "swiftybeaver-queue-" + uuid
+        //print("creating queue \(queueLabel)")
+        queue = dispatch_queue_create(queueLabel, nil)
+    }
+    
     /// send / store the formatted log message to the destination
     /// returns the formatted log message for processing by inheriting method
     /// and for unit tests (nil if error)
-    class func send(level: SwiftyBeaver.Level, msg: String, path: String, function: String, line: Int) -> String? {
+    func send(level: SwiftyBeaver.Level, msg: String, path: String, function: String, line: Int) -> String? {
         var dateStr = ""
         var str = ""
         let levelStr = formattedLevel(level)
         
-        dateStr = formattedDate(Options.dateFormat)
+        dateStr = formattedDate(dateFormat)
         str = formattedMessage(dateStr, levelString: levelStr, msg: msg, path: path,
-            function: function, line: line, detailOutput: Options.detailOutput)
+            function: function, line: line, detailOutput: detailOutput)
         return str
     }
     
     /// returns a formatted date string
-    class func formattedDate(dateFormat: String) -> String {
+    func formattedDate(dateFormat: String) -> String {
         //formatter.timeZone = NSTimeZone(abbreviation: "UTC")
         formatter.dateFormat = dateFormat
         let dateStr = formatter.stringFromDate(NSDate())
@@ -64,42 +69,41 @@ public class BaseDestination: Hashable, Equatable {
     }
     
     /// returns an optionally colored level noun (like INFO, etc.)
-    class func formattedLevel(level: SwiftyBeaver.Level) -> String {
-        let colored = Options.colored
+    func formattedLevel(level: SwiftyBeaver.Level) -> String {
         // optionally wrap the level string in color
         var color = ""
         var levelStr = ""
         
         switch level {
         case SwiftyBeaver.Level.Debug:
-            color = Colors.blue
+            color = blue
             levelStr = "DEBUG"
             
         case SwiftyBeaver.Level.Info:
-            color = Colors.green
+            color = green
             levelStr = "INFO"
             
         case SwiftyBeaver.Level.Warning:
-            color = Colors.yellow
+            color = yellow
             levelStr = "WARNING"
             
         case SwiftyBeaver.Level.Error:
-            color = Colors.red
+            color = red
             levelStr = "ERROR"
             
         default:
-            color = Colors.silver
+            color = silver
             levelStr = "VERBOSE"
         }
         
         if colored {
-            levelStr = Colors.escape + color + levelStr + Colors.reset
+            levelStr = escape + color + levelStr + reset
         }
         return levelStr
     }
     
     /// returns the formatted log message
-    class func formattedMessage(dateString: String, levelString: String, msg: String,
+    func formattedMessage(dateString: String, levelString: String, msg: String,
         path: String, function: String, line: Int, detailOutput: Bool) -> String {
         // just use the file name of the path and remove suffix
         let file = path.componentsSeparatedByString("/").last!.componentsSeparatedByString(".").first!
