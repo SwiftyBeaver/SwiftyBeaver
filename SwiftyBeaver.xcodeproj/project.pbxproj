@@ -12,6 +12,7 @@
 		9E6CA9F71C128ECF009D9093 /* BaseDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6CA9F51C128ECF009D9093 /* BaseDestination.swift */; };
 		9E6CA9F81C128ECF009D9093 /* ConsoleDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6CA9F61C128ECF009D9093 /* ConsoleDestination.swift */; };
 		9E6CA9FA1C129254009D9093 /* FileDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6CA9F91C129254009D9093 /* FileDestination.swift */; };
+		9E6CA9FC1C12BA7A009D9093 /* BaseDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6CA9FB1C12BA7A009D9093 /* BaseDestinationTests.swift */; };
 		9EDCE3EF1C09D211002FA4A7 /* SwiftyBeaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EDCE3E41C09D211002FA4A7 /* SwiftyBeaver.framework */; };
 		9EDCE3F41C09D211002FA4A7 /* SwiftyBeaverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDCE3F31C09D211002FA4A7 /* SwiftyBeaverTests.swift */; };
 		9EDCE4011C09D253002FA4A7 /* SwiftyBeaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDCE4001C09D253002FA4A7 /* SwiftyBeaver.swift */; };
@@ -34,6 +35,7 @@
 		9E6CA9F51C128ECF009D9093 /* BaseDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDestination.swift; sourceTree = "<group>"; };
 		9E6CA9F61C128ECF009D9093 /* ConsoleDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsoleDestination.swift; sourceTree = "<group>"; };
 		9E6CA9F91C129254009D9093 /* FileDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileDestination.swift; sourceTree = "<group>"; };
+		9E6CA9FB1C12BA7A009D9093 /* BaseDestinationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDestinationTests.swift; sourceTree = "<group>"; };
 		9EDCE3E41C09D211002FA4A7 /* SwiftyBeaver.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyBeaver.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EDCE3E91C09D211002FA4A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9EDCE3EE1C09D211002FA4A7 /* SwiftyBeaverTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftyBeaverTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -108,6 +110,7 @@
 			children = (
 				9EDCE3F31C09D211002FA4A7 /* SwiftyBeaverTests.swift */,
 				9EDCE3F51C09D211002FA4A7 /* Info.plist */,
+				9E6CA9FB1C12BA7A009D9093 /* BaseDestinationTests.swift */,
 			);
 			path = SwiftyBeaverTests;
 			sourceTree = "<group>";
@@ -233,6 +236,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9EDCE3F41C09D211002FA4A7 /* SwiftyBeaverTests.swift in Sources */,
+				9E6CA9FC1C12BA7A009D9093 /* BaseDestinationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
