@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		9E4BBDFC1C09EB7F00220716 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 9E4BBDFA1C09EB7F00220716 /* .gitignore */; };
 		9E4BBDFD1C09EB7F00220716 /* License.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9E4BBDFB1C09EB7F00220716 /* License.txt */; };
+		9E6CA9F71C128ECF009D9093 /* BaseDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6CA9F51C128ECF009D9093 /* BaseDestination.swift */; };
+		9E6CA9F81C128ECF009D9093 /* ConsoleDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6CA9F61C128ECF009D9093 /* ConsoleDestination.swift */; };
+		9E6CA9FA1C129254009D9093 /* FileDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6CA9F91C129254009D9093 /* FileDestination.swift */; };
 		9EDCE3EF1C09D211002FA4A7 /* SwiftyBeaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EDCE3E41C09D211002FA4A7 /* SwiftyBeaver.framework */; };
 		9EDCE3F41C09D211002FA4A7 /* SwiftyBeaverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDCE3F31C09D211002FA4A7 /* SwiftyBeaverTests.swift */; };
 		9EDCE4011C09D253002FA4A7 /* SwiftyBeaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDCE4001C09D253002FA4A7 /* SwiftyBeaver.swift */; };
@@ -28,6 +31,9 @@
 		9E4BBDFA1C09EB7F00220716 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		9E4BBDFB1C09EB7F00220716 /* License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = License.txt; sourceTree = "<group>"; };
 		9E4BBDFE1C0A01D000220716 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		9E6CA9F51C128ECF009D9093 /* BaseDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDestination.swift; sourceTree = "<group>"; };
+		9E6CA9F61C128ECF009D9093 /* ConsoleDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsoleDestination.swift; sourceTree = "<group>"; };
+		9E6CA9F91C129254009D9093 /* FileDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileDestination.swift; sourceTree = "<group>"; };
 		9EDCE3E41C09D211002FA4A7 /* SwiftyBeaver.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyBeaver.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EDCE3E91C09D211002FA4A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9EDCE3EE1C09D211002FA4A7 /* SwiftyBeaverTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftyBeaverTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -55,6 +61,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9E6CA9F41C128EAF009D9093 /* Destinations */ = {
+			isa = PBXGroup;
+			children = (
+				9E6CA9F51C128ECF009D9093 /* BaseDestination.swift */,
+				9E6CA9F61C128ECF009D9093 /* ConsoleDestination.swift */,
+				9E6CA9F91C129254009D9093 /* FileDestination.swift */,
+			);
+			name = Destinations;
+			path = SwiftyBeaver/Destinations;
+			sourceTree = SOURCE_ROOT;
+		};
 		9EDCE3DA1C09D211002FA4A7 = {
 			isa = PBXGroup;
 			children = (
@@ -79,6 +96,7 @@
 		9EDCE3E61C09D211002FA4A7 /* SwiftyBeaver */ = {
 			isa = PBXGroup;
 			children = (
+				9E6CA9F41C128EAF009D9093 /* Destinations */,
 				9EDCE3E91C09D211002FA4A7 /* Info.plist */,
 				9EDCE4001C09D253002FA4A7 /* SwiftyBeaver.swift */,
 			);
@@ -203,7 +221,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E6CA9F81C128ECF009D9093 /* ConsoleDestination.swift in Sources */,
 				9EDCE4011C09D253002FA4A7 /* SwiftyBeaver.swift in Sources */,
+				9E6CA9FA1C129254009D9093 /* FileDestination.swift in Sources */,
+				9E6CA9F71C128ECF009D9093 /* BaseDestination.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
