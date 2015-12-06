@@ -154,6 +154,7 @@ class SwiftyBeaverTests: XCTestCase {
         let console = ConsoleDestination()
         console.detailOutput = false
         console.dateFormat = "HH:mm:ss.SSS"
+        console.levelString.Info = "interesting number"
         log.addDestination(console)
         
         log.verbose("My name is üÄölèå")

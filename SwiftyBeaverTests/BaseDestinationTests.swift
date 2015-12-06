@@ -40,7 +40,7 @@ class BaseDestinationTests: XCTestCase {
         XCTAssertEqual(str, dateStr)
     }
 
-    func tesFormattedLevel() {
+    func testFormattedLevel() {
         let obj = BaseDestination()
         var str = ""
         
@@ -54,6 +54,24 @@ class BaseDestinationTests: XCTestCase {
         XCTAssertNotNil(str, "WARNING")
         str = obj.formattedLevel(SwiftyBeaver.Level.Error)
         XCTAssertNotNil(str, "ERROR")
+        
+        // custom level strings
+        obj.levelString.Verbose = "Who cares"
+        obj.levelString.Debug = "Look"
+        obj.levelString.Info = "Interesting"
+        obj.levelString.Warning = "Oh oh"
+        obj.levelString.Error = "OMG!!!"
+        
+        str = obj.formattedLevel(SwiftyBeaver.Level.Verbose)
+        XCTAssertNotNil(str, "Who cares")
+        str = obj.formattedLevel(SwiftyBeaver.Level.Debug)
+        XCTAssertNotNil(str, "Look")
+        str = obj.formattedLevel(SwiftyBeaver.Level.Info)
+        XCTAssertNotNil(str, "Interesting")
+        str = obj.formattedLevel(SwiftyBeaver.Level.Warning)
+        XCTAssertNotNil(str, "Oh oh")
+        str = obj.formattedLevel(SwiftyBeaver.Level.Error)
+        XCTAssertNotNil(str, "OMG!!!")
     }
 
     func testFormattedMessage() {
@@ -69,6 +87,5 @@ class BaseDestinationTests: XCTestCase {
         str = obj.formattedMessage(dateStr, levelString: "DEBUG", msg: "Hello", path: "/path/to/ViewController.swift", function: "testFunction()", line: 50, detailOutput: true)
         print(str)
         XCTAssertNotNil(str.rangeOfString("[\(dateStr)] ViewController.testFunction():50 DEBUG: Hello"))
-
     }
 }
