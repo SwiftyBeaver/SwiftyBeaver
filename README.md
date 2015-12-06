@@ -90,6 +90,13 @@ log.debug("something to debug")  // prio 2, DEBUG in blue
 log.info("a nice information")   // prio 3, INFO in green
 log.warning("oh no, that won’t be good")  // prio 4, WARNING in yellow
 log.error("ouch, an error did occur!")  // prio 5, ERROR in red
+
+// log anything!
+log.verbose(123)
+log.info(-123.45678)
+log.warning(NSDate())
+log.error(["I", "like", "logs!"])
+log.error(["name": "Mr Beaver", "address": "7 Beaver Lodge"])
 ```
 
 
@@ -111,6 +118,8 @@ Property  | Default | Description
 **.colored**  | true | Colored output or not
 **.minLevel**  | SwiftyBeaver.Level.Verbose | Any level with a priority lower than that level is not logged. Possible values are SwiftyBeaver.Level.Verbose, .Debug, .Info .Warning, .Error
 **.dateFormat**  | "yyyy-MM-dd HH:mm:ss.SSS" | Logs current date and time including milliseconds
+**.levelString.Verbose, .Debug, .Info, .Warning, .Error**  | "VERBOSE", "DEBUG", etc. | Sets a custom string representing the log level. On default it is the log level as uppercase word.
+
 
 Example:
 
@@ -134,6 +143,7 @@ Property  | Default | Description
 **.colored**  | true | Colored output or not
 **.minLevel**  | SwiftyBeaver.Level.Verbose | Any level with a priority lower than that level is not logged. Possible values are SwiftyBeaver.Level.Verbose, .Debug, .Info .Warning, .Error
 **.dateFormat**  | "yyyy-MM-dd HH:mm:ss.SSS" | Logs current date and time including milliseconds
+**.levelString.Verbose, .Debug, .Info, .Warning, .Error**  | "VERBOSE", "DEBUG", etc. | Sets a custom string representing the log level. On default it is the log level as uppercase word.
 **.logFileURL**  | DocumentDirectory + "swiftybeaver.log" | The default filename is `swiftybeaver.log` and it is stored in the app’s DocumentDirectory. During development it is recommended to change that logfileURL to `/tmp/swiftybeaver.log` so that the file can be tailed by a Terminal app using the CLI command `tail -f /tmp/swiftybeaver.log`.
 
 Example with logging to 2 files in parallel:
@@ -151,6 +161,7 @@ log.addDestination(file) // add to SwiftyBeaver to use destination
 let file2 = FileDestination()
 file2.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
 file2.minLevel = Level.Info
+file2.levelString.Error = "Beaver Alarm!"
 file2.logFileURL = NSURL(string: "file:///tmp/app_info.log")!
 log.addDestination(file2)
 ```

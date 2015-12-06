@@ -15,6 +15,15 @@ public class BaseDestination: Hashable, Equatable {
     public var colored = true
     public var minLevel = SwiftyBeaver.Level.Verbose
     public var dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
+    public var levelString = LevelString()
+    
+    public struct LevelString {
+        public var Verbose = "VERBOSE"
+        public var Debug = "DEBUG"
+        public var Info = "INFO"
+        public var Warning = "WARNING"
+        public var Error = "ERROR"
+    }
     
     let formatter = NSDateFormatter()
 
@@ -77,23 +86,23 @@ public class BaseDestination: Hashable, Equatable {
         switch level {
         case SwiftyBeaver.Level.Debug:
             color = blue
-            levelStr = "DEBUG"
+            levelStr = levelString.Verbose
             
         case SwiftyBeaver.Level.Info:
             color = green
-            levelStr = "INFO"
+            levelStr = levelString.Info
             
         case SwiftyBeaver.Level.Warning:
             color = yellow
-            levelStr = "WARNING"
+            levelStr = levelString.Warning
             
         case SwiftyBeaver.Level.Error:
             color = red
-            levelStr = "ERROR"
+            levelStr = levelString.Error
             
         default:
             color = silver
-            levelStr = "VERBOSE"
+            levelStr = levelString.Verbose
         }
         
         if colored {

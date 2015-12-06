@@ -36,7 +36,7 @@ public class FileDestination: BaseDestination {
         reset = "\u{001b}[0m"
     }
     
-    // print to Xcode Console. uses full base class functionality
+    // append to file. uses full base class functionality
     override func send(level: SwiftyBeaver.Level, msg: String, path: String, function: String, line: Int) -> String? {
         let formattedString = super.send(level, msg: msg, path: path, function: function, line: line)
         
