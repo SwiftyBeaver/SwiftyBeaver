@@ -146,4 +146,23 @@ class SwiftyBeaverTests: XCTestCase {
         log.error("ouch, an error did occur!")
         XCTAssertEqual(log.countDestinations(), 2)
     }
+    
+    func testDifferentMessageTypes() {
+        let log = SwiftyBeaver.self
+        
+        // add console
+        let console = ConsoleDestination()
+        console.detailOutput = false
+        console.dateFormat = "HH:mm:ss.SSS"
+        log.addDestination(console)
+        
+        log.verbose("My name is üÄölèå")
+        log.verbose(123)
+        log.info(-123.45678)
+        log.warning(NSDate())
+        log.error(["I", "like", "logs!"])
+        log.error(["beaver": "yeah", "age": 12])
+
+        XCTAssertEqual(log.countDestinations(), 1)
+    }
 }
