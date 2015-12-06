@@ -4,7 +4,7 @@
 <img src="https://img.shields.io/badge/Platform-Mac%20OS%20X%2010.9%2B-blue.svg" alt="Platform iOS8+">
 <a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/Language-Swift%202-orange.svg" alt="Language: Swift 2" /></a>
 <a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-brightgreen.svg" alt="Carthage compatible" /></a>
-<a href="https://github.com/skreutzberger/SwiftyBeaver/blob/master/License.txt"><img src="http://img.shields.io/badge/License-MIT-lightgrey.svg?style=flat" alt="License: MIT" /></a>
+<a href="https://github.com/skreutzberger/SwiftyBeaver/blob/master/LICENSE"><img src="http://img.shields.io/badge/License-MIT-lightgrey.svg?style=flat" alt="License: MIT" /></a>
 
 
 SwiftyBeaver is a **new**, fast & very **lightweight** logger, with a unique combination of great features. 
@@ -197,5 +197,5 @@ If you have questions please contact me via Twitter [@skreutzb](https://twitter.
 Thanks for testing, sharing, staring & contributing - Happy Logging!
 
 ## License
-SwiftyBeaver is released under the [MIT License](https://github.com/skreutzberger/SwiftyBeaver/blob/master/License.txt).
+SwiftyBeaver is released under the [MIT License](https://github.com/skreutzberger/SwiftyBeaver/blob/master/LICENSE).
 

@@ -10,7 +10,6 @@ Pod::Spec.new do |s|
   #   * Finally, don't worry about the indent, CocoaPods strips it!
   s.description  = <<-DESC
   SwiftyBeaver is a new, fast & very lightweight logger, with a unique combination of great features.
-
   It is written in Swift 2 and was released on November 28, 2015 by Sebastian Kreutzberger (Twitter: @skreutzb).
                    DESC
 
