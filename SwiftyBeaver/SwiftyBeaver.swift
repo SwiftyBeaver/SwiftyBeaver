@@ -66,64 +66,27 @@ public class SwiftyBeaver {
     // MARK: Levels
     
     public class func verbose(msg: String = "", _ path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
-        let level = Level.Verbose
-        
-        for dest in destinations {
-            if let queue = dest.queue {
-                if dest.minLevel.rawValue <= level.rawValue && dest.queue != nil {
-                    dispatch_async(queue, {
-                        dest.send(level, msg: msg, path: path, function: function, line: line)
-                    })
-                }
-            }
-        }
+        dispatch_send(Level.Verbose, msg: msg, path: path, function: function, line: line)
     }
 
     public class func debug(msg: String = "", _ path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
-        let level = Level.Debug
-        
-        for dest in destinations {
-            if let queue = dest.queue {
-                if dest.minLevel.rawValue <= level.rawValue && dest.queue != nil {
-                    dispatch_async(queue, {
-                        dest.send(level, msg: msg, path: path, function: function, line: line)
-                    })
-                }
-            }
-        }
+        dispatch_send(Level.Debug, msg: msg, path: path, function: function, line: line)
     }
     
     public class func info(msg: String = "", _ path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
-        let level = Level.Info
-        
-        for dest in destinations {
-            if let queue = dest.queue {
-                if dest.minLevel.rawValue <= level.rawValue && dest.queue != nil {
-                    dispatch_async(queue, {
-                        dest.send(level, msg: msg, path: path, function: function, line: line)
-                    })
-                }
-            }
-        }
+        dispatch_send(Level.Info, msg: msg, path: path, function: function, line: line)
     }
     
     public class func warning(msg: String = "", _ path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
-        let level = Level.Warning
-        
-        for dest in destinations {
-            if let queue = dest.queue {
-                if dest.minLevel.rawValue <= level.rawValue && dest.queue != nil {
-                    dispatch_async(queue, {
-                        dest.send(level, msg: msg, path: path, function: function, line: line)
-                    })
-                }
-            }
-        }
+        dispatch_send(Level.Warning, msg: msg, path: path, function: function, line: line)
     }
     
     public class func error(msg: String = "", _ path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
-        let level = Level.Error
-        
+       dispatch_send(Level.Error, msg: msg, path: path, function: function, line: line)
+    }
+    
+    /// internal helper which dispatches send to dedicated queue if minLevel is ok
+    class func dispatch_send(level: SwiftyBeaver.Level, msg: String, path: String, function: String, line: Int) {
         for dest in destinations {
             if let queue = dest.queue {
                 if dest.minLevel.rawValue <= level.rawValue && dest.queue != nil {
