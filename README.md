@@ -51,6 +51,7 @@ While tailing the log file.
 
 - iOS 8.0+ / Mac OS X 10.9+
 - Xcode 7
+- [Xcode Colors plugin](https://github.com/robbiehanson/XcodeColors)
 
 ## Installation
 
@@ -70,7 +71,7 @@ pod 'SwiftyBeaver', '~> 0.2'
 ```
 
 #### or Manually
-Just drag & drop the file `SwiftyBeaver.swift` from Github into your project. 
+Just drag & drop the file `SwiftyBeaver.swift` along with the `Destination` files from Github into your project. 
 
 
 ## Usage
