@@ -4,6 +4,7 @@
 <img src="https://img.shields.io/badge/Platform-Mac%20OS%20X%2010.9%2B-blue.svg" alt="Platform iOS8+">
 <a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/Language-Swift%202-orange.svg" alt="Language: Swift 2" /></a>
 <a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-brightgreen.svg" alt="Carthage compatible" /></a>
+<a href="https://cocoapods.org"><img src="https://img.shields.io/cocoapods/v/SwiftyBeaver.svg" alt="Cocoapods compatible" /></a>
 <a href="https://github.com/skreutzberger/SwiftyBeaver/blob/master/LICENSE"><img src="http://img.shields.io/badge/License-MIT-lightgrey.svg?style=flat" alt="License: MIT" /></a>
 
 
@@ -59,6 +60,13 @@ You can use [Carthage](https://github.com/Carthage/Carthage
 ) to install SwiftyBeaver by adding that to your Cartfile: 
 ```
 github "skreutzberger/SwiftyBeaver"
+```
+
+#### via CocoaPods
+
+To use SwiftyBeaver if you use CocoaPods just add this to your Podfile:
+```
+pod 'SwiftyBeaver', '~> 0.2'
 ```
 
 #### or Manually
