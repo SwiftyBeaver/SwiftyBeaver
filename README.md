@@ -10,7 +10,7 @@
 
 SwiftyBeaver is a **new**, fast & very **lightweight** logger, with a unique combination of great features. 
 
-It is written in Swift 2 and was released on November 28, 2015 by [Sebastian Kreutzberger](https://twitter.com/skreutzb). Please **follow [SwiftyBeaver on Twitter](https://twitter.com/sSwiftyBeaver)** to stay up to date or to get in contact. Thanks!
+It is written in Swift 2 and was released on November 28, 2015 by [Sebastian Kreutzberger](https://twitter.com/skreutzb). Please **follow [SwiftyBeaver on Twitter](https://twitter.com/SwiftyBeaver)** to stay up to date or to get in contact. Thanks!
 
 ## Features
 
@@ -198,7 +198,7 @@ Now it should work. If not then please create an issue.
 
 
 ## Contact & Contribute
-If you have questions please contact Sebastian via the dedicated [SwiftyBeaver Twitter account](https://twitter.com/sSwiftyBeaver). Feature requests or bugs are better reported and discussed as Github Issue.
+If you have questions please contact Sebastian via the dedicated [SwiftyBeaver Twitter account](https://twitter.com/SwiftyBeaver). Feature requests or bugs are better reported and discussed as Github Issue.
 
 **Please contribute back** any great stuff, especially logging destinations and ways to make SwiftyBeaver even more flexible, elegant and awesome!
 
