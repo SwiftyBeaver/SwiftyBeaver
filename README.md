@@ -86,7 +86,7 @@ let package = Package(
 ```
 
 #### or Manually
-Just drag & drop the file `SwiftyBeaver.swift` from Github into your project.
+Just drag & drop the files within the [sources](https://github.com/skreutzberger/SwiftyBeaver/tree/master/sources) folder from Github into your project. 
 
 
 ## Usage
