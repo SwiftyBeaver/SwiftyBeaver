@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "SwiftyBeaver"
-  s.version      = "0.2.2"
+  s.version      = "0.2.3"
   s.summary      = "Colorful, lightweight & fast logging in Swift 2"
 
   # This description is used to generate tags and improve search results.
@@ -18,6 +18,6 @@ Pod::Spec.new do |s|
   s.license      = "MIT"
   s.author       = { "Sebastian Kreutzberger" => "s.kreutzberger@googlemail.com" }
   s.platform     = :ios, "8.0"
-  s.source       = { :git => "https://github.com/skreutzberger/SwiftyBeaver.git", :tag => "v0.2.2" }
+  s.source       = { :git => "https://github.com/skreutzberger/SwiftyBeaver.git", :tag => "v0.2.3" }
   s.source_files  = "sources"
 end
