@@ -3,7 +3,7 @@
 <img src="https://img.shields.io/badge/Platform-iOS%208%2B-blue.svg" alt="Platform iOS8+">
 <img src="https://img.shields.io/badge/Platform-Mac%20OS%20X%2010.9%2B-blue.svg" alt="Platform iOS8+"> <img src="https://img.shields.io/badge/tvOS-9%2B-blue.svg" alt="Platform tvOS8+"> <img src="https://img.shields.io/badge/watchOS-2%2B-blue.svg" alt="Platform tvOS8+"><br/>
 <a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/Language-Swift%202-orange.svg" alt="Language: Swift 2" /></a>
-<a href="https://github.com/apple/swift-package-manager"><img src="https://img.shields.io/badge/%20Swift%20Package%20Manager-compatible-brightgreen.svg" alt="Swift Package Manager compatible" /></a> <a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-brightgreen.svg" alt="Carthage compatible" /></a>
+<a href="https://github.com/apple/swift-package-manager"><img src="https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg" alt="Swift Package Manager compatible" /></a> <a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-brightgreen.svg" alt="Carthage compatible" /></a>
 <a href="https://cocoapods.org"><img src="https://img.shields.io/cocoapods/v/SwiftyBeaver.svg" alt="Cocoapods compatible" /></a>
 <a href="https://github.com/skreutzberger/SwiftyBeaver/blob/master/LICENSE"><img src="http://img.shields.io/badge/License-MIT-lightgrey.svg?style=flat" alt="License: MIT" /></a>
 
