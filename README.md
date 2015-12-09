@@ -1,4 +1,4 @@
-# SwiftyBeaver 
+# SwiftyBeaver
 
 <img src="https://img.shields.io/badge/Platform-iOS%208%2B-blue.svg" alt="Platform iOS8+">
 <img src="https://img.shields.io/badge/Platform-Mac%20OS%20X%2010.9%2B-blue.svg" alt="Platform iOS8+">
@@ -8,7 +8,7 @@
 <a href="https://github.com/skreutzberger/SwiftyBeaver/blob/master/LICENSE"><img src="http://img.shields.io/badge/License-MIT-lightgrey.svg?style=flat" alt="License: MIT" /></a>
 
 
-SwiftyBeaver is a **new**, fast & very **lightweight** logger, with a unique combination of great features. 
+SwiftyBeaver is a **new**, fast & very **lightweight** logger, with a unique combination of great features.
 
 It is written in Swift 2 and was released on November 28, 2015 by [Sebastian Kreutzberger](https://twitter.com/skreutzb). Please **follow [SwiftyBeaver on Twitter](https://twitter.com/SwiftyBeaver)** to stay up to date or to get in contact. Thanks!
 
@@ -57,7 +57,7 @@ While tailing the log file.
 #### via Carthage
 
 You can use [Carthage](https://github.com/Carthage/Carthage
-) to install SwiftyBeaver by adding that to your Cartfile: 
+) to install SwiftyBeaver by adding that to your Cartfile:
 ```
 github "skreutzberger/SwiftyBeaver"
 ```
@@ -69,8 +69,24 @@ To use SwiftyBeaver if you use CocoaPods just add this to your Podfile:
 pod 'SwiftyBeaver', '~> 0.2'
 ```
 
+#### via Swift Package Manager (Swift 2.2 beta)
+
+To use SwiftyBeaver as a package from Swift add something like the following
+in your Package.swift file, see more details [here](https://swift.org/package-manager/).
+
+```swift
+import PackageDescription
+
+let package = Package(
+    name: "HellowWorld",
+    dependencies: [
+        .Package(url: "https://github.com/skreutzberger/SwiftyBeaver.git", majorVersion: 0)]),
+    ]
+)
+```
+
 #### or Manually
-Just drag & drop the file `SwiftyBeaver.swift` from Github into your project. 
+Just drag & drop the file `SwiftyBeaver.swift` from Github into your project.
 
 
 ## Usage
@@ -142,7 +158,7 @@ log.addDestination(console) // add to SwiftyBeaver to use destination
 
 ### File Destination
 
-SwiftyBeaver can write logs to a file by instantiating and adding of `FileDestination()` class. Logging in a different format to multiple files is possible if several file destination instances are created and added. If a file is not existing then it is created. 
+SwiftyBeaver can write logs to a file by instantiating and adding of `FileDestination()` class. Logging in a different format to multiple files is possible if several file destination instances are created and added. If a file is not existing then it is created.
 
 
 Property  | Default | Description
@@ -180,13 +196,13 @@ It is very easy to write own custom logging destinations, for example to Loggly,
 
 All logging destination classes need to subclass `BaseDestination()` and just need to override the `send()` method. By calling `super.send(...)` you already receive the finally formatted log string which can then be edited or directly sent / stored at any other system, storage or server.
 
-To get started, please check the destination classes [ConsoleDestination.swift](https://github.com/skreutzberger/SwiftyBeaver/blob/master/SwiftyBeaver/Destinations/ConsoleDestination.swift) and [FileDestination.swift](https://github.com/skreutzberger/SwiftyBeaver/blob/master/SwiftyBeaver/Destinations/FileDestination.swift) which do the logging to Xcode Console and File. 
+To get started, please check the destination classes [ConsoleDestination.swift](https://github.com/skreutzberger/SwiftyBeaver/blob/master/SwiftyBeaver/Destinations/ConsoleDestination.swift) and [FileDestination.swift](https://github.com/skreutzberger/SwiftyBeaver/blob/master/SwiftyBeaver/Destinations/FileDestination.swift) which do the logging to Xcode Console and File.
 
 If you wrote some great new destinations then **please contribute them**!
 
 
 ## No Colors?!
-If Xcode does not show the log level word in color and you activated that option then you still may need the additional  [Xcode-Colors](https://github.com/robbiehanson/XcodeColors) plugin. 
+If Xcode does not show the log level word in color and you activated that option then you still may need the additional  [Xcode-Colors](https://github.com/robbiehanson/XcodeColors) plugin.
 
 Simple installation of the plugin:
 

@@ -19,5 +19,5 @@ Pod::Spec.new do |s|
   s.author       = { "Sebastian Kreutzberger" => "s.kreutzberger@googlemail.com" }
   s.platform     = :ios, "8.0"
   s.source       = { :git => "https://github.com/skreutzberger/SwiftyBeaver.git", :tag => "v0.2.2" }
-  s.source_files  = "SwiftyBeaver", "SwiftyBeaver/Destinations"
+  s.source_files  = "sources"
 end
