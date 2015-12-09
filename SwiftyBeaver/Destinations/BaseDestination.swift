@@ -86,7 +86,7 @@ public class BaseDestination: Hashable, Equatable {
         switch level {
         case SwiftyBeaver.Level.Debug:
             color = blue
-            levelStr = levelString.Verbose
+            levelStr = levelString.Debug
             
         case SwiftyBeaver.Level.Info:
             color = green
@@ -99,8 +99,9 @@ public class BaseDestination: Hashable, Equatable {
         case SwiftyBeaver.Level.Error:
             color = red
             levelStr = levelString.Error
-            
+
         default:
+            // Verbose is default
             color = silver
             levelStr = levelString.Verbose
         }
