@@ -118,10 +118,13 @@ public class BaseDestination: Hashable, Equatable {
         // just use the file name of the path and remove suffix
         let file = path.componentsSeparatedByString("/").last!.componentsSeparatedByString(".").first!
         var str = ""
+        if dateString != "" {
+             str += "[\(dateString)] "
+        }
         if detailOutput {
-            str = "[\(dateString)] \(file).\(function):\(line) \(levelString): \(msg)"
+            str += "\(file).\(function):\(line) \(levelString): \(msg)"
         } else {
-            str = "[\(dateString)] \(levelString): \(msg)"
+            str += "\(levelString): \(msg)"
         }
         return str
     }

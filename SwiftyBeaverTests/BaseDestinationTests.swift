@@ -88,4 +88,14 @@ class BaseDestinationTests: XCTestCase {
         print(str)
         XCTAssertNotNil(str.rangeOfString("[\(dateStr)] ViewController.testFunction():50 DEBUG: Hello"))
     }
+    
+    func testFormattedMessageEmptyDate() {
+        let obj = BaseDestination()
+        var str = ""
+        let dateStr = obj.formattedDate("")
+        XCTAssertEqual(dateStr, "")
+        
+        str = obj.formattedMessage(dateStr, levelString: "DEBUG", msg: "Hello", path: "/path/to/ViewController.swift", function: "testFunction()", line: 50, detailOutput: false)
+        XCTAssertEqual(str, "DEBUG: Hello")
+    }
 }
