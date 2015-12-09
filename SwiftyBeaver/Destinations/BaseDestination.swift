@@ -13,6 +13,7 @@ public class BaseDestination: Hashable, Equatable {
     
     public var detailOutput = true
     public var colored = true
+    public var showDate = true
     public var minLevel = SwiftyBeaver.Level.Verbose
     public var dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
     public var levelString = LevelString()
@@ -118,11 +119,14 @@ public class BaseDestination: Hashable, Equatable {
         // just use the file name of the path and remove suffix
         let file = path.componentsSeparatedByString("/").last!.componentsSeparatedByString(".").first!
         var str = ""
-        if detailOutput {
-            str = "[\(dateString)] \(file).\(function):\(line) \(levelString): \(msg)"
-        } else {
-            str = "[\(dateString)] \(levelString): \(msg)"
+        if showDate {
+            str += "[\(dateString)] "
         }
+        if detailOutput {
+            str += "\(file).\(function):\(line) "
+        }
+        str += "\(levelString): \(msg)"
+
         return str
     }
 }
