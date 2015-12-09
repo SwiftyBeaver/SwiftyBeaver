@@ -166,4 +166,55 @@ class SwiftyBeaverTests: XCTestCase {
 
         XCTAssertEqual(log.countDestinations(), 1)
     }
+
+    func testLogLevels() {
+        let log = SwiftyBeaver.self
+
+        let logURL = NSURL(string: "file:///tmp/testSwiftyBeaver.log")!
+        let fileManager = NSFileManager()
+
+        if fileManager.fileExistsAtPath(logURL.path!) {
+            try! fileManager.removeItemAtURL(logURL)
+        }
+
+        let file = FileDestination()
+        file.logFileURL = NSURL(string: "file:///tmp/testSwiftyBeaver.log")!
+        log.addDestination(file)
+
+        log.verbose("test")
+        log.flush()
+        var fileText = try! String(contentsOfFile: logURL.path!)
+        XCTAssertTrue(fileText.containsString("VERBOSE"))
+
+        try! fileManager.removeItemAtURL(logURL)
+        log.debug("test")
+        log.flush()
+        fileText = try! String(contentsOfFile: logURL.path!)
+        XCTAssertTrue(fileText.containsString("DEBUG"))
+
+        try! fileManager.removeItemAtURL(logURL)
+        log.info("test")
+        log.flush()
+        fileText = try! String(contentsOfFile: logURL.path!)
+        XCTAssertTrue(fileText.containsString("INFO"))
+
+        try! fileManager.removeItemAtURL(logURL)
+        log.warning("test")
+        log.flush()
+        fileText = try! String(contentsOfFile: logURL.path!)
+        XCTAssertTrue(fileText.containsString("WARNING"))
+
+        try! fileManager.removeItemAtURL(logURL)
+        log.error("test")
+        log.flush()
+        fileText = try! String(contentsOfFile: logURL.path!)
+        XCTAssertTrue(fileText.containsString("ERROR"))
+
+        file.levelString.Info = "CUSTOM"
+        try! fileManager.removeItemAtURL(logURL)
+        log.info("test")
+        log.flush()
+        fileText = try! String(contentsOfFile: logURL.path!)
+        XCTAssertTrue(fileText.containsString("CUSTOM"))
+    }
 }
