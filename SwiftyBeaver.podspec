@@ -19,6 +19,8 @@ Pod::Spec.new do |s|
   s.author       = { "Sebastian Kreutzberger" => "s.kreutzberger@googlemail.com" }
   s.ios.deployment_target = "8.0"
   s.watchos.deployment_target = "2.0"
+  s.tvos.deployment_target = "9.0"
+  s.osx.deployment_target = "10.9"
   s.source       = { :git => "https://github.com/skreutzberger/SwiftyBeaver.git", :tag => "v0.2.3" }
   s.source_files  = "sources"
 end
