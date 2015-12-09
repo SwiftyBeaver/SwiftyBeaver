@@ -84,6 +84,12 @@ public class SwiftyBeaver {
     public class func error(msg: Any, _ path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
        dispatch_send(Level.Error, msg: msg, path: path, function: function, line: line)
     }
+
+    public class func flush() {
+        for dest in destinations {
+            dest.flush()
+        }
+    }
     
     /// internal helper which dispatches send to dedicated queue if minLevel is ok
     class func dispatch_send(level: SwiftyBeaver.Level, msg: Any, path: String, function: String, line: Int) {

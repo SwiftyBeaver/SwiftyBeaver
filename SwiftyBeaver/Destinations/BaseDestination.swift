@@ -24,7 +24,7 @@ public class BaseDestination: Hashable, Equatable {
         public var Warning = "WARNING"
         public var Error = "ERROR"
     }
-    
+
     let formatter = NSDateFormatter()
 
     // For a colored log level word in a logged line
@@ -68,7 +68,14 @@ public class BaseDestination: Hashable, Equatable {
             function: function, line: line, detailOutput: detailOutput)
         return str
     }
-    
+
+    /// returns only once all log items have completed
+    func flush() {
+        if let queue = self.queue {
+            dispatch_barrier_sync(queue, {})
+        }
+    }
+
     /// returns a formatted date string
     func formattedDate(dateFormat: String) -> String {
         //formatter.timeZone = NSTimeZone(abbreviation: "UTC")
