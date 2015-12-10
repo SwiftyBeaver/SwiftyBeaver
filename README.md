@@ -86,7 +86,12 @@ let package = Package(
 ```
 
 #### or Manually
-Just drag & drop the file `SwiftyBeaver.swift` from Github into your project.
+1. Download the latest release zip from [here](https://github.com/skreutzberger/SwiftyBeaver/releases)
+2. Drag & drop the `/sources` folder into your project (make sure "Copy items if needed" is checked)
+3. Rename the "sources" group to "SwiftyBeaver" if you'd like
+
+Note: You don't have to `import SwiftyBeaver` if you install this way.
+
 
 
 ## Usage
