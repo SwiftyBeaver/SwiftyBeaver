@@ -207,7 +207,7 @@ If Xcode does not show the log level word in color and you activated that option
 Simple installation of the plugin:
 
 1. Download the file [XcodeColors.xcplugin.zip](https://github.com/skreutzberger/SwiftyBeaver/raw/master/Assets/XcodeColors.xcplugin.zip)
-2. Unzip it to "~/Library/Application Support/Developer/Shared/Xcode/Plug-ins/"
+2. Unzip it to "~/Library/Application Support/Developer/Shared/Xcode/Plug-ins/" (if this directory path does not exist, you can just create it)
 3. Restart Xcode & allow the plugin
 
 Now it should work. If not then please create an issue.
