@@ -222,7 +222,7 @@ SwiftyBeaver supports Krzysztof Zabłocki’s great Xcode Plugin [KZLinkedConsol
 
 Simple installation of the plugin:
 
-1. Download the file [XcodeColors.xcplugin.zip](https://github.com/skreutzberger/SwiftyBeaver/raw/master/Assets/KZLinkedConsole.xcplugin.zip)
+1. Download the file [KZLinkedConsole.xcplugin.zip](https://github.com/skreutzberger/SwiftyBeaver/raw/master/Assets/KZLinkedConsole.xcplugin.zip)
 2. Unzip it to "~/Library/Application Support/Developer/Shared/Xcode/Plug-ins/" (if this directory path does not exist, you can just create it)
 3. Restart Xcode & allow the plugin
 
