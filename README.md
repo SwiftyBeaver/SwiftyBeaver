@@ -24,8 +24,9 @@ It is written in Swift 2 and was released on November 28, 2015 by [Sebastian Kre
 1. Already comes with good defaults
 1. Use `log.debug("foo")` syntax
 1. Get started with 3 lines of code
-1. Simple installation via Carthage or copy & paste of a single source file
+1. Simple installation via Carthage, CocoaPods, Swift Package Manager or download
 1. Has just ~350 lines of source code, easy to understand
+2. Native support for leading Xcode development plugins
 
 ## Colors!
 
@@ -214,6 +215,16 @@ Simple installation of the plugin:
 3. Restart Xcode & allow the plugin
 
 Now it should work. If not then please create an issue.
+
+## Clickable Hyperlink to Source in Console
+
+SwiftyBeaver supports Krzysztof Zabłocki’s great Xcode Plugin [KZLinkedConsole](https://github.com/krzysztofzablocki/KZLinkedConsole) which adds a clickable link to each line that is logged in Xcode Console. The link leads to the file and line of the log message and is a great helper during Console debugging!
+
+Simple installation of the plugin:
+
+1. Download the file [XcodeColors.xcplugin.zip](https://github.com/skreutzberger/SwiftyBeaver/raw/master/Assets/KZLinkedConsole.xcplugin.zip)
+2. Unzip it to "~/Library/Application Support/Developer/Shared/Xcode/Plug-ins/" (if this directory path does not exist, you can just create it)
+3. Restart Xcode & allow the plugin
 
 
 ## Contact & Contribute
