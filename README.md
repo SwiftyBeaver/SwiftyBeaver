@@ -8,9 +8,11 @@
 <a href="https://github.com/skreutzberger/SwiftyBeaver/blob/master/LICENSE"><img src="http://img.shields.io/badge/License-MIT-lightgrey.svg?style=flat" alt="License: MIT" /></a>
 
 
-SwiftyBeaver is a **new**, fast & very **lightweight** logger, with a unique combination of great features.
+SwiftyBeaver is a **colorful**, fast, flexible & very **lightweight** logger, with a unique combination of great features.
 
-It is written in Swift 2 and was released on November 28, 2015 by [Sebastian Kreutzberger](https://twitter.com/skreutzb). Please **follow [SwiftyBeaver on Twitter](https://twitter.com/SwiftyBeaver)** to stay up to date or to get in contact. Thanks!
+It is written in Swift 2, supports Swift Package Manager and was released on November 28, 2015 by [Sebastian Kreutzberger](https://twitter.com/skreutzb). 
+
+It is under active development, so please **follow [SwiftyBeaver on Twitter](https://twitter.com/SwiftyBeaver)** to stay up-to-date on new versions & features or to get in contact.
 
 ## Features
 
@@ -55,6 +57,18 @@ While tailing the log file.
 
 ## Installation
 
+#### Platform & Installation Support
+
+
+\ | iOS 8+ | OSX 10.9+ | watchOS 2+ | tvOS 9+
+------------- | ------------- | ------------- | ------------- | -------------
+[Swift Package Manager](https://swift.org/package-manager/) | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center>  
+[Carthage](https://github.com/Carthage/Carthage) | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center>  
+[CocoaPods](https://cocoapods.org) | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center>  
+Download | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center>  
+
+For installation details please see the next points.
+
 #### via Carthage
 
 You can use [Carthage](https://github.com/Carthage/Carthage
@@ -65,15 +79,14 @@ github "skreutzberger/SwiftyBeaver"
 
 #### via CocoaPods
 
-To use SwiftyBeaver if you use CocoaPods just add this to your Podfile:
+To use [CocoaPods](https://cocoapods.org) just add this to your Podfile:
 ```
 pod 'SwiftyBeaver', '~> 0.2'
 ```
 
 #### via Swift Package Manager (Swift 2.2 beta)
 
-To use SwiftyBeaver as a package from Swift add something like the following
-in your Package.swift file, see more details [here](https://swift.org/package-manager/).
+To use SwiftyBeaver as a [Swift Package Manager](https://swift.org/package-manager/) package just add the following in your Package.swift file.
 
 ```Swift
 import PackageDescription
@@ -128,16 +141,15 @@ log.error(["name": "Mr Beaver", "address": "7 Beaver Lodge"])
 ```
 
 
-## Destination Properties / Options
+## Destination Properties
 
-You can log to Xcode Console, to one or multiple files and to other, custom log destinations. Each log destination is an instance of a Destination class with iths own set of properties with defaults. But most properties / options are the same.
+You can log to Xcode Console, to one or multiple files and to other, custom log destinations. Each log destination is an instance of a Destination class with it’s own set of properties with defaults.
 
-The options should be set before or directly after the `.addDestination(...)` call.
+The properties should be set before or directly after the `.addDestination(...)` call. Please see some examples further down below.
 
+###  Core Properties
 
-### Console Destination
-
-To log to Xcode Console just instantiate `ConsoleDestination()`, optionally adjust properties and then add the instance to SwiftyBeaver itself.
+The following core properties are **available for every destination** and must be **set individually** for every destination instance!
 
 
 Property  | Default | Description
@@ -145,9 +157,13 @@ Property  | Default | Description
 **.detailOutput**  | true | Logs date, file, function, line, level, message.  If set to `false` then just date, level, message are logged.
 **.colored**  | true | Colored output or not
 **.minLevel**  | SwiftyBeaver.Level.Verbose | Any level with a priority lower than that level is not logged. Possible values are SwiftyBeaver.Level.Verbose, .Debug, .Info .Warning, .Error
-**.dateFormat**  | "yyyy-MM-dd HH:mm:ss.SSS" | Logs current date and time including milliseconds
+**.dateFormat**  | "yyyy-MM-dd HH:mm:ss.SSS" | Logs current date and time including milliseconds. If you set an empty String then no date is added to the log.
 **.levelString.Verbose, .Debug, .Info, .Warning, .Error**  | "VERBOSE", "DEBUG", etc. | Sets a custom string representing the log level. On default it is the log level as uppercase word.
 
+
+### Log to Console
+
+To log to Xcode Console just instantiate `ConsoleDestination()`, optionally adjust properties and then add the instance to SwiftyBeaver itself.
 
 Example:
 
@@ -160,19 +176,15 @@ log.addDestination(console) // add to SwiftyBeaver to use destination
 ```
 
 
-### File Destination
+### Log to File
 
-SwiftyBeaver can write logs to a file by instantiating and adding of `FileDestination()` class. Logging in a different format to multiple files is possible if several file destination instances are created and added. If a file is not existing then it is created.
+SwiftyBeaver can write logs to a file by instantiating and adding of the `FileDestination()` class. Logging in a different format to multiple files is possible if several file destination instances are created and added. If a file is not existing then it is created.
 
+Additional to above mentioned core properties the file destination also comes with the following properties:
 
 Property  | Default | Description
 ------------- | ------------- | -------------
-**.detailOutput**  | true | Logs date, file, function, line, level, message. If set to `false` then just date, level, message are logged.
-**.colored**  | true | Colored output or not
-**.minLevel**  | SwiftyBeaver.Level.Verbose | Any level with a priority lower than that level is not logged. Possible values are SwiftyBeaver.Level.Verbose, .Debug, .Info .Warning, .Error
-**.dateFormat**  | "yyyy-MM-dd HH:mm:ss.SSS" | Logs current date and time including milliseconds
-**.levelString.Verbose, .Debug, .Info, .Warning, .Error**  | "VERBOSE", "DEBUG", etc. | Sets a custom string representing the log level. On default it is the log level as uppercase word.
-**.logFileURL**  | DocumentDirectory + "swiftybeaver.log" | The default filename is `swiftybeaver.log` and it is stored in the app’s DocumentDirectory. During development it is recommended to change that logfileURL to `/tmp/swiftybeaver.log` so that the file can be tailed by a Terminal app using the CLI command `tail -f /tmp/swiftybeaver.log`.
+**.logFileURL**  | DocumentDirectory+"swiftybeaver.log" | The default filename is `swiftybeaver.log` and it is stored in the app’s DocumentDirectory. During development it is recommended to change that logfileURL to `/tmp/swiftybeaver.log` so that the file can be tailed by a Terminal app using the CLI command `tail -f /tmp/swiftybeaver.log`.
 
 Example with logging to 2 files in parallel:
 
@@ -230,7 +242,7 @@ Simple installation of the plugin:
 ## Contact & Contribute
 If you have questions please contact Sebastian via the dedicated [SwiftyBeaver Twitter account](https://twitter.com/SwiftyBeaver). Feature requests or bugs are better reported and discussed as Github Issue.
 
-**Please contribute back** any great stuff, especially logging destinations and ways to make SwiftyBeaver even more flexible, elegant and awesome!
+**Please contribute back** any great stuff, especially logging destinations and ways to make SwiftyBeaver even more flexible, elegant and awesome! Each new bugfix, feature request or addition/change should be put in **a dedicated pull request** to simplify discussion and merging.
 
 Thanks for testing, sharing, staring & contributing - Happy Logging!
 
