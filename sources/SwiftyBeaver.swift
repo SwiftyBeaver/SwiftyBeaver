@@ -27,29 +27,27 @@ public class SwiftyBeaver {
     
     /// returns boolean about success
     public class func addDestination(destination: AnyObject) -> Bool {
-        let dest = destination as? BaseDestination
-        
-        if let dest = dest {
-            //print("insert hashValue \(dest.hashValue)")
-            destinations.insert(dest)  // if not already in (it’s a set)
-            return true
-        } else {
-            print("SwiftyBeaver: adding of destination failed")
-            return false
-        }
+		guard let dest = destination as? BaseDestination else {
+			print("SwiftyBeaver: adding of destination failed")
+			return false
+		}
+		
+		//print("insert hashValue \(dest.hashValue)")
+		destinations.insert(dest)  // if not already in (it’s a set)
+		return true
+
     }
 
     /// returns boolean about success
     public class func removeDestination(destination: AnyObject) -> Bool {
-        let dest = destination as? BaseDestination
-        
-        if let dest = dest {
-            destinations.remove(dest)
-            return true
-        } else {
-            print("SwiftyBeaver: removing of destination failed")
-            return false
-        }
+		guard let dest = destination as? BaseDestination else {
+			print("SwiftyBeaver: removing of destination failed")
+			return false
+		}
+		
+		destinations.remove(dest)
+		return true
+
     }
 
     /// if you need to start fresh
