@@ -166,4 +166,23 @@ class SwiftyBeaverTests: XCTestCase {
 
         XCTAssertEqual(log.countDestinations(), 1)
     }
+    
+    func testMinLevelFilters() {
+        let log = SwiftyBeaver.self
+        
+        // add console
+        let console = ConsoleDestination()
+        console.dateFormat = "HH:mm:ss.SSS"
+        // set info level on default
+        console.minLevel = .Info
+        // do verbose logging for current unit tests file
+        console.addMinLevelFilter(.Debug, path: "Test")
+        log.addDestination(console)
+    
+        log.verbose("This should NOT BE VISIBLE!")
+        log.debug("This should be visible due to minLevelFilter")
+        log.info("This should be visible due to console minLevel")
+        
+        XCTAssertEqual(log.countDestinations(), 1)
+    }
 }

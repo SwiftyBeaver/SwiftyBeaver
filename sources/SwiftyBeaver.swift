@@ -89,7 +89,7 @@ public class SwiftyBeaver {
     class func dispatch_send(level: SwiftyBeaver.Level, msg: Any, path: String, function: String, line: Int) {
         for dest in destinations {
             if let queue = dest.queue {
-                if dest.minLevel.rawValue <= level.rawValue && dest.queue != nil {
+                if dest.shouldLevelBeLogged(level, path: path, function: function) && dest.queue != nil {
                     // try to convert msg object to String and put it on queue
                     let msgStr = "\(msg)"
                     if msgStr.characters.count > 0 {
