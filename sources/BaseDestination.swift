@@ -144,10 +144,9 @@ public class BaseDestination: Hashable, Equatable {
     /// checks if level is at least minLevel or if a minLevel filter for that path does exist
     /// returns boolean and can be used to decide if a message should be logged or not
     func shouldLevelBeLogged(level: SwiftyBeaver.Level, path: String, function: String) -> Bool {
-        var ok = false
         // at first check the instance’s global minLevel property
         if minLevel.rawValue <= level.rawValue {
-            ok = true
+            return true
         }
         // now go through all minLevelFilters and see if there is a match
         for filter in minLevelFilters {
@@ -155,12 +154,12 @@ public class BaseDestination: Hashable, Equatable {
             if filter.minLevel.rawValue <= level.rawValue {
                 if filter.path == "" || path == filter.path || path.rangeOfString(filter.path) != nil {
                     if filter.function == "" || function == filter.function || function.rangeOfString(filter.function) != nil {
-                        ok = true
+                        return true
                     }
                 }
             }
         }
-        return ok
+        return false
     }
 }
 
