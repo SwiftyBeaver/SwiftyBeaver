@@ -21,6 +21,7 @@ It is under active development, so please **follow [SwiftyBeaver on Twitter](htt
 1. **Colored output** to Xcode Console(!), log file, etc.
 1. Uses **own serial background queues/threads** for a great performance
 1. Log levels which are below the set minimum are not executed for even better release performance
+2. **Increases productivity & saves a lot of time** thanks to "Needle in the Haystack" mode
 2. Easy & convenient configuration
 2. Use multiple logging destinations & settings, even for the same type
 1. Already comes with good defaults
@@ -99,7 +100,7 @@ let package = Package(
 )
 ```
 
-#### or Manually
+#### or Download
 1. Download the latest release zip from [here](https://github.com/skreutzberger/SwiftyBeaver/releases)
 2. Drag & drop the `/sources` folder into your project (make sure "Copy items if needed" is checked)
 3. Rename the "sources" group to "SwiftyBeaver" if you'd like
@@ -156,7 +157,7 @@ Property  | Default | Description
 ------------- | ------------- | -------------
 **.detailOutput**  | true | Logs date, file, function, line, level, message.  If set to `false` then just date, level, message are logged.
 **.colored**  | true | Colored output or not
-**.minLevel**  | SwiftyBeaver.Level.Verbose | Any level with a priority lower than that level is not logged. Possible values are SwiftyBeaver.Level.Verbose, .Debug, .Info .Warning, .Error
+**.minLevel**  | SwiftyBeaver.Level.Verbose | Any level with a priority lower than that level is not logged. Possible values are SwiftyBeaver.Level.Verbose, .Debug, .Info .Warning, .Error. Use `.addMinLevelFilter()` to find the needle in the haystack (see further below).
 **.dateFormat**  | "yyyy-MM-dd HH:mm:ss.SSS" | Logs current date and time including milliseconds. If you set an empty String then no date is added to the log.
 **.levelString.Verbose, .Debug, .Info, .Warning, .Error**  | "VERBOSE", "DEBUG", etc. | Sets a custom string representing the log level. On default it is the log level as uppercase word.
 
@@ -216,6 +217,84 @@ To get started, please check the destination classes [ConsoleDestination.swift](
 
 If you wrote some great new destinations then **please contribute them**!
 
+
+## The Needle in the Haystack
+
+<img src="https://cloud.githubusercontent.com/assets/564725/11744328/b0f45b9a-a00f-11e5-813a-23de809cb456.jpg"/>
+
+After a while every software project is full of `log.verbose()` or `log.debug()`statements. Fixing a small bug in the middle of the application logic often requires reading and parsing of hundreds of log messages until you find the message you are really interested in.
+
+This really annoying issue could until now just be fixed by commenting out all unnecessary `log.verbose()` or `log.debug()` lines in the module or whole software - a tedious, time-consuming task just to focus on a bug in a single file or function.
+
+But SwiftyBeaver comes with **a much better solution** called MinLevelFilters.
+
+A MinLevelFilter **overrules the minimum log level** of the destination for a certain file or folder name pattern and a function or function name pattern. SwiftyBeaver’s MinLevelFilters are so flexible that you can add multiple filters per destination and the filter pattern themselve are very easy to understand and can have a **huge positive impact on your productivity** during development and debugging.
+
+
+### How to add a MinLevelFilter
+
+Let's assume the following every-day-work example: you have a grown project, it is full of `log.verbose()` and `log.debug()`. You currently work on the the file `MyViewController.swift` and you are just interested in the `log.verbose()` lines of the file. So what do you need to do?
+
+Firstly, set the general minimum log level for the whole app to `.Info`:
+
+```Swift
+let console = ConsoleDestination()
+console.minLevel = .Info
+```
+
+Secondly, add a MinLevelFilter which sets the MinLevel for the file `MyViewController.swift` to `.Verbose`.
+
+```Swift
+console.addMinLevelFilter(.Verbose, path: "MyViewController.swift")
+```
+
+Now when you run your app you will just see logging output of level `.Info` and higher and **additionally all** logging output from `MyViewController.swift` due to the minLevelFilter `.Verbose` of the file.
+
+
+### MinLevelFilters Are Very Flexible
+
+Internally SwiftyBeaver checks on every log event if the absolute path of the source file and the function name of the log statement do match the filter arguments. 
+
+The matching itself is done by checking if the strings do either match or the source strings contain the filter strings. 
+
+The matching is **case-sensitive** and for path it compares the **absolute path**.
+
+Let’s take an example for better understanding:
+
+```Swift
+let console = ConsoleDestination()
+console.minLevel = .Info // just log if .Info or higher if not filter matches
+
+// some path examples with matching pattern
+var path = "MyViewController.swift" // matches *MyViewController.swift*
+path = "MyViewController" // matches *MyViewController*
+path = "ViewController" // matches *MyViewController*
+path = "MyLib/" // matches *MyLib/*
+
+console.addMinLevelFilter(.Verbose, path: path)
+```
+
+And an example to match all function names  which contain the word `init` in files which have the word `ViewController` in their absolute path:
+
+```Swift
+var path = "ViewController" // pattern *ViewController*
+var function = "init" // function pattern *init*
+console.addMinLevelFilter(.Verbose, path: path, function: function)
+```
+
+That's great, isn’t it? And also please keep in mind that **a destination can have multiple MinLevelFilters**. 
+
+And finally a complete and complex example which sets the minLevel all files in the folder `MyLib` to `.Debug`, and the minLevel all function names inside and outside everywhere in the app containing the word `setup` to `.Verbose`:
+
+```Swift
+let c = ConsoleDestination()
+c.minLevel = .Info // just log if .Info or higher
+
+console.addMinLevelFilter(.Verbose, path: "MyLib/")
+console.addMinLevelFilter(.Debug, path: "", "setup")
+
+log.addDestination(console)
+```
 
 ## No Colors?!
 If Xcode does not show the log level word in color and you activated that option then you still may need the additional  [Xcode-Colors](https://github.com/robbiehanson/XcodeColors) plugin.
