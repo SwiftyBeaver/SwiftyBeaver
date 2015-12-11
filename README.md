@@ -6,11 +6,13 @@
 <a href="https://github.com/apple/swift-package-manager"><img src="https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg" alt="Swift Package Manager compatible" /></a> <a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-brightgreen.svg" alt="Carthage compatible" /></a>
 <a href="https://cocoapods.org"><img src="https://img.shields.io/cocoapods/v/SwiftyBeaver.svg" alt="Cocoapods compatible" /></a>
 <a href="https://github.com/skreutzberger/SwiftyBeaver/blob/master/LICENSE"><img src="http://img.shields.io/badge/License-MIT-lightgrey.svg?style=flat" alt="License: MIT" /></a>
+<a href="https://travis-ci.org/skreutzberger/SwiftyBeaver"><img src="http://img.shields.io/travis/skreutzberger/SwiftyBeaver.svg" alt="Travis" /></a>
+
 
 
 SwiftyBeaver is a **colorful**, fast, flexible & very **lightweight** logger, with a unique combination of great features.
 
-It is written in Swift 2, supports Swift Package Manager and was released on November 28, 2015 by [Sebastian Kreutzberger](https://twitter.com/skreutzb). 
+It is written in Swift 2, supports Swift Package Manager and was released on November 28, 2015 by [Sebastian Kreutzberger](https://twitter.com/skreutzb).
 
 It is under active development, so please **follow [SwiftyBeaver on Twitter](https://twitter.com/SwiftyBeaver)** to stay up-to-date on new versions & features or to get in contact.
 
@@ -63,10 +65,10 @@ While tailing the log file.
 
 \ | iOS 8+ | OSX 10.9+ | watchOS 2+ | tvOS 9+
 ------------- | ------------- | ------------- | ------------- | -------------
-[Swift Package Manager](https://swift.org/package-manager/) | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center>  
-[Carthage](https://github.com/Carthage/Carthage) | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center>  
-[CocoaPods](https://cocoapods.org) | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center>  
-Download | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center>  
+[Swift Package Manager](https://swift.org/package-manager/) | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center>
+[Carthage](https://github.com/Carthage/Carthage) | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center>
+[CocoaPods](https://cocoapods.org) | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center>
+Download | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center>
 
 For installation details please see the next points.
 
@@ -253,7 +255,7 @@ Now when you run your app you will just see logging output of level `.Info` and 
 
 ### MinLevelFilters Are Very Flexible
 
-Internally SwiftyBeaver checks on every log event if the absolute path of the source file and the function name of the log statement do match the filter arguments. 
+Internally SwiftyBeaver checks on every log event if the absolute path of the source file and the function name of the log statement do match the filter arguments.
 
 The matching itself is done by checking if the strings do either match or the source strings contain the filter strings. The matching is **case-sensitive** and for path it compares the **absolute path**.
 
@@ -280,7 +282,7 @@ var function = "init" // function pattern *init*
 console.addMinLevelFilter(.Verbose, path: path, function: function)
 ```
 
-That's great, isn’t it? Please keep in mind that **a destination can have multiple MinLevelFilters**. 
+That's great, isn’t it? Please keep in mind that **a destination can have multiple MinLevelFilters**.
 
 And finally a complete and more complex example which:
 
