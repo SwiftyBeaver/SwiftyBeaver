@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "SwiftyBeaver"
-  s.version      = "0.2.5"
+  s.version      = "0.3.0"
   s.summary      = "Colorful, lightweight & fast logging in Swift 2"
 
   # This description is used to generate tags and improve search results.
@@ -21,6 +21,6 @@ Pod::Spec.new do |s|
   s.watchos.deployment_target = "2.0"
   s.tvos.deployment_target = "9.0"
   s.osx.deployment_target = "10.9"
-  s.source       = { :git => "https://github.com/skreutzberger/SwiftyBeaver.git", :tag => "v0.2.5" }
+  s.source       = { :git => "https://github.com/skreutzberger/SwiftyBeaver.git", :tag => "v0.3.0" }
   s.source_files  = "sources"
 end
