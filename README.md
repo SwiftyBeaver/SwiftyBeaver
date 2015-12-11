@@ -255,9 +255,7 @@ Now when you run your app you will just see logging output of level `.Info` and 
 
 Internally SwiftyBeaver checks on every log event if the absolute path of the source file and the function name of the log statement do match the filter arguments. 
 
-The matching itself is done by checking if the strings do either match or the source strings contain the filter strings. 
-
-The matching is **case-sensitive** and for path it compares the **absolute path**.
+The matching itself is done by checking if the strings do either match or the source strings contain the filter strings. The matching is **case-sensitive** and for path it compares the **absolute path**.
 
 Let’s take an example for better understanding:
 
@@ -266,10 +264,10 @@ let console = ConsoleDestination()
 console.minLevel = .Info // just log if .Info or higher if not filter matches
 
 // some path examples with matching pattern
-var path = "MyViewController.swift" // matches *MyViewController.swift*
-path = "MyViewController" // matches *MyViewController*
-path = "ViewController" // matches *MyViewController*
-path = "MyLib/" // matches *MyLib/*
+var path = "MyViewController.swift" // matches all filenames containing MyViewController.swift
+path = "MyViewController" // matches file names & folder names containing MyViewController
+path = "ViewController" // ViewController, MyViewController, ViewController/foo, etc.
+path = "MyLib/" // matches files & folders inside MyLib, IloveMyLib or We/LoveMyLib folder
 
 console.addMinLevelFilter(.Verbose, path: path)
 ```
@@ -282,9 +280,13 @@ var function = "init" // function pattern *init*
 console.addMinLevelFilter(.Verbose, path: path, function: function)
 ```
 
-That's great, isn’t it? And also please keep in mind that **a destination can have multiple MinLevelFilters**. 
+That's great, isn’t it? Please keep in mind that **a destination can have multiple MinLevelFilters**. 
 
-And finally a complete and complex example which sets the minLevel all files in the folder `MyLib` to `.Debug`, and the minLevel all function names inside and outside everywhere in the app containing the word `setup` to `.Verbose`:
+And finally a complete and more complex example which:
+
+1. sets the default minLevel of the project to `.Info`
+2. sets the minLevel of all files in the folder `MyLib` to `.Verbose`
+3. sets the minLevel of all function names which contain the word `setup` to `.Debug`:
 
 ```Swift
 let c = ConsoleDestination()
