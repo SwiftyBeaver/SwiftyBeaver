@@ -86,17 +86,15 @@ public class SwiftyBeaver {
     /// internal helper which dispatches send to dedicated queue if minLevel is ok
     class func dispatch_send(level: SwiftyBeaver.Level, msg: Any, path: String, function: String, line: Int) {
         for dest in destinations {
-            if let queue = dest.queue {
-                if dest.shouldLevelBeLogged(level, path: path, function: function) && dest.queue != nil {
-                    // try to convert msg object to String and put it on queue
-                    let msgStr = "\(msg)"
-                    if msgStr.characters.count > 0 {
-                        dispatch_async(queue, {
-                            dest.send(level, msg: msgStr, path: path, function: function, line: line)
-                        })
-                    }
-                }
-            }
+            let msgStr = "\(msg)"
+            // try to convert msg object to String and put it on queue
+            // ensure the message object is not empty
+            guard let queue = dest.queue where
+                dest.minLevel.rawValue <= level.rawValue && msgStr.characters.count > 0
+                else { break }
+            dispatch_async(queue, {
+                dest.send(level, msg: msgStr, path: path, function: function, line: line)
+            })
         }
     }
 }
