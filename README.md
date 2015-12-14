@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/skreutzberger/SwiftyBeaver.png?label=ready&title=Ready)](https://waffle.io/skreutzberger/SwiftyBeaver)
 # SwiftyBeaver
 
 ![Platform iOS 8+](https://img.shields.io/badge/Platform-iOS%208%2B-blue.svg)
