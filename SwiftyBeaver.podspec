@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
   It is written in Swift 2 and was released on November 28, 2015 by Sebastian Kreutzberger (Twitter: @skreutzb).
                    DESC
 
-  s.homepage     = "https://github.com/skreutzberger/SwiftyBeaver"
+  s.homepage     = "https://github.com/SwiftyBeaver/SwiftyBeaver"
   s.screenshots  = "https://cloud.githubusercontent.com/assets/564725/11452558/17fd5f04-95ec-11e5-96d2-427f62ed4f05.jpg", "https://cloud.githubusercontent.com/assets/564725/11452560/33225d16-95ec-11e5-8461-78f50b9e8da7.jpg"
   s.license      = "MIT"
   s.author       = { "Sebastian Kreutzberger" => "s.kreutzberger@googlemail.com" }
@@ -21,6 +21,6 @@ Pod::Spec.new do |s|
   s.watchos.deployment_target = "2.0"
   s.tvos.deployment_target = "9.0"
   s.osx.deployment_target = "10.9"
-  s.source       = { :git => "https://github.com/skreutzberger/SwiftyBeaver.git", :tag => "v0.3.0" }
+  s.source       = { :git => "https://github.com/SwiftyBeaver/SwiftyBeaver.git", :tag => "v0.3.0" }
   s.source_files  = "sources"
 end
