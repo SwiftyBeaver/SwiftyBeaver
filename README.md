@@ -5,8 +5,8 @@
 <a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/Language-Swift%202-orange.svg" alt="Language: Swift 2" /></a>
 <a href="https://github.com/apple/swift-package-manager"><img src="https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg" alt="Swift Package Manager compatible" /></a> <a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-brightgreen.svg" alt="Carthage compatible" /></a>
 <a href="https://cocoapods.org"><img src="https://img.shields.io/cocoapods/v/SwiftyBeaver.svg" alt="Cocoapods compatible" /></a>
-<a href="https://github.com/skreutzberger/SwiftyBeaver/blob/master/LICENSE"><img src="http://img.shields.io/badge/License-MIT-lightgrey.svg?style=flat" alt="License: MIT" /></a>
-<a href="https://travis-ci.org/skreutzberger/SwiftyBeaver"><img src="http://img.shields.io/travis/skreutzberger/SwiftyBeaver.svg" alt="Travis" /></a>
+<a href="https://github.com/skreutzberger/SwiftyBeaver/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-lightgrey.svg?style=flat" alt="License: MIT" /></a>
+<a href="https://travis-ci.org/skreutzberger/SwiftyBeaver"><img src="https://img.shields.io/travis/skreutzberger/SwiftyBeaver.svg" alt="Travis" /></a>
 
 
 
@@ -103,7 +103,7 @@ let package = Package(
 ```
 
 #### or Download
-1. Download the latest release zip from [here](https://github.com/skreutzberger/SwiftyBeaver/releases)
+1. Download the latest release zip from [here](https://github.com/SwiftyBeaver/SwiftyBeaver/releases)
 2. Drag & drop the `/sources` folder into your project (make sure "Copy items if needed" is checked)
 3. Rename the "sources" group to "SwiftyBeaver" if you'd like
 
