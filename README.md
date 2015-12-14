@@ -1,20 +1,22 @@
 # SwiftyBeaver
 
-<img src="https://img.shields.io/badge/Platform-iOS%208%2B-blue.svg" alt="Platform iOS8+">
-<img src="https://img.shields.io/badge/Platform-Mac%20OS%20X%2010.9%2B-blue.svg" alt="Platform iOS8+"> <img src="https://img.shields.io/badge/tvOS-9%2B-blue.svg" alt="Platform tvOS8+"> <img src="https://img.shields.io/badge/watchOS-2%2B-blue.svg" alt="Platform tvOS8+"><br/>
-<a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/Language-Swift%202-orange.svg" alt="Language: Swift 2" /></a>
-<a href="https://github.com/apple/swift-package-manager"><img src="https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg" alt="Swift Package Manager compatible" /></a> <a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-brightgreen.svg" alt="Carthage compatible" /></a>
-<a href="https://cocoapods.org"><img src="https://img.shields.io/cocoapods/v/SwiftyBeaver.svg" alt="Cocoapods compatible" /></a>
-<a href="https://github.com/skreutzberger/SwiftyBeaver/blob/master/LICENSE"><img src="http://img.shields.io/badge/License-MIT-lightgrey.svg?style=flat" alt="License: MIT" /></a>
-<a href="https://travis-ci.org/skreutzberger/SwiftyBeaver"><img src="http://img.shields.io/travis/skreutzberger/SwiftyBeaver.svg" alt="Travis" /></a>
-
+![Platform iOS 8+](https://img.shields.io/badge/Platform-iOS%208%2B-blue.svg)
+![Platform Mac OS X 10.9+](https://img.shields.io/badge/Platform-Mac%20OS%20X%2010.9%2B-blue.svg)
+![Platform](https://img.shields.io/badge/Platform-tvOS%209%2B-blue.svg)
+![Platform](https://img.shields.io/badge/Platform-watchOS%202%2B-blue.svg)
+<br/>
+[![Language Swift 2](https://img.shields.io/badge/Language-Swift%202-orange.svg)](https://developer.apple.com/swift)
+[![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-brightgreen.svg)](https://github.com/Carthage/Carthage)
+[![Cocoapods compatible](https://img.shields.io/cocoapods/v/SwiftyBeaver.svg)]("https://cocoapods.org)
+[![Travis Build Status](http://img.shields.io/travis/SwiftyBeaver/SwiftyBeaver.svg)]("https://travis-ci.org/SwiftyBeaver/SwiftyBeaver)
 
 
 SwiftyBeaver is a **colorful**, fast, flexible & very **lightweight** logger, with a unique combination of great features.
 
 It is written in Swift 2, supports Swift Package Manager and was released on November 28, 2015 by [Sebastian Kreutzberger](https://twitter.com/skreutzb).
 
-It is under active development, so please **follow [SwiftyBeaver on Twitter](https://twitter.com/SwiftyBeaver)** to stay up-to-date on new versions & features or to get in contact.
+Please **follow [SwiftyBeaver on Twitter](https://twitter.com/SwiftyBeaver)** to stay up-to-date on new versions.
 
 ## Features
 
@@ -77,7 +79,7 @@ For installation details please see the next points.
 You can use [Carthage](https://github.com/Carthage/Carthage
 ) to install SwiftyBeaver by adding that to your Cartfile:
 ```
-github "skreutzberger/SwiftyBeaver"
+github "SwiftyBeaver/SwiftyBeaver"
 ```
 
 #### via CocoaPods
@@ -97,13 +99,13 @@ import PackageDescription
 let package = Package(
     name: "HellowWorld",
     dependencies: [
-        .Package(url: "https://github.com/skreutzberger/SwiftyBeaver.git", majorVersion: 0)]),
+        .Package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git", majorVersion: 0)]),
     ]
 )
 ```
 
 #### or Download
-1. Download the latest release zip from [here](https://github.com/skreutzberger/SwiftyBeaver/releases)
+1. Download the latest release zip from [here](https://github.com/SwiftyBeaver/SwiftyBeaver/releases)
 2. Drag & drop the `/sources` folder into your project (make sure "Copy items if needed" is checked)
 3. Rename the "sources" group to "SwiftyBeaver" if you'd like
 
@@ -215,7 +217,7 @@ It is very easy to write own custom logging destinations, for example to Loggly,
 
 All logging destination classes need to subclass `BaseDestination()` and just need to override the `send()` method. By calling `super.send(...)` you already receive the finally formatted log string which can then be edited or directly sent / stored at any other system, storage or server.
 
-To get started, please check the destination classes [ConsoleDestination.swift](https://github.com/skreutzberger/SwiftyBeaver/blob/master/SwiftyBeaver/Destinations/ConsoleDestination.swift) and [FileDestination.swift](https://github.com/skreutzberger/SwiftyBeaver/blob/master/SwiftyBeaver/Destinations/FileDestination.swift) which do the logging to Xcode Console and File.
+To get started, please check the destination classes [ConsoleDestination.swift](https://github.com/SwiftyBeaver/SwiftyBeaver/blob/master/SwiftyBeaver/Destinations/ConsoleDestination.swift) and [FileDestination.swift](https://github.com/SwiftyBeaver/SwiftyBeaver/blob/master/SwiftyBeaver/Destinations/FileDestination.swift) which do the logging to Xcode Console and File.
 
 If you wrote some great new destinations then **please contribute them**!
 
@@ -305,7 +307,7 @@ If Xcode does not show the log level word in color and you activated that option
 
 Simple installation of the plugin:
 
-1. Download the file [XcodeColors.xcplugin.zip](https://github.com/skreutzberger/SwiftyBeaver/raw/master/Assets/XcodeColors.xcplugin.zip)
+1. Download the file [XcodeColors.xcplugin.zip](https://github.com/SwiftyBeaver/SwiftyBeaver/raw/master/Assets/XcodeColors.xcplugin.zip)
 2. Unzip it to "~/Library/Application Support/Developer/Shared/Xcode/Plug-ins/" (if this directory path does not exist, you can just create it)
 3. Restart Xcode & allow the plugin
 
@@ -317,7 +319,7 @@ SwiftyBeaver supports Krzysztof Zabłocki’s great Xcode Plugin [KZLinkedConsol
 
 Simple installation of the plugin:
 
-1. Download the file [KZLinkedConsole.xcplugin.zip](https://github.com/skreutzberger/SwiftyBeaver/raw/master/Assets/KZLinkedConsole.xcplugin.zip)
+1. Download the file [KZLinkedConsole.xcplugin.zip](https://github.com/SwiftyBeaver/SwiftyBeaver/raw/master/Assets/KZLinkedConsole.xcplugin.zip)
 2. Unzip it to "~/Library/Application Support/Developer/Shared/Xcode/Plug-ins/" (if this directory path does not exist, you can just create it)
 3. Restart Xcode & allow the plugin
 
@@ -325,10 +327,12 @@ Simple installation of the plugin:
 ## Contact & Contribute
 If you have questions please contact Sebastian via the dedicated [SwiftyBeaver Twitter account](https://twitter.com/SwiftyBeaver). Feature requests or bugs are better reported and discussed as Github Issue.
 
+Have a look at SwiftyBeaver's [Waffle Board](https://waffle.io/SwiftyBeaver/SwiftyBeaver) for the roadmap and what should be into the next and the upcoming versions.
+
 **Please contribute back** any great stuff, especially logging destinations and ways to make SwiftyBeaver even more flexible, elegant and awesome! Each new bugfix, feature request or addition/change should be put in **a dedicated pull request** to simplify discussion and merging.
 
 Thanks for testing, sharing, staring & contributing - Happy Logging!
 
 ## License
-SwiftyBeaver is released under the [MIT License](https://github.com/skreutzberger/SwiftyBeaver/blob/master/LICENSE).
+SwiftyBeaver is released under the [MIT License](https://github.com/SwiftyBeaver/SwiftyBeaver/blob/master/LICENSE).
 
