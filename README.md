@@ -18,6 +18,11 @@ It is written in Swift 2, supports Swift Package Manager and was released on Nov
 
 Please **follow [SwiftyBeaver on Twitter](https://twitter.com/SwiftyBeaver)** to stay up-to-date on new versions.
 
+## Watch the 1 Minute Video
+
+<a href="https://swiftybeaver.wistia.com/medias/8fz841gc4w" target="_blank" title="SwiftyBeaver Video Logging to Console and File">![SwiftyBeaver Video Logging to Console and File](https://cloud.githubusercontent.com/assets/564725/11848072/e380110c-a420-11e5-9e5a-e489bce1e288.jpg)</a>
+Video "SwiftyBeaver: Logging to Console & File"
+
 ## Features
 
 1. Log to Xcode Console and / or **log to a file**
