@@ -20,7 +20,7 @@ Please **follow [SwiftyBeaver on Twitter](https://twitter.com/SwiftyBeaver)** to
 
 ## Watch the 1 Minute Video
 
-<a href="https://swiftybeaver.wistia.com/medias/8fz841gc4w" target="_blank" title="SwiftyBeaver Video Logging to Console and File">![SwiftyBeaver Video Logging to Console and File](https://cloud.githubusercontent.com/assets/564725/11848072/e380110c-a420-11e5-9e5a-e489bce1e288.jpg)</a>
+<a href="https://swiftybeaver.wistia.com/medias/8fz841gc4w?wtime=0sm" target="_blank" title="SwiftyBeaver Video Logging to Console and File">![SwiftyBeaver Video Logging to Console and File](https://cloud.githubusercontent.com/assets/564725/11848072/e380110c-a420-11e5-9e5a-e489bce1e288.jpg)</a>
 Video "SwiftyBeaver: Logging to Console & File"
 
 ## Features
@@ -137,6 +137,7 @@ log.addDestination(console)
 log.addDestination(file)
 
 // Now let’s log!
+log.verbose("not so important")  // prio 1, VERBOSE in silver
 log.debug("something to debug")  // prio 2, DEBUG in blue
 log.info("a nice information")   // prio 3, INFO in green
 log.warning("oh no, that won’t be good")  // prio 4, WARNING in yellow
