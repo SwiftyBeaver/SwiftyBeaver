@@ -13,7 +13,7 @@ public class FileDestination: BaseDestination {
     
     public var logFileURL: NSURL
 
-    override var defaultHashValue: Int {return 2}
+    public override var defaultHashValue: Int {return 2}
     let fileManager = NSFileManager.defaultManager()
     
     public override init() {
@@ -37,7 +37,7 @@ public class FileDestination: BaseDestination {
     }
     
     // append to file. uses full base class functionality
-    override func send(level: SwiftyBeaver.Level, msg: String, path: String, function: String, line: Int) -> String? {
+    override public func send(level: SwiftyBeaver.Level, msg: String, path: String, function: String, line: Int) -> String? {
         let formattedString = super.send(level, msg: msg, path: path, function: function, line: line)
         
         if let str = formattedString {
