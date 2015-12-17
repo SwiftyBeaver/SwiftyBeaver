@@ -18,10 +18,16 @@ struct MinLevelFilter {
 public class BaseDestination: Hashable, Equatable {
     
     public var detailOutput = true
-    public var colored = true
+    public var colorOption = ColorOption.Message
     public var minLevel = SwiftyBeaver.Level.Verbose
     public var dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
     public var levelString = LevelString()
+    
+    public enum ColorOption {
+        case None
+        case Level
+        case Message
+    }
     
     public struct LevelString {
         public var Verbose = "VERBOSE"
@@ -78,6 +84,30 @@ public class BaseDestination: Hashable, Equatable {
         dateStr = formattedDate(dateFormat)
         str = formattedMessage(dateStr, levelString: levelStr, msg: msg, path: path,
             function: function, line: line, detailOutput: detailOutput)
+        
+        if colorOption == .Message {
+            var color = ""
+            
+            switch level {
+            case SwiftyBeaver.Level.Debug:
+                color = blue
+                
+            case SwiftyBeaver.Level.Info:
+                color = green
+                
+            case SwiftyBeaver.Level.Warning:
+                color = yellow
+                
+            case SwiftyBeaver.Level.Error:
+                color = red
+                
+            default:
+                // Verbose is default
+                color = silver
+            }
+            str = escape + color + str + reset
+        }
+        
         return str
     }
     
@@ -118,7 +148,7 @@ public class BaseDestination: Hashable, Equatable {
             levelStr = levelString.Verbose
         }
         
-        if colored {
+        if colorOption == .Level {
             levelStr = escape + color + levelStr + reset
         }
         return levelStr

@@ -136,8 +136,8 @@ class SwiftyBeaverTests: XCTestCase {
         file.dateFormat = "HH:mm:ss.SSS"
         log.addDestination(file)
         
-        XCTAssertTrue(console.colored)
-        XCTAssertTrue(file.colored)
+        XCTAssertTrue(console.colorOption != .None)
+        XCTAssertTrue(file.colorOption != .None)
         
         log.verbose("not so important")
         log.debug("something to debug")
@@ -160,6 +160,7 @@ class SwiftyBeaverTests: XCTestCase {
         log.verbose("My name is üÄölèå")
         log.verbose(123)
         log.info(-123.45678)
+        log.info("Hello", "World", 1, 2, 3)
         log.warning(NSDate())
         log.error(["I", "like", "logs!"])
         log.error(["beaver": "yeah", "age": 12])
