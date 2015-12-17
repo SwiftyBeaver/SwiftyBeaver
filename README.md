@@ -12,18 +12,9 @@
 [![Travis Build Status](http://img.shields.io/travis/SwiftyBeaver/SwiftyBeaver.svg)]("https://travis-ci.org/SwiftyBeaver/SwiftyBeaver)
 
 
-SwiftyBeaver is a **colorful**, fast, flexible & very **lightweight** logger, with a unique combination of great features.
+SwiftyBeaver is the **colorful**, extensible, **lightweight** logger in Swift 2. Made for use in development & release.
 
-It is written in Swift 2, supports Swift Package Manager and was released on November 28, 2015 by [Sebastian Kreutzberger](https://twitter.com/skreutzb).
-
-Please **follow [SwiftyBeaver on Twitter](https://twitter.com/SwiftyBeaver)** to stay up-to-date on new versions.
-
-## Watch the 1 Minute Video
-
-<a href="https://swiftybeaver.wistia.com/medias/8fz841gc4w?wtime=0sm" target="_blank" title="SwiftyBeaver Video Logging to Console and File">![SwiftyBeaver Video Logging to Console and File](https://cloud.githubusercontent.com/assets/564725/11848072/e380110c-a420-11e5-9e5a-e489bce1e288.jpg)</a>
-Video "SwiftyBeaver: Logging to Console & File"
-
-## Features
+## Unique Feature Set
 
 1. Log to Xcode Console and / or **log to a file**
 3. Add **custom log destination** handlers to log to Loggly, Redis, etc.
@@ -35,10 +26,12 @@ Video "SwiftyBeaver: Logging to Console & File"
 2. Use multiple logging destinations & settings, even for the same type
 1. Already comes with good defaults
 1. Use `log.debug("foo")` syntax
-1. Get started with 3 lines of code
+1. Get started with 2 lines of code
 1. Simple installation via Carthage, CocoaPods, Swift Package Manager or download
 1. Has just ~350 lines of source code, easy to understand
 2. Native support for leading Xcode development plugins
+
+Please **follow [SwiftyBeaver on Twitter](https://twitter.com/SwiftyBeaver)** to stay up-to-date on new versions.
 
 ## Colors!
 
@@ -54,11 +47,13 @@ While tailing the log file.
 
 <img src="https://cloud.githubusercontent.com/assets/564725/11452560/33225d16-95ec-11e5-8461-78f50b9e8da7.jpg" width="672">
 
+Watch the intro video "SwiftyBeaver in 60 Seconds":
+
+<a href="https://swiftybeaver.wistia.com/medias/kbmjbt2wb4?wtime=0s" target="_blank" title="SwiftyBeaver Logging in 60 Seconds">![SwiftyBeaver in 60 Seconds](https://cloud.githubusercontent.com/assets/564725/11879573/74e0250c-a4fc-11e5-8cab-f2603d158338.jpg)</a>
+
 ***Looks good, tell me more!***
 
-<br><br>
-
-
+<br/><br/>
 
 ## Requirements
 
