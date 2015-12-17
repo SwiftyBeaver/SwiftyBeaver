@@ -18,10 +18,16 @@ struct MinLevelFilter {
 public class BaseDestination: Hashable, Equatable {
     
     public var detailOutput = true
-    public var colored = true
+    public var colorOption = ColorOption.Message
     public var minLevel = SwiftyBeaver.Level.Verbose
     public var dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
     public var levelString = LevelString()
+    
+    public enum ColorOption {
+        case None
+        case Level
+        case Message
+    }
     
     public struct LevelString {
         public var Verbose = "VERBOSE"
@@ -36,26 +42,26 @@ public class BaseDestination: Hashable, Equatable {
 
     // For a colored log level word in a logged line
     // XCode RGB colors
-    var blue = "fg0,0,255;"
-    var green = "fg0,255,0;"
-    var yellow = "fg255,255,0;"
-    var red = "fg255,0,0;"
-    var magenta = "fg255,0,255;"
-    var cyan = "fg0,255,255;"
-    var silver = "fg200,200,200;"
+    public var blue = "fg0,0,255;"
+    public var green = "fg0,255,0;"
+    public var yellow = "fg255,255,0;"
+    public var red = "fg255,0,0;"
+    public var magenta = "fg255,0,255;"
+    public var cyan = "fg0,255,255;"
+    public var silver = "fg200,200,200;"
     var reset = "\u{001b}[;"
     var escape = "\u{001b}["
 
 
     // each destination class must have an own hashValue Int
     lazy public var hashValue: Int = self.defaultHashValue
-    var defaultHashValue: Int {return 0}
+    public var defaultHashValue: Int {return 0}
     
     // each destination instance must have an own serial queue to ensure serial output
     // GCD gives it a prioritization between User Initiated and Utility
     var queue: dispatch_queue_t?
     
-    init() {
+    public init() {
         let uuid = NSUUID().UUIDString
         let queueLabel = "swiftybeaver-queue-" + uuid
         queue = dispatch_queue_create(queueLabel, nil)
@@ -70,7 +76,7 @@ public class BaseDestination: Hashable, Equatable {
     /// send / store the formatted log message to the destination
     /// returns the formatted log message for processing by inheriting method
     /// and for unit tests (nil if error)
-    func send(level: SwiftyBeaver.Level, msg: String, path: String, function: String, line: Int) -> String? {
+    public func send(level: SwiftyBeaver.Level, msg: String, path: String, function: String, line: Int) -> String? {
         var dateStr = ""
         var str = ""
         let levelStr = formattedLevel(level)
@@ -78,6 +84,30 @@ public class BaseDestination: Hashable, Equatable {
         dateStr = formattedDate(dateFormat)
         str = formattedMessage(dateStr, levelString: levelStr, msg: msg, path: path,
             function: function, line: line, detailOutput: detailOutput)
+        
+        if colorOption == .Message {
+            var color = ""
+            
+            switch level {
+            case SwiftyBeaver.Level.Debug:
+                color = blue
+                
+            case SwiftyBeaver.Level.Info:
+                color = green
+                
+            case SwiftyBeaver.Level.Warning:
+                color = yellow
+                
+            case SwiftyBeaver.Level.Error:
+                color = red
+                
+            default:
+                // Verbose is default
+                color = silver
+            }
+            str = escape + color + str + reset
+        }
+        
         return str
     }
     
@@ -118,7 +148,7 @@ public class BaseDestination: Hashable, Equatable {
             levelStr = levelString.Verbose
         }
         
-        if colored {
+        if colorOption == .Level {
             levelStr = escape + color + levelStr + reset
         }
         return levelStr

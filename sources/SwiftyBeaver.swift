@@ -63,33 +63,44 @@ public class SwiftyBeaver {
     
     // MARK: Levels
     
-    public class func verbose(msg: Any, _ path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
-        dispatch_send(Level.Verbose, msg: msg, path: path, function: function, line: line)
+    public class func verbose(items: Any..., _ path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
+        dispatch_send(Level.Verbose, items: items, path: path, function: function, line: line)
     }
 
-    public class func debug(msg: Any, _ path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
-        dispatch_send(Level.Debug, msg: msg, path: path, function: function, line: line)
+    public class func debug(items: Any..., _ path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
+        dispatch_send(Level.Debug, items: items, path: path, function: function, line: line)
     }
     
-    public class func info(msg: Any, _ path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
-        dispatch_send(Level.Info, msg: msg, path: path, function: function, line: line)
+    public class func info(items: Any..., _ path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
+        dispatch_send(Level.Info, items: items, path: path, function: function, line: line)
     }
     
-    public class func warning(msg: Any, _ path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
-        dispatch_send(Level.Warning, msg: msg, path: path, function: function, line: line)
+    public class func warning(items: Any..., _ path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
+        dispatch_send(Level.Warning, items: items, path: path, function: function, line: line)
     }
     
-    public class func error(msg: Any, _ path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
-       dispatch_send(Level.Error, msg: msg, path: path, function: function, line: line)
+    public class func error(items: Any..., _ path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
+       dispatch_send(Level.Error, items: items, path: path, function: function, line: line)
     }
     
     /// internal helper which dispatches send to dedicated queue if minLevel is ok
-    class func dispatch_send(level: SwiftyBeaver.Level, msg: Any, path: String, function: String, line: Int) {
+    class func dispatch_send(level: SwiftyBeaver.Level, items: [Any], path: String, function: String, line: Int) {
+        let separator = " "
+        var msgStr = ""
+        for item in items {
+            if !msgStr.isEmpty {
+                msgStr += separator
+            }
+            if let itemStr = item as? String {
+                msgStr += itemStr
+            } else {
+                msgStr += String(item)
+            }
+        }
         for dest in destinations {
             if let queue = dest.queue {
                 if dest.shouldLevelBeLogged(level, path: path, function: function) && dest.queue != nil {
                     // try to convert msg object to String and put it on queue
-                    let msgStr = "\(msg)"
                     if msgStr.characters.count > 0 {
                         dispatch_async(queue, {
                             dest.send(level, msg: msgStr, path: path, function: function, line: line)
