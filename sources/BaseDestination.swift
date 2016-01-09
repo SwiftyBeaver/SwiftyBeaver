@@ -70,13 +70,13 @@ public class BaseDestination: Hashable, Equatable {
     /// send / store the formatted log message to the destination
     /// returns the formatted log message for processing by inheriting method
     /// and for unit tests (nil if error)
-    func send(level: SwiftyBeaver.Level, msg: String, path: String, function: String, line: Int) -> String? {
+    func send(level: SwiftyBeaver.Level, msg: String, thread: String, path: String, function: String, line: Int) -> String? {
         var dateStr = ""
         var str = ""
         let levelStr = formattedLevel(level)
         
         dateStr = formattedDate(dateFormat)
-        str = formattedMessage(dateStr, levelString: levelStr, msg: msg, path: path,
+        str = formattedMessage(dateStr, levelString: levelStr, msg: msg, thread: thread, path: path,
             function: function, line: line, detailOutput: detailOutput)
         return str
     }
@@ -126,7 +126,7 @@ public class BaseDestination: Hashable, Equatable {
     
     /// returns the formatted log message
     func formattedMessage(dateString: String, levelString: String, msg: String,
-        path: String, function: String, line: Int, detailOutput: Bool) -> String {
+        thread: String, path: String, function: String, line: Int, detailOutput: Bool) -> String {
         // just use the file name of the path and remove suffix
         let file = path.componentsSeparatedByString("/").last!.componentsSeparatedByString(".").first!
         var str = ""
@@ -134,7 +134,7 @@ public class BaseDestination: Hashable, Equatable {
              str += "[\(dateString)] "
         }
         if detailOutput {
-            str += "\(file).\(function):\(line) \(levelString): \(msg)"
+            str += "\(file).\(function):\(line) [\(thread)] \(levelString): \(msg)"
         } else {
             str += "\(levelString): \(msg)"
         }

@@ -18,8 +18,8 @@ public class ConsoleDestination: BaseDestination {
     }
     
     // print to Xcode Console. uses full base class functionality
-    override func send(level: SwiftyBeaver.Level, msg: String, path: String, function: String, line: Int) -> String? {
-        let formattedString = super.send(level, msg: msg, path: path, function: function, line: line)
+    override func send(level: SwiftyBeaver.Level, msg: String, thread: String, path: String, function: String, line: Int) -> String? {
+        let formattedString = super.send(level, msg: msg, thread: thread, path: path, function: function, line: line)
         
         if let str = formattedString {
             print(str)
