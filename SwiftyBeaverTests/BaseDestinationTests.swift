@@ -81,12 +81,12 @@ class BaseDestinationTests: XCTestCase {
         formatter.dateFormat = "HH:mm:ss"
         let dateStr = formatter.stringFromDate(NSDate())
         
-        str = obj.formattedMessage(dateStr, levelString: "DEBUG", msg: "Hello", path: "/path/to/ViewController.swift", function: "testFunction()", line: 50, detailOutput: false)
+        str = obj.formattedMessage(dateStr, levelString: "DEBUG", msg: "Hello", thread: "main", path: "/path/to/ViewController.swift", function: "testFunction()", line: 50, detailOutput: false)
         XCTAssertNotNil(str.rangeOfString("[\(dateStr)] DEBUG: Hello"))
 
-        str = obj.formattedMessage(dateStr, levelString: "DEBUG", msg: "Hello", path: "/path/to/ViewController.swift", function: "testFunction()", line: 50, detailOutput: true)
+        str = obj.formattedMessage(dateStr, levelString: "DEBUG", msg: "Hello", thread: "main", path: "/path/to/ViewController.swift", function: "testFunction()", line: 50, detailOutput: true)
         print(str)
-        XCTAssertNotNil(str.rangeOfString("[\(dateStr)] ViewController.testFunction():50 DEBUG: Hello"))
+        XCTAssertNotNil(str.rangeOfString("[\(dateStr)] [main] ViewController.testFunction():50 DEBUG: Hello"))
     }
     
     func testFormattedMessageEmptyDate() {
@@ -95,7 +95,7 @@ class BaseDestinationTests: XCTestCase {
         let dateStr = obj.formattedDate("")
         XCTAssertEqual(dateStr, "")
         
-        str = obj.formattedMessage(dateStr, levelString: "DEBUG", msg: "Hello", path: "/path/to/ViewController.swift", function: "testFunction()", line: 50, detailOutput: false)
+        str = obj.formattedMessage(dateStr, levelString: "DEBUG", msg: "Hello", thread: "main", path: "/path/to/ViewController.swift", function: "testFunction()", line: 50, detailOutput: false)
         XCTAssertEqual(str, "DEBUG: Hello")
     }
     

@@ -59,32 +59,45 @@ public class SwiftyBeaver {
     public class func countDestinations() -> Int {
         return destinations.count
     }
-    
+
+    class func threadName() -> String {
+        if NSThread.isMainThread() {
+            return "main"
+        } else {
+            if let threadName = NSThread.currentThread().name where !threadName.isEmpty {
+                return threadName
+            } else if let queueName = String(UTF8String: dispatch_queue_get_label(DISPATCH_CURRENT_QUEUE_LABEL)) where !queueName.isEmpty {
+                return queueName
+            } else {
+                return String(format: "%p", NSThread.currentThread())
+            }
+        }
+    }
     
     // MARK: Levels
     
     public class func verbose(msg: Any, _ path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
-        dispatch_send(Level.Verbose, msg: msg, path: path, function: function, line: line)
+        dispatch_send(Level.Verbose, msg: msg, thread: threadName(), path: path, function: function, line: line)
     }
 
     public class func debug(msg: Any, _ path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
-        dispatch_send(Level.Debug, msg: msg, path: path, function: function, line: line)
+        dispatch_send(Level.Debug, msg: msg, thread: threadName(), path: path, function: function, line: line)
     }
     
     public class func info(msg: Any, _ path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
-        dispatch_send(Level.Info, msg: msg, path: path, function: function, line: line)
+        dispatch_send(Level.Info, msg: msg, thread: threadName(), path: path, function: function, line: line)
     }
     
     public class func warning(msg: Any, _ path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
-        dispatch_send(Level.Warning, msg: msg, path: path, function: function, line: line)
+        dispatch_send(Level.Warning, msg: msg, thread: threadName(), path: path, function: function, line: line)
     }
     
     public class func error(msg: Any, _ path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
-       dispatch_send(Level.Error, msg: msg, path: path, function: function, line: line)
+        dispatch_send(Level.Error, msg: msg, thread: threadName(), path: path, function: function, line: line)
     }
     
     /// internal helper which dispatches send to dedicated queue if minLevel is ok
-    class func dispatch_send(level: SwiftyBeaver.Level, msg: Any, path: String, function: String, line: Int) {
+    class func dispatch_send(level: SwiftyBeaver.Level, msg: Any, thread: String, path: String, function: String, line: Int) {
         for dest in destinations {
             if let queue = dest.queue {
                 if dest.shouldLevelBeLogged(level, path: path, function: function) && dest.queue != nil {
@@ -92,7 +105,7 @@ public class SwiftyBeaver {
                     let msgStr = "\(msg)"
                     if msgStr.characters.count > 0 {
                         dispatch_async(queue, {
-                            dest.send(level, msg: msgStr, path: path, function: function, line: line)
+                            dest.send(level, msg: msgStr, thread: thread, path: path, function: function, line: line)
                         })
                     }
                 }
