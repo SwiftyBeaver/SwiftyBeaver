@@ -1,15 +1,8 @@
 # SwiftyBeaver
 
-![Platform iOS 8+](https://img.shields.io/badge/Platform-iOS%208%2B-blue.svg)
-![Platform Mac OS X 10.9+](https://img.shields.io/badge/Platform-Mac%20OS%20X%2010.9%2B-blue.svg)
-![Platform](https://img.shields.io/badge/Platform-tvOS%209%2B-blue.svg)
-![Platform](https://img.shields.io/badge/Platform-watchOS%202%2B-blue.svg)
-<br/>
-[![Language Swift 2](https://img.shields.io/badge/Language-Swift%202-orange.svg)](https://developer.apple.com/swift)
-[![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
-[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-brightgreen.svg)](https://github.com/Carthage/Carthage)
-[![Cocoapods compatible](https://img.shields.io/cocoapods/v/SwiftyBeaver.svg)]("https://cocoapods.org)
-[![Travis Build Status](http://img.shields.io/travis/SwiftyBeaver/SwiftyBeaver.svg)]("https://travis-ci.org/SwiftyBeaver/SwiftyBeaver)
+![Platform iOS 8+](https://img.shields.io/badge/Platform-iOS%208%2B-blue.svg) ![Platform Mac OS X 10.9+](https://img.shields.io/badge/Platform-Mac%20OS%20X%2010.9%2B-blue.svg) ![Platform](https://img.shields.io/badge/Platform-tvOS%209%2B-blue.svg) ![Platform](https://img.shields.io/badge/Platform-watchOS%202%2B-blue.svg)<br/>
+[![Language Swift 2](https://img.shields.io/badge/Language-Swift%202-orange.svg)](https://developer.apple.com/swift) [![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-brightgreen.svg)](https://github.com/Carthage/Carthage) [![Cocoapods compatible](https://img.shields.io/cocoapods/v/SwiftyBeaver.svg)]("https://cocoapods.org) [![Travis Build Status](http://img.shields.io/travis/SwiftyBeaver/SwiftyBeaver.svg)]("https://travis-ci.org/SwiftyBeaver/SwiftyBeaver)
+
 
 
 SwiftyBeaver is the **colorful**, extensible, **lightweight** logger in Swift 2. Made for use in development & release.
@@ -17,19 +10,25 @@ SwiftyBeaver is the **colorful**, extensible, **lightweight** logger in Swift 2.
 ## Unique Feature Set
 
 1. Log to Xcode Console and / or **log to a file**
-3. Add **custom log destination** handlers to log to Loggly, Redis, etc.
-1. **Colored output** to Xcode Console(!), log file, etc.
-1. Uses **own serial background queues/threads** for a great performance
-1. Log levels which are below the set minimum are not executed for even better release performance
-2. **Increases productivity & saves a lot of time** thanks to "Needle in the Haystack" mode
-2. Easy & convenient configuration
-2. Use multiple logging destinations & settings, even for the same type
-1. Already comes with good defaults
-1. Use `log.debug("foo")` syntax
-1. Get started with 2 lines of code
-1. Simple installation via Carthage, CocoaPods, Swift Package Manager or download
-1. Has just ~350 lines of source code, easy to understand
-2. Native support for leading Xcode development plugins
+2. Add **custom log destination** handlers to log to Loggly, Redis, etc.
+3. **Colored output** to Xcode Console(!), log file, etc.
+4. Uses **own serial background queues/threads** for a great performance
+5. Log levels which are below the set minimum are not executed for even better release performance
+6. **Increases productivity & saves a lot of time** thanks to "Needle in the Haystack" mode
+7. Easy & convenient configuration
+8. Use multiple logging destinations & settings, even for the same type
+9. Already comes with good defaults
+10. Use `log.debug("foo")` syntax
+11. Get started with 2 lines of code
+12. Simple installation via Carthage, CocoaPods, Swift Package Manager or download
+13. Each log entry includes in detail mode:
+1. time (with microsecond precision)
+1. level (output in color)
+1. **thread name** (if not main thread)
+1. filename, function & line
+1. message (can be string or a variable of any type)
+14. Has just ~350 lines of source code, easy to understand
+15. Native support for leading Xcode development plugins
 
 Please **follow [SwiftyBeaver on Twitter](https://twitter.com/SwiftyBeaver)** to stay up-to-date on new versions.
 
@@ -65,27 +64,31 @@ Watch the intro video "SwiftyBeaver in 60 Seconds":
 #### Platform & Installation Support
 
 
-\ | iOS 8+ | OSX 10.9+ | watchOS 2+ | tvOS 9+
-------------- | ------------- | ------------- | ------------- | -------------
-[Swift Package Manager](https://swift.org/package-manager/) | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center>
-[Carthage](https://github.com/Carthage/Carthage) | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center>
-[CocoaPods](https://cocoapods.org) | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center>
-Download | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center>
+
+| \                                        | iOS 8+             | OSX 10.9+          | watchOS 2+         | tvOS 9+            |
+| ---------------------------------------- | ------------------ | ------------------ | ------------------ | ------------------ |
+| [Swift Package Manager](https://swift.org/package-manager/) | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center> |
+| [Carthage](https://github.com/Carthage/Carthage) | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center> |
+| [CocoaPods](https://cocoapods.org)       | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center> |
+| Download                                 | <center>✅</center> | <center>✅</center> | <center>✅</center> | <center>✅</center> |
 
 For installation details please see the next points.
 
 #### via Carthage
 
 You can use [Carthage](https://github.com/Carthage/Carthage
-) to install SwiftyBeaver by adding that to your Cartfile:
-```
+                       
+                       ) to install SwiftyBeaver by adding that to your Cartfile:
+
+``` 
 github "SwiftyBeaver/SwiftyBeaver"
 ```
 
 #### via CocoaPods
 
 To use [CocoaPods](https://cocoapods.org) just add this to your Podfile:
-```
+
+``` 
 pod 'SwiftyBeaver', '~> 0.2'
 ```
 
@@ -93,18 +96,19 @@ pod 'SwiftyBeaver', '~> 0.2'
 
 To use SwiftyBeaver as a [Swift Package Manager](https://swift.org/package-manager/) package just add the following in your Package.swift file.
 
-```Swift
+``` Swift
 import PackageDescription
 
 let package = Package(
-    name: "HellowWorld",
-    dependencies: [
-        .Package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git", majorVersion: 0)
-    ]
+name: "HellowWorld",
+dependencies: [
+.Package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git", majorVersion: 0)
+]
 )
 ```
 
 #### or Download
+
 1. Download the latest release zip from [here](https://github.com/SwiftyBeaver/SwiftyBeaver/releases)
 2. Drag & drop the `/sources` folder into your project (make sure "Copy items if needed" is checked)
 3. Rename the "sources" group to "SwiftyBeaver" if you'd like
@@ -117,14 +121,15 @@ Note: You don't have to `import SwiftyBeaver` if you install this way.
 
 Add that near the top of your `AppDelegate.swift` to be able to use SwiftyBeaver in your whole project.
 
-```Swift
+``` Swift
 import SwiftyBeaver
 let log = SwiftyBeaver.self
 
 ```
 
 At the the beginning of your `AppDelegate:didFinishLaunchingWithOptions()` add the SwiftyBeaver log destinations (console, file, etc.) and then you can already do the following log level calls globally (**colors included**):
-```Swift
+
+``` Swift
 // add log destinations. at least one is needed!
 let console = ConsoleDestination()  // log to Xcode Console
 let file = FileDestination()  // log to default swiftybeaver.log file
@@ -147,25 +152,26 @@ log.error(["name": "Mr Beaver", "address": "7 Beaver Lodge"])
 ```
 
 
+
 ## Destination Properties
 
 You can log to Xcode Console, to one or multiple files and to other, custom log destinations. Each log destination is an instance of a Destination class with it’s own set of properties with defaults.
 
 The properties should be set before or directly after the `.addDestination(...)` call. Please see some examples further down below.
 
-###  Core Properties
+### Core Properties
 
 The following core properties are **available for every destination** and must be **set individually** for every destination instance!
 
 
-Property  | Default | Description
-------------- | ------------- | -------------
-**.detailOutput**  | true | Logs date, file, function, line, level, message.  If set to `false` then just date, level, message are logged.
-**.colored**  | true | Colored output or not
-**.minLevel**  | SwiftyBeaver.Level.Verbose | Any level with a priority lower than that level is not logged. Possible values are SwiftyBeaver.Level.Verbose, .Debug, .Info .Warning, .Error. Use `.addMinLevelFilter()` to find the needle in the haystack (see further below).
-**.dateFormat**  | "yyyy-MM-dd HH:mm:ss.SSS" | Logs current date and time including milliseconds. If you set an empty String then no date is added to the log.
-**.levelString.Verbose, .Debug, .Info, .Warning, .Error**  | "VERBOSE", "DEBUG", etc. | Sets a custom string representing the log level. On default it is the log level as uppercase word.
 
+| Property                                 | Default                    | Description                              |
+| ---------------------------------------- | -------------------------- | ---------------------------------------- |
+| **.detailOutput**                        | true                       | Logs date, file, function, line, level, message.  If set to `false` then just date, level, message are logged. |
+| **.colored**                             | true                       | Colored output or not                    |
+| **.minLevel**                            | SwiftyBeaver.Level.Verbose | Any level with a priority lower than that level is not logged. Possible values are SwiftyBeaver.Level.Verbose, .Debug, .Info .Warning, .Error. Use `.addMinLevelFilter()` to find the needle in the haystack (see further below). |
+| **.dateFormat**                          | "yyyy-MM-dd HH:mm:ss.SSS"  | Logs current date and time including milliseconds. If you set an empty String then no date is added to the log. |
+| **.levelString.Verbose, .Debug, .Info, .Warning, .Error** | "VERBOSE", "DEBUG", etc.   | Sets a custom string representing the log level. On default it is the log level as uppercase word. |
 
 ### Log to Console
 
@@ -173,7 +179,7 @@ To log to Xcode Console just instantiate `ConsoleDestination()`, optionally adju
 
 Example:
 
-```Swift
+``` Swift
 let console = ConsoleDestination() // get new console destination
 console.detailOutput = false // log simple (date, level, message)
 console.dateFormat = "HH:mm:ss"  // simpler date format
@@ -182,19 +188,20 @@ log.addDestination(console) // add to SwiftyBeaver to use destination
 ```
 
 
+
 ### Log to File
 
 SwiftyBeaver can write logs to a file by instantiating and adding of the `FileDestination()` class. Logging in a different format to multiple files is possible if several file destination instances are created and added. If a file is not existing then it is created.
 
 Additional to above mentioned core properties the file destination also comes with the following properties:
 
-Property  | Default | Description
-------------- | ------------- | -------------
-**.logFileURL**  | DocumentDirectory+"swiftybeaver.log" | The default filename is `swiftybeaver.log` and it is stored in the app’s DocumentDirectory. During development it is recommended to change that logfileURL to `/tmp/swiftybeaver.log` so that the file can be tailed by a Terminal app using the CLI command `tail -f /tmp/swiftybeaver.log`.
+| Property        | Default                              | Description                              |
+| --------------- | ------------------------------------ | ---------------------------------------- |
+| **.logFileURL** | DocumentDirectory+"swiftybeaver.log" | The default filename is `swiftybeaver.log` and it is stored in the app’s DocumentDirectory. During development it is recommended to change that logfileURL to `/tmp/swiftybeaver.log` so that the file can be tailed by a Terminal app using the CLI command `tail -f /tmp/swiftybeaver.log`. |
 
 Example with logging to 2 files in parallel:
 
-```Swift
+``` Swift
 let file = FileDestination() // get new file destination instance
 // uses standard logging to swiftybeaver.log
 file.detailOutput = false
@@ -223,6 +230,7 @@ To get started, please check the destination classes [ConsoleDestination.swift](
 If you wrote some great new destinations then **please contribute them**!
 
 
+
 ## The Needle in the Haystack
 
 <img src="https://cloud.githubusercontent.com/assets/564725/11744328/b0f45b9a-a00f-11e5-813a-23de809cb456.jpg"/>
@@ -236,24 +244,26 @@ But SwiftyBeaver comes with **a much better solution** called MinLevelFilters.
 A MinLevelFilter **overrules the minimum log level** of the destination for a certain file or folder name pattern and a function or function name pattern. SwiftyBeaver’s MinLevelFilters are so flexible that you can add multiple filters per destination and the filter pattern themselve are very easy to understand and can have a **huge positive impact on your productivity** during development and debugging.
 
 
+
 ### How to add a MinLevelFilter
 
 Let's assume the following every-day-work example: you have a grown project, it is full of `log.verbose()` and `log.debug()`. You currently work on the the file `MyViewController.swift` and you are just interested in the `log.verbose()` lines of the file. So what do you need to do?
 
 Firstly, set the general minimum log level for the whole app to `.Info`:
 
-```Swift
+``` Swift
 let console = ConsoleDestination()
 console.minLevel = .Info
 ```
 
 Secondly, add a MinLevelFilter which sets the MinLevel for the file `MyViewController.swift` to `.Verbose`.
 
-```Swift
+``` Swift
 console.addMinLevelFilter(.Verbose, path: "MyViewController.swift")
 ```
 
 Now when you run your app you will just see logging output of level `.Info` and higher and **additionally all** logging output from `MyViewController.swift` due to the minLevelFilter `.Verbose` of the file.
+
 
 
 ### MinLevelFilters Are Very Flexible
@@ -264,7 +274,7 @@ The matching itself is done by checking if the strings do either match or the so
 
 Let’s take an example for better understanding:
 
-```Swift
+``` Swift
 let console = ConsoleDestination()
 console.minLevel = .Info // just log if .Info or higher if not filter matches
 
@@ -279,7 +289,7 @@ console.addMinLevelFilter(.Verbose, path: path)
 
 And an example to match all function names  which contain the word `init` in files which have the word `ViewController` in their absolute path:
 
-```Swift
+``` Swift
 var path = "ViewController" // pattern *ViewController*
 var function = "init" // function pattern *init*
 console.addMinLevelFilter(.Verbose, path: path, function: function)
@@ -293,7 +303,7 @@ And finally a complete and more complex example which:
 2. sets the minLevel of all files in the folder `MyLib` to `.Verbose`
 3. sets the minLevel of all function names which contain the word `setup` to `.Debug`:
 
-```Swift
+``` Swift
 let c = ConsoleDestination()
 c.minLevel = .Info // just log if .Info or higher
 
@@ -304,6 +314,7 @@ log.addDestination(console)
 ```
 
 ## No Colors?!
+
 If Xcode does not show the log level word in color and you activated that option then you still may need the additional  [Xcode-Colors](https://github.com/robbiehanson/XcodeColors) plugin.
 
 Simple installation of the plugin:
@@ -324,16 +335,14 @@ Simple installation of the plugin:
 2. Unzip it to "~/Library/Application Support/Developer/Shared/Xcode/Plug-ins/" (if this directory path does not exist, you can just create it)
 3. Restart Xcode & allow the plugin
 
-
 ## Contact & Contribute
-If you have questions please contact Sebastian via the dedicated [SwiftyBeaver Twitter account](https://twitter.com/SwiftyBeaver). Feature requests or bugs are better reported and discussed as Github Issue.
 
-Have a look at SwiftyBeaver's [Waffle Board](https://waffle.io/SwiftyBeaver/SwiftyBeaver) for the roadmap and what should be into the next and the upcoming versions.
+If you have questions please contact Sebastian via the dedicated [SwiftyBeaver Twitter account](https://twitter.com/SwiftyBeaver). Feature requests or bugs are better reported and discussed as Github Issue.
 
 **Please contribute back** any great stuff, especially logging destinations and ways to make SwiftyBeaver even more flexible, elegant and awesome! Each new bugfix, feature request or addition/change should be put in **a dedicated pull request** to simplify discussion and merging.
 
 Thanks for testing, sharing, staring & contributing - Happy Logging!
 
 ## License
-SwiftyBeaver is released under the [MIT License](https://github.com/SwiftyBeaver/SwiftyBeaver/blob/master/LICENSE).
 
+SwiftyBeaver is released under the [MIT License](https://github.com/SwiftyBeaver/SwiftyBeaver/blob/master/LICENSE).
