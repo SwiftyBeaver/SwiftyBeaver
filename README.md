@@ -1,6 +1,7 @@
 # SwiftyBeaver
 
 ![Platform iOS 8+](https://img.shields.io/badge/Platform-iOS%208%2B-blue.svg) ![Platform Mac OS X 10.9+](https://img.shields.io/badge/Platform-Mac%20OS%20X%2010.9%2B-blue.svg) ![Platform](https://img.shields.io/badge/Platform-tvOS%209%2B-blue.svg) ![Platform](https://img.shields.io/badge/Platform-watchOS%202%2B-blue.svg)<br/>
+
 [![Language Swift 2](https://img.shields.io/badge/Language-Swift%202-orange.svg)](https://developer.apple.com/swift) [![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-brightgreen.svg)](https://github.com/Carthage/Carthage) [![Cocoapods compatible](https://img.shields.io/cocoapods/v/SwiftyBeaver.svg)]("https://cocoapods.org) [![Travis Build Status](http://img.shields.io/travis/SwiftyBeaver/SwiftyBeaver.svg)]("https://travis-ci.org/SwiftyBeaver/SwiftyBeaver)
 
 
@@ -21,12 +22,12 @@ SwiftyBeaver is the **colorful**, extensible, **lightweight** logger in Swift 2.
 10. Use `log.debug("foo")` syntax
 11. Get started with 2 lines of code
 12. Simple installation via Carthage, CocoaPods, Swift Package Manager or download
-13. Each log entry includes in detail mode:
-1. time (with microsecond precision)
-1. level (output in color)
-1. **thread name** (if not main thread)
-1. filename, function & line
-1. message (can be string or a variable of any type)
+13. Very detailed logging (optional):
+    1. time (with microsecond precision)
+    2. level (output in color)
+    3. **thread name** (if not main thread)
+    4. filename, function & line
+    5. message (can be string or a variable of any type)
 14. Has just ~350 lines of source code, easy to understand
 15. Native support for leading Xcode development plugins
 
@@ -77,8 +78,10 @@ For installation details please see the next points.
 #### via Carthage
 
 You can use [Carthage](https://github.com/Carthage/Carthage
-                       
-                       ) to install SwiftyBeaver by adding that to your Cartfile:
+
+``` 
+                   ) to install SwiftyBeaver by adding that to your Cartfile:
+```
 
 ``` 
 github "SwiftyBeaver/SwiftyBeaver"
