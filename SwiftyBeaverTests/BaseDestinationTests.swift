@@ -81,12 +81,21 @@ class BaseDestinationTests: XCTestCase {
         formatter.dateFormat = "HH:mm:ss"
         let dateStr = formatter.stringFromDate(NSDate())
         
-        str = obj.formattedMessage(dateStr, levelString: "DEBUG", msg: "Hello", thread: "main", path: "/path/to/ViewController.swift", function: "testFunction()", line: 50, detailOutput: false)
+        // logging to main thread does not output thread name
+        str = obj.formattedMessage(dateStr, levelString: "DEBUG", msg: "Hello", thread: "main",
+            path: "/path/to/ViewController.swift", function: "testFunction()", line: 50, detailOutput: false)
         XCTAssertNotNil(str.rangeOfString("[\(dateStr)] DEBUG: Hello"))
+        XCTAssertNil(str.rangeOfString("main"))
+        XCTAssertNil(str.rangeOfString("|"))
+        
+        str = obj.formattedMessage(dateStr, levelString: "DEBUG", msg: "Hello", thread: "myThread",
+            path: "/path/to/ViewController.swift", function: "testFunction()", line: 50, detailOutput: true)
+        XCTAssertNotNil(str.rangeOfString("[\(dateStr)] |myThread| ViewController.testFunction():50 DEBUG: Hello"))
 
-        str = obj.formattedMessage(dateStr, levelString: "DEBUG", msg: "Hello", thread: "main", path: "/path/to/ViewController.swift", function: "testFunction()", line: 50, detailOutput: true)
-        print(str)
-        XCTAssertNotNil(str.rangeOfString("[\(dateStr)] [main] ViewController.testFunction():50 DEBUG: Hello"))
+        str = obj.formattedMessage(dateStr, levelString: "DEBUG", msg: "Hello", thread: "",
+            path: "/path/to/ViewController.swift", function: "testFunction()", line: 50, detailOutput: true)
+        XCTAssertNotNil(str.rangeOfString("[\(dateStr)] ViewController.testFunction():50 DEBUG: Hello"))
+        XCTAssertNil(str.rangeOfString("|"))
     }
     
     func testFormattedMessageEmptyDate() {
@@ -95,7 +104,8 @@ class BaseDestinationTests: XCTestCase {
         let dateStr = obj.formattedDate("")
         XCTAssertEqual(dateStr, "")
         
-        str = obj.formattedMessage(dateStr, levelString: "DEBUG", msg: "Hello", thread: "main", path: "/path/to/ViewController.swift", function: "testFunction()", line: 50, detailOutput: false)
+        str = obj.formattedMessage(dateStr, levelString: "DEBUG", msg: "Hello", thread: "main",
+            path: "/path/to/ViewController.swift", function: "testFunction()", line: 50, detailOutput: false)
         XCTAssertEqual(str, "DEBUG: Hello")
     }
     

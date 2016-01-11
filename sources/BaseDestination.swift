@@ -134,7 +134,11 @@ public class BaseDestination: Hashable, Equatable {
              str += "[\(dateString)] "
         }
         if detailOutput {
-            str += "[\(thread)] \(file).\(function):\(line) \(levelString): \(msg)"
+            if thread != "main" && thread != "" {
+                str += "|\(thread)| "
+            }
+            
+            str += "\(file).\(function):\(line) \(levelString): \(msg)"
         } else {
             str += "\(levelString): \(msg)"
         }
