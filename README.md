@@ -76,11 +76,7 @@ For installation details please see the next points.
 
 #### via Carthage
 
-You can use [Carthage](https://github.com/Carthage/Carthage
-
-``` 
-                   ) to install SwiftyBeaver by adding that to your Cartfile:
-```
+You can use [Carthage](https://github.com/Carthage/Carthage) to install SwiftyBeaver by adding that to your Cartfile:
 
 ``` 
 github "SwiftyBeaver/SwiftyBeaver"
