@@ -55,7 +55,7 @@ public class BaseDestination: Hashable, Equatable {
     // GCD gives it a prioritization between User Initiated and Utility
     var queue: dispatch_queue_t?
     
-    init() {
+    public init() {
         let uuid = NSUUID().UUIDString
         let queueLabel = "swiftybeaver-queue-" + uuid
         queue = dispatch_queue_create(queueLabel, nil)
