@@ -112,4 +112,26 @@ public class SwiftyBeaver {
             }
         }
     }
+
+  /**
+   Flush all destinations to make sure all logging messages have been written out
+   Returns after all messages flushed or timeout seconds
+
+   - returns: true if all messages flushed, false if timeout occurred
+   */
+  public class func flush(secondTimeout: Int64) -> Bool {
+    let grp = dispatch_group_create();
+    for dest in destinations {
+      if let queue = dest.queue {
+        print("found \(queue.description)")
+        dispatch_group_enter(grp)
+        dispatch_async(queue, {
+          print("flushed \(queue.description)")
+          dispatch_group_leave(grp)
+        })
+      }
+    }
+    let waitUntil = dispatch_time(DISPATCH_TIME_NOW, secondTimeout * 1000000000)
+    return dispatch_group_wait(grp, waitUntil) == 0
+  }
 }
