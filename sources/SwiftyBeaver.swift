@@ -123,10 +123,8 @@ public class SwiftyBeaver {
     let grp = dispatch_group_create();
     for dest in destinations {
       if let queue = dest.queue {
-        print("found \(queue.description)")
         dispatch_group_enter(grp)
         dispatch_async(queue, {
-          print("flushed \(queue.description)")
           dispatch_group_leave(grp)
         })
       }
