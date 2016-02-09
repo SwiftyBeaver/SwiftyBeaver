@@ -3,13 +3,20 @@
 All notable changes to this project will be documented in this file following the style described at [Keep a Changelog](http://keepachangelog.com) by [@olivierlacan](https://github.com/olivierlacan). 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+----
 
+## Next Version 
 
-## Next Version
+### Added 
+- <add text here during development>
+
+----
+
+## 0.3.3 (2016-02-09)
 
 ### Added
 
-- `Flush`function to make sure all logging messages have been written out by @prenagha
+- `Flush` function to make sure all logging messages have been written out by @prenagha
 
 ### Changed
 
