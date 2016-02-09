@@ -1,6 +1,7 @@
 # Change Log
 
-All notable changes to this project will be documented in this file following the style described at  [Keep a Changelog](http://keepachangelog.com) by [@olivierlacan](https://github.com/olivierlacan). This project adheres to [Semantic Versioning](http://semver.org/).
+All notable changes to this project will be documented in this file following the style described at [Keep a Changelog](http://keepachangelog.com) by [@olivierlacan](https://github.com/olivierlacan). 
+This project adheres to [Semantic Versioning](http://semver.org/).
 
 
 

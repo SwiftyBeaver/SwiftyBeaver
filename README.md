@@ -30,7 +30,7 @@ SwiftyBeaver is the **colorful**, extensible, **lightweight** logger in Swift 2.
 14. Has just ~350 lines of source code, easy to understand
 15. Native support for leading Xcode development plugins
 
-Please **follow [SwiftyBeaver on Twitter](https://twitter.com/SwiftyBeaver)** to stay up-to-date on new versions.
+Please **follow [SwiftyBeaver on Twitter](https://twitter.com/SwiftyBeaver)** to stay up-to-date on new versions & see the [Change Log](https://github.com/SwiftyBeaver/SwiftyBeaver/blob/master/CHANGELOG.md).
 
 ## Colors!
 
@@ -87,10 +87,10 @@ github "SwiftyBeaver/SwiftyBeaver"
 To use [CocoaPods](https://cocoapods.org) just add this to your Podfile:
 
 ``` 
-pod 'SwiftyBeaver', '~> 0.2'
+pod 'SwiftyBeaver'
 ```
 
-#### via Swift Package Manager (Swift 2.2 beta)
+#### via Swift Package Manager (Swift 2.2)
 
 To use SwiftyBeaver as a [Swift Package Manager](https://swift.org/package-manager/) package just add the following in your Package.swift file.
 
