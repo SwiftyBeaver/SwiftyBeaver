@@ -15,8 +15,9 @@ public class SwiftyBeaver {
         case Verbose = 0
         case Debug = 1
         case Info = 2
-        case Warning = 3
-        case Error = 4
+        case User = 3
+        case Warning = 4
+        case Error = 5
     }
     
     // a set of active destinations
@@ -88,6 +89,10 @@ public class SwiftyBeaver {
         dispatch_send(Level.Info, msg: msg, thread: threadName(), path: path, function: function, line: line)
     }
     
+    public class func user(msg: Any, _ path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
+        dispatch_send(Level.User, msg: msg, thread: threadName(), path: path, function: function, line: line)
+    }
+
     public class func warning(msg: Any, _ path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
         dispatch_send(Level.Warning, msg: msg, thread: threadName(), path: path, function: function, line: line)
     }

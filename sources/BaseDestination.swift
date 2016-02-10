@@ -27,6 +27,7 @@ public class BaseDestination: Hashable, Equatable {
         public var Verbose = "VERBOSE"
         public var Debug = "DEBUG"
         public var Info = "INFO"
+        public var User = "USER"
         public var Warning = "WARNING"
         public var Error = "ERROR"
     }
@@ -40,6 +41,7 @@ public class BaseDestination: Hashable, Equatable {
     public var green = "fg0,255,0;"
     public var yellow = "fg255,255,0;"
     public var red = "fg255,0,0;"
+    public var brown = "fg244,164,96;"
     public var magenta = "fg255,0,255;"
     public var cyan = "fg0,255,255;"
     public var silver = "fg200,200,200;"
@@ -104,6 +106,10 @@ public class BaseDestination: Hashable, Equatable {
             color = green
             levelStr = levelString.Info
             
+        case SwiftyBeaver.Level.User:
+            color = brown
+            levelStr = levelString.User
+
         case SwiftyBeaver.Level.Warning:
             color = yellow
             levelStr = levelString.Warning
