@@ -36,15 +36,15 @@ public class BaseDestination: Hashable, Equatable {
 
     // For a colored log level word in a logged line
     // XCode RGB colors
-    var blue = "fg0,0,255;"
-    var green = "fg0,255,0;"
-    var yellow = "fg255,255,0;"
-    var red = "fg255,0,0;"
-    var magenta = "fg255,0,255;"
-    var cyan = "fg0,255,255;"
-    var silver = "fg200,200,200;"
-    var reset = "\u{001b}[;"
-    var escape = "\u{001b}["
+    public var blue = "fg0,0,255;"
+    public var green = "fg0,255,0;"
+    public var yellow = "fg255,255,0;"
+    public var red = "fg255,0,0;"
+    public var magenta = "fg255,0,255;"
+    public var cyan = "fg0,255,255;"
+    public var silver = "fg200,200,200;"
+    public var reset = "\u{001b}[;"
+    public var escape = "\u{001b}["
 
 
     // each destination class must have an own hashValue Int
