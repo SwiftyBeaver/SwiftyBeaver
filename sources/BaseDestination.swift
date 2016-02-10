@@ -82,7 +82,7 @@ public class BaseDestination: Hashable, Equatable {
     }
     
     /// returns a formatted date string
-    func formattedDate(dateFormat: String) -> String {
+    public func formattedDate(dateFormat: String) -> String {
         //formatter.timeZone = NSTimeZone(abbreviation: "UTC")
         formatter.dateFormat = dateFormat
         let dateStr = formatter.stringFromDate(NSDate())
@@ -90,7 +90,7 @@ public class BaseDestination: Hashable, Equatable {
     }
     
     /// returns an optionally colored level noun (like INFO, etc.)
-    func formattedLevel(level: SwiftyBeaver.Level) -> String {
+    public func formattedLevel(level: SwiftyBeaver.Level) -> String {
         // optionally wrap the level string in color
         var color = ""
         var levelStr = ""
@@ -125,7 +125,7 @@ public class BaseDestination: Hashable, Equatable {
     }
     
     /// returns the formatted log message
-    func formattedMessage(dateString: String, levelString: String, msg: String,
+    public func formattedMessage(dateString: String, levelString: String, msg: String,
         thread: String, path: String, function: String, line: Int, detailOutput: Bool) -> String {
         // just use the file name of the path and remove suffix
         let file = path.componentsSeparatedByString("/").last!.componentsSeparatedByString(".").first!
