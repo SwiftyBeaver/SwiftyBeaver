@@ -9,10 +9,10 @@
 
 import Foundation
 
-struct MinLevelFilter {
-    var minLevel = SwiftyBeaver.Level.Verbose
-    var path = ""
-    var function = ""
+public struct MinLevelFilter {
+    public var minLevel = SwiftyBeaver.Level.Verbose
+    public var path = ""
+    public var function = ""
 }
 
 public class BaseDestination: Hashable, Equatable {
@@ -32,8 +32,8 @@ public class BaseDestination: Hashable, Equatable {
         public var Error = "ERROR"
     }
     
-    var minLevelFilters = [MinLevelFilter]()
-    let formatter = NSDateFormatter()
+    public var minLevelFilters = [MinLevelFilter]()
+    public let formatter = NSDateFormatter()
 
     // For a colored log level word in a logged line
     // XCode RGB colors
@@ -55,7 +55,7 @@ public class BaseDestination: Hashable, Equatable {
     
     // each destination instance must have an own serial queue to ensure serial output
     // GCD gives it a prioritization between User Initiated and Utility
-    var queue: dispatch_queue_t?
+    public var queue: dispatch_queue_t?
     
     public init() {
         let uuid = NSUUID().UUIDString
@@ -153,7 +153,7 @@ public class BaseDestination: Hashable, Equatable {
 
     /// checks if level is at least minLevel or if a minLevel filter for that path does exist
     /// returns boolean and can be used to decide if a message should be logged or not
-    func shouldLevelBeLogged(level: SwiftyBeaver.Level, path: String, function: String) -> Bool {
+    public func shouldLevelBeLogged(level: SwiftyBeaver.Level, path: String, function: String) -> Bool {
         // at first check the instance’s global minLevel property
         if minLevel.rawValue <= level.rawValue {
             return true
