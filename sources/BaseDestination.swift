@@ -41,6 +41,7 @@ public class BaseDestination: Hashable, Equatable {
     public var green = "fg0,255,0;"
     public var yellow = "fg255,255,0;"
     public var red = "fg255,0,0;"
+    public var orange = "fg253,153,0"
     public var brown = "fg244,164,96;"
     public var magenta = "fg255,0,255;"
     public var cyan = "fg0,255,255;"
