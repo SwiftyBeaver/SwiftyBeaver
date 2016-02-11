@@ -102,11 +102,11 @@ public class SwiftyBeaver {
     }
     
     public class func trace(path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
-        dispatch_send(Level.Info, msg: "", thread: threadName(), path: path, function: function, line: line)
+        dispatch_send(Level.Info, msg: " ", thread: threadName(), path: path, function: function, line: line)
     }
 
     public class func traceUser(path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
-        dispatch_send(Level.User, msg: "", thread: threadName(), path: path, function: function, line: line)
+        dispatch_send(Level.User, msg: " ", thread: threadName(), path: path, function: function, line: line)
     }
 
     /// internal helper which dispatches send to dedicated queue if minLevel is ok
