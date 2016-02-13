@@ -102,7 +102,7 @@ public class SwiftyBeaver {
             if let queue = dest.queue {
                 if dest.shouldLevelBeLogged(level, path: path, function: function) && dest.queue != nil {
                     // try to convert msg object to String and put it on queue
-                    let msgStr = "\(msg)"
+                    let msgStr = String(reflecting: msg)
                     if msgStr.characters.count > 0 {
                         dispatch_async(queue, {
                             dest.send(level, msg: msgStr, thread: thread, path: path, function: function, line: line)
