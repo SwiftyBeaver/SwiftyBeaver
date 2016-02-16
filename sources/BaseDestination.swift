@@ -9,10 +9,10 @@
 
 import Foundation
 
-struct MinLevelFilter {
-    var minLevel = SwiftyBeaver.Level.Verbose
-    var path = ""
-    var function = ""
+public struct MinLevelFilter {
+    public var minLevel = SwiftyBeaver.Level.Verbose
+    public var path = ""
+    public var function = ""
 }
 
 public class BaseDestination: Hashable, Equatable {
@@ -27,24 +27,27 @@ public class BaseDestination: Hashable, Equatable {
         public var Verbose = "VERBOSE"
         public var Debug = "DEBUG"
         public var Info = "INFO"
+        public var User = "USER"
         public var Warning = "WARNING"
         public var Error = "ERROR"
     }
     
-    var minLevelFilters = [MinLevelFilter]()
-    let formatter = NSDateFormatter()
+    public var minLevelFilters = [MinLevelFilter]()
+    public let formatter = NSDateFormatter()
 
     // For a colored log level word in a logged line
     // XCode RGB colors
-    var blue = "fg0,0,255;"
-    var green = "fg0,255,0;"
-    var yellow = "fg255,255,0;"
-    var red = "fg255,0,0;"
-    var magenta = "fg255,0,255;"
-    var cyan = "fg0,255,255;"
-    var silver = "fg200,200,200;"
-    var reset = "\u{001b}[;"
-    var escape = "\u{001b}["
+    public var blue = "fg0,0,255;"
+    public var green = "fg0,255,0;"
+    public var yellow = "fg255,255,0;"
+    public var red = "fg255,0,0;"
+    public var orange = "fg253,153,0"
+    public var brown = "fg244,164,96;"
+    public var magenta = "fg255,0,255;"
+    public var cyan = "fg0,255,255;"
+    public var silver = "fg200,200,200;"
+    public var reset = "\u{001b}[;"
+    public var escape = "\u{001b}["
 
 
     // each destination class must have an own hashValue Int
@@ -53,7 +56,7 @@ public class BaseDestination: Hashable, Equatable {
     
     // each destination instance must have an own serial queue to ensure serial output
     // GCD gives it a prioritization between User Initiated and Utility
-    var queue: dispatch_queue_t?
+    public var queue: dispatch_queue_t?
     
     public init() {
         let uuid = NSUUID().UUIDString
@@ -82,7 +85,7 @@ public class BaseDestination: Hashable, Equatable {
     }
     
     /// returns a formatted date string
-    func formattedDate(dateFormat: String) -> String {
+    public func formattedDate(dateFormat: String) -> String {
         //formatter.timeZone = NSTimeZone(abbreviation: "UTC")
         formatter.dateFormat = dateFormat
         let dateStr = formatter.stringFromDate(NSDate())
@@ -90,7 +93,7 @@ public class BaseDestination: Hashable, Equatable {
     }
     
     /// returns an optionally colored level noun (like INFO, etc.)
-    func formattedLevel(level: SwiftyBeaver.Level) -> String {
+    public func formattedLevel(level: SwiftyBeaver.Level) -> String {
         // optionally wrap the level string in color
         var color = ""
         var levelStr = ""
@@ -104,6 +107,10 @@ public class BaseDestination: Hashable, Equatable {
             color = green
             levelStr = levelString.Info
             
+        case SwiftyBeaver.Level.User:
+            color = brown
+            levelStr = levelString.User
+
         case SwiftyBeaver.Level.Warning:
             color = yellow
             levelStr = levelString.Warning
@@ -125,7 +132,7 @@ public class BaseDestination: Hashable, Equatable {
     }
     
     /// returns the formatted log message
-    func formattedMessage(dateString: String, levelString: String, msg: String,
+    public func formattedMessage(dateString: String, levelString: String, msg: String,
         thread: String, path: String, function: String, line: Int, detailOutput: Bool) -> String {
         // just use the file name of the path and remove suffix
         let file = path.componentsSeparatedByString("/").last!.componentsSeparatedByString(".").first!
@@ -147,7 +154,7 @@ public class BaseDestination: Hashable, Equatable {
 
     /// checks if level is at least minLevel or if a minLevel filter for that path does exist
     /// returns boolean and can be used to decide if a message should be logged or not
-    func shouldLevelBeLogged(level: SwiftyBeaver.Level, path: String, function: String) -> Bool {
+    public func shouldLevelBeLogged(level: SwiftyBeaver.Level, path: String, function: String) -> Bool {
         // at first check the instance’s global minLevel property
         if minLevel.rawValue <= level.rawValue {
             return true
