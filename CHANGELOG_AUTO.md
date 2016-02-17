@@ -53,11 +53,14 @@
 ## [v0.3.0](https://github.com/SwiftyBeaver/SwiftyBeaver/tree/v0.3.0) (2015-12-11)
 [Full Changelog](https://github.com/SwiftyBeaver/SwiftyBeaver/compare/v0.2.5...v0.3.0)
 
+**Added**
+
+- File-based logging levels [\#2](https://github.com/SwiftyBeaver/SwiftyBeaver/issues/2)
+
 **Closed issues:**
 
 - Format of string in console. [\#35](https://github.com/SwiftyBeaver/SwiftyBeaver/issues/35)
 - WatchOS Support [\#16](https://github.com/SwiftyBeaver/SwiftyBeaver/issues/16)
-- File-based logging levels [\#2](https://github.com/SwiftyBeaver/SwiftyBeaver/issues/2)
 
 ## [v0.2.5](https://github.com/SwiftyBeaver/SwiftyBeaver/tree/v0.2.5) (2015-12-10)
 [Full Changelog](https://github.com/SwiftyBeaver/SwiftyBeaver/compare/v0.2.4...v0.2.5)
@@ -110,7 +113,7 @@
 ## [v0.2.1](https://github.com/SwiftyBeaver/SwiftyBeaver/tree/v0.2.1) (2015-12-06)
 [Full Changelog](https://github.com/SwiftyBeaver/SwiftyBeaver/compare/v0.2.0...v0.2.1)
 
-**Closed issues:**
+**Added**
 
 - Bundle recurring if statements in level methods [\#13](https://github.com/SwiftyBeaver/SwiftyBeaver/issues/13)
 - Log all types [\#11](https://github.com/SwiftyBeaver/SwiftyBeaver/issues/11)
