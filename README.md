@@ -1,4 +1,4 @@
-<p align="center"><img src="https://cloud.githubusercontent.com/assets/564725/13137340/9bf07da4-d620-11e5-8e3e-34417fb84ea2.png" width="280" alt="SwiftyBeaver"><br/>SwiftyBeaver is the <b>colorful</b>, extensible & <b>lightweight</b> logger for Swift 2. <br/>
+<p align="center"><img src="https://cloud.githubusercontent.com/assets/564725/13137893/1b8eced2-d624-11e5-9264-3416ff821657.png" width="280" alt="SwiftyBeaver"><br/>SwiftyBeaver is the <b>colorful</b>, extensible & <b>lightweight</b> logger for Swift 2. <br/>
 Great for <b>development & release</b> due to its support for many (custom) logging destinations & platforms.<br/><br/>
 </p>
 
