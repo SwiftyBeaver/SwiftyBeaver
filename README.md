@@ -1,11 +1,15 @@
-# SwiftyBeaver
+<p align="center"><img src="https://cloud.githubusercontent.com/assets/564725/13137340/9bf07da4-d620-11e5-8e3e-34417fb84ea2.png" width="280" alt="SwiftyBeaver"><br/>SwiftyBeaver is the <b>colorful</b>, extensible & <b>lightweight</b> logger for Swift 2. <br/>
+Great for <b>development & release</b> due to its support for many (custom) logging destinations & platforms.<br/><br/>
+</p>
+
+
+
+----
 
 ![Platform iOS 8+](https://img.shields.io/badge/Platform-iOS%208%2B-blue.svg) ![Platform Mac OS X 10.9+](https://img.shields.io/badge/Platform-Mac%20OS%20X%2010.9%2B-blue.svg) ![Platform](https://img.shields.io/badge/Platform-tvOS%209%2B-blue.svg) ![Platform](https://img.shields.io/badge/Platform-watchOS%202%2B-blue.svg)<br/>
 [![Language Swift 2](https://img.shields.io/badge/Language-Swift%202-orange.svg)](https://developer.apple.com/swift) [![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-brightgreen.svg)](https://github.com/Carthage/Carthage) [![Cocoapods compatible](https://img.shields.io/cocoapods/v/SwiftyBeaver.svg)]("https://cocoapods.org) [![Travis Build Status](http://img.shields.io/travis/SwiftyBeaver/SwiftyBeaver.svg)]("https://travis-ci.org/SwiftyBeaver/SwiftyBeaver)
 
-
-
-SwiftyBeaver is the **colorful**, extensible, **lightweight** logger in Swift 2. Made for use in development & release.
+----
 
 ## Unique Feature Set
 
