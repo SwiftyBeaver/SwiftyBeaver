@@ -7,128 +7,137 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Next Version 
 
-### Added 
+#### Added 
 - <add text here during development>
 
-----
 
+<br/>
+## 0.3.4 (2016-02-23)
+
+##### Changed
+
+- Optimized writing to log file by @skreutzberger. Thanks go to [Andy Chou](https://twitter.com/_achou) for pointing on it.
+
+<br/>
 ## 0.3.3 (2016-02-09)
 
-### Added
+##### Added
 
 - `Flush` function to make sure all logging messages have been written out by @prenagha
 
-### Changed
+##### Changed
 
 - Versions & tags do not start with a "v" anymore by @skreutzberger
 
 
-
+<br/>
 ## 0.3.2 (2016-02-04)
 
-### Added
+##### Added
 
 - Easier creation of custom destinations by making certain base class functions public by @irace
 - Secrets.* files are ignored by Git to act as credential-holding file in the future by @skreutzberger
 
 
-
+<br/>
 ## 0.3.1 (2016-01-11)
 
-### Added
+##### Added
 
 - Logging of thread by @VDKA
 
 
 
+<br/>
 ## 0.3.0 (2015-12-11)
 
-### Added
+#### Added
 
 - File-based minimum level filters by @skreutzberger
 
 
 
+<br/><br/>
 ## 0.2.5 (2015-12-10)
 
-### Added
+#### Added
 
 - Support for KZLinkedConsole plugin by @skreutzberger
 - Installation via Carthage for tvOS, watchOS & OSX by @davidrothera
 - Introduction of API limitation to allowed SwiftyBeaver to be used in Extensions by @impossibleventures
 
 
-
+<br/>
 ## 0.2.4 (2015-12-09)
 
-### Added
+#### Added
 
 - Installation via Cocoapods for tvOS, watchOS2 & OSX by @davidrothera
 
-### Changed
+#### Changed
 
 - No date output if date format is empty by @skreutzberger
 
 
-
+<br/>
 ## 0.2.3 (2015-12-09)
 
-### Added
+#### Added
 
 - Installation via Swift Package Manager by @davidrothera
 
 
-
+<br/>
 ## 0.2.2 (2015-12-09)
 
-### Added
+#### Added
 
 - Installation via Cocoapods by @davidrothera
 
-### Fixed
+#### Fixed
 
 - Wrong level word displayed for Debug level by @skreutzberger
 
 
-
+<br/>
 ## 0.2.1 (2015-12-06)
 
-### Added
+#### Added
 
 - Flexible level names by @skreutzberger
 - Logging of all types and not just strings by @skreutzberger
 
 
-
+<br/>
 ## 0.2.0 (2015-12-05)
 
-### Added
+#### Added
 
 - Dedicated serial queues for each destination by @skreutzberger
 - Destinations are now each in a single file by @skreutzberger
 
-### Fixed
+#### Fixed
 
 - Wrong scope of `init`function by @skreutzberger
 
 
-
+<br/>
 ## 0.1.1 (2015-12-01)
 
-### Added
+#### Added
 
 - Downloadable assets by @skreutzberger
 
-### Fixed
+#### Fixed
 
 - Deployment version to make Carthage work by @manuelvanrijn
 - License text by @skreutzberger
 
 
-
+<br/>
 ## 0.1.0 (2015-11-28)
 
-### Added
+#### Added
 
 - Initial release by @skreutzberger
 
