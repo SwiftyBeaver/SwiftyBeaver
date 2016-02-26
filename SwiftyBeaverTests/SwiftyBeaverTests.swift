@@ -198,13 +198,12 @@ class SwiftyBeaverTests: XCTestCase {
         
         log.addDestination(console)
 
-        func longRunningTask() -> CustomStringConvertible {
+        func longRunningTask() -> String {
             XCTAssert(false, "A block passed should not be executed if the log should not be logged.")
             return "This should NOT BE VISIBLE!"
         }
         
         log.verbose(longRunningTask())
-        
     }
     
 }
