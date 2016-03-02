@@ -125,6 +125,7 @@ public class SwiftyBeaver {
       if let queue = dest.queue {
         dispatch_group_enter(grp)
         dispatch_async(queue, {
+          dest.flush()
           dispatch_group_leave(grp)
         })
       }

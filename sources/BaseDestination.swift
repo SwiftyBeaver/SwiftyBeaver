@@ -165,6 +165,15 @@ public class BaseDestination: Hashable, Equatable {
         }
         return false
     }
+
+  /**
+    Triggered by main flush() method on each destination. Runs in background thread.
+   Use for destinations that buffer log items, implement this function to flush those
+   buffers to their final destination (web server...)
+   */
+  func flush() {
+    // no implementation in base destination needed
+  }
 }
 
 public func == (lhs: BaseDestination, rhs: BaseDestination) -> Bool {
