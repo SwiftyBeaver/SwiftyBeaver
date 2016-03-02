@@ -18,7 +18,13 @@ public class FileDestination: BaseDestination {
     var fileHandle: NSFileHandle? = nil
     
     public override init() {
-        if let url = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first {
+        #if OSX
+            let logsBaseDir:NSSearchPathDirectory = .DocumentDirectory
+        #else
+            let logsBaseDir:NSSearchPathDirectory = .CachesDirectory
+        #endif
+        
+        if let url = fileManager.URLsForDirectory(logsBaseDir, inDomains: .UserDomainMask).first {
             logFileURL = url.URLByAppendingPathComponent("swiftybeaver.log", isDirectory: false)
         } else {
             logFileURL = NSURL()
