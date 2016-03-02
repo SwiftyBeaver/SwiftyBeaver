@@ -38,6 +38,7 @@
 		ACE597A01C18832E0031451F /* SwiftyBeaver.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 9E6CAA471C148EC1009D9093 /* SwiftyBeaver.podspec */; };
 		ACE597A11C18832E0031451F /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 9E6CAA491C149579009D9093 /* LICENSE */; };
 		ACE597A21C18832E0031451F /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 9E4BBDFA1C09EB7F00220716 /* .gitignore */; };
+		AF659FE61C868BA30057B084 /* LogglyDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF659FE51C868BA30057B084 /* LogglyDestination.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,7 @@
 		ACE597841C1882DF0031451F /* SwiftyBeaver.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyBeaver.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACE597951C18830D0031451F /* SwiftyBeaver.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyBeaver.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACE597A61C18832E0031451F /* SwiftyBeaver.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyBeaver.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AF659FE51C868BA30057B084 /* LogglyDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LogglyDestination.swift; path = sources/LogglyDestination.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +120,7 @@
 				9E31D62B1C185EE3004E0980 /* BaseDestination.swift */,
 				9E31D62C1C185EE3004E0980 /* ConsoleDestination.swift */,
 				9E31D62D1C185EE3004E0980 /* FileDestination.swift */,
+				AF659FE51C868BA30057B084 /* LogglyDestination.swift */,
 			);
 			name = sources;
 			sourceTree = "<group>";
@@ -385,6 +388,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF659FE61C868BA30057B084 /* LogglyDestination.swift in Sources */,
 				9E31D62F1C185EE3004E0980 /* ConsoleDestination.swift in Sources */,
 				9E31D6291C185ECD004E0980 /* SwiftyBeaver.swift in Sources */,
 				9E31D6301C185EE3004E0980 /* FileDestination.swift in Sources */,
