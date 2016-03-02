@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "SwiftyBeaver"
-  s.version      = "0.3.2"
+  s.version      = "0.3.5"
   s.summary      = "Colorful, lightweight & fast logging in Swift 2"
 
   # This description is used to generate tags and improve search results.
@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   #   * Finally, don't worry about the indent, CocoaPods strips it!
   s.description  = <<-DESC
   SwiftyBeaver is a new, fast & very lightweight logger, with a unique combination of great features.
-  It is written in Swift 2 and was released on November 28, 2015 by Sebastian Kreutzberger (Twitter: @skreutzb).
+  It is written in Swift 2 and actively maintained by Sebastian Kreutzberger (Twitter: @skreutzb).
                    DESC
 
   s.homepage     = "https://github.com/SwiftyBeaver/SwiftyBeaver"
@@ -21,6 +21,6 @@ Pod::Spec.new do |s|
   s.watchos.deployment_target = "2.0"
   s.tvos.deployment_target = "9.0"
   s.osx.deployment_target = "10.9"
-  s.source       = { :git => "https://github.com/SwiftyBeaver/SwiftyBeaver.git", :tag => "v0.3.2" }
+  s.source       = { :git => "https://github.com/SwiftyBeaver/SwiftyBeaver.git", :tag => "0.3.5" }
   s.source_files  = "sources"
 end

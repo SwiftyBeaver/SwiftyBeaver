@@ -185,4 +185,25 @@ class SwiftyBeaverTests: XCTestCase {
         
         XCTAssertEqual(log.countDestinations(), 1)
     }
+    
+    func testLongRunningTaskIsNotExecutedWhenLoggingUnderMinLevel() {
+        
+        let log = SwiftyBeaver.self
+        
+        // add console
+        let console = ConsoleDestination()
+        console.dateFormat = "HH:mm:ss.SSS"
+        // set info level on default
+        console.minLevel = .Info
+        
+        log.addDestination(console)
+
+        func longRunningTask() -> String {
+            XCTAssert(false, "A block passed should not be executed if the log should not be logged.")
+            return "This should NOT BE VISIBLE!"
+        }
+        
+        log.verbose(longRunningTask())
+    }
+    
 }

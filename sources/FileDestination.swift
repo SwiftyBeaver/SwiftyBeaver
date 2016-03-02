@@ -15,6 +15,7 @@ public class FileDestination: BaseDestination {
 
     override public var defaultHashValue: Int {return 2}
     let fileManager = NSFileManager.defaultManager()
+    var fileHandle: NSFileHandle? = nil
     
     public override init() {
         if let url = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first {
@@ -45,6 +46,13 @@ public class FileDestination: BaseDestination {
         }
         return formattedString
     }
+    
+    deinit {
+        // close file handle if set
+        if let fileHandle = fileHandle {
+            fileHandle.closeFile()
+        }
+    }
 
     /// appends a string as line to a file.
     /// returns boolean about success
@@ -56,12 +64,16 @@ public class FileDestination: BaseDestination {
                 try line.writeToURL(url, atomically: true, encoding: NSUTF8StringEncoding)
             } else {
                 // append to end of file
-                let fileHandle = try NSFileHandle(forWritingToURL: url)
-                fileHandle.seekToEndOfFile()
-                let line = str + "\n"
-                let data = line.dataUsingEncoding(NSUTF8StringEncoding)!
-                fileHandle.writeData(data)
-                fileHandle.closeFile()
+                if fileHandle == nil {
+                    // initial setting of file handle
+                    fileHandle = try NSFileHandle(forWritingToURL: url)
+                }
+                if let fileHandle = fileHandle {
+                    fileHandle.seekToEndOfFile()
+                    let line = str + "\n"
+                    let data = line.dataUsingEncoding(NSUTF8StringEncoding)!
+                    fileHandle.writeData(data)
+                }
             }
             return true
         } catch let error {
