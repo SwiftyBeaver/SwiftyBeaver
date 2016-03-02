@@ -121,7 +121,6 @@ class SwiftyBeaverTests: XCTestCase {
         log.debug("this should be in both files, msg 1")
         log.info("this should be in both files, msg 2")
     }
-
     
     func testColors() {
         let log = SwiftyBeaver.self
@@ -130,6 +129,8 @@ class SwiftyBeaverTests: XCTestCase {
         // add console
         let console = ConsoleDestination()
         log.addDestination(console)
+        
+        // add file
         let file = FileDestination()
         file.logFileURL = NSURL(string: "file:///tmp/testSwiftyBeaver.log")!
         file.detailOutput = false
@@ -144,7 +145,31 @@ class SwiftyBeaverTests: XCTestCase {
         log.info("a nice information")
         log.warning("oh no, that won’t be good")
         log.error("ouch, an error did occur!")
+
         XCTAssertEqual(log.countDestinations(), 2)
+    }
+    
+    func testModifiedColors() {
+        let log = SwiftyBeaver.self
+
+        // add console
+        let console = ConsoleDestination()
+        log.addDestination(console)
+
+        XCTAssertTrue(console.colored)
+
+        // change default color
+        console.levelColor.Verbose = "fg255,0,255;"
+        console.levelColor.Debug = "fg255,100,0;"
+        console.levelColor.Info = ""
+        console.levelColor.Warning = "fg255,255,255;"
+        console.levelColor.Error = "fg100,0,200;"
+        
+        log.verbose("not so important, level in magenta")
+        log.debug("something to debug, level in orange")
+        log.info("a nice information, level in black")
+        log.warning("oh no, that won’t be good, level in white")
+        log.error("ouch, an error did occur!, level in purple")
     }
     
     func testDifferentMessageTypes() {
