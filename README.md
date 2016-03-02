@@ -220,6 +220,20 @@ file2.levelString.Error = "Beaver Alarm!"
 file2.logFileURL = NSURL(string: "file:///tmp/app_info.log")!
 log.addDestination(file2)
 ```
+##Log to Loggly  
+
+It's possible to send logs to [loggly](www.loggly.com) using beaver, example: 
+ 
+``` Swift  
+let loggly = LogglyDestination()  
+loggly.logglyTag = "my-beaver-logs"  
+loggly.logglyToken = "my-token"  
+loggly.maxEntriesBeforeSend = 10  
+log.addDestination(loggly)  
+```  
+*LogglyDestination* keeps a buffer of strings that will be sent all at once when the buffer in larger than the value of *maxEntriesBeforeSend*.  
+This is to not stress the connection with many requests.  
+The source code is taken from [SlimLogger](https://github.com/melke/SlimLogger)
 
 ## Own Logging Destinations
 
