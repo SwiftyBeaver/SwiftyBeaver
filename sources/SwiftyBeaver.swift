@@ -60,7 +60,8 @@ public class SwiftyBeaver {
         return destinations.count
     }
 
-    class func threadName() -> String {
+    /// returns the current thread name
+    public class func threadName() -> String {
         if NSThread.isMainThread() {
             return "main"
         } else {
