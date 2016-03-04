@@ -11,6 +11,19 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - <add text here during development>
 
 <br/>
+## 0.4.0 (2016-03-04)
+
+##### Added
+
+- Default log file directory is OS-dependent by [@xeo-it](https://github.com/xeo-it)
+- Flush function is accessible to all destinations by [@prenagha](https://github.com/prenagha)
+- Customizable log colors by [@fvvliet](https://github.com/fvvliet)
+
+##### Changed
+
+- Default log file directory for iOS, tvOS & watchOS is an app’s cache directory by [@xeo-it](https://github.com/xeo-it)
+
+<br/><br/>
 ## 0.3.5 (2016-02-24)
 
 ##### Changed
