@@ -9,6 +9,21 @@
 
 import Foundation
 
+// store operating system / platform
+#if os(iOS)
+let OS = "iOS"
+#elseif os(OSX)
+let OS = "OSX"
+#elseif os(watchOS)
+let OS = "watchOS"
+#elseif os(tvOS)
+let OS = "tvOS"
+#elseif os(Linux)
+let OS = "Linux"
+#else
+let OS = "Unknown"
+#endif
+
 struct MinLevelFilter {
     var minLevel = SwiftyBeaver.Level.Verbose
     var path = ""
