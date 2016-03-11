@@ -107,26 +107,24 @@ public class SwiftyBeaver {
     class func dispatch_send(level: SwiftyBeaver.Level, @autoclosure message: () -> Any,
         thread: String, path: String, function: String, line: Int) {
         for dest in destinations {
-            
+
             guard let queue = dest.queue else {
                 continue
             }
-            
+
             if dest.shouldLevelBeLogged(level, path: path, function: function) {
                 // try to convert msg object to String and put it on queue
                 let msgStr = "\(message())"
-                
-                guard msgStr.characters.isEmpty == false else {
-                    continue
-                }
-        
-                if dest.asynchronously {
-                    dispatch_async(queue) {
-                        dest.send(level, msg: msgStr, thread: thread, path: path, function: function, line: line)
-                    }
-                } else {
-                    dispatch_sync(queue) {
-                        dest.send(level, msg: msgStr, thread: thread, path: path, function: function, line: line)
+
+                if !msgStr.isEmpty {
+                    if dest.asynchronously {
+                        dispatch_async(queue) {
+                            dest.send(level, msg: msgStr, thread: thread, path: path, function: function, line: line)
+                        }
+                    } else {
+                        dispatch_sync(queue) {
+                            dest.send(level, msg: msgStr, thread: thread, path: path, function: function, line: line)
+                        }
                     }
                 }
             }
