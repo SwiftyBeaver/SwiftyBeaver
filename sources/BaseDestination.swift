@@ -34,6 +34,7 @@ public class BaseDestination: Hashable, Equatable {
     
     public var detailOutput = true
     public var colored = true
+    public var asynchronously = true
     public var minLevel = SwiftyBeaver.Level.Verbose
     public var dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
     public var levelString = LevelString()
