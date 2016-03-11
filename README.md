@@ -171,6 +171,7 @@ The following core properties are **available for every destination** and must b
 | ---------------------------------------- | -------------------------- | ---------------------------------------- |
 | **.detailOutput**                        | true                       | Logs date, file, function, line, level, message.  If set to `false` then just date, level, message are logged. |
 | **.colored**                             | true                       | Colored output or not                    |
+| **.asynchronously**                      | true                       | Runs on own serial background thread for better performance. Set to `false` during development for easier debugging. |
 | **.minLevel**                            | SwiftyBeaver.Level.Verbose | Any level with a priority lower than that level is not logged. Possible values are SwiftyBeaver.Level.Verbose, .Debug, .Info .Warning, .Error. Use `.addMinLevelFilter()` to find the needle in the haystack (see further below). |
 | **.dateFormat**                          | "yyyy-MM-dd HH:mm:ss.SSS"  | Logs current date and time including milliseconds. If you set an empty String then no date is added to the log. |
 | **.levelString.Verbose, .Debug, .Info, .Warning, .Error** | "VERBOSE", "DEBUG", etc.   | Sets a custom string representing the log level. On default it is the log level as uppercase word. |

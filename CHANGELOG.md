@@ -11,6 +11,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - <add text here during development>
 
 <br/>
+## 0.4.1 (2016-03-11)
+
+##### Added
+
+- Option to log synchronously during development by [@muukii](https://github.com/muukii)
+- Code completion docs for most public variables & functions by [@skreutzberger](https://github.com/skreutzberger)
+- Internal linting of code base by [@skreutzberger](https://github.com/skreutzberger)
+
+<br/>
 ## 0.4.0 (2016-03-04)
 
 ##### Added

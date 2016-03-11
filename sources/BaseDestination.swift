@@ -33,12 +33,19 @@ struct MinLevelFilter {
 /// destination which all others inherit from. do not directly use
 public class BaseDestination: Hashable, Equatable {
 
+    /// if true additionally logs file, function & line
     public var detailOutput = true
+    /// adds colored log levels where possible
     public var colored = true
+    /// runs in own serial background thread for better performance
     public var asynchronously = true
+    /// do not log any message which has a lower level than this one
     public var minLevel = SwiftyBeaver.Level.Verbose
+    /// standard log format; set to "" to not log date at all
     public var dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
+    /// set custom log level words for each level
     public var levelString = LevelString()
+    /// set custom log level colors for each level
     public var levelColor = LevelColor()
 
     public struct LevelString {
