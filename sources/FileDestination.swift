@@ -10,28 +10,28 @@
 import Foundation
 
 public class FileDestination: BaseDestination {
-    
+
     public var logFileURL: NSURL
 
     override public var defaultHashValue: Int {return 2}
     let fileManager = NSFileManager.defaultManager()
     var fileHandle: NSFileHandle? = nil
-    
+
     public override init() {
         // platform-dependent logfile directory default
         var logsBaseDir: NSSearchPathDirectory = .CachesDirectory
-        
+
         if OS == "OSX" {
             logsBaseDir = .DocumentDirectory
         }
-        
+
         if let url = fileManager.URLsForDirectory(logsBaseDir, inDomains: .UserDomainMask).first {
             logFileURL = url.URLByAppendingPathComponent("swiftybeaver.log", isDirectory: false)
         } else {
             logFileURL = NSURL()
         }
         super.init()
-        
+
         // bash font color, first value is intensity, second is color
         // see http://bit.ly/1Otu3Zr to learn more
         // replace first 0 with 1 to make it bold
@@ -40,20 +40,21 @@ public class FileDestination: BaseDestination {
         levelColor.Info = "0;32m"
         levelColor.Warning = "0;33m"
         levelColor.Error = "0;31m"
-        
+
         reset = "\u{001b}[0m"
     }
-    
+
     // append to file. uses full base class functionality
-    override public func send(level: SwiftyBeaver.Level, msg: String, thread: String, path: String, function: String, line: Int) -> String? {
+    override public func send(level: SwiftyBeaver.Level, msg: String, thread: String,
+        path: String, function: String, line: Int) -> String? {
         let formattedString = super.send(level, msg: msg, thread: thread, path: path, function: function, line: line)
-        
+
         if let str = formattedString {
             saveToFile(str, url: logFileURL)
         }
         return formattedString
     }
-    
+
     deinit {
         // close file handle if set
         if let fileHandle = fileHandle {
@@ -89,4 +90,3 @@ public class FileDestination: BaseDestination {
         }
     }
 }
-

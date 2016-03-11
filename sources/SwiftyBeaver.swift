@@ -10,7 +10,7 @@
 import Foundation
 
 public class SwiftyBeaver {
-    
+
     public enum Level: Int {
         case Verbose = 0
         case Debug = 1
@@ -18,20 +18,20 @@ public class SwiftyBeaver {
         case Warning = 3
         case Error = 4
     }
-    
+
     // a set of active destinations
     static var destinations = Set<BaseDestination>() //[BaseDestination]()
-    
-    
+
+
     // MARK: Destination Handling
-    
+
     /// returns boolean about success
     public class func addDestination(destination: AnyObject) -> Bool {
 		guard let dest = destination as? BaseDestination else {
 			print("SwiftyBeaver: adding of destination failed")
 			return false
 		}
-		
+
 		//print("insert hashValue \(dest.hashValue)")
 		destinations.insert(dest)  // if not already in (it’s a set)
 		return true
@@ -44,7 +44,7 @@ public class SwiftyBeaver {
 			print("SwiftyBeaver: removing of destination failed")
 			return false
 		}
-		
+
 		destinations.remove(dest)
 		return true
 
@@ -54,7 +54,7 @@ public class SwiftyBeaver {
     public class func removeAllDestinations() {
         destinations.removeAll()
     }
-    
+
     /// returns the amount of destinations
     public class func countDestinations() -> Int {
         return destinations.count
@@ -67,44 +67,51 @@ public class SwiftyBeaver {
         } else {
             if let threadName = NSThread.currentThread().name where !threadName.isEmpty {
                 return threadName
-            } else if let queueName = String(UTF8String: dispatch_queue_get_label(DISPATCH_CURRENT_QUEUE_LABEL)) where !queueName.isEmpty {
+            } else if let queueName = String(UTF8String:
+                dispatch_queue_get_label(DISPATCH_CURRENT_QUEUE_LABEL)) where !queueName.isEmpty {
                 return queueName
             } else {
                 return String(format: "%p", NSThread.currentThread())
             }
         }
     }
-    
+
     // MARK: Levels
-    
-    public class func verbose(@autoclosure message: () -> Any, _ path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
+
+    public class func verbose(@autoclosure message: () -> Any, _
+        path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
         dispatch_send(Level.Verbose, message: message, thread: threadName(), path: path, function: function, line: line)
     }
 
-    public class func debug(@autoclosure message: () -> Any, _ path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
+    public class func debug(@autoclosure message: () -> Any, _
+        path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
         dispatch_send(Level.Debug, message: message, thread: threadName(), path: path, function: function, line: line)
     }
-    
-    public class func info(@autoclosure message: () -> Any, _ path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
+
+    public class func info(@autoclosure message: () -> Any, _
+        path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
         dispatch_send(Level.Info, message: message, thread: threadName(), path: path, function: function, line: line)
     }
-    
-    public class func warning(@autoclosure message: () -> Any, _ path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
+
+    public class func warning(@autoclosure message: () -> Any, _
+        path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
         dispatch_send(Level.Warning, message: message, thread: threadName(), path: path, function: function, line: line)
     }
-    
-    public class func error(@autoclosure message: () -> Any, _ path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
+
+    public class func error(@autoclosure message: () -> Any, _
+        path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
         dispatch_send(Level.Error, message: message, thread: threadName(), path: path, function: function, line: line)
     }
-    
+
     /// internal helper which dispatches send to dedicated queue if minLevel is ok
-    class func dispatch_send(level: SwiftyBeaver.Level, @autoclosure message: () -> Any, thread: String, path: String, function: String, line: Int) {
+    class func dispatch_send(level: SwiftyBeaver.Level, @autoclosure message: () -> Any,
+        thread: String, path: String, function: String, line: Int) {
         for dest in destinations {
             if let queue = dest.queue {
                 if dest.shouldLevelBeLogged(level, path: path, function: function) && dest.queue != nil {
                     // try to convert msg object to String and put it on queue
                     let msgStr = "\(message())"
-                    if msgStr.characters.count > 0 {
+                    if !msgStr.isEmpty {
                         dispatch_async(queue, {
                             dest.send(level, msg: msgStr, thread: thread, path: path, function: function, line: line)
                         })
@@ -121,7 +128,7 @@ public class SwiftyBeaver {
    - returns: true if all messages flushed, false if timeout occurred
    */
   public class func flush(secondTimeout: Int64) -> Bool {
-    let grp = dispatch_group_create();
+    let grp = dispatch_group_create()
     for dest in destinations {
       if let queue = dest.queue {
         dispatch_group_enter(grp)
