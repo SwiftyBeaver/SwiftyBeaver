@@ -7,7 +7,7 @@ Great for <b>development & release</b> due to its support for many (custom) logg
 ----
 
 ![Platform iOS 8+](https://img.shields.io/badge/Platform-iOS%208%2B-blue.svg) ![Platform Mac OS X 10.9+](https://img.shields.io/badge/Platform-Mac%20OS%20X%2010.9%2B-blue.svg) ![Platform](https://img.shields.io/badge/Platform-tvOS%209%2B-blue.svg) ![Platform](https://img.shields.io/badge/Platform-watchOS%202%2B-blue.svg)<br/>
-[![Language Swift 2](https://img.shields.io/badge/Language-Swift%202-orange.svg)](https://developer.apple.com/swift) [![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-brightgreen.svg)](https://github.com/Carthage/Carthage) [![Cocoapods compatible](https://img.shields.io/cocoapods/v/SwiftyBeaver.svg)]("https://cocoapods.org) [![Travis Build Status](http://img.shields.io/travis/SwiftyBeaver/SwiftyBeaver.svg)]("https://travis-ci.org/SwiftyBeaver/SwiftyBeaver)
+[![Language Swift 2](https://img.shields.io/badge/Language-Swift%202-orange.svg)](https://developer.apple.com/swift) [![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-brightgreen.svg)](https://github.com/Carthage/Carthage) [![Cocoapods compatible](https://img.shields.io/cocoapods/v/SwiftyBeaver.svg)](https://cocoapods.org) [![Travis Build Status](http://img.shields.io/travis/SwiftyBeaver/SwiftyBeaver.svg)](https://travis-ci.org/SwiftyBeaver/SwiftyBeaver)
 
 ----
 
