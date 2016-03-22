@@ -80,31 +80,31 @@ public class SwiftyBeaver {
 
     /// log something generally unimportant (lowest priority)
     public class func verbose(@autoclosure message: () -> Any, _
-        path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
+        path: String = #file, _ function: String = #function, line: Int = #line) {
         dispatch_send(Level.Verbose, message: message, thread: threadName(), path: path, function: function, line: line)
     }
 
     /// log something which help during debugging (low priority)
     public class func debug(@autoclosure message: () -> Any, _
-        path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
+        path: String = #file, _ function: String = #function, line: Int = #line) {
         dispatch_send(Level.Debug, message: message, thread: threadName(), path: path, function: function, line: line)
     }
 
     /// log something which you are really interested but which is not an issue or error (normal priority)
     public class func info(@autoclosure message: () -> Any, _
-        path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
+        path: String = #file, _ function: String = #function, line: Int = #line) {
         dispatch_send(Level.Info, message: message, thread: threadName(), path: path, function: function, line: line)
     }
 
     /// log something which may cause big trouble soon (high priority)
     public class func warning(@autoclosure message: () -> Any, _
-        path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
+        path: String = #file, _ function: String = #function, line: Int = #line) {
         dispatch_send(Level.Warning, message: message, thread: threadName(), path: path, function: function, line: line)
     }
 
     /// log something which will keep you awake at night (highest priority)
     public class func error(@autoclosure message: () -> Any, _
-        path: String = __FILE__, _ function: String = __FUNCTION__, line: Int = __LINE__) {
+        path: String = #file, _ function: String = #function, line: Int = #line) {
         dispatch_send(Level.Error, message: message, thread: threadName(), path: path, function: function, line: line)
     }
 

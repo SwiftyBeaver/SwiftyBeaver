@@ -11,6 +11,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - <add text here during development>
 
 <br/>
+## 0.4.2 (2016-03-22)
+
+##### Changed
+
+- Optimized codebase for Swift 2.2, Swift 3 & Xcode 7.3 by [@skreutzberger](https://github.com/skreutzberger)
+
+<br/>
 ## 0.4.1 (2016-03-11)
 
 ##### Added
