@@ -61,7 +61,7 @@ Watch the intro video "SwiftyBeaver in 60 Seconds":
 ## Requirements
 
 - iOS 8.0+ / Mac OS X 10.9+
-- Xcode 7
+- Xcode 7.3+
 
 ## Installation
 
