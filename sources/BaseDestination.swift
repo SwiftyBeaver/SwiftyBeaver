@@ -78,7 +78,7 @@ public class BaseDestination: Hashable, Equatable {
 
     // each destination instance must have an own serial queue to ensure serial output
     // GCD gives it a prioritization between User Initiated and Utility
-    var queue: dispatch_queue_t?
+    internal var queue: dispatch_queue_t?
 
     public init() {
         let uuid = NSUUID().UUIDString

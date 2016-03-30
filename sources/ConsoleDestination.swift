@@ -15,6 +15,7 @@ public class ConsoleDestination: BaseDestination {
 
     public override init() {
         super.init()
+        self.queue = dispatch_get_main_queue() // print wants to be done in the mainq
     }
 
     // print to Xcode Console. uses full base class functionality
