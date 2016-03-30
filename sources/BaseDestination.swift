@@ -78,13 +78,18 @@ public class BaseDestination: Hashable, Equatable {
 
     // each destination instance must have an own serial queue to ensure serial output
     // GCD gives it a prioritization between User Initiated and Utility
-    internal var queue: dispatch_queue_t?
+    var queue: dispatch_queue_t?
 
     public init() {
         let uuid = NSUUID().UUIDString
         let queueLabel = "swiftybeaver-queue-" + uuid
         queue = dispatch_queue_create(queueLabel, nil)
     }
+    
+    public init(queue q:dispatch_queue_t) {
+        queue = q
+    }
+    
 
     /// overrule the destination’s minLevel for a given path and optional function
     public func addMinLevelFilter(minLevel: SwiftyBeaver.Level, path: String, function: String = "") {
