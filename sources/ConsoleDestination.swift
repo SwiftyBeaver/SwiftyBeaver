@@ -23,7 +23,7 @@ public class ConsoleDestination: BaseDestination {
         let formattedString = super.send(level, msg: msg, thread: thread, path: path, function: function, line: line)
 
         if let str = formattedString {
-            print(str)
+            NSLog(str)
         }
         return formattedString
     }
