@@ -82,7 +82,7 @@ For installation details please see the next points.
 
 You can use [Carthage](https://github.com/Carthage/Carthage) to install SwiftyBeaver by adding that to your Cartfile:
 
-``` 
+```
 github "SwiftyBeaver/SwiftyBeaver"
 ```
 
@@ -90,7 +90,7 @@ github "SwiftyBeaver/SwiftyBeaver"
 
 To use [CocoaPods](https://cocoapods.org) just add this to your Podfile:
 
-``` 
+```
 pod 'SwiftyBeaver'
 ```
 
@@ -200,7 +200,7 @@ Additional to above mentioned core properties the file destination also comes wi
 
 | Property        | Default                              | Description                              |
 | --------------- | ------------------------------------ | ---------------------------------------- |
-| **.logFileURL** | DocumentDirectory+"swiftybeaver.log" | The default filename is `swiftybeaver.log` and it is stored in the app’s DocumentDirectory. During development it is recommended to change that logfileURL to `/tmp/swiftybeaver.log` so that the file can be tailed by a Terminal app using the CLI command `tail -f /tmp/swiftybeaver.log`. |
+| **.logFileURL** | DocumentDirectory+"swiftybeaver.log" _or_ CacheDirectory+"swiftybeaver.log" | The default filename is `swiftybeaver.log` and it is stored in the app’s DocumentDirectory for OS X or the CacheDirectory for iOS. During development it is recommended to change that logfileURL to `/tmp/swiftybeaver.log` so that the file can be tailed by a Terminal app using the CLI command `tail -f /tmp/swiftybeaver.log`. Note: if the app is running on an iOS device, it will attempt to write into the /tmp folder in the iOS file system (instead of the one on OS X) and result in a permission error.  |
 
 Example with logging to 2 files in parallel:
 
