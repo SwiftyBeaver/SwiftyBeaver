@@ -110,27 +110,42 @@ public class SwiftyBeaver {
 
     /// internal helper which dispatches send to dedicated queue if minLevel is ok
     class func dispatch_send(level: SwiftyBeaver.Level, @autoclosure message: () -> Any,
-        thread: String, path: String, function: String, line: Int) {
+                             thread: String, path: String, function: String, line: Int) {
+
+
+        var builtMessage: Any?
+        var builtAsString: String?
+        var builtAsStringDebugDescription: String?
+
         for dest in destinations {
 
-            guard let queue = dest.queue else {
+            if case .Disabled = dest.executionContext {
                 continue
             }
 
             if dest.shouldLevelBeLogged(level, path: path, function: function) {
                 // try to convert msg object to String and put it on queue
-                let msgStr = "\(message())"
+
+                // only call message() for the first valid destination
+                if builtMessage == nil {
+                    builtMessage = message()
+                }
+                // only convert these to strings as needed once
+                if !dest.useDebugDescription && (builtAsString == nil) {
+                    builtAsString = "\(builtMessage)"
+                }
+                if dest.useDebugDescription && (builtAsStringDebugDescription == nil) {
+                    builtAsStringDebugDescription = String(reflecting: builtMessage)
+                }
+
+                let msgStr = dest.useDebugDescription ? builtAsStringDebugDescription! : builtAsString!
 
                 if !msgStr.isEmpty {
-                    if dest.asynchronously {
-                        dispatch_async(queue) {
-                            dest.send(level, msg: msgStr, thread: thread, path: path, function: function, line: line)
-                        }
-                    } else {
-                        dispatch_sync(queue) {
-                            dest.send(level, msg: msgStr, thread: thread, path: path, function: function, line: line)
-                        }
+
+                    dest.executionContext.dispatch {
+                        dest.send(level, msg: msgStr, thread: thread, path: path, function: function, line: line)
                     }
+
                 }
             }
         }
@@ -145,15 +160,32 @@ public class SwiftyBeaver {
   public class func flush(secondTimeout: Int64) -> Bool {
     let grp = dispatch_group_create()
     for dest in destinations {
-      if let queue = dest.queue {
+
+        if case .Disabled = dest.executionContext {
+            continue
+        }
         dispatch_group_enter(grp)
-        dispatch_async(queue, {
-          dest.flush()
-          dispatch_group_leave(grp)
+        dest.executionContext.dispatch({
+            dest.flushAsync {
+                dispatch_group_leave(grp)
+            }
         })
-      }
     }
     let waitUntil = dispatch_time(DISPATCH_TIME_NOW, secondTimeout * 1000000000)
     return dispatch_group_wait(grp, waitUntil) == 0
-  }
+   }
+
+
+    // doesn't block the calling thread when calling!
+    public class func flush(secondTimeout: Int64, flushDone: (Bool) -> ()) {
+
+        let uuid = NSUUID().UUIDString
+        let queueLabel = "swiftybeaver-queue-flush" + uuid
+        let flush_queue = dispatch_queue_create(queueLabel, nil)
+
+        dispatch_async(flush_queue) {
+            flushDone(self.flush(secondTimeout))
+        }
+    }
+
 }

@@ -122,6 +122,51 @@ class SwiftyBeaverTests: XCTestCase {
         log.info("this should be in both files, msg 2")
     }
 
+    func testAllTheConsoleTypes() {
+        let log = SwiftyBeaver.self
+        log.verbose("that should lead to nowhere")
+
+        // add console
+        let consoleDefault = ConsoleDestination()
+        if case .UsePrint = consoleDefault.consoleType {} else {
+            XCTAssert(false, "Default type should be UsePrint")
+        }
+
+        log.addDestination(consoleDefault)
+        log.verbose("the default (Print) console destination")
+        // add another console and set it to be less chatty
+
+        let console2 = ConsoleDestination()
+        log.addDestination(console2)
+        XCTAssertEqual(log.countDestinations(), 2)
+        console2.detailOutput = false
+        console2.dateFormat = "HH:mm:ss.SSS"
+        console2.minLevel = SwiftyBeaver.Level.Debug
+        log.verbose("a verbose hello from hopefully just Print console!")
+        log.debug("a debug hello from 2 different consoles (Print,DebugPrint)!")
+
+        // add file
+        let file = FileDestination()
+        file.logFileURL = NSURL(string: "file:///tmp/testSwiftyBeaver.log")!
+        log.addDestination(file)
+        XCTAssertEqual(log.countDestinations(), 3)
+        log.verbose("default file msg 1")
+        log.verbose("default file msg 2")
+        log.verbose("default file msg 3")
+
+        // log to another file
+        let file2 = FileDestination()
+        file2.logFileURL = NSURL(string: "file:///tmp/testSwiftyBeaver2.log")!
+        file2.detailOutput = false
+        file2.dateFormat = "HH:mm:ss.SSS"
+        file2.minLevel = SwiftyBeaver.Level.Debug
+        log.addDestination(file2)
+        XCTAssertEqual(log.countDestinations(), 4)
+        log.verbose("this should be in file 1")
+        log.debug("this should be in both files, msg 1")
+        log.info("this should be in both files, msg 2")
+    }
+
     func testColors() {
         let log = SwiftyBeaver.self
         log.verbose("that should lead to nowhere")

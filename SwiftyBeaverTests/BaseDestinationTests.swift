@@ -22,7 +22,9 @@ class BaseDestinationTests: XCTestCase {
 
     func testInit() {
         let obj = BaseDestination()
-        XCTAssertNotNil(obj.queue)
+        if case .AsyncQueue = obj.executionContext {} else {
+            XCTAssert(false)
+        }
     }
 
     func testFormattedDate() {

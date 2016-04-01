@@ -30,6 +30,37 @@ struct MinLevelFilter {
     var function = ""
 }
 
+// Each destination can log in whatever context you want.
+public enum ExecutionContext {
+
+    case AsyncQueue(dispatch_queue_t)     // provide whatever queue you want
+    case SyncQueue(dispatch_queue_t)      // proivde whatever queue you wants
+    case Disabled                         // kills the current destination.  It will not be executed
+    case Immediate                        // Log in the CALLING thread. Can screw up the order of messages! Use with Care!
+    case Custom((dispatch_block_t)->Void) // Bake your own logic.  ex: NSOperationQueue, FutureFifo,
+
+
+    public func dispatch(block: dispatch_block_t) {
+        switch self {
+        case let .AsyncQueue(q):
+            dispatch_async(q, block)
+
+        case let .SyncQueue(q):
+            dispatch_sync(q, block)
+
+        case .Disabled:
+            break
+
+        case .Immediate:
+            block()
+
+        case let .Custom(custom):
+            custom(block)
+        }
+    }
+
+}
+
 /// destination which all others inherit from. do not directly use
 public class BaseDestination: Hashable, Equatable {
 
@@ -38,7 +69,38 @@ public class BaseDestination: Hashable, Equatable {
     /// adds colored log levels where possible
     public var colored = true
     /// runs in own serial background thread for better performance
-    public var asynchronously = true
+    @available(*, deprecated=0.0, message="use the var executionContext instead!")
+    public var asynchronously: Bool {
+        get {
+            switch self.executionContext {
+            case .AsyncQueue:
+                return true
+            case .SyncQueue:
+                return false
+            case .Disabled:
+                return false
+            case .Immediate:
+                return false
+            case .Custom:
+                return false
+            }
+        }
+        set(be_async) {
+            switch self.executionContext {
+            case let .AsyncQueue(q):
+                if (!be_async) {
+                    self.executionContext = .SyncQueue(q)
+                }
+            case let.SyncQueue(q):
+                if (be_async) {
+                    self.executionContext = .AsyncQueue(q)
+                }
+            default:
+                SwiftyBeaver.warning("setting the asynchronously var doesn't do anything for .Immediate or .Custom contexts!")
+            }
+
+        }
+    }
     /// do not log any message which has a lower level than this one
     public var minLevel = SwiftyBeaver.Level.Verbose
     /// standard log format; set to "" to not log date at all
@@ -47,6 +109,10 @@ public class BaseDestination: Hashable, Equatable {
     public var levelString = LevelString()
     /// set custom log level colors for each level
     public var levelColor = LevelColor()
+    /// try to print objects using their CustomDebugStringConvertable
+    public var useDebugDescription = false
+    /// define how you want this destination to execute
+    public var executionContext: ExecutionContext
 
     public struct LevelString {
         public var Verbose = "VERBOSE"
@@ -76,14 +142,15 @@ public class BaseDestination: Hashable, Equatable {
     lazy public var hashValue: Int = self.defaultHashValue
     public var defaultHashValue: Int {return 0}
 
-    // each destination instance must have an own serial queue to ensure serial output
-    // GCD gives it a prioritization between User Initiated and Utility
-    var queue: dispatch_queue_t?
 
     public init() {
         let uuid = NSUUID().UUIDString
         let queueLabel = "swiftybeaver-queue-" + uuid
-        queue = dispatch_queue_create(queueLabel, nil)
+        executionContext = .AsyncQueue(dispatch_queue_create(queueLabel, nil))
+    }
+
+    public init(exectionContext e: ExecutionContext) {
+        executionContext = e
     }
 
     /// overrule the destination’s minLevel for a given path and optional function
@@ -193,12 +260,24 @@ public class BaseDestination: Hashable, Equatable {
         return false
     }
 
+    /**
+     Triggered by main flush() method on each destination.
+     Destinations can perform their flush asynchronously and call flushDone() when
+     they are done.
+     You do NOT need implement BOTH flush and flushAsync(flushDone:dispatch_block_t)!
+     It's better to just implement one or the other!
+     */
+    public func flushAsync(flushDone: dispatch_block_t) {
+        flush()
+        flushDone()
+    }
   /**
     Triggered by main flush() method on each destination. Runs in background thread.
    Use for destinations that buffer log items, implement this function to flush those
    buffers to their final destination (web server...)
    */
-  func flush() {
+   @available(*, deprecated=0.0, message="use the async version flush(flushDone:dispatch_block_t)")
+   func flush() {
     // no implementation in base destination needed
   }
 }
