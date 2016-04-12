@@ -132,7 +132,7 @@ public class SwiftyBeaver {
                 }
                 // only convert these to strings as needed once
                 if !dest.useDebugDescription && (builtAsString == nil) {
-                    builtAsString = "\(builtMessage)"
+                    builtAsString = "\(builtMessage!)"
                 }
                 if dest.useDebugDescription && (builtAsStringDebugDescription == nil) {
                     builtAsStringDebugDescription = String(reflecting: builtMessage)

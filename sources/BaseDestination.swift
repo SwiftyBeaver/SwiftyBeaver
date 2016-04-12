@@ -36,7 +36,7 @@ public enum ExecutionContext {
     case AsyncQueue(dispatch_queue_t)     // provide whatever queue you want
     case SyncQueue(dispatch_queue_t)      // proivde whatever queue you wants
     case Disabled                         // kills the current destination.  It will not be executed
-    case Immediate                        // Log in the CALLING thread. Can screw up the order of messages! Use with Care!
+    case Immediate                        // Log in the CALLING thread. Can log messages out of order! Use with Care!
     case Custom((dispatch_block_t)->Void) // Bake your own logic.  ex: NSOperationQueue, FutureFifo,
 
 
@@ -88,15 +88,15 @@ public class BaseDestination: Hashable, Equatable {
         set(be_async) {
             switch self.executionContext {
             case let .AsyncQueue(q):
-                if (!be_async) {
+                if !be_async {
                     self.executionContext = .SyncQueue(q)
                 }
             case let.SyncQueue(q):
-                if (be_async) {
+                if be_async {
                     self.executionContext = .AsyncQueue(q)
                 }
             default:
-                SwiftyBeaver.warning("setting the asynchronously var doesn't do anything for .Immediate or .Custom contexts!")
+                SwiftyBeaver.warning("setting the asynchronously var is ignored for .Immediate or .Custom contexts!")
             }
 
         }

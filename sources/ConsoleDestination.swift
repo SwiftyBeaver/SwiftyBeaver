@@ -51,7 +51,7 @@ public enum ConsoleDestinationType {
         return .UseCustom(customBlock)
 
     }
-    
+
     func printToConsole(str: String) {
         switch self {
         case .UsePrint:
