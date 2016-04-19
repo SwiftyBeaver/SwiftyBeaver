@@ -220,6 +220,11 @@ class SBPlatformDestinationTests: XCTestCase {
     }
 
     func testAnalytics() {
+        if platform.appID.isEmpty || platform.appSecret.isEmpty || platform.encryptionKey.isEmpty {
+            // leave the test on missing credentials or Travis will fail
+            return
+        }
+        
         let dict = platform.analytics(platform.analyticsFileURL, update: false)
         print(dict)
         if let uuid = dict["uuid"] as? String {
