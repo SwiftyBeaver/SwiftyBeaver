@@ -37,12 +37,12 @@ function_body_length:
   error: 100
 
 type_body_length:
-  warning: 300
-  error: 400
+  warning: 700
+  error: 1000
 
 file_length:
-  warning: 500
-  error: 1200
+  warning: 1200
+  error: 1500
 
 variable_name:
   min_length: 2

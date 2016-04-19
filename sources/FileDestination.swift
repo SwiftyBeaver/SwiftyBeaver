@@ -36,8 +36,8 @@ public class FileDestination: BaseDestination {
         // see http://bit.ly/1Otu3Zr to learn more
         // replace first 0 with 1 to make it bold
         levelColor.Verbose = "0;37m"
-        levelColor.Debug = "0;34m"
-        levelColor.Info = "0;32m"
+        levelColor.Debug = "0;32m"
+        levelColor.Info = "0;34m"
         levelColor.Warning = "0;33m"
         levelColor.Error = "0;31m"
 
@@ -85,7 +85,7 @@ public class FileDestination: BaseDestination {
             }
             return true
         } catch let error {
-            print("SwiftyBeaver could not write to file \(url). \(error)")
+            print("SwiftyBeaver File Destination could not write to file \(url). \(error)")
             return false
         }
     }

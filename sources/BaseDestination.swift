@@ -60,8 +60,8 @@ public class BaseDestination: Hashable, Equatable {
     // XCode RGB colors
     public struct LevelColor {
         public var Verbose = "fg200,200,200;"     // silver
-        public var Debug = "fg0,0,255;"           // blue
-        public var Info = "fg0,255,0;"            // green
+        public var Debug = "fg0,255,0;"           // green
+        public var Info = "fg0,0,255;"           // blue
         public var Warning = "fg255,255,0;"       // yellow
         public var Error = "fg255,0,0;"           // red
     }
@@ -83,7 +83,7 @@ public class BaseDestination: Hashable, Equatable {
     public init() {
         let uuid = NSUUID().UUIDString
         let queueLabel = "swiftybeaver-queue-" + uuid
-        queue = dispatch_queue_create(queueLabel, nil)
+        queue = dispatch_queue_create(queueLabel, DISPATCH_QUEUE_SERIAL)
     }
 
     /// overrule the destination’s minLevel for a given path and optional function
