@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name         = "SwiftyBeaver"
-  s.version      = "0.4.2"
-  s.summary      = "Colorful, lightweight & fast logging in Swift 2"
+  s.version      = "0.5.0"
+  s.summary      = "Easy & powerful Logging & Analytics for Swift 2"
 
   # This description is used to generate tags and improve search results.
   #   * Think: What does it do? Why did you write it? What is the focus?
@@ -9,8 +9,8 @@ Pod::Spec.new do |s|
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
   s.description  = <<-DESC
-  SwiftyBeaver is a new, fast & very lightweight logger, with a unique combination of great features.
-  It is written in Swift 2 and actively maintained by Sebastian Kreutzberger (Twitter: @skreutzb).
+Easy-to-use, extensible & powerful logging & analytics for Swift 2.
+Great for development & release due to its support for many logging destinations & platforms.
                    DESC
 
   s.homepage     = "https://github.com/SwiftyBeaver/SwiftyBeaver"
@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = "8.0"
   s.watchos.deployment_target = "2.0"
   s.tvos.deployment_target = "9.0"
-  s.osx.deployment_target = "10.9"
-  s.source       = { :git => "https://github.com/SwiftyBeaver/SwiftyBeaver.git", :tag => "0.4.2" }
+  s.osx.deployment_target = "10.11"
+  s.source       = { :git => "https://github.com/SwiftyBeaver/SwiftyBeaver.git", :tag => "0.5.0" }
   s.source_files  = "sources"
 end
