@@ -13,8 +13,6 @@ import Foundation
 // valid values for os(): OSX, iOS, watchOS, tvOS, Linux
 #if os(iOS) || os(tvOS) || os(watchOS)
     import UIKit
-    //let DEVICE_MODEL = UIDevice.currentDevice().model
-    let DEVICE_NAME = UIDevice.currentDevice().name
     var DEVICE_MODEL: String {
         get {
             var systemInfo = utsname()
@@ -28,8 +26,14 @@ import Foundation
         }
     }
 #else
-    let DEVICE_NAME = ""
     let DEVICE_MODEL = ""
+#endif
+
+#if os(iOS) || os(tvOS)
+    var DEVICE_NAME = UIDevice.currentDevice().name
+#else
+    // under watchOS UIDevice is not existing, http://apple.co/26ch5J1
+    let DEVICE_NAME = ""
 #endif
 
 
