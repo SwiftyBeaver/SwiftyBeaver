@@ -20,7 +20,6 @@ import Foundation
 */
 
 
-/*
 struct Secrets {
 
     struct Platform {
@@ -29,4 +28,3 @@ struct Secrets {
         static let encryptionKey = ""
     }
 }
-*/
