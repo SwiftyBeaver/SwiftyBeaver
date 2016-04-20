@@ -11,6 +11,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - <add text here during development>
 
 <br/>
+## 0.5.0 (2016-04-19)
+
+##### Added
+
+- SwiftyBeaver Platform destination by [@skreutzberger](https://github.com/skreutzberger)
+- SwiftyBeaver AES256CBC class for string encryption by [@skreutzberger](https://github.com/skreutzberger)
+- Lots of small improvements by [@skreutzberger](https://github.com/skreutzberger)
+
+<br/>
 ## 0.4.2 (2016-03-22)
 
 ##### Changed
