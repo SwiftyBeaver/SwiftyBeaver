@@ -146,7 +146,7 @@ public class BaseDestination: Hashable, Equatable {
     public init() {
         let uuid = NSUUID().UUIDString
         let queueLabel = "swiftybeaver-queue-" + uuid
-        executionContext = .AsyncQueue(dispatch_queue_create(queueLabel, nil))
+        executionContext = .AsyncQueue(dispatch_queue_create(queueLabel, DISPATCH_QUEUE_SERIAL))
     }
 
     public init(exectionContext e: ExecutionContext) {
