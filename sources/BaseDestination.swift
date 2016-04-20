@@ -40,6 +40,7 @@ public enum ExecutionContext {
     case Custom((dispatch_block_t)->Void) // Bake your own logic.  ex: NSOperationQueue, FutureFifo,
 
 
+
     public func dispatch(block: dispatch_block_t) {
         switch self {
         case let .AsyncQueue(q):
@@ -57,6 +58,27 @@ public enum ExecutionContext {
         case let .Custom(custom):
             custom(block)
         }
+    }
+    
+    
+    var queue : dispatch_queue_t? {
+        switch self {
+        case let .AsyncQueue(q):
+            return q
+            
+        case let .SyncQueue(q):
+            return q
+            
+        case .Disabled:
+            return nil
+            
+        case .Immediate:
+            return nil
+            
+        case let .Custom(_):
+            return nil
+        }
+        
     }
 
 }
@@ -142,6 +164,11 @@ public class BaseDestination: Hashable, Equatable {
     lazy public var hashValue: Int = self.defaultHashValue
     public var defaultHashValue: Int {return 0}
 
+    // each destination instance must have an own serial queue to ensure serial output
+    // GCD gives it a prioritization between User Initiated and Utility
+    var queue: dispatch_queue_t? {
+        return self.executionContext.queue
+    }
 
     public init() {
         let uuid = NSUUID().UUIDString
