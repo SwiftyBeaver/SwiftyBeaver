@@ -25,7 +25,6 @@ class SwiftyBeaverTests: XCTestCase {
         let log = SwiftyBeaver.self
 
         // add invalid destination
-        XCTAssertFalse(log.addDestination(["foo": "bar"]))
         XCTAssertEqual(log.countDestinations(), 0)
 
         // add valid destinations
@@ -36,12 +35,11 @@ class SwiftyBeaverTests: XCTestCase {
         XCTAssertEqual(log.countDestinations(), 0)
         XCTAssertTrue(log.addDestination(console))
         XCTAssertEqual(log.countDestinations(), 1)
-        XCTAssertTrue(log.addDestination(console))
-        XCTAssertTrue(log.addDestination(console))
+        XCTAssertFalse(log.addDestination(console))
         XCTAssertEqual(log.countDestinations(), 1)
         XCTAssertTrue(log.addDestination(console2))
-        XCTAssertTrue(log.addDestination(console2))
         XCTAssertEqual(log.countDestinations(), 2)
+        XCTAssertFalse(log.addDestination(console2))
         XCTAssertTrue(log.addDestination(file))
         XCTAssertEqual(log.countDestinations(), 3)
     }
@@ -50,7 +48,6 @@ class SwiftyBeaverTests: XCTestCase {
         let log = SwiftyBeaver.self
 
         // remove invalid destination
-        XCTAssertFalse(log.removeDestination(["foo": "bar"]))
         XCTAssertEqual(log.countDestinations(), 0)
 
         // remove valid destinations
@@ -66,11 +63,10 @@ class SwiftyBeaverTests: XCTestCase {
         // remove destinations
         XCTAssertTrue(log.removeDestination(console))
         XCTAssertEqual(log.countDestinations(), 2)
-        XCTAssertTrue(log.removeDestination(console))
-        XCTAssertTrue(log.removeDestination(console))
+        XCTAssertFalse(log.removeDestination(console))
         XCTAssertEqual(log.countDestinations(), 2)
         XCTAssertTrue(log.removeDestination(console2))
-        XCTAssertTrue(log.removeDestination(console2))
+        XCTAssertFalse(log.removeDestination(console2))
         XCTAssertEqual(log.countDestinations(), 1)
         XCTAssertTrue(log.removeDestination(file))
         XCTAssertEqual(log.countDestinations(), 0)

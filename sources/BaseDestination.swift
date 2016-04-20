@@ -75,7 +75,7 @@ public enum ExecutionContext {
         case .Immediate:
             return nil
             
-        case let .Custom(_):
+        case .Custom:
             return nil
         }
         

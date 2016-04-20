@@ -502,7 +502,9 @@ public class SBPlatformDestination: BaseDestination {
     /// Returns the current app build as integer (like 563, always incrementing) or 0 on error
     func appBuild() -> Int {
         if let version = NSBundle.mainBundle().infoDictionary?["CFBundleVersion"] as? String {
-            return Int(version)!
+            if let intVersion = Int(version) {
+                return intVersion
+            }
         }
         return 0
     }

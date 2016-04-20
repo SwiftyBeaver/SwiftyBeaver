@@ -66,6 +66,31 @@ public enum ConsoleDestinationType {
 }
 
 public class ConsoleDestination: BaseDestination {
+    
+    @available(*, deprecated=0.0, message="use the var consoleType instead!")
+    public var useNSLog : Bool  {
+        get {
+            switch consoleType {
+            case .UsePrint:
+                return false
+            case .UseNSLog:
+                return true
+            case .UseCustom:
+                return false
+            }
+        }
+        set(newValue) {
+            if case .UseCustom = self.consoleType {
+                print("useNSLog is ignored if consoleType is Custom!")
+            }
+            else if (newValue) {
+                self.consoleType = .UseNSLog
+            }
+            else {
+                self.consoleType = .UsePrint
+            }
+        }
+    }
 
     override public var defaultHashValue: Int {return 1}
 
