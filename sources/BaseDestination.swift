@@ -85,6 +85,11 @@ public class BaseDestination: Hashable, Equatable {
         let queueLabel = "swiftybeaver-queue-" + uuid
         queue = dispatch_queue_create(queueLabel, DISPATCH_QUEUE_SERIAL)
     }
+    
+    public init(queue q:dispatch_queue_t) {
+        queue = q
+    }
+    
 
     /// overrule the destination’s minLevel for a given path and optional function
     public func addMinLevelFilter(minLevel: SwiftyBeaver.Level, path: String, function: String = "") {

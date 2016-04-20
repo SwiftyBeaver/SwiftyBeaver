@@ -14,7 +14,7 @@ public class ConsoleDestination: BaseDestination {
     override public var defaultHashValue: Int {return 1}
 
     public override init() {
-        super.init()
+        super.init(queue: dispatch_get_main_queue())
     }
 
     // print to Xcode Console. uses full base class functionality
