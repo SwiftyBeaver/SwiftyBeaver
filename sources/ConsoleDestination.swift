@@ -10,6 +10,8 @@
 import Foundation
 
 public class ConsoleDestination: BaseDestination {
+    
+    public var useNSLog = false
 
     override public var defaultHashValue: Int {return 1}
 
@@ -23,7 +25,11 @@ public class ConsoleDestination: BaseDestination {
         let formattedString = super.send(level, msg: msg, thread: thread, path: path, function: function, line: line)
 
         if let str = formattedString {
-            print(str)
+            if useNSLog {
+                NSLog(str)
+            } else {
+                print(str)
+            }
         }
         return formattedString
     }
