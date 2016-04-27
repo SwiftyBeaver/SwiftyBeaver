@@ -33,11 +33,20 @@
 <br/>
 
 
-### On Release: Encrypted Logging to SwiftyBeaver Mac App
+### On Release: Encrypted Logging to SwiftyBeaver Platform
 
 <img src="https://cloud.githubusercontent.com/assets/564725/14281408/38d6a6ba-fb39-11e5-9584-34e3679bb1c5.jpg" width="700">
 
 [Learn more](http://docs.swiftybeaver.com/article/11-log-to-swiftybeaver-platform) about logging to the SwiftyBeaver Platform during release.
+
+<br/>
+
+
+### Browse, Search & Filter via Mac App
+
+![swiftybeaver-demo1](https://cloud.githubusercontent.com/assets/564725/14846071/218c0646-0c62-11e6-92cb-e6e963b68724.gif)
+
+[Signup to private beta](https://swiftybeaver.com) to get your development & release logs into the free Mac App.
 
 <br/>
 
