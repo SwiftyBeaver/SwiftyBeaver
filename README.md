@@ -75,7 +75,7 @@ To use SwiftyBeaver as a [Swift Package Manager](https://swift.org/package-manag
 import PackageDescription
 
 let package = Package(
-name: "HellowWorld",
+name: "HelloWorld",
 dependencies: [
 .Package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git", majorVersion: 0)
 ]
