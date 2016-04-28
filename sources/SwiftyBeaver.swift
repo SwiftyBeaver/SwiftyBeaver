@@ -114,15 +114,13 @@ public class SwiftyBeaver {
                 // try to convert msg object to String and put it on queue
                 let msgStr = "\(message())"
 
-                if !msgStr.isEmpty {
-                    if dest.asynchronously {
-                        dispatch_async(queue) {
-                            dest.send(level, msg: msgStr, thread: thread, path: path, function: function, line: line)
-                        }
-                    } else {
-                        dispatch_sync(queue) {
-                            dest.send(level, msg: msgStr, thread: thread, path: path, function: function, line: line)
-                        }
+                if dest.asynchronously {
+                    dispatch_async(queue) {
+                        dest.send(level, msg: msgStr, thread: thread, path: path, function: function, line: line)
+                    }
+                } else {
+                    dispatch_sync(queue) {
+                        dest.send(level, msg: msgStr, thread: thread, path: path, function: function, line: line)
                     }
                 }
             }
