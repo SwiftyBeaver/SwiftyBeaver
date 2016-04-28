@@ -10,7 +10,7 @@
 import Foundation
 
 public class ConsoleDestination: BaseDestination {
-    
+
     public var useNSLog = false
 
     override public var defaultHashValue: Int {return 1}
