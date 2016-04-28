@@ -5,10 +5,17 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ----
 
-## Next Version 
+## 0.5.1 (2016-04-28)
 
-#### Added 
-- <add text here during development>
+##### Added
+
+- Type-safe adding/removal of destination by [@muukii](https://github.com/muukii)
+- Allow empty log messages by [@ewanmellor](https://github.com/ewanmellor)
+- Console can use NSLog instead of print by [@skreutzberger](https://github.com/skreutzberger)
+- Exposing of framework version & build for easier support by [@skreutzberger](https://github.com/skreutzberger)
+
+##### Fixed
+- Issue with overwritten analytics data by [@skreutzberger](https://github.com/skreutzberger)
 
 <br/>
 ## 0.5.0 (2016-04-19)
