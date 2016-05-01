@@ -59,11 +59,11 @@ public class BaseDestination: Hashable, Equatable {
     // For a colored log level word in a logged line
     // XCode RGB colors
     public struct LevelColor {
-        public var Verbose = "fg200,200,200;"     // silver
-        public var Debug = "fg0,255,0;"           // green
-        public var Info = "fg0,0,255;"           // blue
-        public var Warning = "fg255,255,0;"       // yellow
-        public var Error = "fg255,0,0;"           // red
+        public var Verbose = "fg150,178,193;"     // silver
+        public var Debug = "fg32,155,124;"        // green
+        public var Info = "fg70,204,221;"         // blue
+        public var Warning = "fg253,202,78;"      // yellow
+        public var Error = "fg243,36,73;"         // red
     }
 
     var minLevelFilters = [MinLevelFilter]()
