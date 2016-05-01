@@ -168,6 +168,25 @@ class SwiftyBeaverTests: XCTestCase {
         log.error("ouch, an error did occur!, level in purple")
     }
 
+    func testColoredMessage() {
+        let log = SwiftyBeaver.self
+
+        // add console
+        let console = ConsoleDestination()
+        log.addDestination(console)
+
+        console.coloredLines = true
+
+        XCTAssertTrue(console.colored)
+        XCTAssertTrue(console.coloredLines)
+
+        log.verbose("not so important")
+        log.debug("something to debug")
+        log.info("a nice information")
+        log.warning("oh no, that won’t be good")
+        log.error("ouch, an error did occur!")
+    }
+
     func testDifferentMessageTypes() {
         let log = SwiftyBeaver.self
 
