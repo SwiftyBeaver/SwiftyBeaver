@@ -5,6 +5,18 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ----
 
+## 0.5.2 (2016-05-02)
+
+##### Added
+
+- Get more colored content with `coloredLines = true` by [@DasHutch](https://github.com/DasHutch)
+
+##### Changed
+
+- Adjusted Xcode Console colors to match SwiftyBeaver Mac App UI by [@DasHutch](https://github.com/DasHutch)
+- Adjusted file destination colors to match SwiftyBeaver Mac App UI by [@skreutzberger](https://github.com/skreutzberger)
+
+<br/>
 ## 0.5.1 (2016-04-28)
 
 ##### Added

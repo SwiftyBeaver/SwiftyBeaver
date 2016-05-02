@@ -18,7 +18,7 @@
 
 ### During Development: Colored Logging to Xcode Console
 
-<img src="https://cloud.githubusercontent.com/assets/564725/11452558/17fd5f04-95ec-11e5-96d2-427f62ed4f05.jpg" width="709">
+<img src="https://cloud.githubusercontent.com/assets/564725/14951113/ea682b42-1056-11e6-824f-a6da82e2a0a8.png" width="709">
 
 [Learn more](http://docs.swiftybeaver.com/article/9-log-to-xcode-console) about colored logging to Xcode Console.
 
@@ -26,7 +26,7 @@
 
 ### During Development: Colored Logging to File
 
-<img src="https://cloud.githubusercontent.com/assets/564725/11452560/33225d16-95ec-11e5-8461-78f50b9e8da7.jpg" width="672">
+<img src="https://cloud.githubusercontent.com/assets/564725/14951092/d5948f44-1056-11e6-9f6e-81801a130661.png" width="637">
 
 [Learn more](http://docs.swiftybeaver.com/article/10-log-to-file) about logging to file.
 
@@ -86,8 +86,6 @@ dependencies: [
 
 
 ## Usage
-
-### Let's go!
 
 Add that near the top of your `AppDelegate.swift` to be able to use SwiftyBeaver in your whole project.
 
