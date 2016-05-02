@@ -125,10 +125,8 @@ public class BaseDestination: Hashable, Equatable {
         }
 
         let color = colorForLevel(level)
-        var formattedMsg = msg
-
-        formattedMsg = escape + color + formattedMsg + reset
-        return formattedMsg
+        let coloredMsg = escape + color + msg + reset
+        return coloredMsg
     }
 
     /// returns color string for level

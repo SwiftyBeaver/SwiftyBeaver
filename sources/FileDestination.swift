@@ -33,15 +33,15 @@ public class FileDestination: BaseDestination {
         super.init()
 
         // bash font color, first value is intensity, second is color
-        // see http://bit.ly/1Otu3Zr to learn more
-        // replace first 0 with 1 to make it bold
-        levelColor.Verbose = "0;37m"
-        levelColor.Debug = "0;32m"
-        levelColor.Info = "0;34m"
-        levelColor.Warning = "0;33m"
-        levelColor.Error = "0;31m"
-
+        // see http://bit.ly/1Otu3Zr & for syntax http://bit.ly/1Tp6Fw9
+        // uses the 256-color table from http://bit.ly/1W1qJuH
         reset = "\u{001b}[0m"
+        escape = "\u{001b}[38;5;"
+        levelColor.Verbose = "251m"
+        levelColor.Debug = "35m"
+        levelColor.Info = "38m"
+        levelColor.Warning = "178m"
+        levelColor.Error = "197m"
     }
 
     // append to file. uses full base class functionality
