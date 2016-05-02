@@ -175,10 +175,19 @@ class SwiftyBeaverTests: XCTestCase {
         let console = ConsoleDestination()
         log.addDestination(console)
 
-        console.coloredLines = true
+        // add file
+        let file = FileDestination()
+        file.logFileURL = NSURL(string: "file:///tmp/testSwiftyBeaver.log")!
+        file.detailOutput = false
+        file.dateFormat = "HH:mm:ss.SSS"
+        log.addDestination(file)
 
+        console.coloredLines = true
         XCTAssertTrue(console.colored)
         XCTAssertTrue(console.coloredLines)
+        file.coloredLines = true
+        XCTAssertTrue(file.colored)
+        XCTAssertTrue(file.coloredLines)
 
         log.verbose("not so important")
         log.debug("something to debug")
