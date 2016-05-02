@@ -37,6 +37,8 @@ public class BaseDestination: Hashable, Equatable {
     public var detailOutput = true
     /// adds colored log levels where possible
     public var colored = true
+    /// colors entire log
+    public var coloredLines = false
     /// runs in own serial background thread for better performance
     public var asynchronously = true
     /// do not log any message which has a lower level than this one
@@ -100,9 +102,10 @@ public class BaseDestination: Hashable, Equatable {
         var dateStr = ""
         var str = ""
         let levelStr = formattedLevel(level)
+        let formattedMsg = coloredMessage(msg, forLevel: level)
 
         dateStr = formattedDate(dateFormat)
-        str = formattedMessage(dateStr, levelString: levelStr, msg: msg, thread: thread, path: path,
+        str = formattedMessage(dateStr, levelString: levelStr, msg: formattedMsg, thread: thread, path: path,
             function: function, line: line, detailOutput: detailOutput)
         return str
     }
@@ -115,32 +118,64 @@ public class BaseDestination: Hashable, Equatable {
         return dateStr
     }
 
-    /// returns an optionally colored level noun (like INFO, etc.)
-    func formattedLevel(level: SwiftyBeaver.Level) -> String {
-        // optionally wrap the level string in color
+    /// returns the log message entirely colored
+    func coloredMessage(msg: String, forLevel level: SwiftyBeaver.Level) -> String {
+        if !(colored && coloredLines) {
+            return msg
+        }
+
+        let color = colorForLevel(level)
+        var formattedMsg = msg
+
+        formattedMsg = escape + color + formattedMsg + reset
+        return formattedMsg
+    }
+
+    /// returns color string for level
+    func colorForLevel(level: SwiftyBeaver.Level) -> String {
         var color = ""
-        var levelStr = ""
 
         switch level {
         case SwiftyBeaver.Level.Debug:
             color = levelColor.Debug
-            levelStr = levelString.Debug
 
         case SwiftyBeaver.Level.Info:
             color = levelColor.Info
-            levelStr = levelString.Info
 
         case SwiftyBeaver.Level.Warning:
             color = levelColor.Warning
-            levelStr = levelString.Warning
 
         case SwiftyBeaver.Level.Error:
             color = levelColor.Error
+
+        default:
+            color = levelColor.Verbose
+        }
+
+        return color
+    }
+
+    /// returns an optionally colored level noun (like INFO, etc.)
+    func formattedLevel(level: SwiftyBeaver.Level) -> String {
+        // optionally wrap the level string in color
+        let color = colorForLevel(level)
+        var levelStr = ""
+
+        switch level {
+        case SwiftyBeaver.Level.Debug:
+            levelStr = levelString.Debug
+
+        case SwiftyBeaver.Level.Info:
+            levelStr = levelString.Info
+
+        case SwiftyBeaver.Level.Warning:
+            levelStr = levelString.Warning
+
+        case SwiftyBeaver.Level.Error:
             levelStr = levelString.Error
 
         default:
             // Verbose is default
-            color = levelColor.Verbose
             levelStr = levelString.Verbose
         }
 
