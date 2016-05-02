@@ -213,6 +213,34 @@ class SwiftyBeaverTests: XCTestCase {
         log.error("ouch, an error did occur!, level in purple")
     }
 
+    func testColoredMessage() {
+        let log = SwiftyBeaver.self
+
+        // add console
+        let console = ConsoleDestination()
+        log.addDestination(console)
+
+        // add file
+        let file = FileDestination()
+        file.logFileURL = NSURL(string: "file:///tmp/testSwiftyBeaver.log")!
+        file.detailOutput = false
+        file.dateFormat = "HH:mm:ss.SSS"
+        log.addDestination(file)
+
+        console.coloredLines = true
+        XCTAssertTrue(console.colored)
+        XCTAssertTrue(console.coloredLines)
+        file.coloredLines = true
+        XCTAssertTrue(file.colored)
+        XCTAssertTrue(file.coloredLines)
+
+        log.verbose("not so important")
+        log.debug("something to debug")
+        log.info("a nice information")
+        log.warning("oh no, that won’t be good")
+        log.error("ouch, an error did occur!")
+    }
+
     func testDifferentMessageTypes() {
         let log = SwiftyBeaver.self
 
@@ -270,6 +298,11 @@ class SwiftyBeaverTests: XCTestCase {
         }
 
         log.verbose(longRunningTask())
+    }
+
+    func testVersionAndBuild() {
+        XCTAssertGreaterThan(SwiftyBeaver.version.characters.count, 4)
+        XCTAssertGreaterThan(SwiftyBeaver.build, 500)
     }
 
 }

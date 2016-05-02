@@ -445,10 +445,10 @@ public class SBPlatformDestination: BaseDestination {
         dict["appBuild"] = appBuild()
 
         if let loadedDict = dictFromFile(analyticsFileURL) {
-            if let val = loadedDict["firstStart"] as? String {
+            if let val = loadedDict["firstStart"] as? Double {
                 dict["firstStart"] = val
             }
-            if let val = loadedDict["lastStart"] as? String {
+            if let val = loadedDict["lastStart"] as? Double {
                 if update {
                     dict["lastStart"] = now
                 } else {
@@ -467,10 +467,10 @@ public class SBPlatformDestination: BaseDestination {
                 uuid = val
             }
             if let val = loadedDict["userName"] as? String {
-                if update && analyticsUserName != "" {
+                if update && !analyticsUserName.isEmpty {
                     dict["userName"] = analyticsUserName
                 } else {
-                    if val > "" {
+                    if !val.isEmpty {
                         dict["userName"] = val
                     }
                 }
@@ -478,14 +478,8 @@ public class SBPlatformDestination: BaseDestination {
             if let val = loadedDict["firstAppVersion"] as? String {
                 dict["firstAppVersion"] = val
             }
-            if let val = loadedDict["appVersion"] as? String {
-                dict["appVersion"] = val
-            }
-            if let val = loadedDict["firstAppBuild"] as? String {
+            if let val = loadedDict["firstAppBuild"] as? Int {
                 dict["firstAppBuild"] = val
-            }
-            if let val = loadedDict["appBuild"] as? String {
-                dict["appBuild"] = val
             }
         }
         return dict

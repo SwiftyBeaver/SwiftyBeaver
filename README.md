@@ -18,7 +18,7 @@
 
 ### During Development: Colored Logging to Xcode Console
 
-<img src="https://cloud.githubusercontent.com/assets/564725/11452558/17fd5f04-95ec-11e5-96d2-427f62ed4f05.jpg" width="709">
+<img src="https://cloud.githubusercontent.com/assets/564725/14951113/ea682b42-1056-11e6-824f-a6da82e2a0a8.png" width="637">
 
 [Learn more](http://docs.swiftybeaver.com/article/9-log-to-xcode-console) about colored logging to Xcode Console.
 
@@ -26,18 +26,27 @@
 
 ### During Development: Colored Logging to File
 
-<img src="https://cloud.githubusercontent.com/assets/564725/11452560/33225d16-95ec-11e5-8461-78f50b9e8da7.jpg" width="672">
+<img src="https://cloud.githubusercontent.com/assets/564725/14951092/d5948f44-1056-11e6-9f6e-81801a130661.png" width="659">
 
 [Learn more](http://docs.swiftybeaver.com/article/10-log-to-file) about logging to file.
 
 <br/>
 
 
-### On Release: Encrypted Logging to SwiftyBeaver Mac App
+### On Release: Encrypted Logging to SwiftyBeaver Platform
 
 <img src="https://cloud.githubusercontent.com/assets/564725/14281408/38d6a6ba-fb39-11e5-9584-34e3679bb1c5.jpg" width="700">
 
 [Learn more](http://docs.swiftybeaver.com/article/11-log-to-swiftybeaver-platform) about logging to the SwiftyBeaver Platform during release.
+
+<br/>
+
+
+### Browse, Search & Filter via Mac App
+
+![swiftybeaver-demo1](https://cloud.githubusercontent.com/assets/564725/14846071/218c0646-0c62-11e6-92cb-e6e963b68724.gif)
+
+[Signup to private beta](https://swiftybeaver.com) to get your development & release logs into the free Mac App.
 
 <br/>
 
@@ -66,7 +75,7 @@ To use SwiftyBeaver as a [Swift Package Manager](https://swift.org/package-manag
 import PackageDescription
 
 let package = Package(
-name: "HellowWorld",
+name: "HelloWorld",
 dependencies: [
 .Package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git", majorVersion: 0)
 ]
@@ -77,8 +86,6 @@ dependencies: [
 
 
 ## Usage
-
-### Let's go!
 
 Add that near the top of your `AppDelegate.swift` to be able to use SwiftyBeaver in your whole project.
 
