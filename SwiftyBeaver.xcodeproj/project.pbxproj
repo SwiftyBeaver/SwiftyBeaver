@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		048E6BFA1CDBB68E00DC9116 /* DestinationSetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048E6BF91CDBB68E00DC9116 /* DestinationSetTests.swift */; };
 		9E195B0A1C6B3B4600D924CB /* AES256CBC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E195B091C6B3B4600D924CB /* AES256CBC.swift */; };
 		9E195B0B1C6B3B4600D924CB /* AES256CBC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E195B091C6B3B4600D924CB /* AES256CBC.swift */; };
 		9E195B0C1C6B3B4600D924CB /* AES256CBC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E195B091C6B3B4600D924CB /* AES256CBC.swift */; };
@@ -58,6 +59,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		048E6BF91CDBB68E00DC9116 /* DestinationSetTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DestinationSetTests.swift; sourceTree = "<group>"; };
 		9E195B091C6B3B4600D924CB /* AES256CBC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AES256CBC.swift; path = sources/AES256CBC.swift; sourceTree = "<group>"; };
 		9E195B0E1C6B3B6F00D924CB /* AES256CBCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AES256CBCTests.swift; sourceTree = "<group>"; };
 		9E195B101C6B766D00D924CB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 				9EDCE3F31C09D211002FA4A7 /* SwiftyBeaverTests.swift */,
 				9EA53F881C561E4C00B160AF /* Secrets.swift */,
 				9EA53F8A1C561EE600B160AF /* SecretsExample.swift */,
+				048E6BF91CDBB68E00DC9116 /* DestinationSetTests.swift */,
 			);
 			path = SwiftyBeaverTests;
 			sourceTree = "<group>";
@@ -425,6 +428,7 @@
 				9EA53F8B1C561EE600B160AF /* SecretsExample.swift in Sources */,
 				9ED096FD1C521D3200FE3059 /* SBPlatformDestinationTests.swift in Sources */,
 				9EDCE3F41C09D211002FA4A7 /* SwiftyBeaverTests.swift in Sources */,
+				048E6BFA1CDBB68E00DC9116 /* DestinationSetTests.swift in Sources */,
 				9E195B0F1C6B3B6F00D924CB /* AES256CBCTests.swift in Sources */,
 				9E6CA9FC1C12BA7A009D9093 /* BaseDestinationTests.swift in Sources */,
 			);
