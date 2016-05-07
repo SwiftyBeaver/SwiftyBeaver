@@ -15,6 +15,8 @@ public class SwiftyBeaver {
     public static let version = "0.5.2"  // UPDATE ON RELEASE!
     /// build number of framework
     public static let build = 520 // version 0.7.0 -> 700, UPDATE ON RELEASE!
+    /// the crash reporter
+    public static var crashReporter: SBCrashReporter?
 
     public enum Level: Int {
         case Verbose = 0
@@ -22,6 +24,13 @@ public class SwiftyBeaver {
         case Info = 2
         case Warning = 3
         case Error = 4
+    }
+
+    // MARK: Crash Reporting
+    //????: Not sure yet on instantiation, naming here...
+    public class func setupCrashReporter() {
+        let reporter = SBCrashReporter()
+        crashReporter = reporter
     }
 
     // a set of active destinations
