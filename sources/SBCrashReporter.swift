@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 //TODO: Create SBCrashReporterError enum
 //TODO: Add Proper Errors for all 'catch' statements
 
@@ -36,7 +35,7 @@ public class SBCrashReporter {
             } else {
                 crashLogFileURL = NSURL()
             }
-            
+
             return crashLogFileURL
         }
     }
@@ -106,9 +105,13 @@ public class SBCrashReporter {
     /// Sends Crash Report to any / all SwiftyBeaver destinations available
     private func sendCrashReport() {
         let crashLogFileURL = SBCrashReporter.crashLogURL
+        guard let crashLogFilePath = crashLogFileURL.path else {
+            //TODO: Replace with an SBCrashReporterError
+            print("SwiftyBeaver Crash Reporter could not get crash log file path.")
+            return
+        }
         do {
-            //TODO: fix forced unwrap and handle that error if that fails
-            let data = try NSData(contentsOfURL: NSURL(fileURLWithPath: crashLogFileURL.path!), options: .DataReadingMappedIfSafe)
+            let data = try NSData(contentsOfURL: NSURL(fileURLWithPath: crashLogFilePath), options: .DataReadingMappedIfSafe)
 
             if let jsonString = String(data: data, encoding: NSUTF8StringEncoding) {
                 for destination in SwiftyBeaver.destinations {
@@ -190,9 +193,14 @@ public class SBCrashReporter {
     /// - parameter crashLog: [String: AnyObject] (a single crash log dictionary)
     /// - parameter fileURL: NSURL defaults to `SBCrashReporter.crashLogURL()`
     private func appendToCrashLogFile(crashLog: [String: AnyObject], crashLogFileURL: NSURL = SBCrashReporter.crashLogURL) {
+        guard let crashLogFilePath = crashLogFileURL.path else {
+            //TODO: Replace with an SBCrashReporterError
+            print("SwiftyBeaver Crash Reporter could not get crash log file path.")
+            return
+        }
+
         do {
-            //TODO: fix forced unwrap and handle that error if that fails
-            let existingCrashLogData = try NSData(contentsOfURL: NSURL(fileURLWithPath: crashLogFileURL.path!), options: .DataReadingMappedIfSafe)
+            let existingCrashLogData = try NSData(contentsOfURL: NSURL(fileURLWithPath: crashLogFilePath), options: .DataReadingMappedIfSafe)
             do {
                 let existingCrashLogJSON = try NSJSONSerialization.JSONObjectWithData(existingCrashLogData, options: .AllowFragments)
 
