@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		048E6BFA1CDBB68E00DC9116 /* DestinationSetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048E6BF91CDBB68E00DC9116 /* DestinationSetTests.swift */; };
 		55EF81B11CDE9842001BF728 /* SBCrashReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EF81B01CDE9842001BF728 /* SBCrashReporter.swift */; };
-		55EF81B21CDE9842001BF728 /* SBCrashReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EF81B01CDE9842001BF728 /* SBCrashReporter.swift */; };
 		55EF81B31CDE9842001BF728 /* SBCrashReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EF81B01CDE9842001BF728 /* SBCrashReporter.swift */; };
 		55EF81B41CDE9842001BF728 /* SBCrashReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EF81B01CDE9842001BF728 /* SBCrashReporter.swift */; };
 		55EF81B51CDE9842001BF728 /* SBCrashReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EF81B01CDE9842001BF728 /* SBCrashReporter.swift */; };
@@ -435,7 +434,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9EA53F8B1C561EE600B160AF /* SecretsExample.swift in Sources */,
-				55EF81B21CDE9842001BF728 /* SBCrashReporter.swift in Sources */,
 				9ED096FD1C521D3200FE3059 /* SBPlatformDestinationTests.swift in Sources */,
 				9EDCE3F41C09D211002FA4A7 /* SwiftyBeaverTests.swift in Sources */,
 				048E6BFA1CDBB68E00DC9116 /* DestinationSetTests.swift in Sources */,
