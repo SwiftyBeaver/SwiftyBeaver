@@ -5,6 +5,18 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ----
 
+## 0.5.3 (2016-05-11)
+
+##### Added
+
+- Ability to adjust destination properties during runtime by [@MarkQSchultz](https://github.com/MarkQSchultz)
+
+##### Changed
+
+- Message resolution is done in background for better performance by [@JeffBNimble](https://github.com/JeffBNimble)
+- Lowered minimum OSX version to 10.10 for CocoaPods by [@skreutzberger](https://github.com/skreutzberger)
+
+<br/>
 ## 0.5.2 (2016-05-02)
 
 ##### Added
