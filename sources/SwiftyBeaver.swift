@@ -12,9 +12,9 @@ import Foundation
 public class SwiftyBeaver {
 
     /// version string of framework
-    public static let version = "0.5.2"  // UPDATE ON RELEASE!
+    public static let version = "0.5.3"  // UPDATE ON RELEASE!
     /// build number of framework
-    public static let build = 520 // version 0.7.0 -> 700, UPDATE ON RELEASE!
+    public static let build = 531 // version 0.7.0 -> 700, UPDATE ON RELEASE!
 
     public enum Level: Int {
         case Verbose = 0
@@ -76,37 +76,37 @@ public class SwiftyBeaver {
     // MARK: Levels
 
     /// log something generally unimportant (lowest priority)
-    public class func verbose(@autoclosure(escaping) message: () -> Any, _
+    public class func verbose(@autoclosure message: () -> Any, _
         path: String = #file, _ function: String = #function, line: Int = #line) {
         dispatch_send(Level.Verbose, message: message, thread: threadName(), path: path, function: function, line: line)
     }
 
     /// log something which help during debugging (low priority)
-    public class func debug(@autoclosure(escaping) message: () -> Any, _
+    public class func debug(@autoclosure message: () -> Any, _
         path: String = #file, _ function: String = #function, line: Int = #line) {
         dispatch_send(Level.Debug, message: message, thread: threadName(), path: path, function: function, line: line)
     }
 
     /// log something which you are really interested but which is not an issue or error (normal priority)
-    public class func info(@autoclosure(escaping) message: () -> Any, _
+    public class func info(@autoclosure message: () -> Any, _
         path: String = #file, _ function: String = #function, line: Int = #line) {
         dispatch_send(Level.Info, message: message, thread: threadName(), path: path, function: function, line: line)
     }
 
     /// log something which may cause big trouble soon (high priority)
-    public class func warning(@autoclosure(escaping) message: () -> Any, _
+    public class func warning(@autoclosure message: () -> Any, _
         path: String = #file, _ function: String = #function, line: Int = #line) {
         dispatch_send(Level.Warning, message: message, thread: threadName(), path: path, function: function, line: line)
     }
 
     /// log something which will keep you awake at night (highest priority)
-    public class func error(@autoclosure(escaping) message: () -> Any, _
+    public class func error(@autoclosure message: () -> Any, _
         path: String = #file, _ function: String = #function, line: Int = #line) {
         dispatch_send(Level.Error, message: message, thread: threadName(), path: path, function: function, line: line)
     }
 
     /// internal helper which dispatches send to dedicated queue if minLevel is ok
-    class func dispatch_send(level: SwiftyBeaver.Level, @autoclosure(escaping) message: () -> Any,
+    class func dispatch_send(level: SwiftyBeaver.Level, @autoclosure message: () -> Any,
         thread: String, path: String, function: String, line: Int) {
         for dest in destinations {
 
@@ -115,13 +115,16 @@ public class SwiftyBeaver {
             }
 
             if dest.shouldLevelBeLogged(level, path: path, function: function) {
+                // try to convert msg object to String and put it on queue
+                let msgStr = "\(message())"
+
                 if dest.asynchronously {
                     dispatch_async(queue) {
-                        dest.send(level, msg: "\(message())", thread: thread, path: path, function: function, line: line)
+                        dest.send(level, msg: msgStr, thread: thread, path: path, function: function, line: line)
                     }
                 } else {
                     dispatch_sync(queue) {
-                        dest.send(level, msg: "\(message())", thread: thread, path: path, function: function, line: line)
+                        dest.send(level, msg: msgStr, thread: thread, path: path, function: function, line: line)
                     }
                 }
             }
