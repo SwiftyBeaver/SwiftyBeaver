@@ -150,4 +150,101 @@ class BaseDestinationTests: XCTestCase {
         // check filter 5 (function)
         XCTAssertTrue(obj.shouldLevelBeLogged(SwiftyBeaver.Level.Verbose, path: "", function: "MyFunction"))
     }
+
+    func test_shouldMessageBeLogged_noMessageFilters_answersTrue() {
+        let obj = BaseDestination()
+        obj.minLevel = SwiftyBeaver.Level.Info
+
+        obj.addMinLevelFilter(.Info, path: "", function: "", messageFilter: nil)
+
+        XCTAssertTrue(obj.shouldMessageBeLogged("Hello"))
+    }
+
+    func test_shouldMessageBeLogged_oneLevelFilterWithMessageFilterThatAnswersTrue_answersTrue() {
+        let obj = BaseDestination()
+        obj.minLevel = SwiftyBeaver.Level.Info
+
+        obj.addMinLevelFilter(.Info, path: "", function: "") {
+            message in
+
+            return true
+        }
+
+
+        XCTAssertTrue(obj.shouldMessageBeLogged("Hello"))
+    }
+
+    func test_shouldMessageBeLogged_oneLevelFilterWithMessageFilterThatAnswersFalse_answersFalse() {
+        let obj = BaseDestination()
+        obj.minLevel = SwiftyBeaver.Level.Info
+
+        obj.addMinLevelFilter(.Info, path: "", function: "") {
+            message in
+
+            return false
+        }
+
+
+        XCTAssertFalse(obj.shouldMessageBeLogged("Hello"))
+    }
+
+    func test_shouldMessageBeLogged_multipleLevelFiltersWithMessageFiltersThatAnswersTrue_answersTrue() {
+        let obj = BaseDestination()
+        obj.minLevel = SwiftyBeaver.Level.Info
+
+        obj.addMinLevelFilter(.Info, path: "", function: "") {
+            message in
+
+            return true
+        }
+
+        obj.addMinLevelFilter(.Info, path: "", function: "") {
+            message in
+
+            return 1 + 1 == 2
+        }
+
+
+        XCTAssertTrue(obj.shouldMessageBeLogged("Hello"))
+    }
+
+    func test_shouldMessageBeLogged_multipleLevelFiltersWithMessageFiltersAnswersFalse_answersFalse() {
+        let obj = BaseDestination()
+        obj.minLevel = SwiftyBeaver.Level.Info
+
+        obj.addMinLevelFilter(.Info, path: "", function: "") {
+            message in
+
+            return false
+        }
+
+        obj.addMinLevelFilter(.Info, path: "", function: "") {
+            message in
+
+            return 1 + 1 == 3
+        }
+
+
+        XCTAssertFalse(obj.shouldMessageBeLogged("Hello"))
+    }
+
+    func test_shouldMessageBeLogged_multipleLevelFiltersWithMessageFiltersOneAnswersTrueOneAnswersFalse_answersFalse() {
+        let obj = BaseDestination()
+        obj.minLevel = SwiftyBeaver.Level.Info
+
+        obj.addMinLevelFilter(.Info, path: "", function: "") {
+            message in
+
+            return true
+        }
+
+        obj.addMinLevelFilter(.Info, path: "", function: "") {
+            message in
+
+            return 1 + 1 == 3
+        }
+
+
+        XCTAssertFalse(obj.shouldMessageBeLogged("Hello"))
+    }
 }

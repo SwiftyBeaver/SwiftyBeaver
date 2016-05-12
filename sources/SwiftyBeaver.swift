@@ -108,24 +108,44 @@ public class SwiftyBeaver {
     /// internal helper which dispatches send to dedicated queue if minLevel is ok
     class func dispatch_send(level: SwiftyBeaver.Level, @autoclosure message: () -> Any,
         thread: String, path: String, function: String, line: Int) {
-        for dest in destinations {
 
-            guard let queue = dest.queue else {
-                continue
+        // Get only the destinations to which we will send
+        let activeDestinations = destinations.filter() {
+            destination in
+
+            guard let _ = destination.queue where destination.shouldLevelBeLogged(level, path: path, function: function) else {
+                return false
             }
 
-            if dest.shouldLevelBeLogged(level, path: path, function: function) {
-                // try to convert msg object to String and put it on queue
-                let msgStr = "\(message())"
+            return true
+        }
 
-                if dest.asynchronously {
-                    dispatch_async(queue) {
-                        dest.send(level, msg: msgStr, thread: thread, path: path, function: function, line: line)
-                    }
-                } else {
-                    dispatch_sync(queue) {
-                        dest.send(level, msg: msgStr, thread: thread, path: path, function: function, line: line)
-                    }
+        // If we have no destinations to send to, bail
+        guard activeDestinations.count > 0 else { return }
+
+        // Now, convert the msg object to String and filter active destinations that have message filters
+        let msgStr = "\(message())"
+
+        // Further filter destinations based upon the messageFilter if there is one and send to the destination
+        activeDestinations.filter() {
+            activeDestination in
+
+            return activeDestination.shouldMessageBeLogged(msgStr)
+        }.forEach() {
+            destination in
+
+            // Even though we've already filtered destinations without queues, we have to guard
+            guard let queue = destination.queue else {
+                return
+            }
+
+            if destination.asynchronously {
+                dispatch_async(queue) {
+                    destination.send(level, msg: msgStr, thread: thread, path: path, function: function, line: line)
+                }
+            } else {
+                dispatch_sync(queue) {
+                    destination.send(level, msg: msgStr, thread: thread, path: path, function: function, line: line)
                 }
             }
         }

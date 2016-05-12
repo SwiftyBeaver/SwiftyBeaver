@@ -28,6 +28,7 @@ struct MinLevelFilter {
     var minLevel = SwiftyBeaver.Level.Verbose
     var path = ""
     var function = ""
+    var messageFilter : (String -> Bool)?
 }
 
 /// destination which all others inherit from. do not directly use
@@ -89,8 +90,8 @@ public class BaseDestination: Hashable, Equatable {
     }
 
     /// overrule the destination’s minLevel for a given path and optional function
-    public func addMinLevelFilter(minLevel: SwiftyBeaver.Level, path: String, function: String = "") {
-        let filter = MinLevelFilter(minLevel: minLevel, path: path, function: function)
+    public func addMinLevelFilter(minLevel: SwiftyBeaver.Level, path: String, function: String = "", messageFilter: (String -> Bool)? = nil) {
+        let filter = MinLevelFilter(minLevel: minLevel, path: path, function: function, messageFilter: messageFilter)
         minLevelFilters.append(filter)
     }
 
@@ -224,6 +225,20 @@ public class BaseDestination: Hashable, Equatable {
             }
         }
         return false
+    }
+
+    /// checks if the message should be logged using the message filter, if one is specified
+    /// returns boolean and can be used to decide if a message should be logged or not
+    func shouldMessageBeLogged(message: String) -> Bool {
+        return minLevelFilters.filter() {
+            minLevelFilter in
+
+            guard let messageFilter = minLevelFilter.messageFilter else {
+                return true
+            }
+
+            return messageFilter(message)
+        }.count == minLevelFilters.count // All minLevelFilters must agree
     }
 
   /**
