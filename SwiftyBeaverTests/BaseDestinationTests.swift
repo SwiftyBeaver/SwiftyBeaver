@@ -151,97 +151,170 @@ class BaseDestinationTests: XCTestCase {
         XCTAssertTrue(obj.shouldLevelBeLogged(SwiftyBeaver.Level.Verbose, path: "", function: "MyFunction"))
     }
 
-    func test_shouldMessageBeLogged_noMessageFilters_answersTrue() {
+    /// minLevelFilters can be specified using a messageContains argument, which can be used to filter whether
+    /// a message is logged by determining whether the logged message contains the "messageContains" argument.
+    /// If the logged message contains the specified argument, the message will be logged. Otherwise, it is
+    /// filtered out and will not be logged. If multiple minLevelFilters are added, all of them must evaluate
+    /// to true to allow the message to be logged.
+    func test_shouldMessageBeLogged_noMessageContains_answersTrue() {
         let obj = BaseDestination()
         obj.minLevel = SwiftyBeaver.Level.Info
 
-        obj.addMinLevelFilter(.Info, path: "", function: "", messageFilter: nil)
+        obj.addMinLevelFilter(.Info, path: "", function: "", messageContains: nil)
 
-        XCTAssertTrue(obj.shouldMessageBeLogged("Hello"))
+        XCTAssertTrue(obj.shouldMessageBeLogged("I'm a Swifty Beaver"))
     }
 
-    func test_shouldMessageBeLogged_oneLevelFilterWithMessageFilterThatAnswersTrue_answersTrue() {
+    func test_shouldMessageBeLogged_oneMatchingNumericMessageContains_answersTrue() {
         let obj = BaseDestination()
         obj.minLevel = SwiftyBeaver.Level.Info
 
-        obj.addMinLevelFilter(.Info, path: "", function: "") {
-            message in
+        obj.addMinLevelFilter(.Info, path: "", function: "", messageContains: 2)
 
-            return true
-        }
-
-
-        XCTAssertTrue(obj.shouldMessageBeLogged("Hello"))
+        XCTAssertTrue(obj.shouldMessageBeLogged("I'm a Swifty Beaver with 2 sharp teeth"))
     }
 
-    func test_shouldMessageBeLogged_oneLevelFilterWithMessageFilterThatAnswersFalse_answersFalse() {
+    func test_shouldMessageBeLogged_oneMatchingNumericExpressionMessageContains_answersTrue() {
         let obj = BaseDestination()
         obj.minLevel = SwiftyBeaver.Level.Info
 
-        obj.addMinLevelFilter(.Info, path: "", function: "") {
-            message in
+        obj.addMinLevelFilter(.Info, path: "", function: "", messageContains: 2 + 2)
 
-            return false
-        }
-
-
-        XCTAssertFalse(obj.shouldMessageBeLogged("Hello"))
+        XCTAssertTrue(obj.shouldMessageBeLogged("I'm a Swifty Beaver with 4 sharp teeth"))
     }
 
-    func test_shouldMessageBeLogged_multipleLevelFiltersWithMessageFiltersThatAnswersTrue_answersTrue() {
+    func test_shouldMessageBeLogged_oneMatchingMessageContains_answersTrue() {
         let obj = BaseDestination()
         obj.minLevel = SwiftyBeaver.Level.Info
 
-        obj.addMinLevelFilter(.Info, path: "", function: "") {
-            message in
+        obj.addMinLevelFilter(.Info, path: "", function: "", messageContains: "Swifty")
 
-            return true
-        }
-
-        obj.addMinLevelFilter(.Info, path: "", function: "") {
-            message in
-
-            return 1 + 1 == 2
-        }
-
-
-        XCTAssertTrue(obj.shouldMessageBeLogged("Hello"))
+        XCTAssertTrue(obj.shouldMessageBeLogged("I'm a Swifty Beaver"))
     }
 
-    func test_shouldMessageBeLogged_multipleLevelFiltersWithMessageFiltersAnswersFalse_answersFalse() {
+    func test_shouldMessageBeLogged_oneMatchingAtStartMessageContains_answersTrue() {
         let obj = BaseDestination()
         obj.minLevel = SwiftyBeaver.Level.Info
 
-        obj.addMinLevelFilter(.Info, path: "", function: "") {
-            message in
+        obj.addMinLevelFilter(.Info, path: "", function: "", messageContains: "I'm")
 
-            return false
-        }
-
-        obj.addMinLevelFilter(.Info, path: "", function: "") {
-            message in
-
-            return 1 + 1 == 3
-        }
-
-
-        XCTAssertFalse(obj.shouldMessageBeLogged("Hello"))
+        XCTAssertTrue(obj.shouldMessageBeLogged("I'm a Swifty Beaver"))
     }
 
-    func test_shouldMessageBeLogged_multipleLevelFiltersWithMessageFiltersOneAnswersTrueOneAnswersFalse_answersFalse() {
+    func test_shouldMessageBeLogged_oneMatchingAtEndMessageContains_answersTrue() {
+        let obj = BaseDestination()
+        obj.minLevel = SwiftyBeaver.Level.Info
+
+        obj.addMinLevelFilter(.Info, path: "", function: "", messageContains: "Beaver")
+
+        XCTAssertTrue(obj.shouldMessageBeLogged("I'm a Swifty Beaver"))
+    }
+
+    func test_shouldMessageBeLogged_oneNonMatchingMessageContains_answersFalse() {
+        let obj = BaseDestination()
+        obj.minLevel = SwiftyBeaver.Level.Info
+
+        obj.addMinLevelFilter(.Info, path: "", function: "", messageContains: "Not so Swifty")
+
+        XCTAssertFalse(obj.shouldMessageBeLogged("I'm a Swifty Beaver"))
+    }
+
+    func test_shouldMessageBeLogged_oneMatchingAndOneNonMatchingMessageContains_answersFalse() {
+        let obj = BaseDestination()
+        obj.minLevel = SwiftyBeaver.Level.Info
+
+        obj.addMinLevelFilter(.Info, path: "", function: "", messageContains: "Beaver")
+        obj.addMinLevelFilter(.Info, path: "", function: "", messageContains: "Not so Swifty")
+
+        XCTAssertFalse(obj.shouldMessageBeLogged("I'm a Swifty Beaver"))
+    }
+
+    /// minLevelFilters can also be specified using a contentFilter argument, which can be used to filter whether
+    /// a message is logged. This version allows you complete control by specifying your own closure which will
+    /// be passed the message string to be logged. Your function can use whatever logic you wish. Answer true
+    /// to allow the message to be logged or false to prevent it from being logged. If multiple minLevelFilters are added,
+    /// all of them must evaluate to true to allow the message to be logged.
+    func test_shouldMessageBeLogged_oneLevelFilterWithContentFilterThatAnswersTrue_answersTrue() {
         let obj = BaseDestination()
         obj.minLevel = SwiftyBeaver.Level.Info
 
         obj.addMinLevelFilter(.Info, path: "", function: "") {
             message in
 
-            return true
+            return message.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 10
+        }
+
+        XCTAssertTrue(obj.shouldMessageBeLogged("I'm a Swifty Beaver"))
+    }
+
+    func test_shouldMessageBeLogged_oneLevelFilterWithContentFilterThatAnswersFalse_answersFalse() {
+        let obj = BaseDestination()
+        obj.minLevel = SwiftyBeaver.Level.Info
+
+        obj.addMinLevelFilter(.Info, path: "", function: "") {
+            message in
+
+            return message.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) < 10
+        }
+
+
+        XCTAssertFalse(obj.shouldMessageBeLogged("I'm a Swifty Beaver"))
+    }
+
+    func test_shouldMessageBeLogged_multipleLevelFiltersWithContentFiltersThatAnswersTrue_answersTrue() {
+        let obj = BaseDestination()
+        obj.minLevel = SwiftyBeaver.Level.Info
+
+        obj.addMinLevelFilter(.Info, path: "", function: "") {
+            message in
+
+            return message.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 10
         }
 
         obj.addMinLevelFilter(.Info, path: "", function: "") {
             message in
 
-            return 1 + 1 == 3
+            return message.hasSuffix("Beaver")
+        }
+
+
+        XCTAssertTrue(obj.shouldMessageBeLogged("I'm a Swifty Beaver"))
+    }
+
+    func test_shouldMessageBeLogged_multipleLevelFiltersWithContentFiltersThatAnswersFalse_answersFalse() {
+        let obj = BaseDestination()
+        obj.minLevel = SwiftyBeaver.Level.Info
+
+        obj.addMinLevelFilter(.Info, path: "", function: "") {
+            message in
+
+            return message.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) < 10
+        }
+
+        obj.addMinLevelFilter(.Info, path: "", function: "") {
+            message in
+
+            return message.hasPrefix("Beaver")
+        }
+
+
+        XCTAssertFalse(obj.shouldMessageBeLogged("I'm a Swifty Beaver"))
+    }
+
+    func test_shouldMessageBeLogged_multipleLevelFiltersWithContentFiltersOneAnswersTrueOneAnswersFalse_answersFalse() {
+        let obj = BaseDestination()
+        obj.minLevel = SwiftyBeaver.Level.Info
+
+        obj.addMinLevelFilter(.Info, path: "", function: "") {
+            message in
+
+            return message.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 10
+        }
+
+        obj.addMinLevelFilter(.Info, path: "", function: "") {
+            message in
+
+            return message.hasPrefix("Beaver")
         }
 
 

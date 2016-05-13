@@ -24,11 +24,14 @@ let OS = "Linux"
 let OS = "Unknown"
 #endif
 
+public typealias BasicFilter = () -> Bool
+public typealias ContentFilter = String -> Bool
+
 struct MinLevelFilter {
     var minLevel = SwiftyBeaver.Level.Verbose
     var path = ""
     var function = ""
-    var messageFilter : (String -> Bool)?
+    var contentFilter : ContentFilter?
 }
 
 /// destination which all others inherit from. do not directly use
@@ -90,8 +93,23 @@ public class BaseDestination: Hashable, Equatable {
     }
 
     /// overrule the destination’s minLevel for a given path and optional function
-    public func addMinLevelFilter(minLevel: SwiftyBeaver.Level, path: String, function: String = "", messageFilter: (String -> Bool)? = nil) {
-        let filter = MinLevelFilter(minLevel: minLevel, path: path, function: function, messageFilter: messageFilter)
+    public func addMinLevelFilter(minLevel: SwiftyBeaver.Level, path: String, function: String = "", @autoclosure messageContains: () -> Any?) {
+        let resolved = messageContains()
+        let compareString : String? = resolved == nil ? nil : "\(resolved!)" // Forced unwrap (sad face)
+        addMinLevelFilter(minLevel, path: path, function: function) {
+            (message : String) in
+
+            guard let compareString = compareString else {
+                return true
+            }
+
+            return message.containsString(compareString)
+        }
+    }
+
+    /// overrule the destination’s minLevel for a given path and optional function
+    public func addMinLevelFilter(minLevel: SwiftyBeaver.Level, path: String, function: String = "", contentFilter: ContentFilter? = nil) {
+        let filter = MinLevelFilter(minLevel: minLevel, path: path, function: function, contentFilter: contentFilter)
         minLevelFilters.append(filter)
     }
 
@@ -233,11 +251,11 @@ public class BaseDestination: Hashable, Equatable {
         return minLevelFilters.filter() {
             minLevelFilter in
 
-            guard let messageFilter = minLevelFilter.messageFilter else {
+            guard let contentFilter = minLevelFilter.contentFilter else {
                 return true
             }
 
-            return messageFilter(message)
+            return contentFilter(message)
         }.count == minLevelFilters.count // All minLevelFilters must agree
     }
 
