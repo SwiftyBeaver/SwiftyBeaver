@@ -73,6 +73,15 @@ class SBPlatformDestinationTests: XCTestCase {
         if let str = str {
             XCTAssertEqual(str.characters.first, "{")
             XCTAssertEqual(str.characters.last, "}")
+            #if swift(>=3.0)
+            XCTAssertNotNil(str.range(of: "\"line\":123"))
+            XCTAssertNotNil(str.range(of: "\"message\":\"test message\\nNewlineäößø\""))
+            XCTAssertNotNil(str.range(of: "\"fileName\":\"path.swift\""))
+            XCTAssertNotNil(str.range(of: "\"timestamp\":"))
+            XCTAssertNotNil(str.range(of: "\"level\":0"))
+            XCTAssertNotNil(str.range(of: "\"thread\":\"\""))
+            XCTAssertNotNil(str.range(of: "\"function\":\"TestFunction()\""))
+            #else
             XCTAssertNotNil(str.rangeOfString("\"line\":123"))
             XCTAssertNotNil(str.rangeOfString("\"message\":\"test message\\nNewlineäößø\""))
             XCTAssertNotNil(str.rangeOfString("\"fileName\":\"path.swift\""))
@@ -80,6 +89,7 @@ class SBPlatformDestinationTests: XCTestCase {
             XCTAssertNotNil(str.rangeOfString("\"level\":0"))
             XCTAssertNotNil(str.rangeOfString("\"thread\":\"\""))
             XCTAssertNotNil(str.rangeOfString("\"function\":\"TestFunction()\""))
+            #endif
         }
     }
 
@@ -111,7 +121,12 @@ class SBPlatformDestinationTests: XCTestCase {
 
         // invalid address
         platform.serverURL = NSURL(string: "https://notexisting.swiftybeaver.com")!
+        #if swift(>=3.0)
+        let exp = expectation(withDescription: "returns false due to invalid URL")
+        #else
         let exp = expectationWithDescription("returns false due to invalid URL")
+        #endif
+
 
         platform.sendToServerAsync(jsonStr) {
             ok, status in
@@ -123,7 +138,12 @@ class SBPlatformDestinationTests: XCTestCase {
         // invalid app ID
         platform.serverURL = correctURL
         platform.appID = "abc"
+        #if swift(>=3.0)
+        let exp2 = expectation(withDescription: "returns false due to invalid app ID")
+        #else
         let exp2 = expectationWithDescription("returns false due to invalid app ID")
+        #endif
+
 
         platform.sendToServerAsync(jsonStr) {
             ok, status in
@@ -135,7 +155,11 @@ class SBPlatformDestinationTests: XCTestCase {
         // invalid secret
         platform.appID = Secrets.Platform.appID
         platform.appSecret += "invalid"
+        #if swift(>=3.0)
+        let exp3 = expectation(withDescription: "returns false due to invalid secret")
+        #else
         let exp3 = expectationWithDescription("returns false due to invalid secret")
+        #endif
 
         platform.sendToServerAsync(jsonStr) {
             ok, status in
@@ -158,7 +182,13 @@ class SBPlatformDestinationTests: XCTestCase {
             exp4.fulfill()
         }
         */
+        #if swift(>=3.0)
+        waitForExpectations(withTimeout: 5, handler: nil)
+        #else
         waitForExpectationsWithTimeout(5, handler: nil)
+        #endif
+
+
     }
 
     func testIntegration() {
@@ -193,10 +223,16 @@ class SBPlatformDestinationTests: XCTestCase {
             }
 
             formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
+            #if swift(>=3.0)
+            let dateStr = formatter.string(from: NSDate())
+            #else
             let dateStr = formatter.stringFromDate(NSDate())
+            #endif
+
             log.debug("msg \(index) - \(dateStr)")
         }
         log.flush(3)
+
         // do some further waiting for sending to complete
         for _ in 1...platform.sendingPoints.Threshold + 3 {
             // simulate work by doing a computing
@@ -243,6 +279,7 @@ class SBPlatformDestinationTests: XCTestCase {
         if let userName = dict["userName"] as? String {
             XCTAssertEqual(userName, "")
         }
+
         XCTAssertTrue(platform.saveDictToFile(dict, url: platform.analyticsFileURL))
 
         // set userName
@@ -259,7 +296,11 @@ class SBPlatformDestinationTests: XCTestCase {
     /// helper function to delete temp file before test
     func deleteFile(url: NSURL) -> Bool {
         do {
+            #if swift(>=3.0)
+            try NSFileManager.default().removeItem(at: url)
+            #else
             try NSFileManager.defaultManager().removeItemAtURL(url)
+            #endif
             return true
         } catch let error {
             NSLog("Unit test: could not delete file \(url). \(error)")

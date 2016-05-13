@@ -35,7 +35,11 @@ class BaseDestinationTests: XCTestCase {
         // HH:mm:ss
         let formatter = NSDateFormatter()
         formatter.dateFormat = "HH:mm:ss"
+        #if swift(>=3.0)
+        let dateStr = formatter.string(from: NSDate())
+        #else
         let dateStr = formatter.stringFromDate(NSDate())
+        #endif
         str = BaseDestination().formattedDate(formatter.dateFormat)
         XCTAssertEqual(str, dateStr)
     }
@@ -79,23 +83,44 @@ class BaseDestinationTests: XCTestCase {
         var str = ""
         let formatter = NSDateFormatter()
         formatter.dateFormat = "HH:mm:ss"
-        let dateStr = formatter.stringFromDate(NSDate())
+        
+        #if swift(>=3.0)
+        let dateStr = formatter.string(from: NSDate())
 
         // logging to main thread does not output thread name
         str = obj.formattedMessage(dateStr, levelString: "DEBUG", msg: "Hello", thread: "main",
             path: "/path/to/ViewController.swift", function: "testFunction()", line: 50, detailOutput: false)
-        XCTAssertNotNil(str.rangeOfString("[\(dateStr)] DEBUG: Hello"))
-        XCTAssertNil(str.rangeOfString("main"))
-        XCTAssertNil(str.rangeOfString("|"))
+        XCTAssertNotNil(str.range(of: "[\(dateStr)] DEBUG: Hello"))
+        XCTAssertNil(str.range(of: "main"))
+        XCTAssertNil(str.range(of: "|"))
 
         str = obj.formattedMessage(dateStr, levelString: "DEBUG", msg: "Hello", thread: "myThread",
             path: "/path/to/ViewController.swift", function: "testFunction()", line: 50, detailOutput: true)
-        XCTAssertNotNil(str.rangeOfString("[\(dateStr)] |myThread| ViewController.testFunction():50 DEBUG: Hello"))
+        XCTAssertNotNil(str.range(of: "[\(dateStr)] |myThread| ViewController.testFunction():50 DEBUG: Hello"))
 
         str = obj.formattedMessage(dateStr, levelString: "DEBUG", msg: "Hello", thread: "",
             path: "/path/to/ViewController.swift", function: "testFunction()", line: 50, detailOutput: true)
+        XCTAssertNotNil(str.range(of: "[\(dateStr)] ViewController.testFunction():50 DEBUG: Hello"))
+        XCTAssertNil(str.range(of: "|"))
+        #else
+        let dateStr = formatter.stringFromDate(NSDate())
+        
+        // logging to main thread does not output thread name
+        str = obj.formattedMessage(dateStr, levelString: "DEBUG", msg: "Hello", thread: "main",
+        path: "/path/to/ViewController.swift", function: "testFunction()", line: 50, detailOutput: false)
+        XCTAssertNotNil(str.rangeOfString("[\(dateStr)] DEBUG: Hello"))
+        XCTAssertNil(str.rangeOfString("main"))
+        XCTAssertNil(str.rangeOfString("|"))
+        
+        str = obj.formattedMessage(dateStr, levelString: "DEBUG", msg: "Hello", thread: "myThread",
+        path: "/path/to/ViewController.swift", function: "testFunction()", line: 50, detailOutput: true)
+        XCTAssertNotNil(str.rangeOfString("[\(dateStr)] |myThread| ViewController.testFunction():50 DEBUG: Hello"))
+        
+        str = obj.formattedMessage(dateStr, levelString: "DEBUG", msg: "Hello", thread: "",
+        path: "/path/to/ViewController.swift", function: "testFunction()", line: 50, detailOutput: true)
         XCTAssertNotNil(str.rangeOfString("[\(dateStr)] ViewController.testFunction():50 DEBUG: Hello"))
         XCTAssertNil(str.rangeOfString("|"))
+        #endif
     }
 
     func testFormattedMessageEmptyDate() {
