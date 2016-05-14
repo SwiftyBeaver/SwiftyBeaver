@@ -83,33 +83,21 @@ public class BaseDestination: Hashable, Equatable {
     var queue: dispatch_queue_t?
 
     public init() {
-        #if swift(>=3.0)
         let uuid = NSUUID().uuidString
-        #else
-        let uuid = NSUUID().UUIDString
-        #endif
         let queueLabel = "swiftybeaver-queue-" + uuid
         queue = dispatch_queue_create(queueLabel, DISPATCH_QUEUE_SERIAL)
     }
 
     /// overrule the destination’s minLevel for a given path and optional function
-    #if swift(>=3.0)
     public func addMinLevelFilter(_ minLevel: SwiftyBeaver.Level, path: String, function: String = "") {
         let filter = MinLevelFilter(minLevel: minLevel, path: path, function: function)
         minLevelFilters.append(filter)
     }
-    #else
-    public func addMinLevelFilter(minLevel: SwiftyBeaver.Level, path: String, function: String = "") {
-        let filter = MinLevelFilter(minLevel: minLevel, path: path, function: function)
-        minLevelFilters.append(filter)
-    }
-    #endif
 
 
     /// send / store the formatted log message to the destination
     /// returns the formatted log message for processing by inheriting method
     /// and for unit tests (nil if error)
-    #if swift(>=3.0)
     public func send(_ level: SwiftyBeaver.Level, msg: String, thread: String,
         path: String, function: String, line: Int) -> String? {
         var dateStr = ""
@@ -122,40 +110,16 @@ public class BaseDestination: Hashable, Equatable {
             function: function, line: line, detailOutput: detailOutput)
         return str
     }
-    #else
-    public func send(level: SwiftyBeaver.Level, msg: String, thread: String,
-                     path: String, function: String, line: Int) -> String? {
-        var dateStr = ""
-        var str = ""
-        let levelStr = formattedLevel(level)
-        let formattedMsg = coloredMessage(msg, forLevel: level)
-        
-        dateStr = formattedDate(dateFormat)
-        str = formattedMessage(dateStr, levelString: levelStr, msg: formattedMsg, thread: thread, path: path,
-                               function: function, line: line, detailOutput: detailOutput)
-        return str
-    }
-    #endif
 
     /// returns a formatted date string
-    #if swift(>=3.0)
     func formattedDate(_ dateFormat: String) -> String {
         //formatter.timeZone = NSTimeZone(abbreviation: "UTC")
         formatter.dateFormat = dateFormat
         let dateStr = formatter.string(from: NSDate())
         return dateStr
     }
-    #else
-    func formattedDate(dateFormat: String) -> String {
-        //formatter.timeZone = NSTimeZone(abbreviation: "UTC")
-        formatter.dateFormat = dateFormat
-        let dateStr = formatter.stringFromDate(NSDate())
-        return dateStr
-    }
-    #endif
 
     /// returns the log message entirely colored
-    #if swift(>=3.0)
     func coloredMessage(_ msg: String, forLevel level: SwiftyBeaver.Level) -> String {
         if !(colored && coloredLines) {
             return msg
@@ -165,17 +129,6 @@ public class BaseDestination: Hashable, Equatable {
         let coloredMsg = escape + color + msg + reset
         return coloredMsg
     }
-    #else
-    func coloredMessage(msg: String, forLevel level: SwiftyBeaver.Level) -> String {
-        if !(colored && coloredLines) {
-            return msg
-        }
-        
-        let color = colorForLevel(level)
-        let coloredMsg = escape + color + msg + reset
-        return coloredMsg
-    }
-    #endif
 
     /// returns color string for level
     func colorForLevel(level: SwiftyBeaver.Level) -> String {
@@ -202,7 +155,6 @@ public class BaseDestination: Hashable, Equatable {
     }
 
     /// returns an optionally colored level noun (like INFO, etc.)
-    #if swift(>=3.0)
     func formattedLevel(_ level: SwiftyBeaver.Level) -> String {
         // optionally wrap the level string in color
         let color = colorForLevel(level: level)
@@ -231,41 +183,8 @@ public class BaseDestination: Hashable, Equatable {
         }
         return levelStr
     }
-    #else
-    func formattedLevel(level: SwiftyBeaver.Level) -> String {
-        // optionally wrap the level string in color
-        let color = colorForLevel(level)
-        var levelStr = ""
-        
-        switch level {
-        case SwiftyBeaver.Level.Debug:
-            levelStr = levelString.Debug
-            
-        case SwiftyBeaver.Level.Info:
-            levelStr = levelString.Info
-            
-        case SwiftyBeaver.Level.Warning:
-            levelStr = levelString.Warning
-            
-        case SwiftyBeaver.Level.Error:
-            levelStr = levelString.Error
-            
-        default:
-            // Verbose is default
-            levelStr = levelString.Verbose
-        }
-        
-        if colored {
-            levelStr = escape + color + levelStr + reset
-        }
-        return levelStr
-    }
-    #endif
-
-
 
     /// returns the formatted log message
-    #if swift(>=3.0)
     func formattedMessage(_ dateString: String, levelString: String, msg: String,
         thread: String, path: String, function: String, line: Int, detailOutput: Bool) -> String {
         // just use the file name of the path and remove suffix
@@ -286,33 +205,10 @@ public class BaseDestination: Hashable, Equatable {
         }
         return str
     }
-    #else
-    func formattedMessage(dateString: String, levelString: String, msg: String,
-                          thread: String, path: String, function: String, line: Int, detailOutput: Bool) -> String {
-        // just use the file name of the path and remove suffix
-        let file = path.componentsSeparatedByString("/").last!.componentsSeparatedByString(".").first!
-        
-        var str = ""
-        if dateString != "" {
-            str += "[\(dateString)] "
-        }
-        if detailOutput {
-            if thread != "main" && thread != "" {
-                str += "|\(thread)| "
-            }
-            
-            str += "\(file).\(function):\(line) \(levelString): \(msg)"
-        } else {
-            str += "\(levelString): \(msg)"
-        }
-        return str
-    }
-    #endif
 
 
     /// checks if level is at least minLevel or if a minLevel filter for that path does exist
     /// returns boolean and can be used to decide if a message should be logged or not
-    #if swift(>=3.0)
     func shouldLevelBeLogged(_ level: SwiftyBeaver.Level, path: String, function: String) -> Bool {
         // at first check the instance’s global minLevel property
         if minLevel.rawValue <= level.rawValue {
@@ -332,27 +228,6 @@ public class BaseDestination: Hashable, Equatable {
         }
         return false
     }
-    #else
-    func shouldLevelBeLogged(level: SwiftyBeaver.Level, path: String, function: String) -> Bool {
-        // at first check the instance’s global minLevel property
-        if minLevel.rawValue <= level.rawValue {
-            return true
-        }
-        // now go through all minLevelFilters and see if there is a match
-        for filter in minLevelFilters {
-            // rangeOfString returns nil if both values are the same!
-            if filter.minLevel.rawValue <= level.rawValue {
-                if filter.path == "" || path == filter.path || path.rangeOfString(filter.path) != nil {
-                    if filter.function == "" || function == filter.function ||
-                        function.rangeOfString(filter.function) != nil {
-                        return true
-                    }
-                }
-            }
-        }
-        return false
-    }
-    #endif
 
 
   /**
