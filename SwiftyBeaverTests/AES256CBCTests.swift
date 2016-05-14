@@ -112,8 +112,8 @@ class AES256CBCTests: XCTestCase {
         XCTAssertEqual(text.characters.count, length)
         XCTAssertEqual(text2.characters.count, length)
         XCTAssertNotEqual(text, text2)
-        XCTAssertNil(text.rangeOfString(" "))
-        XCTAssertNil(text2.rangeOfString(" "))
+        XCTAssertNil(text.range(of: " "))
+        XCTAssertNil(text2.range(of: " "))
     }
 
     func testGeneratePassword() {
@@ -122,8 +122,8 @@ class AES256CBCTests: XCTestCase {
         XCTAssertEqual(pw.characters.count, 32)
         XCTAssertEqual(pw2.characters.count, 32)
         XCTAssertNotEqual(pw, pw2)
-        XCTAssertNil(pw.rangeOfString(" "))
-        XCTAssertNil(pw2.rangeOfString(" "))
+        XCTAssertNil(pw.range(of: " "))
+        XCTAssertNil(pw2.range(of: " "))
     }
 
 }

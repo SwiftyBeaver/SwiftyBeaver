@@ -14,19 +14,19 @@ public class FileDestination: BaseDestination {
     public var logFileURL: NSURL
 
     override public var defaultHashValue: Int {return 2}
-    let fileManager = NSFileManager.defaultManager()
+    let fileManager = NSFileManager.default()
     var fileHandle: NSFileHandle? = nil
 
     public override init() {
         // platform-dependent logfile directory default
-        var logsBaseDir: NSSearchPathDirectory = .CachesDirectory
+        var logsBaseDir: NSSearchPathDirectory = .cachesDirectory
 
         if OS == "OSX" {
-            logsBaseDir = .DocumentDirectory
+            logsBaseDir = .documentDirectory
         }
 
-        if let url = fileManager.URLsForDirectory(logsBaseDir, inDomains: .UserDomainMask).first {
-            logFileURL = url.URLByAppendingPathComponent("swiftybeaver.log", isDirectory: false)
+        if let url = fileManager.urlsForDirectory(logsBaseDir, inDomains: .userDomainMask).first {
+            logFileURL = url.appendingPathComponent("swiftybeaver.log", isDirectory: false)
         } else {
             logFileURL = NSURL()
         }
@@ -45,7 +45,7 @@ public class FileDestination: BaseDestination {
     }
 
     // append to file. uses full base class functionality
-    override public func send(level: SwiftyBeaver.Level, msg: String, thread: String,
+    override public func send(_ level: SwiftyBeaver.Level, msg: String, thread: String,
         path: String, function: String, line: Int) -> String? {
         let formattedString = super.send(level, msg: msg, thread: thread, path: path, function: function, line: line)
 
@@ -64,23 +64,23 @@ public class FileDestination: BaseDestination {
 
     /// appends a string as line to a file.
     /// returns boolean about success
-    func saveToFile(str: String, url: NSURL) -> Bool {
+    func saveToFile(_ str: String, url: NSURL) -> Bool {
         do {
-            if fileManager.fileExistsAtPath(url.path!) == false {
+            if fileManager.fileExists(atPath: url.path!) == false {
                 // create file if not existing
                 let line = str + "\n"
-                try line.writeToURL(url, atomically: true, encoding: NSUTF8StringEncoding)
+                try line.write(to: url, atomically: true, encoding: NSUTF8StringEncoding)
             } else {
                 // append to end of file
                 if fileHandle == nil {
                     // initial setting of file handle
-                    fileHandle = try NSFileHandle(forWritingToURL: url)
+                    fileHandle = try NSFileHandle(forWritingTo: url)
                 }
                 if let fileHandle = fileHandle {
                     fileHandle.seekToEndOfFile()
                     let line = str + "\n"
-                    let data = line.dataUsingEncoding(NSUTF8StringEncoding)!
-                    fileHandle.writeData(data)
+                    let data = line.data(using: NSUTF8StringEncoding)!
+                    fileHandle.write(data)
                 }
             }
             return true

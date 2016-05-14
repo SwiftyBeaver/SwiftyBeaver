@@ -19,7 +19,7 @@ final class AES256CBC {
     /// returns optional encrypted string via AES-256CBC
     /// automatically generates and puts a random IV at first 16 chars
     /// the password must be exactly 32 chars long for AES-256
-    class func encryptString(str: String, password: String) -> String? {
+    class func encryptString(_ str: String, password: String) -> String? {
         if !str.isEmpty && password.characters.count == 32 {
             let iv = randomText(16)
             let key = password
@@ -37,14 +37,14 @@ final class AES256CBC {
 
     /// returns optional decrypted string via AES-256CBC
     /// IV need to be at first 16 chars, password must be 32 chars long
-    class func decryptString(str: String, password: String) -> String? {
+    class func decryptString(_ str: String, password: String) -> String? {
         if str.characters.count > 16 && password.characters.count == 32 {
             // get AES initialization vector from first 16 chars
-            let ivRange = str.startIndex..<str.startIndex.advancedBy(16)
-            let iv = str.substringWithRange(ivRange)
-            let encryptedString = str.stringByReplacingOccurrencesOfString(iv, withString: "",
-                options: NSStringCompareOptions.LiteralSearch, range: nil) // remove IV
-
+            let ivRange = str.startIndex..<str.index(str.startIndex, offsetBy: 16)
+            let iv = str.substring(with: ivRange)
+            let encryptedString = str.replacingOccurrences(of: iv, with: "",
+                options: NSStringCompareOptions.literalSearch, range: nil) // remove IV
+            
             do {
                 let decryptedString = try aesDecrypt(encryptedString, key: password, iv: iv)
                 return decryptedString
@@ -55,26 +55,26 @@ final class AES256CBC {
         return nil
     }
 
-    /// returns encrypted string, IV must be 16 chars long
-    private class func aesEncrypt(str: String, key: String, iv: String) throws -> String {
-        let keyData = key.dataUsingEncoding(NSUTF8StringEncoding)!
-        let ivData = iv.dataUsingEncoding(NSUTF8StringEncoding)!
-        let data = str.dataUsingEncoding(NSUTF8StringEncoding)!
 
-        let enc = try NSData.withBytes(AESCipher(key: keyData.arrayOfBytes(),
-            iv: ivData.arrayOfBytes()).encrypt(data.arrayOfBytes()))
-        let base64String: String = enc.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0))
+    /// returns encrypted string, IV must be 16 chars long
+    private class func aesEncrypt(_ str: String, key: String, iv: String) throws -> String {
+        let keyData = key.data(using: NSUTF8StringEncoding)!
+        let ivData = iv.data(using: NSUTF8StringEncoding)!
+        let data = str.data(using: NSUTF8StringEncoding)!
+        let enc = try NSData.withBytes(bytes: AESCipher(key: keyData.arrayOfBytes(),
+            iv: ivData.arrayOfBytes()).encrypt(bytes: data.arrayOfBytes()))
+        let base64String: String = enc.base64EncodedString(NSDataBase64EncodingOptions(rawValue: 0))
         let result = String(base64String)
         return result
     }
 
     /// returns decrypted string, IV must be 16 chars long
-    private class func aesDecrypt(str: String, key: String, iv: String) throws -> String {
-        let keyData = key.dataUsingEncoding(NSUTF8StringEncoding)!
-        let ivData = iv.dataUsingEncoding(NSUTF8StringEncoding)!
-        let data = NSData(base64EncodedString: str, options: NSDataBase64DecodingOptions(rawValue: 0))!
-        let dec = try NSData.withBytes(AESCipher(key: keyData.arrayOfBytes(),
-            iv: ivData.arrayOfBytes()).decrypt(data.arrayOfBytes()))
+    private class func aesDecrypt(_ str: String, key: String, iv: String) throws -> String {
+        let keyData = key.data(using: NSUTF8StringEncoding)!
+        let ivData = iv.data(using: NSUTF8StringEncoding)!
+        let data = NSData(base64Encoded: str, options: NSDataBase64DecodingOptions(rawValue: 0))!
+        let dec = try NSData.withBytes(bytes: AESCipher(key: keyData.arrayOfBytes(),
+            iv: ivData.arrayOfBytes()).decrypt(bytes: data.arrayOfBytes()))
         let result = NSString(data: dec, encoding: NSUTF8StringEncoding)
         return String(result!)
     }
@@ -88,7 +88,7 @@ final class AES256CBC {
     /// returns random text of a defined length.
     /// Optional bool parameter justLowerCase to just generate random lowercase text and
     /// whitespace to exclude the whitespace character
-    class func randomText(length: Int, justLowerCase: Bool = false, whitespace: Bool = false) -> String {
+    class func randomText(_ length: Int, justLowerCase: Bool = false, whitespace: Bool = false) -> String {
         var text = ""
         for _ in 1...length {
             var decValue = 0  // ascii decimal value of a character
@@ -116,10 +116,11 @@ final class AES256CBC {
             let char = String(UnicodeScalar(decValue))
             text = text + char
             // remove double spaces if existing
-            text = text.stringByReplacingOccurrencesOfString("  ", withString: " ")
+            text = text.replacingOccurrences(of: "  ", with: " ")
         }
         return text
     }
+
 
 }
 
@@ -149,7 +150,7 @@ final class AES256CBC {
 
 final private class AESCipher {
 
-    enum Error: ErrorType {
+    enum Error: ErrorProtocol {
         case BlockSizeExceeded
         case InvalidKeyOrInitializationVector
         case InvalidInitializationVector
@@ -188,8 +189,8 @@ final private class AESCipher {
     private let key: [UInt8]
     private let iv: [UInt8]?
     private let blockMode = CBCBlockMode()
-    private lazy var expandedKey: [[UInt32]] = self.expandKey(self.key, variant: self.variant)
-    private lazy var expandedKeyInv: [[UInt32]] = self.expandKeyInv(self.key, variant: self.variant)
+    private lazy var expandedKey: [[UInt32]] = self.expandKey(key: self.key, variant: self.variant)
+    private lazy var expandedKeyInv: [[UInt32]] = self.expandKeyInv(key: self.key, variant: self.variant)
 
     private lazy var sBoxes:(sBox: [UInt32], invSBox: [UInt32]) = self.calculateSBox()
     private lazy var sBox: [UInt32] = self.sBoxes.sBox
@@ -629,7 +630,7 @@ final private class AESCipher {
 
     convenience init(key: [UInt8]) throws {
         // default IV is all 0x00...
-        let defaultIV = [UInt8](count: AESCipher.blockSize, repeatedValue: 0)
+        let defaultIV = [UInt8](repeating: 0, count: AESCipher.blockSize)
         try self.init(key: key, iv: defaultIV)
     }
 
@@ -643,17 +644,16 @@ final private class AESCipher {
      */
 
     func encrypt(bytes: [UInt8]) throws -> [UInt8] {
-        let finalBytes = PKCS7().add(bytes, blockSize: AESCipher.blockSize)
-        let blocks = finalBytes.chunks(AESCipher.blockSize)
-        return try blockMode.encryptBlocks(blocks, iv: self.iv, cipherOperation: encryptBlock)
+        let finalBytes = PKCS7().add(bytes: bytes, blockSize: AESCipher.blockSize)
+        let blocks = finalBytes.chunks(chunksize: AESCipher.blockSize)
+        return try blockMode.encryptBlocks(blocks: blocks, iv: self.iv, cipherOperation: encryptBlock)
     }
 
     private func encryptBlock(block: [UInt8]) -> [UInt8]? {
         let rounds = self.variant.Nr
         let rk = self.expandedKey
-        var b = toUInt32Array(block[block.startIndex..<block.endIndex])
-
-        var t = [UInt32](count: 4, repeatedValue: 0)
+        var b = toUInt32Array(slice: block[block.startIndex..<block.endIndex])
+        var t = [UInt32](repeating: 0, count: 4)
 
         for r in 0..<rounds - 1 {
             t[0] = b[0] ^ rk[r][0]
@@ -695,11 +695,11 @@ final private class AESCipher {
         t[3] = b[3] ^ rk[r][3]
 
         // rounds
-        b[0] = F1(t[0], t[1], t[2], t[3]) ^ rk[rounds][0]
-        b[1] = F1(t[1], t[2], t[3], t[0]) ^ rk[rounds][1]
-        b[2] = F1(t[2], t[3], t[0], t[1]) ^ rk[rounds][2]
-        b[3] = F1(t[3], t[0], t[1], t[2]) ^ rk[rounds][3]
-
+        b[0] = F1(x0: t[0], t[1], t[2], t[3]) ^ rk[rounds][0]
+        b[1] = F1(x0: t[1], t[2], t[3], t[0]) ^ rk[rounds][1]
+        b[2] = F1(x0: t[2], t[3], t[0], t[1]) ^ rk[rounds][2]
+        b[3] = F1(x0: t[3], t[0], t[1], t[2]) ^ rk[rounds][3]
+            
         var out = [UInt8]()
         out.reserveCapacity(b.count * 4)
         for num in b {
@@ -717,19 +717,21 @@ final private class AESCipher {
             throw Error.BlockSizeExceeded
         }
 
-        let blocks = bytes.chunks(AESCipher.blockSize)
-        return try PKCS7().remove(blockMode.decryptBlocks(blocks,
+        let blocks = bytes.chunks(chunksize: AESCipher.blockSize)
+        return try PKCS7().remove(bytes: blockMode.decryptBlocks(blocks: blocks,
             iv: self.iv, cipherOperation: decryptBlock), blockSize: AESCipher.blockSize)
+
     }
 
     private func decryptBlock(block: [UInt8]) -> [UInt8]? {
         let rounds = self.variant.Nr
         let rk = expandedKeyInv
-        var b = toUInt32Array(block[block.startIndex..<block.endIndex])
+        var b = toUInt32Array(slice: block[block.startIndex..<block.endIndex])
+        var t = [UInt32](repeating: 0, count: 4)
 
-        var t = [UInt32](count: 4, repeatedValue: 0)
+        let reverse = (2...rounds).reversed()
 
-        for r in (2...rounds).reverse() {
+        for r in reverse {
             t[0] = b[0] ^ rk[r][0]
             t[1] = b[1] ^ rk[r][1]
             t[2] = b[2] ^ rk[r][2]
@@ -767,30 +769,30 @@ final private class AESCipher {
         t[3] = b[3] ^ rk[1][3]
 
         // rounds
-
-        let lb00 = sBoxInv[Int(B0(t[0]))]
-        let lb01 = (sBoxInv[Int(B1(t[3]))] << 8)
-        let lb02 = (sBoxInv[Int(B2(t[2]))] << 16)
-        let lb03 = (sBoxInv[Int(B3(t[1]))] << 24)
+        let lb00 = sBoxInv[Int(B0(x: t[0]))]
+        let lb01 = (sBoxInv[Int(B1(x: t[3]))] << 8)
+        let lb02 = (sBoxInv[Int(B2(x: t[2]))] << 16)
+        let lb03 = (sBoxInv[Int(B3(x: t[1]))] << 24)
         b[0] = lb00 | lb01 | lb02 | lb03 ^ rk[0][0]
 
-        let lb10 = sBoxInv[Int(B0(t[1]))]
-        let lb11 = (sBoxInv[Int(B1(t[0]))] << 8)
-        let lb12 = (sBoxInv[Int(B2(t[3]))] << 16)
-        let lb13 = (sBoxInv[Int(B3(t[2]))] << 24)
+        let lb10 = sBoxInv[Int(B0(x: t[1]))]
+        let lb11 = (sBoxInv[Int(B1(x: t[0]))] << 8)
+        let lb12 = (sBoxInv[Int(B2(x: t[3]))] << 16)
+        let lb13 = (sBoxInv[Int(B3(x: t[2]))] << 24)
         b[1] = lb10 | lb11 | lb12 | lb13 ^ rk[0][1]
 
-        let lb20 = sBoxInv[Int(B0(t[2]))]
-        let lb21 = (sBoxInv[Int(B1(t[1]))] << 8)
-        let lb22 = (sBoxInv[Int(B2(t[0]))] << 16)
-        let lb23 = (sBoxInv[Int(B3(t[3]))] << 24)
+        let lb20 = sBoxInv[Int(B0(x: t[2]))]
+        let lb21 = (sBoxInv[Int(B1(x: t[1]))] << 8)
+        let lb22 = (sBoxInv[Int(B2(x: t[0]))] << 16)
+        let lb23 = (sBoxInv[Int(B3(x: t[3]))] << 24)
         b[2] = lb20 | lb21 | lb22 | lb23 ^ rk[0][2]
 
-        let lb30 = sBoxInv[Int(B0(t[3]))]
-        let lb31 = (sBoxInv[Int(B1(t[2]))] << 8)
-        let lb32 = (sBoxInv[Int(B2(t[1]))] << 16)
-        let lb33 = (sBoxInv[Int(B3(t[0]))] << 24)
+        let lb30 = sBoxInv[Int(B0(x: t[3]))]
+        let lb31 = (sBoxInv[Int(B1(x: t[2]))] << 8)
+        let lb32 = (sBoxInv[Int(B2(x: t[1]))] << 16)
+        let lb33 = (sBoxInv[Int(B3(x: t[0]))] << 24)
         b[3] = lb30 | lb31 | lb32 | lb33 ^ rk[0][3]
+
 
         var out = [UInt8]()
         out.reserveCapacity(b.count * 4)
@@ -806,22 +808,22 @@ final private class AESCipher {
 
     private func expandKeyInv(key: [UInt8], variant: AESVariant) -> [[UInt32]] {
         let rounds = variant.Nr
-        var rk2: [[UInt32]] = expandKey(key, variant: variant)
+        var rk2: [[UInt32]] = expandKey(key: key, variant: variant)
 
         for r in 1..<rounds {
             var w: UInt32
 
             w = rk2[r][0]
-            rk2[r][0] = U1[Int(B0(w))] ^ U2[Int(B1(w))] ^ U3[Int(B2(w))] ^ U4[Int(B3(w))]
+            rk2[r][0] = U1[Int(B0(x: w))] ^ U2[Int(B1(x: w))] ^ U3[Int(B2(x: w))] ^ U4[Int(B3(x: w))]
 
             w = rk2[r][1]
-            rk2[r][1] = U1[Int(B0(w))] ^ U2[Int(B1(w))] ^ U3[Int(B2(w))] ^ U4[Int(B3(w))]
+            rk2[r][1] = U1[Int(B0(x: w))] ^ U2[Int(B1(x: w))] ^ U3[Int(B2(x: w))] ^ U4[Int(B3(x: w))]
 
             w = rk2[r][2]
-            rk2[r][2] = U1[Int(B0(w))] ^ U2[Int(B1(w))] ^ U3[Int(B2(w))] ^ U4[Int(B3(w))]
+            rk2[r][2] = U1[Int(B0(x: w))] ^ U2[Int(B1(x: w))] ^ U3[Int(B2(x: w))] ^ U4[Int(B3(x: w))]
 
             w = rk2[r][3]
-            rk2[r][3] = U1[Int(B0(w))] ^ U2[Int(B1(w))] ^ U3[Int(B2(w))] ^ U4[Int(B3(w))]
+            rk2[r][3] = U1[Int(B0(x: w))] ^ U2[Int(B1(x: w))] ^ U3[Int(B2(x: w))] ^ U4[Int(B3(x: w))]
         }
 
         return rk2
@@ -831,16 +833,17 @@ final private class AESCipher {
 
         func convertExpandedKey(expanded: [UInt8]) -> [[UInt32]] {
             var arr = [UInt32]()
-            for idx in expanded.startIndex.stride(to: expanded.endIndex, by: 4) {
-                let four = Array(expanded[idx..<idx.advancedBy(4)].reverse())
-                let num = UInt32.withBytes(four)
+            for idx in stride(from: expanded.startIndex, to: expanded.endIndex, by: 4) {
+                let four = Array(expanded[idx..<expanded.index(idx, offsetBy: 4)].reversed())
+                let num = UInt32.withBytes(bytes: four)
                 arr.append(num)
             }
 
             var allarr = [[UInt32]]()
-            for idx in arr.startIndex.stride(to: arr.endIndex, by: 4) {
-                allarr.append(Array(arr[idx..<idx.advancedBy(4)]))
+            for idx in stride(from: arr.startIndex, to: arr.endIndex, by: 4) {
+                allarr.append(Array(arr[idx..<arr.index(idx, offsetBy: 4)]))
             }
+
             return allarr
         }
 
@@ -857,7 +860,7 @@ final private class AESCipher {
             return result
         }
 
-        var w = [UInt8](count: variant.Nb * (variant.Nr + 1) * 4, repeatedValue: 0)
+        var w = [UInt8](repeating:0, count: variant.Nb * (variant.Nr + 1) * 4)
         for i in 0..<variant.Nk {
             for wordIdx in 0..<4 {
                 w[(4*i)+wordIdx] = key[(4*i)+wordIdx]
@@ -867,16 +870,16 @@ final private class AESCipher {
         var tmp: [UInt8]
 
         for i in variant.Nk..<variant.Nb * (variant.Nr + 1) {
-            tmp = [UInt8](count: 4, repeatedValue: 0)
+            tmp = [UInt8](repeating: 0, count: 4)
 
             for wordIdx in 0..<4 {
                 tmp[wordIdx] = w[4*(i-1)+wordIdx]
             }
             if (i % variant.Nk) == 0 {
-                tmp = subWord(rotateLeft(UInt32.withBytes(tmp), 8).bytes(sizeof(UInt32)))
+                tmp = subWord(word: rotateLeft(UInt32.withBytes(bytes: tmp), 8).bytes(totalBytes: sizeof(UInt32)))
                 tmp[0] = tmp.first! ^ Rcon[i/variant.Nk]
             } else if variant.Nk > 6 && (i % variant.Nk) == 4 {
-                tmp = subWord(tmp)
+                tmp = subWord(word: tmp)
             }
 
             // xor array of bytes
@@ -884,7 +887,7 @@ final private class AESCipher {
                 w[4*i+wordIdx] = w[4*(i-variant.Nk)+wordIdx]^tmp[wordIdx]
             }
         }
-        return convertExpandedKey(w)
+        return convertExpandedKey(expanded: w)
     }
 }
 
@@ -908,15 +911,15 @@ private extension AESCipher {
 
     private func F1(x0: UInt32, _ x1: UInt32, _ x2: UInt32, _ x3: UInt32) -> UInt32 {
         var result: UInt32 = 0
-        result |= UInt32(B1(T0[Int(x0 & 255)]))
-        result |= UInt32(B1(T0[Int((x1 >> 8) & 255)])) << 8
-        result |= UInt32(B1(T0[Int((x2 >> 16) & 255)])) << 16
-        result |= UInt32(B1(T0[Int(x3 >> 24)])) << 24
+        result |= UInt32(B1(x: T0[Int(x0 & 255)]))
+        result |= UInt32(B1(x: T0[Int((x1 >> 8) & 255)])) << 8
+        result |= UInt32(B1(x: T0[Int((x2 >> 16) & 255)])) << 16
+        result |= UInt32(B1(x: T0[Int(x3 >> 24)])) << 24
         return result
     }
 
     private func calculateSBox() -> (sBox: [UInt32], invSBox: [UInt32]) {
-        var sbox = [UInt32](count: 256, repeatedValue: 0)
+        var sbox = [UInt32](repeating: 0, count: 256)
         var invsbox = sbox
         sbox[0] = 0x63
 
@@ -943,9 +946,9 @@ private extension AESCipher {
 
 private extension AESCipher {
     convenience init(key: String, iv: String) throws {
-        guard let kkey = key.dataUsingEncoding(NSUTF8StringEncoding,
+        guard let kkey = key.data(using: NSUTF8StringEncoding,
             allowLossyConversion: false)?.arrayOfBytes(),
-            let iiv = iv.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)?.arrayOfBytes() else {
+            let iiv = iv.data(using: NSUTF8StringEncoding, allowLossyConversion: false)?.arrayOfBytes() else {
             throw Error.InvalidKeyOrInitializationVector
         }
 
@@ -959,7 +962,8 @@ private extension AESCipher {
 private typealias CipherOperationOnBlock = (block: [UInt8]) -> [UInt8]?
 
 private struct CBCBlockMode {
-    enum BlockError: ErrorType {
+
+    enum BlockError: ErrorProtocol {
         case MissingInitializationVector
     }
 
@@ -974,8 +978,8 @@ private struct CBCBlockMode {
         out.reserveCapacity(blocks.count * blocks[blocks.startIndex].count)
         var prevCiphertext = iv // for the first time prevCiphertext = iv
         for plaintext in blocks {
-            if let encrypted = cipherOperation(block: xor(prevCiphertext, plaintext)) {
-                out.appendContentsOf(encrypted)
+            if let encrypted = cipherOperation(block: xor(a: prevCiphertext, plaintext)) {
+                out.append(contentsOf: encrypted)
                 prevCiphertext = encrypted
             }
         }
@@ -994,7 +998,7 @@ private struct CBCBlockMode {
         var prevCiphertext = iv // for the first time prevCiphertext = iv
         for ciphertext in blocks {
             if let decrypted = cipherOperation(block: ciphertext) { // decrypt
-                out.appendContentsOf(xor(prevCiphertext, decrypted))
+                out.append(contentsOf: xor(a: prevCiphertext, decrypted))
             }
             prevCiphertext = ciphertext
         }
@@ -1007,7 +1011,7 @@ private struct CBCBlockMode {
 
 private struct PKCS7 {
 
-    enum Error: ErrorType {
+    enum Error: ErrorProtocol {
         case InvalidPaddingValue
     }
 
@@ -1021,12 +1025,12 @@ private struct PKCS7 {
         if padding == 0 {
             // If the original data is a multiple of N bytes, then an extra block of bytes with value N is added.
             for _ in 0..<blockSize {
-                withPadding.appendContentsOf([UInt8(blockSize)])
+                withPadding.append(contentsOf: [UInt8(blockSize)])
             }
         } else {
             // The value of each added byte is the number of bytes that are added
             for _ in 0..<padding {
-                withPadding.appendContentsOf([UInt8(padding)])
+                withPadding.append(contentsOf: [UInt8(padding)])
             }
         }
         return withPadding
@@ -1051,26 +1055,27 @@ private struct PKCS7 {
 // MARK: - Utils
 
 private func xor(a: [UInt8], _ b: [UInt8]) -> [UInt8] {
-    var xored = [UInt8](count: min(a.count, b.count), repeatedValue: 0)
+    var xored = [UInt8](repeating: 0, count: min(a.count, b.count))
     for i in 0..<xored.count {
         xored[i] = a[i] ^ b[i]
     }
     return xored
 }
 
-private func rotateLeft(v: UInt8, _ n: UInt8) -> UInt8 {
+
+private func rotateLeft(_ v: UInt8, _ n: UInt8) -> UInt8 {
     return ((v << n) & 0xFF) | (v >> (8 - n))
 }
 
-private func rotateLeft(v: UInt32, _ n: UInt32) -> UInt32 {
+private func rotateLeft(_ v: UInt32, _ n: UInt32) -> UInt32 {
     return ((v << n) & 0xFFFFFFFF) | (v >> (32 - n))
 }
 
 private protocol BitshiftOperationsType {
     func << (lhs: Self, rhs: Self) -> Self
     func >> (lhs: Self, rhs: Self) -> Self
-    func <<= (inout lhs: Self, rhs: Self)
-    func >>= (inout lhs: Self, rhs: Self)
+    func <<= (lhs: inout Self, rhs: Self)
+    func >>= (lhs: inout Self, rhs: Self)
 }
 
 private protocol ByteConvertible {
@@ -1097,12 +1102,12 @@ extension UInt64 : BitshiftOperationsType, ByteConvertible {
     }
 }
 
-private func integerWithBytes<T: IntegerType where T:ByteConvertible, T: BitshiftOperationsType>(bytes: [UInt8]) -> T {
-    var bytes = bytes.reverse() as Array<UInt8>
+private func integerWithBytes<T: Integer where T:ByteConvertible, T: BitshiftOperationsType>(bytes: [UInt8]) -> T {
+    var bytes = bytes.reversed() as Array<UInt8>
     if bytes.count < sizeof(T) {
         let paddingCount = sizeof(T) - bytes.count
         if paddingCount > 0 {
-            bytes += [UInt8](count: paddingCount, repeatedValue: 0)
+            bytes += [UInt8](repeating: 0, count: paddingCount)
         }
     }
 
@@ -1111,7 +1116,7 @@ private func integerWithBytes<T: IntegerType where T:ByteConvertible, T: Bitshif
     }
 
     var result: T = 0
-    for byte in bytes.reverse() {
+    for byte in bytes.reversed() {
         result = result << 8 | T(byte)
     }
     return result
@@ -1120,12 +1125,12 @@ private func integerWithBytes<T: IntegerType where T:ByteConvertible, T: Bitshif
 private extension UInt32 {
 
     private func bytes(totalBytes: Int = sizeof(UInt32)) -> [UInt8] {
-        return arrayOfBytes(self, length: totalBytes)
+        return arrayOfBytes(value: self, length: totalBytes)
     }
 
     /** Int with array bytes (little-endian) */
     private static func withBytes(bytes: [UInt8]) -> UInt32 {
-        return integerWithBytes(bytes)
+        return integerWithBytes(bytes: bytes)
     }
 }
 
@@ -1133,14 +1138,15 @@ private func toUInt32Array(slice: ArraySlice<UInt8>) -> Array<UInt32> {
     var result = Array<UInt32>()
     result.reserveCapacity(16)
 
-    for idx in slice.startIndex.stride(to: slice.endIndex, by: sizeof(UInt32)) {
-        let val1: UInt32 = (UInt32(slice[idx.advancedBy(3)]) << 24)
-        let val2: UInt32 = (UInt32(slice[idx.advancedBy(2)]) << 16)
-        let val3: UInt32 = (UInt32(slice[idx.advancedBy(1)]) << 8)
+    for idx in stride(from: slice.startIndex, to: slice.endIndex, by: sizeof(UInt32)) {
+        let val1: UInt32 = (UInt32(slice[slice.index(idx, offsetBy: 3)]) << 24)
+        let val2: UInt32 = (UInt32(slice[slice.index(idx, offsetBy: 2)]) << 16)
+        let val3: UInt32 = (UInt32(slice[slice.index(idx, offsetBy: 1)]) << 8)
         let val4: UInt32 = UInt32(slice[idx])
         let val: UInt32 = val1 | val2 | val3 | val4
         result.append(val)
     }
+
     return result
 }
 
@@ -1149,21 +1155,20 @@ private func toUInt32Array(slice: ArraySlice<UInt8>) -> Array<UInt32> {
 private func arrayOfBytes<T>(value: T, length: Int? = nil) -> [UInt8] {
     let totalBytes = length ?? sizeof(T)
 
-    let valuePointer = UnsafeMutablePointer<T>.alloc(1)
-    valuePointer.memory = value
+    let valuePointer = UnsafeMutablePointer<T>(allocatingCapacity: 1)
+    valuePointer.pointee = value
 
     let bytesPointer = UnsafeMutablePointer<UInt8>(valuePointer)
-    var bytes = [UInt8](count: totalBytes, repeatedValue: 0)
+    var bytes = [UInt8](repeating: 0, count: totalBytes)
     for j in 0..<min(sizeof(T), totalBytes) {
-        bytes[totalBytes - 1 - j] = (bytesPointer + j).memory
+        bytes[totalBytes - 1 - j] = (bytesPointer + j).pointee
     }
 
-    valuePointer.destroy()
-    valuePointer.dealloc(1)
+    valuePointer.deinitialize()
+    valuePointer.deallocateCapacity(1)
 
     return bytes
 }
-
 
 private extension Array {
 
@@ -1192,7 +1197,7 @@ private extension NSData {
 
     private func arrayOfBytes() -> [UInt8] {
         let count = self.length / sizeof(UInt8)
-        var bytesArray = [UInt8](count: count, repeatedValue: 0)
+        var bytesArray = [UInt8](repeating: 0, count: count)
         self.getBytes(&bytesArray, length:count * sizeof(UInt8))
         return bytesArray
     }

@@ -83,21 +83,22 @@ public class BaseDestination: Hashable, Equatable {
     var queue: dispatch_queue_t?
 
     public init() {
-        let uuid = NSUUID().UUIDString
+        let uuid = NSUUID().uuidString
         let queueLabel = "swiftybeaver-queue-" + uuid
         queue = dispatch_queue_create(queueLabel, DISPATCH_QUEUE_SERIAL)
     }
 
     /// overrule the destination’s minLevel for a given path and optional function
-    public func addMinLevelFilter(minLevel: SwiftyBeaver.Level, path: String, function: String = "") {
+    public func addMinLevelFilter(_ minLevel: SwiftyBeaver.Level, path: String, function: String = "") {
         let filter = MinLevelFilter(minLevel: minLevel, path: path, function: function)
         minLevelFilters.append(filter)
     }
 
+
     /// send / store the formatted log message to the destination
     /// returns the formatted log message for processing by inheriting method
     /// and for unit tests (nil if error)
-    public func send(level: SwiftyBeaver.Level, msg: String, thread: String,
+    public func send(_ level: SwiftyBeaver.Level, msg: String, thread: String,
         path: String, function: String, line: Int) -> String? {
         var dateStr = ""
         var str = ""
@@ -111,20 +112,20 @@ public class BaseDestination: Hashable, Equatable {
     }
 
     /// returns a formatted date string
-    func formattedDate(dateFormat: String) -> String {
+    func formattedDate(_ dateFormat: String) -> String {
         //formatter.timeZone = NSTimeZone(abbreviation: "UTC")
         formatter.dateFormat = dateFormat
-        let dateStr = formatter.stringFromDate(NSDate())
+        let dateStr = formatter.string(from: NSDate())
         return dateStr
     }
 
     /// returns the log message entirely colored
-    func coloredMessage(msg: String, forLevel level: SwiftyBeaver.Level) -> String {
+    func coloredMessage(_ msg: String, forLevel level: SwiftyBeaver.Level) -> String {
         if !(colored && coloredLines) {
             return msg
         }
 
-        let color = colorForLevel(level)
+        let color = colorForLevel(level: level)
         let coloredMsg = escape + color + msg + reset
         return coloredMsg
     }
@@ -154,9 +155,9 @@ public class BaseDestination: Hashable, Equatable {
     }
 
     /// returns an optionally colored level noun (like INFO, etc.)
-    func formattedLevel(level: SwiftyBeaver.Level) -> String {
+    func formattedLevel(_ level: SwiftyBeaver.Level) -> String {
         // optionally wrap the level string in color
-        let color = colorForLevel(level)
+        let color = colorForLevel(level: level)
         var levelStr = ""
 
         switch level {
@@ -184,10 +185,11 @@ public class BaseDestination: Hashable, Equatable {
     }
 
     /// returns the formatted log message
-    func formattedMessage(dateString: String, levelString: String, msg: String,
+    func formattedMessage(_ dateString: String, levelString: String, msg: String,
         thread: String, path: String, function: String, line: Int, detailOutput: Bool) -> String {
         // just use the file name of the path and remove suffix
-        let file = path.componentsSeparatedByString("/").last!.componentsSeparatedByString(".").first!
+        let file = path.components(separatedBy: "/").last!.components(separatedBy: ".").first!
+
         var str = ""
         if dateString != "" {
              str += "[\(dateString)] "
@@ -204,9 +206,10 @@ public class BaseDestination: Hashable, Equatable {
         return str
     }
 
+
     /// checks if level is at least minLevel or if a minLevel filter for that path does exist
     /// returns boolean and can be used to decide if a message should be logged or not
-    func shouldLevelBeLogged(level: SwiftyBeaver.Level, path: String, function: String) -> Bool {
+    func shouldLevelBeLogged(_ level: SwiftyBeaver.Level, path: String, function: String) -> Bool {
         // at first check the instance’s global minLevel property
         if minLevel.rawValue <= level.rawValue {
             return true
@@ -215,9 +218,9 @@ public class BaseDestination: Hashable, Equatable {
         for filter in minLevelFilters {
             // rangeOfString returns nil if both values are the same!
             if filter.minLevel.rawValue <= level.rawValue {
-                if filter.path == "" || path == filter.path || path.rangeOfString(filter.path) != nil {
+                if filter.path == "" || path == filter.path || path.range(of: filter.path) != nil {
                     if filter.function == "" || function == filter.function ||
-                        function.rangeOfString(filter.function) != nil {
+                        function.range(of: filter.function) != nil {
                         return true
                     }
                 }
@@ -225,6 +228,7 @@ public class BaseDestination: Hashable, Equatable {
         }
         return false
     }
+
 
   /**
     Triggered by main flush() method on each destination. Runs in background thread.
