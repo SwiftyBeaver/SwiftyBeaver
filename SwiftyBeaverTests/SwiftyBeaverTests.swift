@@ -12,6 +12,8 @@ import XCTest
 
 class SwiftyBeaverTests: XCTestCase {
 
+    var instanceVar = "an instance variable"
+
     override func setUp() {
         super.setUp()
         SwiftyBeaver.removeAllDestinations()
@@ -278,6 +280,16 @@ class SwiftyBeaverTests: XCTestCase {
         log.info("This should be visible due to console minLevel")
 
         XCTAssertEqual(log.countDestinations(), 1)
+    }
+
+    func testAutoClosure() {
+        let log = SwiftyBeaver.self
+        // add console
+        let console = ConsoleDestination()
+        console.dateFormat = "HH:mm:ss.SSS"
+        log.addDestination(console)
+        // should not create a compile error relating autoclosure
+        log.info(instanceVar)
     }
 
     func testLongRunningTaskIsNotExecutedWhenLoggingUnderMinLevel() {
