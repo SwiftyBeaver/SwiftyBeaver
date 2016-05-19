@@ -14,6 +14,16 @@ public class FileDestination: BaseDestination {
     public var logFileURL: NSURL
 
     override public var defaultHashValue: Int {return 2}
+
+    override public var executionContext: ExecutionContext {
+        didSet {
+            if case .Immediate = executionContext {
+                SwiftyBeaver.error("don't use FileDestination with an immediate Context!")
+                assertionFailure("don't use FileDestination with an immediate Context!")
+            }
+        }
+    }
+
     let fileManager = NSFileManager.defaultManager()
     var fileHandle: NSFileHandle? = nil
 
