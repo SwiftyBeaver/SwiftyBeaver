@@ -5,6 +5,18 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ----
 
+## 0.5.4 (2016-05-20)
+
+##### Changed
+
+- Function names are now logged without parameters (inspired by Gábor Sajó) by [@skreutzberger](https://github.com/skreutzberger)
+- Default location of log file and other internally used files by [@skreutzberger](https://github.com/skreutzberger)
+
+##### Fixed
+
+- Memory leak in string manipulation by [@dkalachov](https://github.com/dkalachov)
+
+<br/>
 ## 0.5.3 (2016-05-11)
 
 ##### Added
