@@ -88,9 +88,23 @@ public class SBPlatformDestination: BaseDestination {
 
         // setup where to write the json files
         var baseURL: NSURL?
+
         if OS == "OSX" {
             if let url = fileManager.URLsForDirectory(.ApplicationSupportDirectory, inDomains: .UserDomainMask).first {
                 baseURL = url
+                // try to use ~/Library/Application Support/APP NAME instead of ~/Library/Application Support
+                if let appName = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleExecutable") as? String {
+                    do {
+                        if let appURL = baseURL?.URLByAppendingPathComponent(appName, isDirectory: true) {
+                            try fileManager.createDirectoryAtURL(appURL,
+                                                                 withIntermediateDirectories: true, attributes: nil)
+                            baseURL = appURL
+                        }
+                    } catch let error as NSError {
+                        // it is too early in the class lifetime to be able to use toNSLog()
+                        print("Warning! Could not create folder ~/Library/Application Support/\(appName). \(error)")
+                    }
+                }
             }
         } else {
             // iOS, watchOS, etc. are using the document directory of the app

@@ -118,6 +118,14 @@ class SwiftyBeaverTests: XCTestCase {
         log.verbose("this should be in file 1")
         log.debug("this should be in both files, msg 1")
         log.info("this should be in both files, msg 2")
+
+        // log to default file location
+        let file3 = FileDestination()
+        file3.detailOutput = false
+        file3.dateFormat = "HH:mm:ss.SSS"
+        log.addDestination(file3)
+        XCTAssertEqual(log.countDestinations(), 5)
+        log.info("Logging to default log file \(file3.logFileURL)")
     }
 
     func testColors() {
