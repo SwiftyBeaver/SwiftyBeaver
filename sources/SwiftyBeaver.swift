@@ -123,7 +123,7 @@ public class SwiftyBeaver {
             if dest.shouldLevelBeLogged(level, path: path, function: function) {
                 // try to convert msg object to String and put it on queue
                 let msgStr = "\(message())"
-                let f = stripParams(function)
+                let f = stripParams(function: function)
 
                 if dest.asynchronously {
                     dispatch_async(queue) {
@@ -142,10 +142,10 @@ public class SwiftyBeaver {
      Flush all destinations to make sure all logging messages have been written out
      Returns after all messages flushed or timeout seconds
 
-     - returns: true if all messages flushed, false if timeout occurred
+     - returns: true if all messages flushed, false if timeout or error occurred
      */
     public class func flush(secondTimeout: Int64) -> Bool {
-        let grp = dispatch_group_create()
+        guard let grp = dispatch_group_create() else { return false }
         for dest in destinations {
             if let queue = dest.queue {
                 dispatch_group_enter(grp)
@@ -162,8 +162,8 @@ public class SwiftyBeaver {
     /// removes the parameters from a function because it looks weird with a single param
     class func stripParams(function: String) -> String {
         var f = function
-        if let indexOfBrace = f.characters.indexOf("(") {
-            f = f.substringToIndex(indexOfBrace)
+        if let indexOfBrace = f.characters.index(of: "(") {
+            f = f.substring(to: indexOfBrace)
         }
         f = f + "()"
         return f

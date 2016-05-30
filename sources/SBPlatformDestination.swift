@@ -93,11 +93,11 @@ public class SBPlatformDestination: BaseDestination {
             if let url = fileManager.urlsForDirectory(.applicationSupportDirectory, inDomains: .userDomainMask).first {
                 baseURL = url
                 // try to use ~/Library/Application Support/APP NAME instead of ~/Library/Application Support
-                if let appName = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleExecutable") as? String {
+                if let appName = NSBundle.main().objectForInfoDictionaryKey("CFBundleExecutable") as? String {
                     do {
-                        if let appURL = baseURL?.URLByAppendingPathComponent(appName, isDirectory: true) {
-                            try fileManager.createDirectoryAtURL(appURL,
-                                                                 withIntermediateDirectories: true, attributes: nil)
+                        if let appURL = baseURL?.appendingPathComponent(appName, isDirectory: true) {
+                            try fileManager.createDirectory(at: appURL,
+                                                            withIntermediateDirectories: true, attributes: nil)
                             baseURL = appURL
                         }
                     } catch let error as NSError {

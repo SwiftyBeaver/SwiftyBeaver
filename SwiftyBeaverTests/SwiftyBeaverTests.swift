@@ -282,10 +282,10 @@ class SwiftyBeaverTests: XCTestCase {
 
     func testStripParams() {
         var f = "singleParam"
-        XCTAssertEqual(SwiftyBeaver.stripParams(f), "singleParam()")
+        XCTAssertEqual(SwiftyBeaver.stripParams(function: f), "singleParam()")
         f = "logWithParamFunc(_:foo:hello:)"
-        XCTAssertEqual(SwiftyBeaver.stripParams(f), "logWithParamFunc()")
+        XCTAssertEqual(SwiftyBeaver.stripParams(function: f), "logWithParamFunc()")
         f = "aFunc()"
-        XCTAssertEqual(SwiftyBeaver.stripParams(f), "aFunc()")
+        XCTAssertEqual(SwiftyBeaver.stripParams(function: f), "aFunc()")
     }
 }

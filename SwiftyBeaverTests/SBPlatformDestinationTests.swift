@@ -198,7 +198,7 @@ class SBPlatformDestinationTests: XCTestCase {
 
             log.debug("msg \(index) - \(dateStr)")
         }
-        log.flush(3)
+        log.flush(secondTimeout: 3)
 
         // do some further waiting for sending to complete
         for _ in 1...platform.sendingPoints.Threshold + 3 {

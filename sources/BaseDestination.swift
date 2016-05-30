@@ -197,8 +197,13 @@ public class BaseDestination: Hashable, Equatable {
             }
 
             // just use the file name of the path and remove suffix
-            let file = path.componentsSeparatedByString("/").last!.componentsSeparatedByString(".").first!
-            str += "\(file).\(function):\(String(line)) \(levelString): \(msg)"
+            //let file = path.components(separatedBy: "/").last!.components(".").first!
+            let pathComponents = path.components(separatedBy: "/")
+            if let lastComponent = pathComponents.last {
+                if let file = lastComponent.components(separatedBy: ".").first {
+                    str += "\(file).\(function):\(String(line)) \(levelString): \(msg)"
+                }
+            }
         } else {
             str += "\(levelString): \(msg)"
         }
