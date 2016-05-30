@@ -20,4 +20,4 @@ install:
 script:
   - swift build
   - set -o pipefail  # required to let xcpretty use the same exit code like xcodebuild
-  - xcodebuild TOOLCHAINS=swift -project SwiftyBeaver.xcodeproj -scheme "SwiftyBeaver (iOS)" -destination name="iPhone 6" -destination name="iPhone 6" build test | xcpretty -c
+  - xcodebuild TOOLCHAINS=swift -project SwiftyBeaver.xcodeproj -scheme "SwiftyBeaver (iOS)" -destination name="iPhone 6" -destination name="iPhone 6" test | xcpretty -c
