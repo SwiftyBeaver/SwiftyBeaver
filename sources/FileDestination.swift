@@ -11,7 +11,7 @@ import Foundation
 
 public class FileDestination: BaseDestination {
 
-    public var logFileURL: NSURL
+    public var logFileURL: NSURL?
 
     override public var defaultHashValue: Int {return 2}
     let fileManager = NSFileManager.default()
@@ -19,16 +19,33 @@ public class FileDestination: BaseDestination {
 
     public override init() {
         // platform-dependent logfile directory default
-        var logsBaseDir: NSSearchPathDirectory = .cachesDirectory
+        var baseURL: NSURL?
 
         if OS == "OSX" {
-            logsBaseDir = .documentDirectory
+            if let url = fileManager.URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask).first {
+                baseURL = url
+                // try to use ~/Library/Caches/APP NAME instead of ~/Library/Caches
+                if let appName = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleExecutable") as? String {
+                    do {
+                        if let appURL = baseURL?.URLByAppendingPathComponent(appName, isDirectory: true) {
+                            try fileManager.createDirectoryAtURL(appURL,
+                                                                 withIntermediateDirectories: true, attributes: nil)
+                            baseURL = appURL
+                        }
+                    } catch let error as NSError {
+                        print("Warning! Could not create folder /Library/Caches/\(appName). \(error)")
+                    }
+                }
+            }
+        } else {
+            // iOS, watchOS, etc. are using the caches directory
+            if let url = fileManager.URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask).first {
+                baseURL = url
+            }
         }
 
-        if let url = fileManager.urlsForDirectory(logsBaseDir, inDomains: .userDomainMask).first {
-            logFileURL = url.appendingPathComponent("swiftybeaver.log", isDirectory: false)
-        } else {
-            logFileURL = NSURL()
+        if let baseURL = baseURL {
+            logFileURL = baseURL.URLByAppendingPathComponent("swiftybeaver.log", isDirectory: false)
         }
         super.init()
 
@@ -50,7 +67,7 @@ public class FileDestination: BaseDestination {
         let formattedString = super.send(level, msg: msg, thread: thread, path: path, function: function, line: line)
 
         if let str = formattedString {
-            saveToFile(str, url: logFileURL)
+            saveToFile(str)
         }
         return formattedString
     }
@@ -64,7 +81,8 @@ public class FileDestination: BaseDestination {
 
     /// appends a string as line to a file.
     /// returns boolean about success
-    func saveToFile(_ str: String, url: NSURL) -> Bool {
+    func saveToFile(str: String) -> Bool {
+        guard let url = logFileURL else { return false }
         do {
             if fileManager.fileExists(atPath: url.path!) == false {
                 // create file if not existing

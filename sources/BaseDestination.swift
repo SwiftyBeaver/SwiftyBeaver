@@ -187,9 +187,6 @@ public class BaseDestination: Hashable, Equatable {
     /// returns the formatted log message
     func formattedMessage(_ dateString: String, levelString: String, msg: String,
         thread: String, path: String, function: String, line: Int, detailOutput: Bool) -> String {
-        // just use the file name of the path and remove suffix
-        let file = path.components(separatedBy: "/").last!.components(separatedBy: ".").first!
-
         var str = ""
         if dateString != "" {
              str += "[\(dateString)] "
@@ -199,7 +196,9 @@ public class BaseDestination: Hashable, Equatable {
                 str += "|\(thread)| "
             }
 
-            str += "\(file).\(function):\(line) \(levelString): \(msg)"
+            // just use the file name of the path and remove suffix
+            let file = path.componentsSeparatedByString("/").last!.componentsSeparatedByString(".").first!
+            str += "\(file).\(function):\(String(line)) \(levelString): \(msg)"
         } else {
             str += "\(levelString): \(msg)"
         }

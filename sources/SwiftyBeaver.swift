@@ -12,9 +12,9 @@ import Foundation
 public class SwiftyBeaver {
 
     /// version string of framework
-    public static let version = "0.5.3"  // UPDATE ON RELEASE!
+    public static let version = "0.5.4"  // UPDATE ON RELEASE!
     /// build number of framework
-    public static let build = 531 // version 0.7.0 -> 700, UPDATE ON RELEASE!
+    public static let build = 540 // version 0.7.0 -> 700, UPDATE ON RELEASE!
 
     public enum Level: Int {
         case Verbose = 0
@@ -123,14 +123,15 @@ public class SwiftyBeaver {
             if dest.shouldLevelBeLogged(level, path: path, function: function) {
                 // try to convert msg object to String and put it on queue
                 let msgStr = "\(message())"
+                let f = stripParams(function)
 
                 if dest.asynchronously {
                     dispatch_async(queue) {
-                        dest.send(level, msg: msgStr, thread: thread, path: path, function: function, line: line)
+                        dest.send(level, msg: msgStr, thread: thread, path: path, function: f, line: line)
                     }
                 } else {
                     dispatch_sync(queue) {
-                        dest.send(level, msg: msgStr, thread: thread, path: path, function: function, line: line)
+                        dest.send(level, msg: msgStr, thread: thread, path: path, function: f, line: line)
                     }
                 }
             }
@@ -138,15 +139,13 @@ public class SwiftyBeaver {
     }
 
     /**
-    Flush all destinations to make sure all logging messages have been written out
-    Returns after all messages flushed or timeout seconds
+     Flush all destinations to make sure all logging messages have been written out
+     Returns after all messages flushed or timeout seconds
 
-    - returns: true if all messages flushed, false if timeout occurred
-    */
-    public class func flush(_ secondTimeout: Int64) -> Bool {
-        guard let grp = dispatch_group_create() else {
-            return false // Swift 3 semantic change. Should perhaps throw.
-        }
+     - returns: true if all messages flushed, false if timeout occurred
+     */
+    public class func flush(secondTimeout: Int64) -> Bool {
+        let grp = dispatch_group_create()
         for dest in destinations {
             if let queue = dest.queue {
                 dispatch_group_enter(grp)
@@ -160,4 +159,13 @@ public class SwiftyBeaver {
         return dispatch_group_wait(grp, waitUntil) == 0
     }
 
+    /// removes the parameters from a function because it looks weird with a single param
+    class func stripParams(function: String) -> String {
+        var f = function
+        if let indexOfBrace = f.characters.indexOf("(") {
+            f = f.substringToIndex(indexOfBrace)
+        }
+        f = f + "()"
+        return f
+    }
 }
