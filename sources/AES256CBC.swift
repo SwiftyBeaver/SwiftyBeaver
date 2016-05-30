@@ -44,7 +44,7 @@ final class AES256CBC {
             let iv = str.substring(with: ivRange)
             let encryptedString = str.replacingOccurrences(of: iv, with: "",
                 options: NSStringCompareOptions.literalSearch, range: nil) // remove IV
-            
+
             do {
                 let decryptedString = try aesDecrypt(encryptedString, key: password, iv: iv)
                 return decryptedString
@@ -699,7 +699,7 @@ final private class AESCipher {
         b[1] = F1(x0: t[1], t[2], t[3], t[0]) ^ rk[rounds][1]
         b[2] = F1(x0: t[2], t[3], t[0], t[1]) ^ rk[rounds][2]
         b[3] = F1(x0: t[3], t[0], t[1], t[2]) ^ rk[rounds][3]
-            
+
         var out = [UInt8]()
         out.reserveCapacity(b.count * 4)
         for num in b {

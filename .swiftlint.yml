@@ -33,16 +33,16 @@ function_parameter_count:
   error: 15
 
 function_body_length:
-  warning: 80
-  error: 100
+  warning: 120
+  error: 150
 
 type_body_length:
   warning: 700
   error: 1000
 
 file_length:
-  warning: 1200
-  error: 1500
+  warning: 1500
+  error: 2000
 
 variable_name:
   min_length: 2

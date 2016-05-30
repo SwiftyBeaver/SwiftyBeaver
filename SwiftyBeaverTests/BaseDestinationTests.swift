@@ -79,7 +79,7 @@ class BaseDestinationTests: XCTestCase {
         var str = ""
         let formatter = NSDateFormatter()
         formatter.dateFormat = "HH:mm:ss"
-        
+
         let dateStr = formatter.string(from: NSDate())
 
         // logging to main thread does not output thread name

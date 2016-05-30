@@ -79,31 +79,36 @@ public class SwiftyBeaver {
     /// log something generally unimportant (lowest priority)
     public class func verbose(_ message: @autoclosure () -> Any, _
         path: String = #file, _ function: String = #function, line: Int = #line) {
-        dispatch_send(level: Level.Verbose, message: message, thread: threadName(), path: path, function: function, line: line)
+        dispatch_send(level: Level.Verbose, message: message, thread: threadName(),
+                      path: path, function: function, line: line)
     }
 
     /// log something which help during debugging (low priority)
     public class func debug(_ message: @autoclosure () -> Any, _
         path: String = #file, _ function: String = #function, line: Int = #line) {
-        dispatch_send(level: Level.Debug, message: message, thread: threadName(), path: path, function: function, line: line)
+        dispatch_send(level: Level.Debug, message: message, thread: threadName(),
+                      path: path, function: function, line: line)
     }
 
     /// log something which you are really interested but which is not an issue or error (normal priority)
     public class func info(_ message: @autoclosure () -> Any, _
         path: String = #file, _ function: String = #function, line: Int = #line) {
-        dispatch_send(level: Level.Info, message: message, thread: threadName(), path: path, function: function, line: line)
+        dispatch_send(level: Level.Info, message: message, thread: threadName(),
+                      path: path, function: function, line: line)
     }
 
     /// log something which may cause big trouble soon (high priority)
     public class func warning(_ message: @autoclosure () -> Any, _
         path: String = #file, _ function: String = #function, line: Int = #line) {
-        dispatch_send(level: Level.Warning, message: message, thread: threadName(), path: path, function: function, line: line)
+        dispatch_send(level: Level.Warning, message: message, thread: threadName(),
+                      path: path, function: function, line: line)
     }
 
     /// log something which will keep you awake at night (highest priority)
     public class func error(_ message: @autoclosure () -> Any, _
         path: String = #file, _ function: String = #function, line: Int = #line) {
-        dispatch_send(level: Level.Error, message: message, thread: threadName(), path: path, function: function, line: line)
+        dispatch_send(level: Level.Error, message: message, thread: threadName(),
+                      path: path, function: function, line: line)
     }
 
     /// internal helper which dispatches send to dedicated queue if minLevel is ok

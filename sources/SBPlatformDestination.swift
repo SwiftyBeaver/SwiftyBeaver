@@ -105,7 +105,7 @@ public class SBPlatformDestination: BaseDestination {
             entriesFileURL = baseURL.appendingPathComponent("sbplatform_entries.json", isDirectory: false)
             sendingFileURL = baseURL.appendingPathComponent("sbplatform_entries_sending.json", isDirectory: false)
             analyticsFileURL = baseURL.appendingPathComponent("sbplatform_analytics.json", isDirectory: false)
-                
+
             // get, update loaded and save analytics data to file on start
             let dict = analytics(analyticsFileURL, update: true)
             saveDictToFile(dict, url: analyticsFileURL)
@@ -127,25 +127,25 @@ public class SBPlatformDestination: BaseDestination {
             "fileName": path.components(separatedBy: "/").last! as AnyObject,
             "function": function as AnyObject,
             "line":line as AnyObject]
-        
+
         jsonString = jsonStringFromDict(dict)
-        
+
         if let str = jsonString {
             toNSLog("saving '\(msg)' to file")
             saveToFile(str, url: entriesFileURL)
             //toNSLog(entriesFileURL.path!)
-            
+
             // now decide if the stored log entries should be sent to the server
             // add level points to current points amount and send to server if threshold is hit
             let newPoints = sendingPointsForLevel(level)
             points += newPoints
             toNSLog("current sending points: \(points)")
-            
+
             if points >= sendingPoints.Threshold || points > maxAllowedThreshold {
                 toNSLog("\(points) points is >= threshold")
                 // above threshold, send to server
                 sendNow()
-                
+
             } else if initialSending {
                 initialSending = false
                 // first logging at this session
@@ -184,12 +184,12 @@ public class SBPlatformDestination: BaseDestination {
             sendingInProgress = true
             //let (jsonString, lines) = logsFromFile(sendingFileURL)
             var lines = 0
-            
+
             guard let logEntries = logsFromFile(sendingFileURL) else {
                 sendingInProgress = false
                 return
             }
-            
+
             lines = logEntries.count
 
 
@@ -197,7 +197,7 @@ public class SBPlatformDestination: BaseDestination {
                 var payload = [String:AnyObject]()
                 // merge device and analytics dictionaries
                 let deviceDetailsDict = deviceDetails()
-                
+
                 var analyticsDict = analytics(analyticsFileURL)
 
                 for key in deviceDetailsDict.keys {
@@ -205,7 +205,7 @@ public class SBPlatformDestination: BaseDestination {
                 }
                 payload["device"] = analyticsDict as AnyObject
                 payload["entries"] = logEntries as AnyObject
-                
+
                 if let str = jsonStringFromDict(payload) {
                     //toNSLog(str)  // uncomment to see full payload
                     toNSLog("Encrypting \(lines) log entries ...")
@@ -214,10 +214,10 @@ public class SBPlatformDestination: BaseDestination {
                         msg += "(\(encryptedStr.characters.count) chars) to server ..."
                         toNSLog(msg)
                         //toNSLog("Sending \(encryptedStr) ...")
-                        
+
                         sendToServerAsync(encryptedStr) {
                             ok, status in
-                            
+
                             self.toNSLog("Sent \(lines) encrypted log entries to server, received ok: \(ok)")
                             if ok {
                                 self.deleteFile(self.sendingFileURL)
@@ -392,7 +392,7 @@ public class SBPlatformDestination: BaseDestination {
         }
         return nil
     }
-    
+
 
     /// returns AES-256 CBC encrypted optional string
     func encrypt(_ str: String) -> String? {
@@ -447,7 +447,7 @@ public class SBPlatformDestination: BaseDestination {
         dict["uuid"] = uuid as AnyObject
         dict["firstStart"] = now as AnyObject
         dict["lastStart"] = now as AnyObject
-        dict["starts"] = 1 
+        dict["starts"] = 1
         dict["userName"] = analyticsUserName as AnyObject
         dict["firstAppVersion"] = appVersion() as AnyObject
         dict["appVersion"] = appVersion() as AnyObject
