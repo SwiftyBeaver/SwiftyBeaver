@@ -69,6 +69,7 @@ public class BaseDestination: Hashable, Equatable {
     }
 
     var minLevelFilters = [MinLevelFilter]()
+    var contentFilters = [ContentFilter]()
     let formatter = NSDateFormatter()
 
     var reset = "\u{001b}[;"
@@ -92,6 +93,35 @@ public class BaseDestination: Hashable, Equatable {
     public func addMinLevelFilter(minLevel: SwiftyBeaver.Level, path: String, function: String = "") {
         let filter = MinLevelFilter(minLevel: minLevel, path: path, function: function)
         minLevelFilters.append(filter)
+    }
+
+    // Apply the ContentFilters to the proposed logged message. If ANY of the filters answer true, the message will be logged.
+    public func applyContentFilters(message : String) -> Bool {
+        guard contentFilters.count > 0 else {
+            return true
+        }
+
+        return contentFilters.filter {
+            contentFilter in
+
+            return contentFilter.apply(message)
+        }.count > 0
+    }
+
+    /// Add a ContentFilter to this destination. When multiple filters exist, a message will be logged if any of the ContentFilters answers true
+    public func addContentFilter(contentFilter : ContentFilter) {
+        contentFilters.append(contentFilter)
+    }
+
+    /// Remove a ContentFilter from this destination.
+    public func removeContentFilter(contentFilter : ContentFilter) {
+        guard let index = contentFilters.indexOf({
+            return $0 === contentFilter
+        }) else {
+            return
+        }
+
+        contentFilters.removeAtIndex(index)
     }
 
     /// send / store the formatted log message to the destination

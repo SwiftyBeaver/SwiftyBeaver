@@ -119,6 +119,10 @@ public class SwiftyBeaver {
                 let msgStr = "\(message())"
                 let f = stripParams(function)
 
+                guard dest.applyContentFilters(msgStr) else {
+                    continue
+                }
+
                 if dest.asynchronously {
                     dispatch_async(queue) {
                         dest.send(level, msg: msgStr, thread: thread, path: path, function: f, line: line)

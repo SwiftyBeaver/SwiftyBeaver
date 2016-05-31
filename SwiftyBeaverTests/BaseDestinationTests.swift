@@ -150,4 +150,76 @@ class BaseDestinationTests: XCTestCase {
         // check filter 5 (function)
         XCTAssertTrue(obj.shouldLevelBeLogged(SwiftyBeaver.Level.Verbose, path: "", function: "MyFunction"))
     }
+
+    func test_applyContentFilters_noContentFilters_answersTrue() {
+        let destination = BaseDestination()
+
+        XCTAssertTrue(destination.applyContentFilters("Some message"))
+    }
+
+    func test_applyContentFilters_oneContentFilterThatAnswersTrue_answersTrue() {
+        let filter = BasicContentFilter()
+        filter.beginsWith("Some")
+
+        let destination = BaseDestination()
+        destination.addContentFilter(filter)
+
+        XCTAssertTrue(destination.applyContentFilters("Some message"))
+    }
+
+    func test_applyContentFilters_oneContentFilterThatAnswersFalse_answersFalse() {
+        let filter = BasicContentFilter()
+        filter.beginsWith("One")
+
+        let destination = BaseDestination()
+        destination.addContentFilter(filter)
+
+        XCTAssertFalse(destination.applyContentFilters("Some message"))
+    }
+
+    func test_applyContentFilters_multipleContentFiltersOneThatAnswersTrue_answersTrue() {
+        let destination = BaseDestination()
+
+        var filter = BasicContentFilter()
+        filter.beginsWith("One")
+        destination.addContentFilter(filter)
+
+        filter = BasicContentFilter()
+        filter.contains("Some")
+        destination.addContentFilter(filter)
+
+        XCTAssertTrue(destination.applyContentFilters("Some message"))
+    }
+
+    func test_applyContentFilters_multipleContentFiltersNoneThatAnswersTrue_answersFalse() {
+        let destination = BaseDestination()
+
+        var filter = BasicContentFilter()
+        filter.beginsWith("One")
+        destination.addContentFilter(filter)
+
+        filter = BasicContentFilter()
+        filter.endsWith("Some")
+        destination.addContentFilter(filter)
+
+        XCTAssertFalse(destination.applyContentFilters("Some message"))
+    }
+
+    func test_addContentFilter_contentFilterCountIsCorrect() {
+        let destination = BaseDestination()
+        destination.addContentFilter(BasicContentFilter())
+
+        XCTAssertEqual(destination.contentFilters.count, 1)
+    }
+
+    func test_rmoveContentFilter_contentFilterCountIsCorrect() {
+        let destination = BaseDestination()
+
+        destination.addContentFilter(BasicContentFilter())
+        let filter = BasicContentFilter()
+        destination.addContentFilter(filter)
+        destination.removeContentFilter(filter)
+
+        XCTAssertEqual(destination.contentFilters.count, 1)
+    }
 }
