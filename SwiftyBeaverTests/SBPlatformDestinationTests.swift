@@ -180,7 +180,7 @@ class SBPlatformDestinationTests: XCTestCase {
             return
         }
 
-        log.addDestination(platform)
+        XCTAssertTrue(log.addDestination(platform))
         //XCTAssertEqual(log.countDestinations(), 2)
 
         // send logs in chunks, use high threshold value to test performance
@@ -198,7 +198,7 @@ class SBPlatformDestinationTests: XCTestCase {
 
             log.debug("msg \(index) - \(dateStr)")
         }
-        log.flush(secondTimeout: 3)
+        XCTAssertTrue(log.flush(secondTimeout: 3))
 
         // do some further waiting for sending to complete
         for _ in 1...platform.sendingPoints.Threshold + 3 {

@@ -127,11 +127,11 @@ public class SwiftyBeaver {
 
                 if dest.asynchronously {
                     dispatch_async(queue) {
-                        dest.send(level, msg: msgStr, thread: thread, path: path, function: f, line: line)
+                        let _ = dest.send(level, msg: msgStr, thread: thread, path: path, function: f, line: line)
                     }
                 } else {
                     dispatch_sync(queue) {
-                        dest.send(level, msg: msgStr, thread: thread, path: path, function: f, line: line)
+                        let _ = dest.send(level, msg: msgStr, thread: thread, path: path, function: f, line: line)
                     }
                 }
             }

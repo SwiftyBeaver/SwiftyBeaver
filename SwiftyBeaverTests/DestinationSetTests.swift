@@ -27,9 +27,9 @@ class DestinationSetTests: XCTestCase {
         let console2 = ConsoleDestination()
         let file = FileDestination()
 
-        log.addDestination(console)
-        log.addDestination(console2)
-        log.addDestination(file)
+        XCTAssertTrue(log.addDestination(console))
+        XCTAssertTrue(log.addDestination(console2))
+        XCTAssertTrue(log.addDestination(file))
 
         // Test that destinations are successfully added
         XCTAssertEqual(log.countDestinations(), 3)
@@ -59,9 +59,9 @@ class DestinationSetTests: XCTestCase {
         let console2 = ConsoleDestination()
         let file = FileDestination()
 
-        log.addDestination(console)
-        log.addDestination(console2)
-        log.addDestination(file)
+        XCTAssertTrue(log.addDestination(console))
+        XCTAssertTrue(log.addDestination(console2))
+        XCTAssertTrue(log.addDestination(file))
 
         // Test that destinations are successfully added
         XCTAssertEqual(log.countDestinations(), 3)
@@ -69,7 +69,7 @@ class DestinationSetTests: XCTestCase {
         // Remove console destinations
         log.destinations.forEach {
             if let consoleDestination = $0 as? ConsoleDestination {
-                log.removeDestination(consoleDestination)
+                XCTAssertTrue(log.removeDestination(consoleDestination))
             }
         }
 

@@ -122,7 +122,7 @@ public class SBPlatformDestination: BaseDestination {
 
             // get, update loaded and save analytics data to file on start
             let dict = analytics(analyticsFileURL, update: true)
-            saveDictToFile(dict, url: analyticsFileURL)
+            let _ = saveDictToFile(dict, url: analyticsFileURL)
         }
     }
 
@@ -146,7 +146,7 @@ public class SBPlatformDestination: BaseDestination {
 
         if let str = jsonString {
             toNSLog("saving '\(msg)' to file")
-            saveToFile(str, url: entriesFileURL)
+            let _ = saveToFile(str, url: entriesFileURL)
             //toNSLog(entriesFileURL.path!)
 
             // now decide if the stored log entries should be sent to the server
@@ -234,7 +234,7 @@ public class SBPlatformDestination: BaseDestination {
 
                             self.toNSLog("Sent \(lines) encrypted log entries to server, received ok: \(ok)")
                             if ok {
-                                self.deleteFile(self.sendingFileURL)
+                                let _ = self.deleteFile(self.sendingFileURL)
                             }
                             self.sendingInProgress = false
                             self.points = 0
