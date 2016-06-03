@@ -19,7 +19,7 @@ import Foundation
 /// target must pass in order for the message to be logged. At least one non-required
 /// filter must pass in order for the message to be logged
 public protocol FilterType : class {
-    func apply(value : AnyObject) -> Bool
+    func apply(value: AnyObject) -> Bool
     func getTarget() -> Filter.TargetType
     func isRequired() -> Bool
 }
@@ -48,10 +48,10 @@ public class Filter {
         case Equals([String], Bool)
     }
 
-    let targetType : TargetType
-    let required : Bool
+    let targetType: TargetType
+    let required: Bool
 
-    public init(target : Filter.TargetType, required : Bool) {
+    public init(target: Filter.TargetType, required: Bool) {
         self.targetType = target
         self.required = required
     }
@@ -67,12 +67,12 @@ public class Filter {
 
 /// LogLevelFilter is a FilterType that filters on the log level and ensures
 /// that a message severity is of a minimum level
-public class LogLevelFilter : Filter, FilterType {
+public class LogLevelFilter: Filter, FilterType {
     public static func atLeast(level: SwiftyBeaver.Level) -> FilterType {
         return LogLevelFilter(minLevel: level)
     }
 
-    init(minLevel : SwiftyBeaver.Level) {
+    init(minLevel: SwiftyBeaver.Level) {
         super.init(target: .LogLevel(minLevel), required: true)
     }
 
@@ -81,7 +81,7 @@ public class LogLevelFilter : Filter, FilterType {
             return false
         }
 
-        let filterLevel : Int
+        let filterLevel: Int
         switch self.getTarget() {
             case let .LogLevel(swiftyBeaverLevel):
                 filterLevel = swiftyBeaverLevel.rawValue
@@ -97,8 +97,8 @@ public class LogLevelFilter : Filter, FilterType {
 /// CompareFilter is a FilterType that can filter based upon whether a target
 /// starts with, contains or ends with a specific string. CompareFilters can be
 /// case sensitive.
-public class CompareFilter : Filter, FilterType {
-    override public init(target : Filter.TargetType, required : Bool) {
+public class CompareFilter: Filter, FilterType {
+    override public init(target: Filter.TargetType, required: Bool) {
         super.init(target: target, required: required)
     }
 
@@ -107,7 +107,7 @@ public class CompareFilter : Filter, FilterType {
             return false
         }
 
-        let comparisonType : Filter.ComparisonType?
+        let comparisonType: Filter.ComparisonType?
         switch self.getTarget() {
         case let .Function(comparison):
             comparisonType = comparison
@@ -126,32 +126,32 @@ public class CompareFilter : Filter, FilterType {
             return false
         }
 
-        let matches : Bool
+        let matches: Bool
         switch filterComparisonType {
             case let .Contains(strings, caseSensitive):
-                matches = strings.filter {
+                matches = !strings.filter {
                     string in
                     return caseSensitive ? value.contains(string) : value.lowercased().contains(string.lowercased())
-                }.count > 0
+                }.isEmpty
 
 
             case let .StartsWith(strings, caseSensitive):
-                matches = strings.filter {
+                matches = !strings.filter {
                     string in
                     return caseSensitive ? value.hasPrefix(string) : value.lowercased().hasPrefix(string.lowercased())
-                }.count > 0
+                }.isEmpty
 
             case let .EndsWith(strings, caseSensitive):
-                matches = strings.filter {
+                matches = !strings.filter {
                     string in
                     return caseSensitive ? value.hasSuffix(string) : value.lowercased().hasSuffix(string.lowercased())
-                }.count > 0
+                }.isEmpty
 
             case let .Equals(strings, caseSensitive):
-                matches = strings.filter {
+                matches = !strings.filter {
                     string in
                     return caseSensitive ? value == string : value.lowercased() == string.lowercased()
-                }.count > 0
+                }.isEmpty
         }
 
         return matches
@@ -160,57 +160,69 @@ public class CompareFilter : Filter, FilterType {
 
 // Syntactic sugar for creating a function comparison filter
 public class FunctionFilterFactory {
-    public static func startsWith(prefixes: String..., caseSensitive : Bool = false, required : Bool = false) -> FilterType {
+    public static func startsWith(prefixes: String..., caseSensitive: Bool = false,
+                                  required: Bool = false) -> FilterType {
         return CompareFilter(target: .Function(.StartsWith(prefixes, caseSensitive)), required: required)
     }
 
-    public static func contains(strings: String..., caseSensitive : Bool = false, required : Bool = false) -> FilterType {
+    public static func contains(strings: String..., caseSensitive: Bool = false,
+                                required: Bool = false) -> FilterType {
         return CompareFilter(target: .Function(.Contains(strings, caseSensitive)), required: required)
     }
 
-    public static func endsWith(suffixes: String..., caseSensitive : Bool = false, required : Bool = false) -> FilterType {
+    public static func endsWith(suffixes: String..., caseSensitive: Bool = false,
+                                required: Bool = false) -> FilterType {
         return CompareFilter(target: .Function(.EndsWith(suffixes, caseSensitive)), required: required)
     }
 
-    public static func equals(strings: String..., caseSensitive : Bool = false, required : Bool = false) -> FilterType {
+    public static func equals(strings: String..., caseSensitive: Bool = false,
+                              required: Bool = false) -> FilterType {
         return CompareFilter(target: .Function(.Equals(strings, caseSensitive)), required: required)
     }
 }
 
 // Syntactic sugar for creating a message comparison filter
 public class MessageFilterFactory {
-    public static func startsWith(prefixes: String..., caseSensitive : Bool = false, required : Bool = false) -> FilterType {
+    public static func startsWith(prefixes: String..., caseSensitive: Bool = false,
+                                  required: Bool = false) -> FilterType {
         return CompareFilter(target: .Message(.StartsWith(prefixes, caseSensitive)), required: required)
     }
 
-    public static func contains(strings: String..., caseSensitive : Bool = false, required : Bool = false) -> FilterType {
+    public static func contains(strings: String..., caseSensitive: Bool = false,
+                                required: Bool = false) -> FilterType {
         return CompareFilter(target: .Message(.Contains(strings, caseSensitive)), required: required)
     }
 
-    public static func endsWith(suffixes: String..., caseSensitive : Bool = false, required : Bool = false) -> FilterType {
+    public static func endsWith(suffixes: String..., caseSensitive: Bool = false,
+                                required: Bool = false) -> FilterType {
         return CompareFilter(target: .Message(.EndsWith(suffixes, caseSensitive)), required: required)
     }
 
-    public static func equals(strings: String..., caseSensitive : Bool = false, required : Bool = false) -> FilterType {
+    public static func equals(strings: String..., caseSensitive: Bool = false,
+                              required: Bool = false) -> FilterType {
         return CompareFilter(target: .Message(.Equals(strings, caseSensitive)), required: required)
     }
 }
 
 // Syntactic sugar for creating a path comparison filter
 public class PathFilterFactory {
-    public static func startsWith(prefixes: String..., caseSensitive : Bool = false, required : Bool = false) -> FilterType {
+    public static func startsWith(prefixes: String..., caseSensitive: Bool = false,
+                                  required: Bool = false) -> FilterType {
         return CompareFilter(target: .Path(.StartsWith(prefixes, caseSensitive)), required: required)
     }
 
-    public static func contains(strings: String..., caseSensitive : Bool = false, required : Bool = false) -> FilterType {
+    public static func contains(strings: String..., caseSensitive: Bool = false,
+                                required: Bool = false) -> FilterType {
         return CompareFilter(target: .Path(.Contains(strings, caseSensitive)), required: required)
     }
 
-    public static func endsWith(suffixes: String..., caseSensitive : Bool = false, required : Bool = false) -> FilterType {
+    public static func endsWith(suffixes: String..., caseSensitive: Bool = false,
+                                required: Bool = false) -> FilterType {
         return CompareFilter(target: .Path(.EndsWith(suffixes, caseSensitive)), required: required)
     }
 
-    public static func equals(strings: String..., caseSensitive : Bool = false, required : Bool = false) -> FilterType {
+    public static func equals(strings: String..., caseSensitive: Bool = false,
+                              required: Bool = false) -> FilterType {
         return CompareFilter(target: .Path(.Equals(strings, caseSensitive)), required: required)
     }
 }
@@ -220,7 +232,7 @@ extension Filter.TargetType : Equatable {
 
 // The == does not compare associated values for each enum. Instead == evaluates to true
 // if both enums are the same "types", ignoring the associated values of each enum
-public func ==(lhs: Filter.TargetType, rhs: Filter.TargetType) -> Bool {
+public func == (lhs: Filter.TargetType, rhs: Filter.TargetType) -> Bool {
     switch (lhs, rhs) {
     case (.LogLevel(_), .LogLevel(_)):
         return true
