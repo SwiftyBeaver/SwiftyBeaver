@@ -115,40 +115,186 @@ class BaseDestinationTests: XCTestCase {
         obj.minLevel = SwiftyBeaver.Level.Info
 
         // filters to set minLevel to Verbose for certain files / folders
-        obj.addMinLevelFilter(.Verbose, path: "foo.swift")
-        obj.addMinLevelFilter(.Verbose, path: "/bar/")
-        obj.addMinLevelFilter(.Verbose, path: "/app")
-        obj.addMinLevelFilter(.Verbose, path: "/world/beaver.swift", function: "AppDelegate")
-        obj.addMinLevelFilter(.Verbose, path: "", function: "MyFunction")
+        obj.addMinLevelFilter(minLevel: .Verbose, path: "foo.swift")
+        obj.addMinLevelFilter(minLevel: .Verbose, path: "/bar/")
+        obj.addMinLevelFilter(minLevel: .Verbose, path: "/app")
+        obj.addMinLevelFilter(minLevel: .Verbose, path: "/world/beaver.swift", function: "AppDelegate")
+        obj.addMinLevelFilter(minLevel: .Verbose, path: "", function: "MyFunction")
 
         // check instance minLevel property
-        XCTAssertFalse(obj.shouldLevelBeLogged(SwiftyBeaver.Level.Verbose, path: "", function: ""))
-        XCTAssertFalse(obj.shouldLevelBeLogged(SwiftyBeaver.Level.Debug, path: "", function: ""))
-        XCTAssertTrue(obj.shouldLevelBeLogged(SwiftyBeaver.Level.Info, path: "", function: ""))
-        XCTAssertTrue(obj.shouldLevelBeLogged(SwiftyBeaver.Level.Warning, path: "", function: ""))
-        XCTAssertTrue(obj.shouldLevelBeLogged(SwiftyBeaver.Level.Error, path: "", function: ""))
+        XCTAssertFalse(obj.shouldLevelBeLogged(level: SwiftyBeaver.Level.Verbose, path: "", function: ""))
+        XCTAssertFalse(obj.shouldLevelBeLogged(level: SwiftyBeaver.Level.Debug, path: "", function: ""))
+        XCTAssertTrue(obj.shouldLevelBeLogged(level: SwiftyBeaver.Level.Info, path: "", function: ""))
+        XCTAssertTrue(obj.shouldLevelBeLogged(level: SwiftyBeaver.Level.Warning, path: "", function: ""))
+        XCTAssertTrue(obj.shouldLevelBeLogged(level: SwiftyBeaver.Level.Error, path: "", function: ""))
         // check if filters overrule instance property
-        XCTAssertFalse(obj.shouldLevelBeLogged(SwiftyBeaver.Level.Verbose, path: "foo2.swift", function: ""))
-        XCTAssertFalse(obj.shouldLevelBeLogged(SwiftyBeaver.Level.Verbose, path: "Foo.swift", function: ""))
-        XCTAssertTrue(obj.shouldLevelBeLogged(SwiftyBeaver.Level.Verbose, path: "foo.swift", function: ""))
-        XCTAssertTrue(obj.shouldLevelBeLogged(SwiftyBeaver.Level.Verbose, path: "/hello/foo.swift", function: ""))
+        XCTAssertFalse(obj.shouldLevelBeLogged(level: SwiftyBeaver.Level.Verbose, path: "foo2.swift", function: ""))
+        XCTAssertFalse(obj.shouldLevelBeLogged(level: SwiftyBeaver.Level.Verbose, path: "Foo.swift", function: ""))
+        XCTAssertTrue(obj.shouldLevelBeLogged(level: SwiftyBeaver.Level.Verbose, path: "foo.swift", function: ""))
+        XCTAssertTrue(obj.shouldLevelBeLogged(level: SwiftyBeaver.Level.Verbose, path: "/hello/foo.swift", function: ""))
         // check filter 2
-        XCTAssertFalse(obj.shouldLevelBeLogged(SwiftyBeaver.Level.Verbose, path: "bar", function: ""))
-        XCTAssertFalse(obj.shouldLevelBeLogged(SwiftyBeaver.Level.Verbose, path: "/Bar/", function: ""))
-        XCTAssertTrue(obj.shouldLevelBeLogged(SwiftyBeaver.Level.Verbose, path: "/bar/", function: ""))
-        XCTAssertTrue(obj.shouldLevelBeLogged(SwiftyBeaver.Level.Verbose, path: "/hello/bar/beaver", function: ""))
+        XCTAssertFalse(obj.shouldLevelBeLogged(level: SwiftyBeaver.Level.Verbose, path: "bar", function: ""))
+        XCTAssertFalse(obj.shouldLevelBeLogged(level: SwiftyBeaver.Level.Verbose, path: "/Bar/", function: ""))
+        XCTAssertTrue(obj.shouldLevelBeLogged(level: SwiftyBeaver.Level.Verbose, path: "/bar/", function: ""))
+        XCTAssertTrue(obj.shouldLevelBeLogged(level: SwiftyBeaver.Level.Verbose,
+                                              path: "/hello/bar/beaver", function: ""))
         // check filter 3
-        XCTAssertFalse(obj.shouldLevelBeLogged(SwiftyBeaver.Level.Verbose, path: "/lol/App2/", function: ""))
-        XCTAssertTrue(obj.shouldLevelBeLogged(SwiftyBeaver.Level.Verbose, path: "/lol/app2/", function: ""))
-        XCTAssertTrue(obj.shouldLevelBeLogged(SwiftyBeaver.Level.Verbose, path: "/lol/app", function: ""))
+        XCTAssertFalse(obj.shouldLevelBeLogged(level: SwiftyBeaver.Level.Verbose, path: "/lol/App2/", function: ""))
+        XCTAssertTrue(obj.shouldLevelBeLogged(level: SwiftyBeaver.Level.Verbose, path: "/lol/app2/", function: ""))
+        XCTAssertTrue(obj.shouldLevelBeLogged(level: SwiftyBeaver.Level.Verbose, path: "/lol/app", function: ""))
         // check filter 4 (file & function)
-        XCTAssertFalse(obj.shouldLevelBeLogged(SwiftyBeaver.Level.Verbose, path: "/world/beaver/", function: ""))
-        XCTAssertFalse(obj.shouldLevelBeLogged(SwiftyBeaver.Level.Verbose, path: "world/beaver.swift", function: ""))
+        XCTAssertFalse(obj.shouldLevelBeLogged(level: SwiftyBeaver.Level.Verbose, path: "/world/beaver/", function: ""))
+        XCTAssertFalse(obj.shouldLevelBeLogged(level: SwiftyBeaver.Level.Verbose,
+                                               path: "world/beaver.swift", function: ""))
         XCTAssertFalse(obj.shouldLevelBeLogged(
-            SwiftyBeaver.Level.Verbose, path: "/world/beaver.swift", function: "appDelegate"))
+            level: SwiftyBeaver.Level.Verbose, path: "/world/beaver.swift", function: "appDelegate"))
         XCTAssertTrue(obj.shouldLevelBeLogged(
-            SwiftyBeaver.Level.Verbose, path: "/world/beaver.swift", function: "AppDelegate"))
+            level: SwiftyBeaver.Level.Verbose, path: "/world/beaver.swift", function: "AppDelegate"))
         // check filter 5 (function)
-        XCTAssertTrue(obj.shouldLevelBeLogged(SwiftyBeaver.Level.Verbose, path: "", function: "MyFunction"))
+        XCTAssertTrue(obj.shouldLevelBeLogged(level: SwiftyBeaver.Level.Verbose, path: "", function: "MyFunction"))
     }
+
+    func test_init_noMinLevelExplicitelySet_createsOneMatchingLevelFilter() {
+        let destination = BaseDestination()
+        XCTAssertEqual(destination.filters.count, 1)
+    }
+
+    func test_init_newMinLevelExplicitelySet_createsOneMatchingLevelFilter() {
+        let destination = BaseDestination()
+        destination.minLevel = SwiftyBeaver.Level.Info
+        XCTAssertEqual(destination.filters.count, 1)
+    }
+
+    func test_init_newMinLevelExplicitelySetAndPasses_True() {
+        let destination = BaseDestination()
+        destination.minLevel = SwiftyBeaver.Level.Info
+        XCTAssertTrue(destination.shouldLevelBeLogged(level: SwiftyBeaver.Level.Info, path: "", function: ""))
+    }
+
+    func test_init_newMinLevelExplicitelySetAndDoesNotPass_False() {
+        let destination = BaseDestination()
+        destination.minLevel = SwiftyBeaver.Level.Info
+        XCTAssertFalse(destination.shouldLevelBeLogged(level: SwiftyBeaver.Level.Verbose, path: "", function: ""))
+    }
+
+    func test_shouldLevelBeLogged_hasLevelFilterAndOneEqualsPathFilterAndPasses_True() {
+        let destination = BaseDestination()
+        destination.minLevel = SwiftyBeaver.Level.Info
+        destination.addFilter(filter: Filters.Path.equals(strings: "/world/beaver.swift",
+                                                          caseSensitive: true, required: true))
+        XCTAssertTrue(destination.shouldLevelBeLogged(level: SwiftyBeaver.Level.Warning,
+                                                      path: "/world/beaver.swift", function: "initialize"))
+    }
+
+    func test_shouldLevelBeLogged_hasLevelFilterAndOneEqualsPathFilterAndDoesNotPass_False() {
+        let destination = BaseDestination()
+        destination.minLevel = SwiftyBeaver.Level.Info
+        destination.addFilter(filter: Filters.Path.equals(strings: "/world/beaver.swift",
+                                                          caseSensitive: true, required: true))
+        XCTAssertFalse(destination.shouldLevelBeLogged(level: SwiftyBeaver.Level.Warning,
+                                                       path: "/hello/foo.swift", function: "initialize"))
+    }
+
+    func test_shouldLevelBeLogged_hasLevelFilterAndTwoRequiredPathFiltersAndPasses_True() {
+        let destination = BaseDestination()
+        destination.minLevel = SwiftyBeaver.Level.Info
+        destination.addFilter(filter: Filters.Path.startsWith(prefixes: "/world",
+                                                              caseSensitive: true, required: true))
+        destination.addFilter(filter: Filters.Path.endsWith(suffixes: "beaver.swift",
+                                                            caseSensitive: true, required: true))
+        XCTAssertTrue(destination.shouldLevelBeLogged(level: SwiftyBeaver.Level.Warning,
+                                                      path: "/world/beaver.swift", function: "initialize"))
+    }
+
+    func test_shouldLevelBeLogged_hasLevelFilterAndTwoRequiredPathFiltersAndDoesNotPass_False() {
+        let destination = BaseDestination()
+        destination.minLevel = SwiftyBeaver.Level.Info
+        destination.addFilter(filter: Filters.Path.startsWith(prefixes: "/world", caseSensitive: true, required: true))
+        destination.addFilter(filter: Filters.Path.endsWith(suffixes: "foo.swift", caseSensitive: true, required: true))
+        XCTAssertFalse(destination.shouldLevelBeLogged(level: SwiftyBeaver.Level.Warning,
+                                                       path: "/hello/foo.swift", function: "initialize"))
+    }
+
+    func test_shouldLevelBeLogged_hasLevelFilterARequiredPathFilterAndTwoRequiredMessageFiltersAndPasses_True() {
+        let destination = BaseDestination()
+        destination.minLevel = SwiftyBeaver.Level.Info
+        destination.addFilter(filter: Filters.Path.startsWith(prefixes: "/world", caseSensitive: true, required: true))
+        destination.addFilter(filter: Filters.Message.startsWith(prefixes: "SQL:", caseSensitive: true, required: true))
+        destination.addFilter(filter: Filters.Message.contains(strings: "insert", caseSensitive: false, required: true))
+        XCTAssertTrue(destination.shouldLevelBeLogged(level: SwiftyBeaver.Level.Warning,
+                                                      path: "/world/beaver.swift", function: "executeSQLStatement",
+                                                      message: "SQL: INSERT INTO table (c1, c2) VALUES (1, 2)"))
+    }
+
+    func test_shouldLevelBeLogged_hasLevelFilterARequiredPathFilterAnd2RequiredMessageFiltersAndDoesNotPass_False() {
+        let destination = BaseDestination()
+        destination.minLevel = SwiftyBeaver.Level.Info
+        destination.addFilter(filter: Filters.Path.startsWith(prefixes: "/world", caseSensitive: true, required: true))
+        destination.addFilter(filter: Filters.Message.startsWith(prefixes: "SQL:", caseSensitive: true, required: true))
+        destination.addFilter(filter: Filters.Message.contains(strings: "insert", caseSensitive: false, required: true))
+        XCTAssertFalse(destination.shouldLevelBeLogged(level: SwiftyBeaver.Level.Warning,
+                                                       path: "/world/beaver.swift", function: "executeSQLStatement",
+                                                       message: "SQL: DELETE FROM table WHERE c1 = 1"))
+    }
+
+    func test_shouldLevelBeLogged_hasLevelFilterCombinationOfAllOtherFiltersAndPasses_True() {
+        let destination = BaseDestination()
+        destination.minLevel = SwiftyBeaver.Level.Info
+        destination.addFilter(filter: Filters.Path.startsWith(prefixes: "/world", caseSensitive: true, required: true))
+        destination.addFilter(filter: Filters.Path.endsWith(suffixes: "/beaver.swift",
+                                                            caseSensitive: true, required: true))
+        destination.addFilter(filter: Filters.Function.equals(strings: "executeSQLStatement", required: true))
+        destination.addFilter(filter: Filters.Message.startsWith(prefixes: "SQL:", caseSensitive: true, required: true))
+        destination.addFilter(filter: Filters.Message.contains(strings: "insert", "update", "delete", required: true))
+        XCTAssertTrue(destination.shouldLevelBeLogged(level: SwiftyBeaver.Level.Warning,
+                                                      path: "/world/beaver.swift", function: "executeSQLStatement",
+                                                      message: "SQL: INSERT INTO table (c1, c2) VALUES (1, 2)"))
+    }
+
+    func test_shouldLevelBeLogged_hasLevelFilterCombinationOfAllOtherFiltersAndDoesNotPass_False() {
+        let destination = BaseDestination()
+        destination.minLevel = SwiftyBeaver.Level.Info
+        destination.addFilter(filter: Filters.Path.startsWith(prefixes: "/world", caseSensitive: true, required: true))
+        destination.addFilter(filter: Filters.Path.endsWith(suffixes: "/beaver.swift",
+                                                            caseSensitive: true, required: true))
+        destination.addFilter(filter: Filters.Function.equals(strings: "executeSQLStatement", required: true))
+        destination.addFilter(filter: Filters.Message.startsWith(prefixes: "SQL:", caseSensitive: true, required: true))
+        destination.addFilter(filter: Filters.Message.contains(strings: "insert", "update", "delete", required: true))
+        XCTAssertFalse(destination.shouldLevelBeLogged(level: SwiftyBeaver.Level.Warning,
+                                                       path: "/world/beaver.swift", function: "executeSQLStatement",
+                                                       message: "SQL: CREATE TABLE sample (c1 INTEGER, c2 VARCHAR)"))
+    }
+
+    func test_shouldLevelBeLogged_hasLevelFilterCombinationOfOtherFiltersIncludingNonRequiredAndPasses_True() {
+        let destination = BaseDestination()
+        destination.minLevel = SwiftyBeaver.Level.Info
+        destination.addFilter(filter: Filters.Path.startsWith(prefixes: "/world", caseSensitive: true, required: true))
+        destination.addFilter(filter: Filters.Path.endsWith(suffixes: "/beaver.swift",
+                                                            caseSensitive: true, required: true))
+        destination.addFilter(filter: Filters.Function.equals(strings: "executeSQLStatement", required: true))
+        destination.addFilter(filter: Filters.Message.startsWith(prefixes: "SQL:", caseSensitive: true, required: true))
+        destination.addFilter(filter: Filters.Message.contains(strings: "insert"))
+        destination.addFilter(filter: Filters.Message.contains(strings: "update"))
+        destination.addFilter(filter: Filters.Message.contains(strings: "delete"))
+        XCTAssertTrue(destination.shouldLevelBeLogged(level: SwiftyBeaver.Level.Warning,
+                                                      path: "/world/beaver.swift", function: "executeSQLStatement",
+                                                      message: "SQL: INSERT INTO table (c1, c2) VALUES (1, 2)"))
+    }
+
+    func test_shouldLevelBeLogged_hasLevelFilterCombinationOfOtherFiltersIncludingNonRequiredAndDoesNotPass_False() {
+        let destination = BaseDestination()
+        destination.minLevel = SwiftyBeaver.Level.Info
+        destination.addFilter(filter: Filters.Path.startsWith(prefixes: "/world", caseSensitive: true, required: true))
+        destination.addFilter(filter: Filters.Path.endsWith(suffixes: "/beaver.swift",
+                                                            caseSensitive: true, required: true))
+        destination.addFilter(filter: Filters.Function.equals(strings: "executeSQLStatement", required: true))
+        destination.addFilter(filter: Filters.Message.startsWith(prefixes: "SQL:", caseSensitive: true, required: true))
+        destination.addFilter(filter: Filters.Message.contains(strings: "insert", caseSensitive: true))
+        destination.addFilter(filter: Filters.Message.contains(strings: "update"))
+        destination.addFilter(filter: Filters.Message.contains(strings: "delete"))
+        XCTAssertFalse(destination.shouldLevelBeLogged(level: SwiftyBeaver.Level.Warning,
+                                                       path: "/world/beaver.swift", function: "executeSQLStatement",
+                                                       message: "SQL: INSERT INTO table (c1, c2) VALUES (1, 2)"))
+    }
+
 }

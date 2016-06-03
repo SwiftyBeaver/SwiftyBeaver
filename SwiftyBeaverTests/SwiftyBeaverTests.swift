@@ -235,7 +235,7 @@ class SwiftyBeaverTests: XCTestCase {
         // set info level on default
         console.minLevel = .Info
         // do verbose logging for current unit tests file
-        console.addMinLevelFilter(.Debug, path: "Test")
+        console.addMinLevelFilter(minLevel: .Debug, path: "Test")
         XCTAssertTrue(log.addDestination(console))
 
         log.verbose("This should NOT BE VISIBLE!")

@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		048E6BFA1CDBB68E00DC9116 /* DestinationSetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048E6BF91CDBB68E00DC9116 /* DestinationSetTests.swift */; };
+		54C1877A9AE10325DE515FBB /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C18922E305A744478EE378 /* Filter.swift */; };
+		54C189632F81D8BF9659C66B /* FilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C1856662C0326F8E96C1B8 /* FilterTests.swift */; };
+		54C18A4D9938F04B113B8EE4 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C18922E305A744478EE378 /* Filter.swift */; };
+		54C18A60F0E7FA721F7D306F /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C18922E305A744478EE378 /* Filter.swift */; };
+		54C18B522AEA28190D77ED0C /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C18922E305A744478EE378 /* Filter.swift */; };
 		9E195B0A1C6B3B4600D924CB /* AES256CBC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E195B091C6B3B4600D924CB /* AES256CBC.swift */; };
 		9E195B0B1C6B3B4600D924CB /* AES256CBC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E195B091C6B3B4600D924CB /* AES256CBC.swift */; };
 		9E195B0C1C6B3B4600D924CB /* AES256CBC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E195B091C6B3B4600D924CB /* AES256CBC.swift */; };
@@ -60,6 +65,8 @@
 
 /* Begin PBXFileReference section */
 		048E6BF91CDBB68E00DC9116 /* DestinationSetTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DestinationSetTests.swift; sourceTree = "<group>"; };
+		54C1856662C0326F8E96C1B8 /* FilterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterTests.swift; sourceTree = "<group>"; };
+		54C18922E305A744478EE378 /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		9E195B091C6B3B4600D924CB /* AES256CBC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AES256CBC.swift; path = sources/AES256CBC.swift; sourceTree = "<group>"; };
 		9E195B0E1C6B3B6F00D924CB /* AES256CBCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AES256CBCTests.swift; sourceTree = "<group>"; };
 		9E195B101C6B766D00D924CB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -135,6 +142,7 @@
 				9E31D62D1C185EE3004E0980 /* FileDestination.swift */,
 				9ED096F71C521C6900FE3059 /* SBPlatformDestination.swift */,
 				9E31D6281C185ECD004E0980 /* SwiftyBeaver.swift */,
+				54C18922E305A744478EE378 /* Filter.swift */,
 			);
 			name = sources;
 			sourceTree = "<group>";
@@ -177,6 +185,7 @@
 				9EA53F881C561E4C00B160AF /* Secrets.swift */,
 				9EA53F8A1C561EE600B160AF /* SecretsExample.swift */,
 				048E6BF91CDBB68E00DC9116 /* DestinationSetTests.swift */,
+				54C1856662C0326F8E96C1B8 /* FilterTests.swift */,
 			);
 			path = SwiftyBeaverTests;
 			sourceTree = "<group>";
@@ -418,6 +427,7 @@
 				9E31D6301C185EE3004E0980 /* FileDestination.swift in Sources */,
 				9E195B0A1C6B3B4600D924CB /* AES256CBC.swift in Sources */,
 				9E31D62E1C185EE3004E0980 /* BaseDestination.swift in Sources */,
+				54C1877A9AE10325DE515FBB /* Filter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -431,6 +441,7 @@
 				048E6BFA1CDBB68E00DC9116 /* DestinationSetTests.swift in Sources */,
 				9E195B0F1C6B3B6F00D924CB /* AES256CBCTests.swift in Sources */,
 				9E6CA9FC1C12BA7A009D9093 /* BaseDestinationTests.swift in Sources */,
+				54C189632F81D8BF9659C66B /* FilterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -444,6 +455,7 @@
 				ACE597791C1882DF0031451F /* FileDestination.swift in Sources */,
 				9E195B0B1C6B3B4600D924CB /* AES256CBC.swift in Sources */,
 				ACE5977A1C1882DF0031451F /* BaseDestination.swift in Sources */,
+				54C18B522AEA28190D77ED0C /* Filter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -457,6 +469,7 @@
 				ACE5978A1C18830D0031451F /* FileDestination.swift in Sources */,
 				9E195B0C1C6B3B4600D924CB /* AES256CBC.swift in Sources */,
 				ACE5978B1C18830D0031451F /* BaseDestination.swift in Sources */,
+				54C18A4D9938F04B113B8EE4 /* Filter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -470,6 +483,7 @@
 				ACE5979B1C18832E0031451F /* FileDestination.swift in Sources */,
 				9E195B0D1C6B3B4600D924CB /* AES256CBC.swift in Sources */,
 				ACE5979C1C18832E0031451F /* BaseDestination.swift in Sources */,
+				54C18A60F0E7FA721F7D306F /* Filter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
