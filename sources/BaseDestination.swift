@@ -20,6 +20,12 @@ let OS = "watchOS"
 let OS = "tvOS"
 #elseif os(Linux)
 let OS = "Linux"
+#elseif os(FreeBSD)
+let OS = "FreeBSD"
+#elseif os(Windows)
+let OS = "Windows"
+#elseif os(Android)
+let OS = "Android"
 #else
 let OS = "Unknown"
 #endif
