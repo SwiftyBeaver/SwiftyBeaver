@@ -7,7 +7,7 @@ import Foundation
 import XCTest
 @testable import SwiftyBeaver
 
-class FilterTests : XCTestCase {
+class FilterTests: XCTestCase {
     //
     // Logging Level filter tests
     //
@@ -18,7 +18,7 @@ class FilterTests : XCTestCase {
 
     func test_level_getTarget_isLogLevelFilter() {
         let filter = Filters.Level.atLeast(.Debug)
-        let isCorrectTargetType : Bool
+        let isCorrectTargetType: Bool
         switch filter.getTarget() {
             case .LogLevel(_):
                 isCorrectTargetType = true
@@ -52,7 +52,7 @@ class FilterTests : XCTestCase {
     //
     func test_path_getTarget_isPathFilter() {
         let filter = Filters.Path.startsWith("/some/path")
-        let isCorrectTargetType : Bool
+        let isCorrectTargetType: Bool
         switch filter.getTarget() {
         case .Path(_):
             isCorrectTargetType = true
@@ -277,7 +277,7 @@ class FilterTests : XCTestCase {
     //
     func test_function_getTarget_isFunctionFilter() {
         let filter = Filters.Function.startsWith("myFunc")
-        let isCorrectTargetType : Bool
+        let isCorrectTargetType: Bool
         switch filter.getTarget() {
         case .Function(_):
             isCorrectTargetType = true
@@ -492,7 +492,7 @@ class FilterTests : XCTestCase {
     //
     func test_message_getTarget_isMessageFilter() {
         let filter = Filters.Message.startsWith("Hello there, SwiftyBeaver!")
-        let isCorrectTargetType : Bool
+        let isCorrectTargetType: Bool
         switch filter.getTarget() {
         case .Message(_):
             isCorrectTargetType = true
@@ -714,7 +714,7 @@ class FilterTests : XCTestCase {
 
     // Helper functions
     private func isCaseSensitive(targetType: Filter.TargetType) -> Bool {
-        let comparisonType : Filter.ComparisonType?
+        let comparisonType: Filter.ComparisonType?
         switch targetType {
         case let .Path(type):
             comparisonType = type
@@ -733,7 +733,7 @@ class FilterTests : XCTestCase {
             return false
         }
 
-        let isCaseSensitive : Bool
+        let isCaseSensitive: Bool
 
         switch compareType {
         case let .Contains(_, caseSensitive):

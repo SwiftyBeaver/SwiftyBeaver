@@ -104,12 +104,14 @@ public class BaseDestination: Hashable, Equatable {
     }
 
     /// Add a filter that determines whether or not a particular message will be logged to this destination
-    public func addFilter(filter : FilterType) {
+    public func addFilter(filter: FilterType) {
         // There can only be a maximum of one level filter in the filters collection.
         // When one is set, remove any others if there are any and then add
-        let isNewLevelFilter = self.getFiltersTargeting(Filter.TargetType.LogLevel(minLevel), fromFilters: [filter]).count == 1
+        let isNewLevelFilter = self.getFiltersTargeting(Filter.TargetType.LogLevel(minLevel),
+                                                        fromFilters: [filter]).count == 1
         if isNewLevelFilter {
-            let levelFilters = self.getFiltersTargeting(Filter.TargetType.LogLevel(minLevel), fromFilters: self.filters)
+            let levelFilters = self.getFiltersTargeting(Filter.TargetType.LogLevel(minLevel),
+                                                        fromFilters: self.filters)
             levelFilters.forEach {
                 filter in
                 self.removeFilter(filter)
@@ -119,7 +121,7 @@ public class BaseDestination: Hashable, Equatable {
     }
 
     /// Remove a filter from the list of filters
-    public func removeFilter(filter : FilterType) {
+    public func removeFilter(filter: FilterType) {
         let index = filters.indexOf {
             return ObjectIdentifier($0) == ObjectIdentifier(filter)
         }
@@ -244,13 +246,13 @@ public class BaseDestination: Hashable, Equatable {
     /// Answer whether the destination has any message filters
     /// returns boolean and is used to decide whether to resolve the message before invoking shouldLevelBeLogged
     func hasMessageFilters() -> Bool {
-        return getFiltersTargeting(Filter.TargetType.Message(.Equals([], true)), fromFilters: self.filters).count > 0
+        return !getFiltersTargeting(Filter.TargetType.Message(.Equals([], true)), fromFilters: self.filters).isEmpty
     }
 
     /// checks if level is at least minLevel or if a minLevel filter for that path does exist
     /// returns boolean and can be used to decide if a message should be logged or not
     func shouldLevelBeLogged(level: SwiftyBeaver.Level, path: String, function: String, message: String? = nil) -> Bool {
-        guard minLevelFilters.count == 0 else {
+        guard minLevelFilters.isEmpty else {
             return shouldLevelBeLoggedUsingMinLevelFilters(level, path: path, function: function)
         }
 
@@ -322,7 +324,8 @@ public class BaseDestination: Hashable, Equatable {
             return true
         }
 
-        let functionFilters = getFiltersTargeting(Filter.TargetType.Function(.Equals([function], false)), fromFilters: self.filters)
+        let functionFilters = getFiltersTargeting(Filter.TargetType.Function(.Equals([function], false)),
+                                                  fromFilters: self.filters)
         let requiredFilters = functionFilters.filter {
             filter in
             return filter.isRequired()
@@ -341,7 +344,8 @@ public class BaseDestination: Hashable, Equatable {
             return true
         }
 
-        let messageFilters = getFiltersTargeting(Filter.TargetType.Message(.Equals([message], false)), fromFilters: self.filters)
+        let messageFilters = getFiltersTargeting(Filter.TargetType.Message(.Equals([message], false)),
+                                                 fromFilters: self.filters)
         let requiredFilters = messageFilters.filter {
             filter in
             return filter.isRequired()
@@ -355,16 +359,17 @@ public class BaseDestination: Hashable, Equatable {
         return passesComparisonFilters(requiredFilters, nonRequiredFilters: nonRequiredFilters, value: message)
     }
 
-    func passesComparisonFilters(requiredFilters: [FilterType], nonRequiredFilters: [FilterType], value: String) -> Bool {
+    func passesComparisonFilters(requiredFilters: [FilterType], nonRequiredFilters: [FilterType],
+                                 value: String) -> Bool {
         let matchesAllRequiredFilters = requiredFilters.filter {
             filter in
             return filter.apply(value)
         }.count == requiredFilters.count
 
-        let matchesAtLeastOneNonRequiredFilter = nonRequiredFilters.filter {
+        let matchesAtLeastOneNonRequiredFilter = !nonRequiredFilters.filter {
             filter in
             return filter.apply(value)
-        }.count > 0 || nonRequiredFilters.count == 0
+        }.isEmpty || nonRequiredFilters.isEmpty
 
         return matchesAllRequiredFilters && matchesAtLeastOneNonRequiredFilter
     }
