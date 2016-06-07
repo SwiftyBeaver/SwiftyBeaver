@@ -5,6 +5,21 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ----
 
+## 0.6.0 (2016-06-07)
+
+##### Added
+
+- New filter system for level, path, function, message per destination by [@JeffBNimble](https://github.com/JeffBNimble)
+
+##### Changed
+
+- `.minLevel` & `minLevelFilter()` are deprecated. Use the new filter system instead by [@JeffBNimble](https://github.com/JeffBNimble)
+
+##### Fixed
+
+- Memory leak in string manipulation by [@dkalachov](https://github.com/dkalachov)
+
+<br/>
 ## 0.5.4 (2016-05-20)
 
 ##### Changed
