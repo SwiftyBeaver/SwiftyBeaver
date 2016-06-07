@@ -15,10 +15,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 - `.minLevel` & `minLevelFilter()` are deprecated. Use the new filter system instead by [@JeffBNimble](https://github.com/JeffBNimble)
 
-##### Fixed
-
-- Memory leak in string manipulation by [@dkalachov](https://github.com/dkalachov)
-
 <br/>
 ## 0.5.4 (2016-05-20)
 
