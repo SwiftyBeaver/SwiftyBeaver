@@ -256,10 +256,8 @@ public class BaseDestination: Hashable, Equatable {
             return shouldLevelBeLoggedUsingMinLevelFilters(level, path: path, function: function)
         }
 
-        return passesLogLevelFilters(level) &&
-                passesPathFilters(path) &&
-                passesFunctionFilters(function) &&
-                passesMessageFilters(message)
+        return passesAllRequiredFilters(level, path: path, function: function, message: message) &&
+                passesAtLeastOneNonRequiredFilter(level, path: path, function: function, message: message)
     }
 
     func shouldLevelBeLoggedUsingMinLevelFilters(level: SwiftyBeaver.Level, path: String, function: String) -> Bool {
@@ -291,6 +289,24 @@ public class BaseDestination: Hashable, Equatable {
         }
     }
 
+    func passesAllRequiredFilters(level: SwiftyBeaver.Level, path: String, function: String, message: String?) -> Bool {
+        let requiredFilters = self.filters.filter {
+            filter in
+            return filter.isRequired()
+        }
+
+        return applyFilters(requiredFilters, level: level, path: path, function: function, message: message) == requiredFilters.count
+    }
+
+    func passesAtLeastOneNonRequiredFilter(level: SwiftyBeaver.Level, path: String, function: String, message: String?) -> Bool {
+        let nonRequiredFilters = self.filters.filter {
+            filter in
+            return !filter.isRequired()
+        }
+
+        return nonRequiredFilters.isEmpty || applyFilters(nonRequiredFilters, level: level, path: path, function: function, message: message) > 0
+    }
+
     func passesLogLevelFilters(level: SwiftyBeaver.Level) -> Bool {
         let logLevelFilters = getFiltersTargeting(Filter.TargetType.LogLevel(level), fromFilters: self.filters)
         return logLevelFilters.filter {
@@ -300,78 +316,32 @@ public class BaseDestination: Hashable, Equatable {
         }.count == logLevelFilters.count
     }
 
-    func passesPathFilters(path: String) -> Bool {
-        guard path.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 else {
-            return true
-        }
-
-        let pathFilters = getFiltersTargeting(Filter.TargetType.Path(.Equals([path], false)), fromFilters: self.filters)
-        let requiredFilters = pathFilters.filter {
+    func applyFilters(targetFilters: [FilterType], level: SwiftyBeaver.Level, path: String, function: String, message: String?) -> Int {
+        return targetFilters.filter {
             filter in
-            return filter.isRequired()
-        }
 
-        let nonRequiredFilters = pathFilters.filter {
-            filter in
-            return !filter.isRequired()
-        }
+            let passes:Bool
 
-        return passesComparisonFilters(requiredFilters, nonRequiredFilters: nonRequiredFilters, value: path)
-    }
+            switch filter.getTarget() {
+            case .LogLevel(_):
+                passes = filter.apply(level.rawValue)
 
-    func passesFunctionFilters(function: String) -> Bool {
-        guard function.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 else {
-            return true
-        }
+            case .Path(_):
+                passes = filter.apply(path)
 
-        let functionFilters = getFiltersTargeting(Filter.TargetType.Function(.Equals([function], false)),
-                                                  fromFilters: self.filters)
-        let requiredFilters = functionFilters.filter {
-            filter in
-            return filter.isRequired()
-        }
+            case .Function(_):
+                passes = filter.apply(function)
 
-        let nonRequiredFilters = functionFilters.filter {
-            filter in
-            return !filter.isRequired()
-        }
+            case .Message(_):
+                guard let message = message else {
+                    return false
+                }
 
-        return passesComparisonFilters(requiredFilters, nonRequiredFilters: nonRequiredFilters, value: function)
-    }
+                passes = filter.apply(message)
+            }
 
-    func passesMessageFilters(message: String?) -> Bool {
-        guard let message = message else {
-            return true
-        }
-
-        let messageFilters = getFiltersTargeting(Filter.TargetType.Message(.Equals([message], false)),
-                                                 fromFilters: self.filters)
-        let requiredFilters = messageFilters.filter {
-            filter in
-            return filter.isRequired()
-        }
-
-        let nonRequiredFilters = messageFilters.filter {
-            filter in
-            return !filter.isRequired()
-        }
-
-        return passesComparisonFilters(requiredFilters, nonRequiredFilters: nonRequiredFilters, value: message)
-    }
-
-    func passesComparisonFilters(requiredFilters: [FilterType], nonRequiredFilters: [FilterType],
-                                 value: String) -> Bool {
-        let matchesAllRequiredFilters = requiredFilters.filter {
-            filter in
-            return filter.apply(value)
-        }.count == requiredFilters.count
-
-        let matchesAtLeastOneNonRequiredFilter = !nonRequiredFilters.filter {
-            filter in
-            return filter.apply(value)
-        }.isEmpty || nonRequiredFilters.isEmpty
-
-        return matchesAllRequiredFilters && matchesAtLeastOneNonRequiredFilter
+            return passes
+        }.count
     }
 
   /**
