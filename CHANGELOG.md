@@ -5,6 +5,24 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ----
 
+## 0.6.1 (2016-06-08)
+
+##### Changed
+
+- Filter `required` argument defines AND (`required: true`) or OR (`required: false`) relation between filters by [@JeffBNimble](https://github.com/JeffBNimble)
+
+<br/>
+## 0.6.0 (2016-06-07)
+
+##### Added
+
+- New filter system for level, path, function, message per destination by [@JeffBNimble](https://github.com/JeffBNimble)
+
+##### Changed
+
+- `.minLevel` & `minLevelFilter()` are deprecated. Use the new filter system instead by [@JeffBNimble](https://github.com/JeffBNimble)
+
+<br/>
 ## 0.5.4 (2016-05-20)
 
 ##### Changed

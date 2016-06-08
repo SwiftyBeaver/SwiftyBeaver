@@ -113,10 +113,10 @@ public class BaseDestination: Hashable, Equatable {
     public func addFilter(filter: FilterType) {
         // There can only be a maximum of one level filter in the filters collection.
         // When one is set, remove any others if there are any and then add
-        let isNewLevelFilter = self.getFiltersTargeting(target: Filter.TargetType.LogLevel(minLevel),
+        let isNewLevelFilter = self.getFiltersTargeting(Filter.TargetType.LogLevel(minLevel),
                                                         fromFilters: [filter]).count == 1
         if isNewLevelFilter {
-            let levelFilters = self.getFiltersTargeting(target: Filter.TargetType.LogLevel(minLevel),
+            let levelFilters = self.getFiltersTargeting(Filter.TargetType.LogLevel(minLevel),
                                                         fromFilters: self.filters)
             levelFilters.forEach {
                 filter in
@@ -128,10 +128,7 @@ public class BaseDestination: Hashable, Equatable {
 
     /// Remove a filter from the list of filters
     public func removeFilter(filter: FilterType) {
-//        let index = filters.indexOf {
-//            return ObjectIdentifier($0) == ObjectIdentifier(filter)
-//        }
-        let index = filters.index {
+        let index = filters.indexOf {
             return ObjectIdentifier($0) == ObjectIdentifier(filter)
         }
 
@@ -306,91 +303,64 @@ public class BaseDestination: Hashable, Equatable {
         }
     }
 
+    func passesAllRequiredFilters(level: SwiftyBeaver.Level, path: String, function: String, message: String?) -> Bool {
+        let requiredFilters = self.filters.filter {
+            filter in
+            return filter.isRequired()
+        }
+
+        return applyFilters(requiredFilters, level: level, path: path,
+                            function: function, message: message) == requiredFilters.count
+    }
+
+    func passesAtLeastOneNonRequiredFilter(level: SwiftyBeaver.Level,
+                                           path: String, function: String, message: String?) -> Bool {
+        let nonRequiredFilters = self.filters.filter {
+            filter in
+            return !filter.isRequired()
+        }
+
+        return nonRequiredFilters.isEmpty ||
+            applyFilters(nonRequiredFilters, level: level, path: path,
+                         function: function, message: message) > 0
+    }
+
     func passesLogLevelFilters(level: SwiftyBeaver.Level) -> Bool {
-        let logLevelFilters = getFiltersTargeting(target: Filter.TargetType.LogLevel(level), fromFilters: self.filters)
+        let logLevelFilters = getFiltersTargeting(Filter.TargetType.LogLevel(level), fromFilters: self.filters)
         return logLevelFilters.filter {
             filter in
 
-            return filter.apply(value: level.rawValue)
+            return filter.apply(level.rawValue)
         }.count == logLevelFilters.count
     }
 
-    func passesPathFilters(path: String) -> Bool {
-        guard path.lengthOfBytes(using: NSUTF8StringEncoding) > 0 else {
-            return true
-        }
-
-        let pathFilters = getFiltersTargeting(target: Filter.TargetType.Path(.Equals([path], false)),
-                                              fromFilters: self.filters)
-        let requiredFilters = pathFilters.filter {
+    func applyFilters(targetFilters: [FilterType], level: SwiftyBeaver.Level,
+                      path: String, function: String, message: String?) -> Int {
+        return targetFilters.filter {
             filter in
-            return filter.isRequired()
-        }
 
-        let nonRequiredFilters = pathFilters.filter {
-            filter in
-            return !filter.isRequired()
-        }
+            let passes: Bool
 
-        return passesComparisonFilters(requiredFilters: requiredFilters,
-                                       nonRequiredFilters: nonRequiredFilters, value: path)
-    }
+            switch filter.getTarget() {
+            case .LogLevel(_):
+                passes = filter.apply(level.rawValue)
 
-    func passesFunctionFilters(function: String) -> Bool {
-        guard function.lengthOfBytes(using: NSUTF8StringEncoding) > 0 else {
-            return true
-        }
+            case .Path(_):
+                passes = filter.apply(path)
 
-        let functionFilters = getFiltersTargeting(target: Filter.TargetType.Function(.Equals([function], false)),
-                                                  fromFilters: self.filters)
-        let requiredFilters = functionFilters.filter {
-            filter in
-            return filter.isRequired()
-        }
+            case .Function(_):
+                passes = filter.apply(function)
 
-        let nonRequiredFilters = functionFilters.filter {
-            filter in
-            return !filter.isRequired()
-        }
+            case .Message(_):
+                guard let message = message else {
+                    return false
+                }
 
-        return passesComparisonFilters(requiredFilters: requiredFilters,
-                                       nonRequiredFilters: nonRequiredFilters, value: function)
-    }
+                passes = filter.apply(message)
+            }
 
-    func passesMessageFilters(message: String?) -> Bool {
-        guard let message = message else {
-            return true
-        }
-
-        let messageFilters = getFiltersTargeting(target: Filter.TargetType.Message(.Equals([message], false)),
-                                                 fromFilters: self.filters)
-        let requiredFilters = messageFilters.filter {
-            filter in
-            return filter.isRequired()
-        }
-
-        let nonRequiredFilters = messageFilters.filter {
-            filter in
-            return !filter.isRequired()
-        }
-
-        return passesComparisonFilters(requiredFilters: requiredFilters,
-                                       nonRequiredFilters: nonRequiredFilters, value: message)
-    }
-
-    func passesComparisonFilters(requiredFilters: [FilterType],
-                                 nonRequiredFilters: [FilterType], value: String) -> Bool {
-        let matchesAllRequiredFilters = requiredFilters.filter {
-            filter in
-            return filter.apply(value: value)
-        }.count == requiredFilters.count
-
-        let matchesAtLeastOneNonRequiredFilter = !nonRequiredFilters.filter {
-            filter in
-            return filter.apply(value: value)
-        }.isEmpty || nonRequiredFilters.isEmpty
-
-        return matchesAllRequiredFilters && matchesAtLeastOneNonRequiredFilter
+            return passes
+        }.count
     }
 
   /**

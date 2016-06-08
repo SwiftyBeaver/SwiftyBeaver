@@ -9,13 +9,12 @@
 /* Begin PBXBuildFile section */
 		048E6BFA1CDBB68E00DC9116 /* DestinationSetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048E6BF91CDBB68E00DC9116 /* DestinationSetTests.swift */; };
 		54C189632F81D8BF9659C66B /* FilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C1856662C0326F8E96C1B8 /* FilterTests.swift */; };
-		9E0E4D3B1D016D8900D779F3 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0E4D3A1D016D8900D779F3 /* Filter.swift */; };
 		9E195B0A1C6B3B4600D924CB /* AES256CBC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E195B091C6B3B4600D924CB /* AES256CBC.swift */; };
 		9E195B0B1C6B3B4600D924CB /* AES256CBC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E195B091C6B3B4600D924CB /* AES256CBC.swift */; };
 		9E195B0C1C6B3B4600D924CB /* AES256CBC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E195B091C6B3B4600D924CB /* AES256CBC.swift */; };
 		9E195B0D1C6B3B4600D924CB /* AES256CBC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E195B091C6B3B4600D924CB /* AES256CBC.swift */; };
 		9E195B0F1C6B3B6F00D924CB /* AES256CBCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E195B0E1C6B3B6F00D924CB /* AES256CBCTests.swift */; };
-		9E23C4AA1D01709F00E7B7ED /* SBPlatformDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E23C4A91D01709F00E7B7ED /* SBPlatformDestination.swift */; };
+		9E236E6C1D016E3600A2CBDC /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E236E6B1D016E3600A2CBDC /* Filter.swift */; };
 		9E31D6291C185ECD004E0980 /* SwiftyBeaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E31D6281C185ECD004E0980 /* SwiftyBeaver.swift */; };
 		9E31D62E1C185EE3004E0980 /* BaseDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E31D62B1C185EE3004E0980 /* BaseDestination.swift */; };
 		9E31D62F1C185EE3004E0980 /* ConsoleDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E31D62C1C185EE3004E0980 /* ConsoleDestination.swift */; };
@@ -23,6 +22,9 @@
 		9E6CA9FC1C12BA7A009D9093 /* BaseDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6CA9FB1C12BA7A009D9093 /* BaseDestinationTests.swift */; };
 		9E6CAA481C148EC1009D9093 /* SwiftyBeaver.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 9E6CAA471C148EC1009D9093 /* SwiftyBeaver.podspec */; };
 		9E6CAA4A1C149579009D9093 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 9E6CAA491C149579009D9093 /* LICENSE */; };
+		9EA0A5491D06EBE500CF16AB /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E236E6B1D016E3600A2CBDC /* Filter.swift */; };
+		9EA0A54A1D06EBE500CF16AB /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E236E6B1D016E3600A2CBDC /* Filter.swift */; };
+		9EA0A54B1D06EBE500CF16AB /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E236E6B1D016E3600A2CBDC /* Filter.swift */; };
 		9EA53F8B1C561EE600B160AF /* SecretsExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA53F8A1C561EE600B160AF /* SecretsExample.swift */; };
 		9ED096FD1C521D3200FE3059 /* SBPlatformDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED096FC1C521D3200FE3059 /* SBPlatformDestinationTests.swift */; };
 		9EDCE3EF1C09D211002FA4A7 /* SwiftyBeaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EDCE3E41C09D211002FA4A7 /* SwiftyBeaver.framework */; };
@@ -60,11 +62,10 @@
 /* Begin PBXFileReference section */
 		048E6BF91CDBB68E00DC9116 /* DestinationSetTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DestinationSetTests.swift; sourceTree = "<group>"; };
 		54C1856662C0326F8E96C1B8 /* FilterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterTests.swift; sourceTree = "<group>"; };
-		9E0E4D3A1D016D8900D779F3 /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Filter.swift; path = sources/Filter.swift; sourceTree = "<group>"; };
 		9E195B091C6B3B4600D924CB /* AES256CBC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AES256CBC.swift; path = sources/AES256CBC.swift; sourceTree = "<group>"; };
 		9E195B0E1C6B3B6F00D924CB /* AES256CBCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AES256CBCTests.swift; sourceTree = "<group>"; };
 		9E195B101C6B766D00D924CB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9E23C4A91D01709F00E7B7ED /* SBPlatformDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBPlatformDestination.swift; path = sources/SBPlatformDestination.swift; sourceTree = "<group>"; };
+		9E236E6B1D016E3600A2CBDC /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Filter.swift; path = sources/Filter.swift; sourceTree = "<group>"; };
 		9E31D6281C185ECD004E0980 /* SwiftyBeaver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyBeaver.swift; path = sources/SwiftyBeaver.swift; sourceTree = "<group>"; };
 		9E31D62B1C185EE3004E0980 /* BaseDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseDestination.swift; path = sources/BaseDestination.swift; sourceTree = "<group>"; };
 		9E31D62C1C185EE3004E0980 /* ConsoleDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConsoleDestination.swift; path = sources/ConsoleDestination.swift; sourceTree = "<group>"; };
@@ -134,8 +135,8 @@
 				9E31D62B1C185EE3004E0980 /* BaseDestination.swift */,
 				9E31D62C1C185EE3004E0980 /* ConsoleDestination.swift */,
 				9E31D62D1C185EE3004E0980 /* FileDestination.swift */,
-				9E0E4D3A1D016D8900D779F3 /* Filter.swift */,
-				9E23C4A91D01709F00E7B7ED /* SBPlatformDestination.swift */,
+				9E236E6B1D016E3600A2CBDC /* Filter.swift */,
+				9ED096F71C521C6900FE3059 /* SBPlatformDestination.swift */,
 				9E31D6281C185ECD004E0980 /* SwiftyBeaver.swift */,
 			);
 			name = sources;
@@ -415,6 +416,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E236E6C1D016E3600A2CBDC /* Filter.swift in Sources */,
 				9E31D62F1C185EE3004E0980 /* ConsoleDestination.swift in Sources */,
 				9E0E4D3B1D016D8900D779F3 /* Filter.swift in Sources */,
 				9E31D6291C185ECD004E0980 /* SwiftyBeaver.swift in Sources */,
@@ -443,6 +445,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9EA0A54B1D06EBE500CF16AB /* Filter.swift in Sources */,
 				ACE597771C1882DF0031451F /* ConsoleDestination.swift in Sources */,
 				ACE597781C1882DF0031451F /* SwiftyBeaver.swift in Sources */,
 				ACE597791C1882DF0031451F /* FileDestination.swift in Sources */,
@@ -455,6 +458,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9EA0A54A1D06EBE500CF16AB /* Filter.swift in Sources */,
 				ACE597881C18830D0031451F /* ConsoleDestination.swift in Sources */,
 				ACE597891C18830D0031451F /* SwiftyBeaver.swift in Sources */,
 				ACE5978A1C18830D0031451F /* FileDestination.swift in Sources */,
@@ -467,6 +471,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9EA0A5491D06EBE500CF16AB /* Filter.swift in Sources */,
 				ACE597991C18832E0031451F /* ConsoleDestination.swift in Sources */,
 				ACE5979A1C18832E0031451F /* SwiftyBeaver.swift in Sources */,
 				ACE5979B1C18832E0031451F /* FileDestination.swift in Sources */,
