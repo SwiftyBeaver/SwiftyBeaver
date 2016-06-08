@@ -5,6 +5,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ----
 
+## 0.6.1 (2016-06-08)
+
+##### Changed
+
+- Filter `required` argument defines AND (`required: true`) or OR (`required: false`) relation between filters by [@JeffBNimble](https://github.com/JeffBNimble)
+
+<br/>
 ## 0.6.0 (2016-06-07)
 
 ##### Added

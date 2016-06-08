@@ -295,16 +295,20 @@ public class BaseDestination: Hashable, Equatable {
             return filter.isRequired()
         }
 
-        return applyFilters(requiredFilters, level: level, path: path, function: function, message: message) == requiredFilters.count
+        return applyFilters(requiredFilters, level: level, path: path,
+                            function: function, message: message) == requiredFilters.count
     }
 
-    func passesAtLeastOneNonRequiredFilter(level: SwiftyBeaver.Level, path: String, function: String, message: String?) -> Bool {
+    func passesAtLeastOneNonRequiredFilter(level: SwiftyBeaver.Level,
+                                           path: String, function: String, message: String?) -> Bool {
         let nonRequiredFilters = self.filters.filter {
             filter in
             return !filter.isRequired()
         }
 
-        return nonRequiredFilters.isEmpty || applyFilters(nonRequiredFilters, level: level, path: path, function: function, message: message) > 0
+        return nonRequiredFilters.isEmpty ||
+            applyFilters(nonRequiredFilters, level: level, path: path,
+                         function: function, message: message) > 0
     }
 
     func passesLogLevelFilters(level: SwiftyBeaver.Level) -> Bool {
@@ -316,11 +320,12 @@ public class BaseDestination: Hashable, Equatable {
         }.count == logLevelFilters.count
     }
 
-    func applyFilters(targetFilters: [FilterType], level: SwiftyBeaver.Level, path: String, function: String, message: String?) -> Int {
+    func applyFilters(targetFilters: [FilterType], level: SwiftyBeaver.Level,
+                      path: String, function: String, message: String?) -> Int {
         return targetFilters.filter {
             filter in
 
-            let passes:Bool
+            let passes: Bool
 
             switch filter.getTarget() {
             case .LogLevel(_):
