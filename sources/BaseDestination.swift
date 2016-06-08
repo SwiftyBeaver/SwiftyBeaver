@@ -113,10 +113,10 @@ public class BaseDestination: Hashable, Equatable {
     public func addFilter(filter: FilterType) {
         // There can only be a maximum of one level filter in the filters collection.
         // When one is set, remove any others if there are any and then add
-        let isNewLevelFilter = self.getFiltersTargeting(Filter.TargetType.LogLevel(minLevel),
+        let isNewLevelFilter = self.getFiltersTargeting(target: Filter.TargetType.LogLevel(minLevel),
                                                         fromFilters: [filter]).count == 1
         if isNewLevelFilter {
-            let levelFilters = self.getFiltersTargeting(Filter.TargetType.LogLevel(minLevel),
+            let levelFilters = self.getFiltersTargeting(target: Filter.TargetType.LogLevel(minLevel),
                                                         fromFilters: self.filters)
             levelFilters.forEach {
                 filter in
@@ -128,7 +128,7 @@ public class BaseDestination: Hashable, Equatable {
 
     /// Remove a filter from the list of filters
     public func removeFilter(filter: FilterType) {
-        let index = filters.indexOf {
+        let index = filters.index {
             return ObjectIdentifier($0) == ObjectIdentifier(filter)
         }
 
@@ -268,10 +268,8 @@ public class BaseDestination: Hashable, Equatable {
             return shouldLevelBeLoggedUsingMinLevelFilters(level: level, path: path, function: function)
         }
 
-        return passesLogLevelFilters(level: level) &&
-                passesPathFilters(path: path) &&
-                passesFunctionFilters(function: function) &&
-                passesMessageFilters(message: message)
+        return passesAllRequiredFilters(level: level, path: path, function: function, message: message) &&
+            passesAtLeastOneNonRequiredFilter(level: level, path: path, function: function, message: message)
     }
 
     func shouldLevelBeLoggedUsingMinLevelFilters(level: SwiftyBeaver.Level, path: String, function: String) -> Bool {
@@ -309,7 +307,7 @@ public class BaseDestination: Hashable, Equatable {
             return filter.isRequired()
         }
 
-        return applyFilters(requiredFilters, level: level, path: path,
+        return applyFilters(targetFilters: requiredFilters, level: level, path: path,
                             function: function, message: message) == requiredFilters.count
     }
 
@@ -321,16 +319,16 @@ public class BaseDestination: Hashable, Equatable {
         }
 
         return nonRequiredFilters.isEmpty ||
-            applyFilters(nonRequiredFilters, level: level, path: path,
+            applyFilters(targetFilters: nonRequiredFilters, level: level, path: path,
                          function: function, message: message) > 0
     }
 
     func passesLogLevelFilters(level: SwiftyBeaver.Level) -> Bool {
-        let logLevelFilters = getFiltersTargeting(Filter.TargetType.LogLevel(level), fromFilters: self.filters)
+        let logLevelFilters = getFiltersTargeting(target: Filter.TargetType.LogLevel(level), fromFilters: self.filters)
         return logLevelFilters.filter {
             filter in
 
-            return filter.apply(level.rawValue)
+            return filter.apply(value: level.rawValue)
         }.count == logLevelFilters.count
     }
 
@@ -343,20 +341,20 @@ public class BaseDestination: Hashable, Equatable {
 
             switch filter.getTarget() {
             case .LogLevel(_):
-                passes = filter.apply(level.rawValue)
+                passes = filter.apply(value: level.rawValue)
 
             case .Path(_):
-                passes = filter.apply(path)
+                passes = filter.apply(value: path)
 
             case .Function(_):
-                passes = filter.apply(function)
+                passes = filter.apply(value: function)
 
             case .Message(_):
                 guard let message = message else {
                     return false
                 }
 
-                passes = filter.apply(message)
+                passes = filter.apply(value: message)
             }
 
             return passes

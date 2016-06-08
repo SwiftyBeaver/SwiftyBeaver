@@ -48,7 +48,7 @@ public class Filter {
         case Equals([String], Bool)
     }
 
-    let targetType: Filter.TargetType
+    let targetType: TargetType
     let required: Bool
 
     public init(target: Filter.TargetType, required: Bool) {
