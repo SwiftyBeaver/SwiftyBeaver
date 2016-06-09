@@ -63,7 +63,7 @@ github "SwiftyBeaver/SwiftyBeaver"
 
 To use [CocoaPods](https://cocoapods.org) just add this to your Podfile:
 
-``` 
+``` Ruby
 pod 'SwiftyBeaver'
 ```
 
@@ -75,10 +75,10 @@ To use SwiftyBeaver as a [Swift Package Manager](https://swift.org/package-manag
 import PackageDescription
 
 let package = Package(
-name: "HelloWorld",
-dependencies: [
-.Package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git", majorVersion: 0)
-]
+  name: "HelloWorld",
+  dependencies: [
+    .Package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git", majorVersion: 0)
+  ]
 )
 ```
 
@@ -91,6 +91,7 @@ Add that near the top of your `AppDelegate.swift` to be able to use SwiftyBeaver
 
 ``` Swift
 import SwiftyBeaver
+
 let log = SwiftyBeaver.self
 
 ```
