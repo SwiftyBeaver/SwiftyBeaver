@@ -12,4 +12,4 @@ before_install:
 - gem install xcpretty
 script:
   - set -o pipefail  # required to let xcpretty use the same exit code like xcodebuild
-  - xcodebuild CODE_SIGNING_REQUIRED=NO -project SwiftyBeaver.xcodeproj -scheme "SwiftyBeaver (iOS)" -destination name="iPhone 6" -destination name="iPhone 6" test | xcpretty -c
+  - xcodebuild CODE_SIGNING_REQUIRED=NO -project SwiftyBeaver.xcodeproj -scheme "SwiftyBeaver (iOS)" -destination name="iPhone 6" -destination name="iPhone 6" -configuration Debug test | xcpretty -c
