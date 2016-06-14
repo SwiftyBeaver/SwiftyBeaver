@@ -43,7 +43,7 @@ final class AES256CBC {
             let ivRange = str.startIndex..<str.index(str.startIndex, offsetBy: 16)
             let iv = str.substring(with: ivRange)
             let encryptedString = str.replacingOccurrences(of: iv, with: "",
-                options: NSStringCompareOptions.literalSearch, range: nil) // remove IV
+                options: NSString.CompareOptions.literalSearch, range: nil) // remove IV
 
             do {
                 let decryptedString = try aesDecrypt(encryptedString, key: password, iv: iv)
@@ -58,24 +58,25 @@ final class AES256CBC {
 
     /// returns encrypted string, IV must be 16 chars long
     private class func aesEncrypt(_ str: String, key: String, iv: String) throws -> String {
-        let keyData = key.data(using: NSUTF8StringEncoding)!
-        let ivData = iv.data(using: NSUTF8StringEncoding)!
-        let data = str.data(using: NSUTF8StringEncoding)!
-        let enc = try NSData.withBytes(bytes: AESCipher(key: keyData.arrayOfBytes(),
+        let keyData = key.data(using: String.Encoding.utf8)!
+        let ivData = iv.data(using: String.Encoding.utf8)!
+        let data = str.data(using: String.Encoding.utf8)!
+        let enc = try Data.withBytes(bytes: AESCipher(key: keyData.arrayOfBytes(),
             iv: ivData.arrayOfBytes()).encrypt(bytes: data.arrayOfBytes()))
-        let base64String: String = enc.base64EncodedString(NSDataBase64EncodingOptions(rawValue: 0))
+        let base64String: String = enc.base64EncodedString(NSData.Base64EncodingOptions(rawValue: 0))
         let result = String(base64String)
         return result
     }
 
     /// returns decrypted string, IV must be 16 chars long
     private class func aesDecrypt(_ str: String, key: String, iv: String) throws -> String {
-        let keyData = key.data(using: NSUTF8StringEncoding)!
-        let ivData = iv.data(using: NSUTF8StringEncoding)!
-        let data = NSData(base64Encoded: str, options: NSDataBase64DecodingOptions(rawValue: 0))!
-        let dec = try NSData.withBytes(bytes: AESCipher(key: keyData.arrayOfBytes(),
+        let keyData = key.data(using: String.Encoding.utf8)!
+        let ivData = iv.data(using: String.Encoding.utf8)!
+        //let data = Data(base64Encoded: str, options: NSData.Base64DecodingOptions(rawValue: 0))!
+        let data = Data(base64Encoded: str)!
+        let dec = try Data.withBytes(bytes: AESCipher(key: keyData.arrayOfBytes(),
             iv: ivData.arrayOfBytes()).decrypt(bytes: data.arrayOfBytes()))
-        let result = NSString(data: dec, encoding: NSUTF8StringEncoding)
+        let result = NSString(data: dec as Data, encoding: String.Encoding.utf8.rawValue)
         return String(result!)
     }
 
@@ -946,9 +947,9 @@ private extension AESCipher {
 
 private extension AESCipher {
     convenience init(key: String, iv: String) throws {
-        guard let kkey = key.data(using: NSUTF8StringEncoding,
+        guard let kkey = key.data(using: String.Encoding.utf8,
             allowLossyConversion: false)?.arrayOfBytes(),
-            let iiv = iv.data(using: NSUTF8StringEncoding, allowLossyConversion: false)?.arrayOfBytes() else {
+            let iiv = iv.data(using: String.Encoding.utf8, allowLossyConversion: false)?.arrayOfBytes() else {
             throw Error.InvalidKeyOrInitializationVector
         }
 
@@ -1190,6 +1191,27 @@ private extension Array {
     }
 }
 
+private extension Data {
+
+    /*
+    public func toHexString() -> String {
+        return self.arrayOfBytes().toHexString()
+    }*/
+
+    static private func withBytes(bytes: [UInt8]) -> NSData {
+        return NSData(bytes: bytes, length: bytes.count)
+    }
+
+    private func arrayOfBytes() -> Array<UInt8> {
+        let count = self.count / sizeof(UInt8)
+        var bytesArray = Array<UInt8>(repeating: 0, count: count)
+        (self as NSData).getBytes(&bytesArray, length: count * sizeof(UInt8))
+        return bytesArray
+    }
+}
+
+/*
+// Swift 2 compatible
 private extension NSData {
     class private func withBytes(bytes: [UInt8]) -> NSData {
         return NSData(bytes: bytes, length: bytes.count)
@@ -1202,3 +1224,4 @@ private extension NSData {
         return bytesArray
     }
 }
+*/

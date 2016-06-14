@@ -33,9 +33,9 @@ class BaseDestinationTests: XCTestCase {
         str = BaseDestination().formattedDate("--")
         XCTAssertGreaterThanOrEqual(str, "--")
         // HH:mm:ss
-        let formatter = NSDateFormatter()
+        let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm:ss"
-        let dateStr = formatter.string(from: NSDate())
+        let dateStr = formatter.string(from: NSDate() as Date)
         str = BaseDestination().formattedDate(formatter.dateFormat)
         XCTAssertEqual(str, dateStr)
     }
@@ -77,10 +77,10 @@ class BaseDestinationTests: XCTestCase {
     func testFormattedMessage() {
         let obj = BaseDestination()
         var str = ""
-        let formatter = NSDateFormatter()
+        let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm:ss"
 
-        let dateStr = formatter.string(from: NSDate())
+        let dateStr = formatter.string(from: NSDate() as Date)
 
         // logging to main thread does not output thread name
         str = obj.formattedMessage(dateStr, levelString: "DEBUG", msg: "Hello", thread: "main",

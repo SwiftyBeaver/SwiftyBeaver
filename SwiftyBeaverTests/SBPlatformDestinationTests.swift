@@ -110,7 +110,7 @@ class SBPlatformDestinationTests: XCTestCase {
         let correctURL = platform.serverURL
 
         // invalid address
-        platform.serverURL = NSURL(string: "https://notexisting.swiftybeaver.com")!
+        platform.serverURL = NSURL(string: "https://notexisting.swiftybeaver.com")! as URL
         let exp = expectation(withDescription: "returns false due to invalid URL")
 
         platform.sendToServerAsync(jsonStr) {
@@ -164,7 +164,7 @@ class SBPlatformDestinationTests: XCTestCase {
 
     func testIntegration() {
         let log = SwiftyBeaver.self
-        let formatter = NSDateFormatter()
+        let formatter = DateFormatter()
 
         // add logging to SwiftyBeaver Platform
         platform.showNSLog = true
@@ -194,7 +194,7 @@ class SBPlatformDestinationTests: XCTestCase {
             }
 
             formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
-            let dateStr = formatter.string(from: NSDate())
+            let dateStr = formatter.string(from: NSDate() as Date)
 
             log.debug("msg \(index) - \(dateStr)")
         }
@@ -216,7 +216,7 @@ class SBPlatformDestinationTests: XCTestCase {
         XCTAssertEqual(device["os"], OS)
         XCTAssertGreaterThan(device["os"]!.characters.count, 0)
         XCTAssertGreaterThan(device["osVersion"]!.characters.count, 4)
-        XCTAssertEqual(device["hostName"], NSProcessInfo.processInfo().hostName)
+        XCTAssertEqual(device["hostName"], ProcessInfo.processInfo().hostName)
         XCTAssertEqual(device["deviceName"], DEVICE_NAME)
         XCTAssertEqual(device["deviceModel"], DEVICE_MODEL)
         //NSLog(stats)
@@ -263,7 +263,7 @@ class SBPlatformDestinationTests: XCTestCase {
     /// helper function to delete temp file before test
     func deleteFile(url: NSURL) -> Bool {
         do {
-            try NSFileManager.default().removeItem(at: url)
+            try FileManager.default().removeItem(at: url as URL)
             return true
         } catch let error {
             NSLog("Unit test: could not delete file \(url). \(error)")

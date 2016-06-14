@@ -59,18 +59,22 @@ public class SwiftyBeaver {
 
     /// returns the current thread name
     class func threadName() -> String {
-        if NSThread.isMainThread() {
+        if Thread.isMainThread() {
             return ""
         } else {
-            let threadName = NSThread.current().name
+            let threadName = Thread.current().name
             if let threadName = threadName where !threadName.isEmpty {
                 return threadName
-            } else if let queueName = NSString(utf8String:
-                dispatch_queue_get_label(DISPATCH_CURRENT_QUEUE_LABEL)) as String? where !queueName.isEmpty {
-                return queueName
             } else {
-                return String(format: "%p", NSThread.current())
+                return String(format: "%p", Thread.current())
             }
+
+            /*
+             // had to remove the following block.
+             // dispatch_queue_get_label seems not to be existing anymore in Swift 3
+             else if let queueName = NSString(utf8String:
+             dispatch_queue_get_label(DISPATCH_CURRENT_QUEUE_LABEL)) as String? where !queueName.isEmpty {
+             return queueName*/
         }
     }
 
@@ -128,11 +132,11 @@ public class SwiftyBeaver {
                 let f = stripParams(function: function)
 
                 if dest.asynchronously {
-                    dispatch_async(queue) {
+                    queue.async() {
                         let _ = dest.send(level, msg: msgStr, thread: thread, path: path, function: f, line: line)
                     }
                 } else {
-                    dispatch_sync(queue) {
+                    queue.sync() {
                         let _ = dest.send(level, msg: msgStr, thread: thread, path: path, function: f, line: line)
                     }
                 }
@@ -141,24 +145,29 @@ public class SwiftyBeaver {
     }
 
     /**
+     DEPRECATED & NEEDS COMPLETE REWRITE DUE TO SWIFT 3 AND GENERAL INCORRECT LOGIC
      Flush all destinations to make sure all logging messages have been written out
      Returns after all messages flushed or timeout seconds
 
      - returns: true if all messages flushed, false if timeout or error occurred
      */
     public class func flush(secondTimeout: Int64) -> Bool {
+
+        /*
         guard let grp = dispatch_group_create() else { return false }
         for dest in destinations {
             if let queue = dest.queue {
                 dispatch_group_enter(grp)
-                dispatch_async(queue, {
+                queue.asynchronously(execute: {
                     dest.flush()
-                    dispatch_group_leave(grp)
+                    grp.leave()
                 })
             }
         }
-        let waitUntil = dispatch_time(DISPATCH_TIME_NOW, secondTimeout * 1000000000)
+        let waitUntil = DispatchTime.now(dispatch_time_t(DISPATCH_TIME_NOW), secondTimeout * 1000000000)
         return dispatch_group_wait(grp, waitUntil) == 0
+         */
+        return true
     }
 
     /// removes the parameters from a function because it looks weird with a single param

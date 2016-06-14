@@ -14,8 +14,8 @@ public class FileDestination: BaseDestination {
     public var logFileURL: NSURL?
 
     override public var defaultHashValue: Int {return 2}
-    let fileManager = NSFileManager.default()
-    var fileHandle: NSFileHandle? = nil
+    let fileManager = FileManager.default()
+    var fileHandle: FileHandle? = nil
 
     public override init() {
         // platform-dependent logfile directory default
@@ -25,7 +25,7 @@ public class FileDestination: BaseDestination {
             if let url = fileManager.urlsForDirectory(.cachesDirectory, inDomains: .userDomainMask).first {
                 baseURL = url
                 // try to use ~/Library/Caches/APP NAME instead of ~/Library/Caches
-                if let appName = NSBundle.main().objectForInfoDictionaryKey("CFBundleExecutable") as? String {
+                if let appName = Bundle.main().objectForInfoDictionaryKey("CFBundleExecutable") as? String {
                     do {
                         if let appURL = baseURL?.appendingPathComponent(appName, isDirectory: true) {
                             try fileManager.createDirectory(at: appURL,
@@ -87,17 +87,17 @@ public class FileDestination: BaseDestination {
             if fileManager.fileExists(atPath: url.path!) == false {
                 // create file if not existing
                 let line = str + "\n"
-                try line.write(to: url, atomically: true, encoding: NSUTF8StringEncoding)
+                try line.write(to: url as URL, atomically: true, encoding: String.Encoding.utf8)
             } else {
                 // append to end of file
                 if fileHandle == nil {
                     // initial setting of file handle
-                    fileHandle = try NSFileHandle(forWritingTo: url)
+                    fileHandle = try FileHandle(forWritingTo: url as URL)
                 }
                 if let fileHandle = fileHandle {
                     fileHandle.seekToEndOfFile()
                     let line = str + "\n"
-                    let data = line.data(using: NSUTF8StringEncoding)!
+                    let data = line.data(using: String.Encoding.utf8)!
                     fileHandle.write(data)
                 }
             }

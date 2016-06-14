@@ -82,7 +82,7 @@ public class BaseDestination: Hashable, Equatable {
 
     var minLevelFilters = [MinLevelFilter]()
     var filters = [FilterType]()
-    let formatter = NSDateFormatter()
+    let formatter = DateFormatter()
 
     var reset = "\u{001b}[;"
     var escape = "\u{001b}["
@@ -93,12 +93,12 @@ public class BaseDestination: Hashable, Equatable {
 
     // each destination instance must have an own serial queue to ensure serial output
     // GCD gives it a prioritization between User Initiated and Utility
-    var queue: dispatch_queue_t?
+    var queue: DispatchQueue? //dispatch_queue_t?
 
     public init() {
         let uuid = NSUUID().uuidString
         let queueLabel = "swiftybeaver-queue-" + uuid
-        queue = dispatch_queue_create(queueLabel, DISPATCH_QUEUE_SERIAL)
+        queue = DispatchQueue(label: queueLabel, attributes: .serial, target: queue)
         addFilter(filter: Filters.Level.atLeast(level: minLevel))
     }
 
@@ -159,7 +159,7 @@ public class BaseDestination: Hashable, Equatable {
     func formattedDate(_ dateFormat: String) -> String {
         //formatter.timeZone = NSTimeZone(abbreviation: "UTC")
         formatter.dateFormat = dateFormat
-        let dateStr = formatter.string(from: NSDate())
+        let dateStr = formatter.string(from: NSDate() as Date)
         return dateStr
     }
 
