@@ -114,9 +114,16 @@ public class SBPlatformDestination: BaseDestination {
         }
 
         if let baseURL = baseURL {
-            entriesFileURL = baseURL.URLByAppendingPathComponent("sbplatform_entries.json", isDirectory: false)
-            sendingFileURL = baseURL.URLByAppendingPathComponent("sbplatform_entries_sending.json", isDirectory: false)
-            analyticsFileURL = baseURL.URLByAppendingPathComponent("sbplatform_analytics.json", isDirectory: false)
+            if let entriesFileURL = baseURL.URLByAppendingPathComponent("sbplatform_entries.json", isDirectory: false),
+                sendingFileURL = baseURL.URLByAppendingPathComponent("sbplatform_entries_sending.json", isDirectory: false),
+                analyticsFileURL = baseURL.URLByAppendingPathComponent("sbplatform_analytics.json", isDirectory: false) {
+                self.entriesFileURL = entriesFileURL
+                self.sendingFileURL = sendingFileURL
+                self.analyticsFileURL = analyticsFileURL
+            } else {
+                // it is too early in the class lifetime to be able to use toNSLog()
+                print("Warning! Could not set URLs.")
+            }
 
             // get, update loaded and save analytics data to file on start
             let dict = analytics(analyticsFileURL, update: true)
