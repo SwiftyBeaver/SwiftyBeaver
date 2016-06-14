@@ -329,28 +329,22 @@
 				TargetAttributes = {
 					9EDCE3E31C09D211002FA4A7 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = DVD7W4R9X4;
-						DevelopmentTeamName = "SwiftyBeaver GmbH";
 						LastSwiftMigration = 0800;
+						ProvisioningStyle = Manual;
 					};
 					9EDCE3ED1C09D211002FA4A7 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = DVD7W4R9X4;
-						DevelopmentTeamName = "SwiftyBeaver GmbH";
 						LastSwiftMigration = 0800;
+						ProvisioningStyle = Manual;
 					};
 					ACE597751C1882DF0031451F = {
-						DevelopmentTeam = DVD7W4R9X4;
-						DevelopmentTeamName = "SwiftyBeaver GmbH";
+						ProvisioningStyle = Manual;
 					};
 					ACE597861C18830D0031451F = {
-						DevelopmentTeam = DVD7W4R9X4;
-						DevelopmentTeamName = "SwiftyBeaver GmbH";
+						ProvisioningStyle = Manual;
 					};
 					ACE597971C18832E0031451F = {
-						DevelopmentTeam = DVD7W4R9X4;
-						DevelopmentTeamName = "SwiftyBeaver GmbH";
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -652,6 +646,7 @@
 		9EDCE3FC1C09D211002FA4A7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SwiftyBeaverTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.SwiftyBeaver.SwiftyBeaverTests;
@@ -663,6 +658,7 @@
 		9EDCE3FD1C09D211002FA4A7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SwiftyBeaverTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.SwiftyBeaver.SwiftyBeaverTests;
