@@ -74,7 +74,6 @@ public class BaseDestination: Hashable, Equatable {
         public var Error = "fg243,36,73;"         // red
     }
 
-    var minLevelFilters = [MinLevelFilter]()
     var filters = [FilterType]()
     let formatter = NSDateFormatter()
 
@@ -94,13 +93,6 @@ public class BaseDestination: Hashable, Equatable {
         let queueLabel = "swiftybeaver-queue-" + uuid
         queue = dispatch_queue_create(queueLabel, DISPATCH_QUEUE_SERIAL)
         addFilter(Filters.Level.atLeast(minLevel))
-    }
-
-    /// overrule the destination’s minLevel for a given path and optional function
-    @available(*, deprecated=0.5.5)
-    public func addMinLevelFilter(minLevel: SwiftyBeaver.Level, path: String, function: String = "") {
-        let filter = MinLevelFilter(minLevel: minLevel, path: path, function: function)
-        minLevelFilters.append(filter)
     }
 
     /// Add a filter that determines whether or not a particular message will be logged to this destination
@@ -252,34 +244,8 @@ public class BaseDestination: Hashable, Equatable {
     /// checks if level is at least minLevel or if a minLevel filter for that path does exist
     /// returns boolean and can be used to decide if a message should be logged or not
     func shouldLevelBeLogged(level: SwiftyBeaver.Level, path: String, function: String, message: String? = nil) -> Bool {
-        guard minLevelFilters.isEmpty else {
-            return shouldLevelBeLoggedUsingMinLevelFilters(level, path: path, function: function)
-        }
-
         return passesAllRequiredFilters(level, path: path, function: function, message: message) &&
                 passesAtLeastOneNonRequiredFilter(level, path: path, function: function, message: message)
-    }
-
-    func shouldLevelBeLoggedUsingMinLevelFilters(level: SwiftyBeaver.Level, path: String, function: String) -> Bool {
-        // at first check the instance’s global minLevel property
-        if minLevel.rawValue <= level.rawValue {
-            return true
-        }
-
-        // now go through all minLevelFilters and see if there is a match
-        for filter in minLevelFilters {
-            // rangeOfString returns nil if both values are the same!
-            if filter.minLevel.rawValue <= level.rawValue {
-                if filter.path == "" || path == filter.path || path.rangeOfString(filter.path) != nil {
-                    if filter.function == "" || function == filter.function ||
-                            function.rangeOfString(filter.function) != nil {
-                        return true
-                    }
-                }
-            }
-        }
-
-        return false
     }
 
     func getFiltersTargeting(target: Filter.TargetType, fromFilters: [FilterType]) -> [FilterType] {
