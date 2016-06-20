@@ -114,10 +114,16 @@ public class SBPlatformDestination: BaseDestination {
         }
 
         if let baseURL = baseURL {
-            entriesFileURL = baseURL.URLByAppendingPathComponent("sbplatform_entries.json", isDirectory: false)
-            sendingFileURL = baseURL.URLByAppendingPathComponent("sbplatform_entries_sending.json", isDirectory: false)
-            analyticsFileURL = baseURL.URLByAppendingPathComponent("sbplatform_analytics.json", isDirectory: false)
-
+            #if swift(>=2.3)
+                entriesFileURL = baseURL.URLByAppendingPathComponent("sbplatform_entries.json", isDirectory: false)!
+                sendingFileURL = baseURL.URLByAppendingPathComponent("sbplatform_entries_sending.json", isDirectory: false)!
+                analyticsFileURL = baseURL.URLByAppendingPathComponent("sbplatform_analytics.json", isDirectory: false)!
+            #else
+                entriesFileURL = baseURL.URLByAppendingPathComponent("sbplatform_entries.json", isDirectory: false)
+                sendingFileURL = baseURL.URLByAppendingPathComponent("sbplatform_entries_sending.json", isDirectory: false)
+                analyticsFileURL = baseURL.URLByAppendingPathComponent("sbplatform_analytics.json", isDirectory: false)
+            #endif
+            
             // get, update loaded and save analytics data to file on start
             let dict = analytics(analyticsFileURL, update: true)
             saveDictToFile(dict, url: analyticsFileURL)
