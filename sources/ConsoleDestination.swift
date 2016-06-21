@@ -26,7 +26,7 @@ public class ConsoleDestination: BaseDestination {
 
         if let str = formattedString {
             if useNSLog {
-                NSLog(str)
+                NSLog("%@", str)
             } else {
                 print(str)
             }
