@@ -110,50 +110,6 @@ class BaseDestinationTests: XCTestCase {
         XCTAssertEqual(str, "DEBUG: Hello")
     }
 
-    func testShouldLevelBeLogged() {
-        let obj = BaseDestination()
-        obj.minLevel = SwiftyBeaver.Level.Info
-
-        // filters to set minLevel to Verbose for certain files / folders
-        obj.addMinLevelFilter(minLevel: .Verbose, path: "foo.swift")
-        obj.addMinLevelFilter(minLevel: .Verbose, path: "/bar/")
-        obj.addMinLevelFilter(minLevel: .Verbose, path: "/app")
-        obj.addMinLevelFilter(minLevel: .Verbose, path: "/world/beaver.swift", function: "AppDelegate")
-        obj.addMinLevelFilter(minLevel: .Verbose, path: "", function: "MyFunction")
-
-        // check instance minLevel property
-        XCTAssertFalse(obj.shouldLevelBeLogged(level: SwiftyBeaver.Level.Verbose, path: "", function: ""))
-        XCTAssertFalse(obj.shouldLevelBeLogged(level: SwiftyBeaver.Level.Debug, path: "", function: ""))
-        XCTAssertTrue(obj.shouldLevelBeLogged(level: SwiftyBeaver.Level.Info, path: "", function: ""))
-        XCTAssertTrue(obj.shouldLevelBeLogged(level: SwiftyBeaver.Level.Warning, path: "", function: ""))
-        XCTAssertTrue(obj.shouldLevelBeLogged(level: SwiftyBeaver.Level.Error, path: "", function: ""))
-        // check if filters overrule instance property
-        XCTAssertFalse(obj.shouldLevelBeLogged(level: SwiftyBeaver.Level.Verbose, path: "foo2.swift", function: ""))
-        XCTAssertFalse(obj.shouldLevelBeLogged(level: SwiftyBeaver.Level.Verbose, path: "Foo.swift", function: ""))
-        XCTAssertTrue(obj.shouldLevelBeLogged(level: SwiftyBeaver.Level.Verbose, path: "foo.swift", function: ""))
-        XCTAssertTrue(obj.shouldLevelBeLogged(level: SwiftyBeaver.Level.Verbose, path: "/hello/foo.swift", function: ""))
-        // check filter 2
-        XCTAssertFalse(obj.shouldLevelBeLogged(level: SwiftyBeaver.Level.Verbose, path: "bar", function: ""))
-        XCTAssertFalse(obj.shouldLevelBeLogged(level: SwiftyBeaver.Level.Verbose, path: "/Bar/", function: ""))
-        XCTAssertTrue(obj.shouldLevelBeLogged(level: SwiftyBeaver.Level.Verbose, path: "/bar/", function: ""))
-        XCTAssertTrue(obj.shouldLevelBeLogged(level: SwiftyBeaver.Level.Verbose,
-                                              path: "/hello/bar/beaver", function: ""))
-        // check filter 3
-        XCTAssertFalse(obj.shouldLevelBeLogged(level: SwiftyBeaver.Level.Verbose, path: "/lol/App2/", function: ""))
-        XCTAssertTrue(obj.shouldLevelBeLogged(level: SwiftyBeaver.Level.Verbose, path: "/lol/app2/", function: ""))
-        XCTAssertTrue(obj.shouldLevelBeLogged(level: SwiftyBeaver.Level.Verbose, path: "/lol/app", function: ""))
-        // check filter 4 (file & function)
-        XCTAssertFalse(obj.shouldLevelBeLogged(level: SwiftyBeaver.Level.Verbose, path: "/world/beaver/", function: ""))
-        XCTAssertFalse(obj.shouldLevelBeLogged(level: SwiftyBeaver.Level.Verbose,
-                                               path: "world/beaver.swift", function: ""))
-        XCTAssertFalse(obj.shouldLevelBeLogged(
-            level: SwiftyBeaver.Level.Verbose, path: "/world/beaver.swift", function: "appDelegate"))
-        XCTAssertTrue(obj.shouldLevelBeLogged(
-            level: SwiftyBeaver.Level.Verbose, path: "/world/beaver.swift", function: "AppDelegate"))
-        // check filter 5 (function)
-        XCTAssertTrue(obj.shouldLevelBeLogged(level: SwiftyBeaver.Level.Verbose, path: "", function: "MyFunction"))
-    }
-
     func test_init_noMinLevelExplicitelySet_createsOneMatchingLevelFilter() {
         let destination = BaseDestination()
         XCTAssertEqual(destination.filters.count, 1)
