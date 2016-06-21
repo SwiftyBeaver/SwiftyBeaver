@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file following th
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ----
+## 0.6.2 (2016-06-21)
+
+##### Added
+
+- Support for Swift 2.3 under Xcode 8 beta by [@brentleyjones](https://github.com/brentleyjones)
+
+##### Fixed
+
+- Potential crash when using ConsoleDestination with NSLog by [@nickoto](https://github.com/nickoto)
+
+##### Removed
+
+- Deprecated MinLevelFilter functionality by [@skreutzberger](https://github.com/skreutzberger)
+
+<br/>
 
 ## 0.6.1 (2016-06-08)
 
