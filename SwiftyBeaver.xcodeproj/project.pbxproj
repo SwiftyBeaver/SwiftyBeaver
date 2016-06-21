@@ -22,6 +22,7 @@
 		9E6CA9FC1C12BA7A009D9093 /* BaseDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6CA9FB1C12BA7A009D9093 /* BaseDestinationTests.swift */; };
 		9E6CAA481C148EC1009D9093 /* SwiftyBeaver.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 9E6CAA471C148EC1009D9093 /* SwiftyBeaver.podspec */; };
 		9E6CAA4A1C149579009D9093 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 9E6CAA491C149579009D9093 /* LICENSE */; };
+		9E88C4711D19301000B1289F /* FileDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E88C4701D19301000B1289F /* FileDestinationTests.swift */; };
 		9EA06DB51D083C9D001DB20A /* SBPlatformDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA06DB41D083C9D001DB20A /* SBPlatformDestination.swift */; };
 		9EA06DB61D083CA4001DB20A /* SBPlatformDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA06DB41D083C9D001DB20A /* SBPlatformDestination.swift */; };
 		9EA06DB71D083CA5001DB20A /* SBPlatformDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA06DB41D083C9D001DB20A /* SBPlatformDestination.swift */; };
@@ -81,6 +82,7 @@
 		9E6CAA471C148EC1009D9093 /* SwiftyBeaver.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SwiftyBeaver.podspec; sourceTree = "<group>"; };
 		9E6CAA491C149579009D9093 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		9E74FEA81CD74AFA0024DD76 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
+		9E88C4701D19301000B1289F /* FileDestinationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileDestinationTests.swift; sourceTree = "<group>"; };
 		9EA06DB41D083C9D001DB20A /* SBPlatformDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBPlatformDestination.swift; path = sources/SBPlatformDestination.swift; sourceTree = "<group>"; };
 		9EA53F881C561E4C00B160AF /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		9EA53F8A1C561EE600B160AF /* SecretsExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecretsExample.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 				9EA53F8A1C561EE600B160AF /* SecretsExample.swift */,
 				048E6BF91CDBB68E00DC9116 /* DestinationSetTests.swift */,
 				54C1856662C0326F8E96C1B8 /* FilterTests.swift */,
+				9E88C4701D19301000B1289F /* FileDestinationTests.swift */,
 			);
 			path = SwiftyBeaverTests;
 			sourceTree = "<group>";
@@ -452,6 +455,7 @@
 			files = (
 				9EA53F8B1C561EE600B160AF /* SecretsExample.swift in Sources */,
 				9ED096FD1C521D3200FE3059 /* SBPlatformDestinationTests.swift in Sources */,
+				9E88C4711D19301000B1289F /* FileDestinationTests.swift in Sources */,
 				9EDCE3F41C09D211002FA4A7 /* SwiftyBeaverTests.swift in Sources */,
 				048E6BFA1CDBB68E00DC9116 /* DestinationSetTests.swift in Sources */,
 				9E195B0F1C6B3B6F00D924CB /* AES256CBCTests.swift in Sources */,
