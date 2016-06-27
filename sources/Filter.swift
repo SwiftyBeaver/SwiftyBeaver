@@ -73,7 +73,7 @@ public class LogLevelFilter: Filter, FilterType {
     }
 
     init(minLevel: SwiftyBeaver.Level) {
-        super.init(target: .LogLevel(minLevel), required: false) // , required: true
+        super.init(target: .LogLevel(minLevel), required: false)
     }
 
     public func apply(value: AnyObject) -> Bool {
