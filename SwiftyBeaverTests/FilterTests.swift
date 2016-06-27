@@ -13,7 +13,7 @@ class FilterTests: XCTestCase {
     //
     func test_level_atLeast_isRequiredFilter() {
         let filter = Filters.Level.atLeast(.Debug)
-        XCTAssertTrue(filter.isRequired())
+        XCTAssertFalse(filter.isRequired())
     }
 
     func test_level_getTarget_isLogLevelFilter() {

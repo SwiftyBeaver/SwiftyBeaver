@@ -233,7 +233,7 @@ class BaseDestinationTests: XCTestCase {
             message: "SQL: INSERT INTO table (c1, c2) VALUES (1, 2)"))
     }
 
-    func test_shouldLevelBeLogged_hasLevelFilterCombinationOfOtherFiltersIncludingNonRequiredAndDoesNotPass_False() {
+    func test_shouldLevelBeLogged_hasLevelFilterCombinationOfOtherFiltersIncludingNonRequired_True() {
         let destination = BaseDestination()
         destination.minLevel = SwiftyBeaver.Level.Info
         destination.addFilter(Filters.Path.startsWith("/world", caseSensitive: true, required: true))
@@ -243,10 +243,55 @@ class BaseDestinationTests: XCTestCase {
         destination.addFilter(Filters.Message.contains("insert", caseSensitive: true))
         destination.addFilter(Filters.Message.contains("update"))
         destination.addFilter(Filters.Message.contains("delete"))
+        XCTAssertTrue(destination.shouldLevelBeLogged(SwiftyBeaver.Level.Warning,
+            path: "/world/beaver.swift",
+            function: "executeSQLStatement",
+            message: "SQL: INSERT INTO table (c1, c2) VALUES (1, 2)"))
+    }
+
+    func test_shouldLevelBeLogged_hasLevelFilterCombinationOfOtherFiltersIncludingNonRequired_False() {
+        let destination = BaseDestination()
+        destination.minLevel = SwiftyBeaver.Level.Info
+        destination.addFilter(Filters.Path.startsWith("/world", caseSensitive: true, required: true))
+        destination.addFilter(Filters.Path.endsWith("/beaver.swift", caseSensitive: true, required: true))
+        destination.addFilter(Filters.Function.equals("executeSQLStatement", required: true))
+        destination.addFilter(Filters.Message.startsWith("SQL:", caseSensitive: true, required: true))
+        destination.addFilter(Filters.Message.contains("rename", caseSensitive: true, required: true))
+        destination.addFilter(Filters.Message.contains("update"))
+        destination.addFilter(Filters.Message.contains("delete"))
         XCTAssertFalse(destination.shouldLevelBeLogged(SwiftyBeaver.Level.Warning,
             path: "/world/beaver.swift",
             function: "executeSQLStatement",
             message: "SQL: INSERT INTO table (c1, c2) VALUES (1, 2)"))
     }
 
+    func test_shouldLevelBeLogged_hasMatchingNonRequiredFilter_True() {
+        let destination = BaseDestination()
+        destination.minLevel = .Info
+        destination.addFilter(Filters.Path.contains("/ViewController"))
+        XCTAssertTrue(destination.shouldLevelBeLogged(.Debug,
+            path: "/world/ViewController.swift",
+            function: "myFunc",
+            message: "Hello World"))
+    }
+
+    func test_shouldLevelBeLogged_hasNoMatchingNonRequiredFilter_False() {
+        let destination = BaseDestination()
+        destination.minLevel = .Info
+        destination.addFilter(Filters.Path.contains("/ViewController"))
+        XCTAssertFalse(destination.shouldLevelBeLogged(.Debug,
+            path: "/world/beaver.swift",
+            function: "myFunc",
+            message: "Hello World"))
+    }
+
+    func test_shouldLevelBeLogged_noFilters_True() {
+        // everything is logged on default
+        let destination = BaseDestination()
+        destination.addFilter(Filters.Path.contains("/ViewController"))
+        XCTAssertTrue(destination.shouldLevelBeLogged(.Debug,
+            path: "/world/beaver.swift",
+            function: "myFunc",
+            message: "Hello World"))
+    }
 }

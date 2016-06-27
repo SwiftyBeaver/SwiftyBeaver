@@ -24,13 +24,6 @@ let OS = "Linux"
 let OS = "Unknown"
 #endif
 
-@available(*, deprecated=0.5.5)
-struct MinLevelFilter {
-    var minLevel = SwiftyBeaver.Level.Verbose
-    var path = ""
-    var function = ""
-}
-
 /// destination which all others inherit from. do not directly use
 public class BaseDestination: Hashable, Equatable {
 
@@ -244,8 +237,15 @@ public class BaseDestination: Hashable, Equatable {
     /// checks if level is at least minLevel or if a minLevel filter for that path does exist
     /// returns boolean and can be used to decide if a message should be logged or not
     func shouldLevelBeLogged(level: SwiftyBeaver.Level, path: String, function: String, message: String? = nil) -> Bool {
-        return passesAllRequiredFilters(level, path: path, function: function, message: message) &&
-                passesAtLeastOneNonRequiredFilter(level, path: path, function: function, message: message)
+        let passedRequired = passesAllRequiredFilters(level, path: path, function: function, message: message)
+        let passedNonRequired = passesAtLeastOneNonRequiredFilter(level, path: path,
+                                                                  function: function, message: message)
+        //print("passed required filters: \(passedRequired) and non-required: \(passedNonRequired)")
+
+        if passedRequired && passedNonRequired {
+            return true
+        }
+        return false
     }
 
     func getFiltersTargeting(target: Filter.TargetType, fromFilters: [FilterType]) -> [FilterType] {
@@ -261,8 +261,15 @@ public class BaseDestination: Hashable, Equatable {
             return filter.isRequired()
         }
 
-        return applyFilters(requiredFilters, level: level, path: path,
-                            function: function, message: message) == requiredFilters.count
+
+        let matchingFilters = applyFilters(requiredFilters, level: level, path: path,
+                            function: function, message: message)
+        //print("matched \(matchingFilters) of \(requiredFilters.count) required filters")
+
+        if requiredFilters.isEmpty || matchingFilters == requiredFilters.count {
+            return true
+        }
+        return false
     }
 
     func passesAtLeastOneNonRequiredFilter(level: SwiftyBeaver.Level,
@@ -271,10 +278,14 @@ public class BaseDestination: Hashable, Equatable {
             filter in
             return !filter.isRequired()
         }
+        let matchingFilters = applyFilters(nonRequiredFilters, level: level,
+                                           path: path, function: function, message: message)
+        //print("matched \(matchingFilters) of \(nonRequiredFilters.count) non-required filters")
 
-        return nonRequiredFilters.isEmpty ||
-            applyFilters(nonRequiredFilters, level: level, path: path,
-                         function: function, message: message) > 0
+        if nonRequiredFilters.isEmpty || matchingFilters > 0 {
+            return true
+        }
+        return false
     }
 
     func passesLogLevelFilters(level: SwiftyBeaver.Level) -> Bool {
