@@ -36,12 +36,7 @@ public class BaseDestination: Hashable, Equatable {
     /// runs in own serial background thread for better performance
     public var asynchronously = true
     /// do not log any message which has a lower level than this one
-    public var minLevel = SwiftyBeaver.Level.Verbose {
-        didSet {
-            // Craft a new level filter and add it
-            self.addFilter(Filters.Level.atLeast(minLevel))
-        }
-    }
+    public var minLevel = SwiftyBeaver.Level.Verbose
     /// standard log format; set to "" to not log date at all
     public var dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
     /// set custom log level words for each level
@@ -85,23 +80,10 @@ public class BaseDestination: Hashable, Equatable {
         let uuid = NSUUID().UUIDString
         let queueLabel = "swiftybeaver-queue-" + uuid
         queue = dispatch_queue_create(queueLabel, DISPATCH_QUEUE_SERIAL)
-        addFilter(Filters.Level.atLeast(minLevel))
     }
 
     /// Add a filter that determines whether or not a particular message will be logged to this destination
     public func addFilter(filter: FilterType) {
-        // There can only be a maximum of one level filter in the filters collection.
-        // When one is set, remove any others if there are any and then add
-        let isNewLevelFilter = self.getFiltersTargeting(Filter.TargetType.LogLevel(minLevel),
-                                                        fromFilters: [filter]).count == 1
-        if isNewLevelFilter {
-            let levelFilters = self.getFiltersTargeting(Filter.TargetType.LogLevel(minLevel),
-                                                        fromFilters: self.filters)
-            levelFilters.forEach {
-                filter in
-                self.removeFilter(filter)
-            }
-        }
         filters.append(filter)
     }
 
@@ -237,13 +219,35 @@ public class BaseDestination: Hashable, Equatable {
     /// checks if level is at least minLevel or if a minLevel filter for that path does exist
     /// returns boolean and can be used to decide if a message should be logged or not
     func shouldLevelBeLogged(level: SwiftyBeaver.Level, path: String, function: String, message: String? = nil) -> Bool {
-        let passedRequired = passesAllRequiredFilters(level, path: path, function: function, message: message)
-        let passedNonRequired = passesAtLeastOneNonRequiredFilter(level, path: path,
-                                                                  function: function, message: message)
-        //print("passed required filters: \(passedRequired) and non-required: \(passedNonRequired)")
 
-        if passedRequired && passedNonRequired {
-            return true
+        if filters.isEmpty {
+            if level.rawValue >= minLevel.rawValue {
+                //print("level >= minLevel")
+                return true
+            } else {
+                //print("filters is empty and level < minLevel")
+                return false
+            }
+        }
+
+        let (matchedRequired, allRequired) = passedRequiredFilters(level, path: path,
+                                                                   function: function, message: message)
+        let (matchedNonRequired, allNonRequired) = passedNonRequiredFilters(level, path: path,
+                                                                    function: function, message: message)
+        if allRequired > 0 {
+            if matchedRequired == allRequired {
+                return true
+            }
+        } else {
+            // no required filters are existing so at least 1 optional needs to match
+            if allNonRequired > 0 {
+                if matchedNonRequired > 0 {
+                    return true
+                }
+            } else {
+                // no optional is existing, so all is good
+                return true
+            }
         }
         return false
     }
@@ -255,46 +259,32 @@ public class BaseDestination: Hashable, Equatable {
         }
     }
 
-    func passesAllRequiredFilters(level: SwiftyBeaver.Level, path: String, function: String, message: String?) -> Bool {
+    /// returns a tuple of matched and all filters
+    func passedRequiredFilters(level: SwiftyBeaver.Level, path: String,
+                               function: String, message: String?) -> (Int, Int) {
         let requiredFilters = self.filters.filter {
             filter in
             return filter.isRequired()
         }
 
-
         let matchingFilters = applyFilters(requiredFilters, level: level, path: path,
                             function: function, message: message)
         //print("matched \(matchingFilters) of \(requiredFilters.count) required filters")
-
-        if requiredFilters.isEmpty || matchingFilters == requiredFilters.count {
-            return true
-        }
-        return false
+        return (matchingFilters, requiredFilters.count)
     }
 
-    func passesAtLeastOneNonRequiredFilter(level: SwiftyBeaver.Level,
-                                           path: String, function: String, message: String?) -> Bool {
+    /// returns a tuple of matched and all filters
+    func passedNonRequiredFilters(level: SwiftyBeaver.Level,
+                                           path: String, function: String, message: String?) -> (Int, Int) {
         let nonRequiredFilters = self.filters.filter {
             filter in
             return !filter.isRequired()
         }
+
         let matchingFilters = applyFilters(nonRequiredFilters, level: level,
                                            path: path, function: function, message: message)
         //print("matched \(matchingFilters) of \(nonRequiredFilters.count) non-required filters")
-
-        if nonRequiredFilters.isEmpty || matchingFilters > 0 {
-            return true
-        }
-        return false
-    }
-
-    func passesLogLevelFilters(level: SwiftyBeaver.Level) -> Bool {
-        let logLevelFilters = getFiltersTargeting(Filter.TargetType.LogLevel(level), fromFilters: self.filters)
-        return logLevelFilters.filter {
-            filter in
-
-            return filter.apply(level.rawValue)
-        }.count == logLevelFilters.count
+        return (matchingFilters, nonRequiredFilters.count)
     }
 
     func applyFilters(targetFilters: [FilterType], level: SwiftyBeaver.Level,
@@ -304,10 +294,11 @@ public class BaseDestination: Hashable, Equatable {
 
             let passes: Bool
 
-            switch filter.getTarget() {
-            case .LogLevel(_):
-                passes = filter.apply(level.rawValue)
+            if !filter.reachedMinLevel(level) {
+                return false
+            }
 
+            switch filter.getTarget() {
             case .Path(_):
                 passes = filter.apply(path)
 

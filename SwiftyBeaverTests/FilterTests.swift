@@ -8,44 +8,6 @@ import XCTest
 @testable import SwiftyBeaver
 
 class FilterTests: XCTestCase {
-    //
-    // Logging Level filter tests
-    //
-    func test_level_atLeast_isRequiredFilter() {
-        let filter = Filters.Level.atLeast(.Debug)
-        XCTAssertFalse(filter.isRequired())
-    }
-
-    func test_level_getTarget_isLogLevelFilter() {
-        let filter = Filters.Level.atLeast(.Debug)
-        let isCorrectTargetType: Bool
-        switch filter.getTarget() {
-            case .LogLevel(_):
-                isCorrectTargetType = true
-
-            default:
-                isCorrectTargetType = false
-        }
-        XCTAssertTrue(isCorrectTargetType)
-    }
-
-    func test_level_loggedLevelIsGreaterThanFilter_answersTrue() {
-        let filter = Filters.Level.atLeast(.Info)
-        let logLevel = SwiftyBeaver.Level.Warning
-        XCTAssertTrue(filter.apply(logLevel.rawValue))
-    }
-
-    func test_level_loggedLevelIsEqualFilter_answersTrue() {
-        let filter = Filters.Level.atLeast(.Info)
-        let logLevel = SwiftyBeaver.Level.Info
-        XCTAssertTrue(filter.apply(logLevel.rawValue))
-    }
-
-    func test_level_loggedLevelIsLessThanFilter_answersFalse() {
-        let filter = Filters.Level.atLeast(.Info)
-        let logLevel = SwiftyBeaver.Level.Debug
-        XCTAssertFalse(filter.apply(logLevel.rawValue))
-    }
 
     //
     // Path filtering tests (identity)
@@ -724,9 +686,6 @@ class FilterTests: XCTestCase {
 
         case let .Message(type):
             comparisonType = type
-
-        default:
-            comparisonType = nil
         }
 
         guard let compareType = comparisonType else {
