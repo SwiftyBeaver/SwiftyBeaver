@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file following th
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ----
+## 0.6.3 (2016-06-29)
+
+##### Added
+
+- Filters can have their own minimum log level by [@skreutzberger](https://github.com/skreutzberger)
+- Prepared for new macOS alias for OS detection by [@skreutzberger](https://github.com/skreutzberger)
+
+##### Removed
+
+- Dedicated log level filter by [@skreutzberger](https://github.com/skreutzberger)
+
+<br/>
+
 ## 0.6.2 (2016-06-21)
 
 ##### Added
