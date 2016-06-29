@@ -12,9 +12,7 @@ import Foundation
 // store operating system / platform
 #if os(iOS)
 let OS = "iOS"
-#elseif os(OSX)
-let OS = "OSX"
-#elseif os(macOS)
+#elseif os(OSX) // elseif os(macOS) // <- available very soon, see https://git.io/vobEG
 let OS = "OSX"
 #elseif os(watchOS)
 let OS = "watchOS"
