@@ -14,6 +14,8 @@ import Foundation
 let OS = "iOS"
 #elseif os(OSX)
 let OS = "OSX"
+#elseif os(macOS)
+let OS = "OSX"
 #elseif os(watchOS)
 let OS = "watchOS"
 #elseif os(tvOS)
