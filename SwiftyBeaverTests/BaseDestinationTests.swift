@@ -167,7 +167,7 @@ class BaseDestinationTests: XCTestCase {
         let destination = BaseDestination()
         destination.minLevel = SwiftyBeaver.Level.Info
         destination.addFilter(Filters.Path.equals("/world/beaver.swift", caseSensitive: true, required: true))
-        XCTAssertFalse(destination.shouldLevelBeLogged(SwiftyBeaver.Level.Warning,
+        XCTAssertFalse(destination.shouldLevelBeLogged(.Debug,
             path: "/hello/foo.swift", function: "initialize"))
     }
 
@@ -185,7 +185,7 @@ class BaseDestinationTests: XCTestCase {
         destination.minLevel = SwiftyBeaver.Level.Info
         destination.addFilter(Filters.Path.startsWith("/world", caseSensitive: true, required: true))
         destination.addFilter(Filters.Path.endsWith("foo.swift", caseSensitive: true, required: true))
-        XCTAssertFalse(destination.shouldLevelBeLogged(SwiftyBeaver.Level.Warning,
+        XCTAssertFalse(destination.shouldLevelBeLogged(.Debug,
             path: "/hello/foo.swift", function: "initialize"))
     }
 
@@ -206,7 +206,7 @@ class BaseDestinationTests: XCTestCase {
         destination.addFilter(Filters.Path.startsWith("/world", caseSensitive: true, required: true))
         destination.addFilter(Filters.Message.startsWith("SQL:", caseSensitive: true, required: true))
         destination.addFilter(Filters.Message.contains("insert", caseSensitive: false, required: true))
-        XCTAssertFalse(destination.shouldLevelBeLogged(SwiftyBeaver.Level.Warning,
+        XCTAssertFalse(destination.shouldLevelBeLogged(.Debug,
             path: "/world/beaver.swift",
             function: "executeSQLStatement",
             message: "SQL: DELETE FROM table WHERE c1 = 1"))
@@ -234,7 +234,7 @@ class BaseDestinationTests: XCTestCase {
         destination.addFilter(Filters.Function.equals("executeSQLStatement", required: true))
         destination.addFilter(Filters.Message.startsWith("SQL:", caseSensitive: true, required: true))
         destination.addFilter(Filters.Message.contains("insert", "update", "delete", required: true))
-        XCTAssertFalse(destination.shouldLevelBeLogged(SwiftyBeaver.Level.Warning,
+        XCTAssertFalse(destination.shouldLevelBeLogged(.Debug,
             path: "/world/beaver.swift",
             function: "executeSQLStatement",
             message: "SQL: CREATE TABLE sample (c1 INTEGER, c2 VARCHAR)"))
@@ -282,7 +282,7 @@ class BaseDestinationTests: XCTestCase {
         destination.addFilter(Filters.Message.contains("rename", caseSensitive: true, required: true))
         destination.addFilter(Filters.Message.contains("update"))
         destination.addFilter(Filters.Message.contains("delete"))
-        XCTAssertFalse(destination.shouldLevelBeLogged(SwiftyBeaver.Level.Warning,
+        XCTAssertFalse(destination.shouldLevelBeLogged(.Debug,
             path: "/world/beaver.swift",
             function: "executeSQLStatement",
             message: "SQL: INSERT INTO table (c1, c2) VALUES (1, 2)"))
@@ -326,4 +326,34 @@ class BaseDestinationTests: XCTestCase {
             function: "myFunc",
             message: "Hello World"))
     }
+
+    func test_shouldLevelBeLogged_multipleNonRequiredFiltersAndGlobal_True() {
+        // everything is logged on default
+        let destination = BaseDestination()
+        destination.minLevel = .Info
+
+        destination.addFilter(Filters.Path.contains("/ViewController", minLevel: .Debug))
+        destination.addFilter(Filters.Function.contains("Func", minLevel: .Debug))
+        destination.addFilter(Filters.Message.contains("World", minLevel: .Debug))
+        //destination.debugPrint = true
+
+        // covered by filters
+        XCTAssertTrue(destination.shouldLevelBeLogged(.Debug,
+            path: "/world/ViewController.swift",
+            function: "myFunc",
+            message: "Hello World"))
+
+        // not in filter but matching global minLevel
+        XCTAssertTrue(destination.shouldLevelBeLogged(.Info,
+            path: "hello.swift",
+            function: "foo",
+            message: "bar"))
+
+        // not in filter and below global minLevel
+        XCTAssertFalse(destination.shouldLevelBeLogged(.Debug,
+            path: "hello.swift",
+            function: "foo",
+            message: "bar"))
+    }
+
 }

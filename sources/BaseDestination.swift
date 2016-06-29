@@ -76,6 +76,8 @@ public class BaseDestination: Hashable, Equatable {
     // GCD gives it a prioritization between User Initiated and Utility
     var queue: dispatch_queue_t?
 
+    var debugPrint = false // set to true to debug the internal logic of the class
+
     public init() {
         let uuid = NSUUID().UUIDString
         let queueLabel = "swiftybeaver-queue-" + uuid
@@ -222,11 +224,22 @@ public class BaseDestination: Hashable, Equatable {
 
         if filters.isEmpty {
             if level.rawValue >= minLevel.rawValue {
-                //print("level >= minLevel")
+                if debugPrint {
+                 print("filters is empty and level >= minLevel")
+                }
                 return true
             } else {
-                //print("filters is empty and level < minLevel")
+                if debugPrint {
+                  print("filters is empty and level < minLevel")
+                }
                 return false
+            }
+        } else {
+            if level.rawValue >= minLevel.rawValue {
+                if debugPrint {
+                    print("filters is not empty and level >= minLevel")
+                }
+                return true
             }
         }
 
@@ -269,7 +282,10 @@ public class BaseDestination: Hashable, Equatable {
 
         let matchingFilters = applyFilters(requiredFilters, level: level, path: path,
                             function: function, message: message)
-        //print("matched \(matchingFilters) of \(requiredFilters.count) required filters")
+        if debugPrint {
+            print("matched \(matchingFilters) of \(requiredFilters.count) required filters")
+        }
+
         return (matchingFilters, requiredFilters.count)
     }
 
@@ -283,7 +299,9 @@ public class BaseDestination: Hashable, Equatable {
 
         let matchingFilters = applyFilters(nonRequiredFilters, level: level,
                                            path: path, function: function, message: message)
-        //print("matched \(matchingFilters) of \(nonRequiredFilters.count) non-required filters")
+        if debugPrint {
+            print("matched \(matchingFilters) of \(nonRequiredFilters.count) non-required filters")
+        }
         return (matchingFilters, nonRequiredFilters.count)
     }
 
