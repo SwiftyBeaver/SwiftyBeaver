@@ -108,7 +108,7 @@ class FileDestinationTests: XCTestCase {
     // deletes a file if it is existing
     func deleteFile(path: String) {
         do {
-            try FileManager.default().removeItem(atPath: path)
+            try FileManager.default.removeItem(atPath: path)
         } catch {}
     }
 
@@ -127,7 +127,7 @@ class FileDestinationTests: XCTestCase {
     // creates a folder if not already existing
     func createFolder(path: String) {
         do {
-            try FileManager.default().createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
+            try FileManager.default.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
         } catch let error as NSError {
             print("Unable to create directory \(error.debugDescription)")
         }

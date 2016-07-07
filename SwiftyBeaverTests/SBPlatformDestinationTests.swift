@@ -216,7 +216,7 @@ class SBPlatformDestinationTests: XCTestCase {
         XCTAssertEqual(device["os"], OS)
         XCTAssertGreaterThan(device["os"]!.characters.count, 0)
         XCTAssertGreaterThan(device["osVersion"]!.characters.count, 4)
-        XCTAssertEqual(device["hostName"], ProcessInfo.processInfo().hostName)
+        XCTAssertEqual(device["hostName"], ProcessInfo.processInfo.hostName)
         XCTAssertEqual(device["deviceName"], DEVICE_NAME)
         XCTAssertEqual(device["deviceModel"], DEVICE_MODEL)
         //NSLog(stats)
@@ -263,7 +263,7 @@ class SBPlatformDestinationTests: XCTestCase {
     /// helper function to delete temp file before test
     func deleteFile(url: NSURL) -> Bool {
         do {
-            try FileManager.default().removeItem(at: url as URL)
+            try FileManager.default.removeItem(at: url as URL)
             return true
         } catch let error {
             NSLog("Unit test: could not delete file \(url). \(error)")

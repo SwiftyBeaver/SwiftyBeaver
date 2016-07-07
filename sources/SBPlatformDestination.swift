@@ -77,7 +77,7 @@ public class SBPlatformDestination: BaseDestination {
 
     // destination
     override public var defaultHashValue: Int {return 3}
-    let fileManager = FileManager.default()
+    let fileManager = FileManager.default
     let isoDateFormatter = DateFormatter()
 
 
@@ -94,7 +94,7 @@ public class SBPlatformDestination: BaseDestination {
             if let url = fileManager.urlsForDirectory(.applicationSupportDirectory, inDomains: .userDomainMask).first {
                 baseURL = url
                 // try to use ~/Library/Application Support/APP NAME instead of ~/Library/Application Support
-                if let appName = Bundle.main().objectForInfoDictionaryKey("CFBundleExecutable") as? String {
+                if let appName = Bundle.main.objectForInfoDictionaryKey("CFBundleExecutable") as? String {
                     do {
                         if let appURL = try baseURL?.appendingPathComponent(appName, isDirectory: true) {
                             try fileManager.createDirectory(at: appURL,
@@ -266,7 +266,7 @@ public class SBPlatformDestination: BaseDestination {
             operationQueue.underlyingQueue = queue
 
             let session = URLSession(configuration:
-                URLSessionConfiguration.default(),
+                URLSessionConfiguration.default,
                 delegate: nil, delegateQueue: operationQueue)
 
             // assemble request
@@ -277,7 +277,7 @@ public class SBPlatformDestination: BaseDestination {
 
             // basic auth header
             let credentials = "\(appID):\(appSecret)".data(using: String.Encoding.utf8)!
-            let base64Credentials = credentials.base64EncodedString([])
+            let base64Credentials = credentials.base64EncodedString(options: [])
             request.setValue("Basic \(base64Credentials)", forHTTPHeaderField: "Authorization")
 
             // POST parameters
@@ -426,7 +426,7 @@ public class SBPlatformDestination: BaseDestination {
     /// Delete file to get started again
     func deleteFile(_ url: URL) -> Bool {
         do {
-            try FileManager.default().removeItem(at: url)
+            try FileManager.default.removeItem(at: url)
             return true
         } catch let error {
             toNSLog("Warning! Could not delete file \(url). \(error)")
@@ -442,13 +442,13 @@ public class SBPlatformDestination: BaseDestination {
         var details = [String: String]()
 
         details["os"] = OS
-        let osVersion = ProcessInfo.processInfo().operatingSystemVersion
+        let osVersion = ProcessInfo.processInfo.operatingSystemVersion
         // becomes for example 10.11.2 for El Capitan
         var osVersionStr = String(osVersion.majorVersion)
         osVersionStr += "." + String(osVersion.minorVersion)
         osVersionStr += "." + String(osVersion.patchVersion)
         details["osVersion"] = osVersionStr
-        details["hostName"] = ProcessInfo.processInfo().hostName
+        details["hostName"] = ProcessInfo.processInfo.hostName
         details["deviceName"] = ""
         details["deviceModel"] = ""
 
@@ -521,7 +521,7 @@ public class SBPlatformDestination: BaseDestination {
 
     /// Returns the current app version string (like 1.2.5) or empty string on error
     func appVersion() -> String {
-        if let version = Bundle.main().objectForInfoDictionaryKey("CFBundleShortVersionString") as? String {
+        if let version = Bundle.main.objectForInfoDictionaryKey("CFBundleShortVersionString") as? String {
                 return version
         }
         return ""
@@ -529,7 +529,7 @@ public class SBPlatformDestination: BaseDestination {
 
     /// Returns the current app build as integer (like 563, always incrementing) or 0 on error
     func appBuild() -> Int {
-        if let version = Bundle.main().infoDictionary?["CFBundleVersion"] as? String {
+        if let version = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
             if let intVersion = Int(version) {
                 return intVersion
             }
@@ -595,13 +595,13 @@ public class SBPlatformDestination: BaseDestination {
 
     /// helper function for thread logging during development
     func threadName() -> String {
-        if Thread.isMainThread() {
+        if Thread.isMainThread {
             return "main"
         } else {
-            if let threadName = Thread.current().name where !threadName.isEmpty {
+            if let threadName = Thread.current.name where !threadName.isEmpty {
                 return threadName
             } else {
-                return String(format: "%p", Thread.current())
+                return String(format: "%p", Thread.current)
             }
 
             /*else if let queueName = NSString(utf8String:

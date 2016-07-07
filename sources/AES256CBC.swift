@@ -43,7 +43,7 @@ final class AES256CBC {
             let ivRange = str.startIndex..<str.index(str.startIndex, offsetBy: 16)
             let iv = str.substring(with: ivRange)
             let encryptedString = str.replacingOccurrences(of: iv, with: "",
-                options: NSString.CompareOptions.literalSearch, range: nil) // remove IV
+                options: NSString.CompareOptions.literal, range: nil) // remove IV
 
             do {
                 let decryptedString = try aesDecrypt(encryptedString, key: password, iv: iv)
@@ -63,7 +63,7 @@ final class AES256CBC {
         let data = str.data(using: String.Encoding.utf8)!
         let enc = try Data.withBytes(bytes: AESCipher(key: keyData.arrayOfBytes(),
             iv: ivData.arrayOfBytes()).encrypt(bytes: data.arrayOfBytes()))
-        let base64String: String = enc.base64EncodedString(NSData.Base64EncodingOptions(rawValue: 0))
+        let base64String: String = enc.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
         let result = String(base64String)
         return result
     }
@@ -877,7 +877,7 @@ final private class AESCipher {
                 tmp[wordIdx] = w[4*(i-1)+wordIdx]
             }
             if (i % variant.Nk) == 0 {
-                tmp = subWord(word: rotateLeft(UInt32.withBytes(bytes: tmp), 8).bytes(totalBytes: sizeof(UInt32)))
+                tmp = subWord(word: rotateLeft(UInt32.withBytes(bytes: tmp), 8).bytes(totalBytes: sizeof(UInt32.self)))
                 tmp[0] = tmp.first! ^ Rcon[i/variant.Nk]
             } else if variant.Nk > 6 && (i % variant.Nk) == 4 {
                 tmp = subWord(word: tmp)
@@ -1105,14 +1105,14 @@ extension UInt64 : BitshiftOperationsType, ByteConvertible {
 
 private func integerWithBytes<T: Integer where T:ByteConvertible, T: BitshiftOperationsType>(bytes: [UInt8]) -> T {
     var bytes = bytes.reversed() as Array<UInt8>
-    if bytes.count < sizeof(T) {
-        let paddingCount = sizeof(T) - bytes.count
+    if bytes.count < sizeof(T.self) {
+        let paddingCount = sizeof(T.self) - bytes.count
         if paddingCount > 0 {
             bytes += [UInt8](repeating: 0, count: paddingCount)
         }
     }
 
-    if sizeof(T) == 1 {
+    if sizeof(T.self) == 1 {
         return T(truncatingBitPattern: UInt64(bytes.first!))
     }
 
@@ -1125,7 +1125,7 @@ private func integerWithBytes<T: Integer where T:ByteConvertible, T: BitshiftOpe
 
 private extension UInt32 {
 
-    private func bytes(totalBytes: Int = sizeof(UInt32)) -> [UInt8] {
+    private func bytes(totalBytes: Int = sizeof(UInt32.self)) -> [UInt8] {
         return arrayOfBytes(value: self, length: totalBytes)
     }
 
@@ -1139,7 +1139,7 @@ private func toUInt32Array(slice: ArraySlice<UInt8>) -> Array<UInt32> {
     var result = Array<UInt32>()
     result.reserveCapacity(16)
 
-    for idx in stride(from: slice.startIndex, to: slice.endIndex, by: sizeof(UInt32)) {
+    for idx in stride(from: slice.startIndex, to: slice.endIndex, by: sizeof(UInt32.self)) {
         let val1: UInt32 = (UInt32(slice[slice.index(idx, offsetBy: 3)]) << 24)
         let val2: UInt32 = (UInt32(slice[slice.index(idx, offsetBy: 2)]) << 16)
         let val3: UInt32 = (UInt32(slice[slice.index(idx, offsetBy: 1)]) << 8)
@@ -1154,14 +1154,14 @@ private func toUInt32Array(slice: ArraySlice<UInt8>) -> Array<UInt32> {
 /// Array of bytes, little-endian representation. Don't use if not necessary.
 /// I found this method slow
 private func arrayOfBytes<T>(value: T, length: Int? = nil) -> [UInt8] {
-    let totalBytes = length ?? sizeof(T)
+    let totalBytes = length ?? sizeof(T.self)
 
     let valuePointer = UnsafeMutablePointer<T>(allocatingCapacity: 1)
     valuePointer.pointee = value
 
     let bytesPointer = UnsafeMutablePointer<UInt8>(valuePointer)
     var bytes = [UInt8](repeating: 0, count: totalBytes)
-    for j in 0..<min(sizeof(T), totalBytes) {
+    for j in 0..<min(sizeof(T.self), totalBytes) {
         bytes[totalBytes - 1 - j] = (bytesPointer + j).pointee
     }
 
@@ -1203,9 +1203,9 @@ private extension Data {
     }
 
     private func arrayOfBytes() -> Array<UInt8> {
-        let count = self.count / sizeof(UInt8)
+        let count = self.count / sizeof(UInt8.self)
         var bytesArray = Array<UInt8>(repeating: 0, count: count)
-        (self as NSData).getBytes(&bytesArray, length: count * sizeof(UInt8))
+        (self as NSData).getBytes(&bytesArray, length: count * sizeof(UInt8.self))
         return bytesArray
     }
 }

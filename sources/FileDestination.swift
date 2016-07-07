@@ -14,7 +14,7 @@ public class FileDestination: BaseDestination {
     public var logFileURL: NSURL?
 
     override public var defaultHashValue: Int {return 2}
-    let fileManager = FileManager.default()
+    let fileManager = FileManager.default
     var fileHandle: FileHandle? = nil
 
     public override init() {
@@ -25,7 +25,7 @@ public class FileDestination: BaseDestination {
             if let url = fileManager.urlsForDirectory(.cachesDirectory, inDomains: .userDomainMask).first {
                 baseURL = url
                 // try to use ~/Library/Caches/APP NAME instead of ~/Library/Caches
-                if let appName = Bundle.main().objectForInfoDictionaryKey("CFBundleExecutable") as? String {
+                if let appName = Bundle.main.objectForInfoDictionaryKey("CFBundleExecutable") as? String {
                     do {
                         if let appURL = baseURL?.appendingPathComponent(appName, isDirectory: true) {
                             try fileManager.createDirectory(at: appURL,

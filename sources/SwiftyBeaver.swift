@@ -59,14 +59,14 @@ public class SwiftyBeaver {
 
     /// returns the current thread name
     class func threadName() -> String {
-        if Thread.isMainThread() {
+        if Thread.isMainThread {
             return ""
         } else {
-            let threadName = Thread.current().name
+            let threadName = Thread.current.name
             if let threadName = threadName where !threadName.isEmpty {
                 return threadName
             } else {
-                return String(format: "%p", Thread.current())
+                return String(format: "%p", Thread.current)
             }
 
             /*
