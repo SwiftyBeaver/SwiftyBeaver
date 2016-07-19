@@ -46,7 +46,7 @@
 
 ![swiftybeaver-demo1](https://cloud.githubusercontent.com/assets/564725/14846071/218c0646-0c62-11e6-92cb-e6e963b68724.gif)
 
-[Signup to private beta](https://swiftybeaver.com) to get your development & release logs into the free Mac App.
+Conveniently access your logs during development & release with our [free Mac App](https://swiftybeaver.com).
 
 <br/>
 
