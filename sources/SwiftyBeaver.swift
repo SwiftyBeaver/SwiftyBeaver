@@ -63,7 +63,7 @@ public class SwiftyBeaver {
             return ""
         } else {
             let threadName = Thread.current.name
-            if let threadName = threadName where !threadName.isEmpty {
+            if let threadName = threadName, !threadName.isEmpty {
                 return threadName
             } else {
                 return String(format: "%p", Thread.current)

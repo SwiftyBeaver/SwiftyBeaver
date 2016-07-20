@@ -949,7 +949,9 @@ private extension AESCipher {
     convenience init(key: String, iv: String) throws {
         guard let kkey = key.data(using: String.Encoding.utf8,
             allowLossyConversion: false)?.arrayOfBytes(),
+            // swiftlint:disable conditional_binding_cascade
             let iiv = iv.data(using: String.Encoding.utf8, allowLossyConversion: false)?.arrayOfBytes() else {
+            // swiftlint:enable conditional_binding_cascade
             throw Error.InvalidKeyOrInitializationVector
         }
 

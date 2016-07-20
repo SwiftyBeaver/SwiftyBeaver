@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "ACE597971C18832E0031451F"
                BuildableName = "SwiftyBeaver.framework"
-               BlueprintName = "SwiftyBeaver (OSX)"
+               BlueprintName = "SwiftyBeaver (macOS)"
                ReferencedContainer = "container:SwiftyBeaver.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -47,7 +47,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "ACE597971C18832E0031451F"
             BuildableName = "SwiftyBeaver.framework"
-            BlueprintName = "SwiftyBeaver (OSX)"
+            BlueprintName = "SwiftyBeaver (macOS)"
             ReferencedContainer = "container:SwiftyBeaver.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -65,7 +65,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "ACE597971C18832E0031451F"
             BuildableName = "SwiftyBeaver.framework"
-            BlueprintName = "SwiftyBeaver (OSX)"
+            BlueprintName = "SwiftyBeaver (macOS)"
             ReferencedContainer = "container:SwiftyBeaver.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

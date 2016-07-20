@@ -20,7 +20,7 @@ import Foundation
             uname(&systemInfo)
             let machineMirror = Mirror(reflecting: systemInfo.machine)
             let identifier = machineMirror.children.reduce("") { identifier, element in
-                guard let value = element.value as? Int8 where value != 0 else { return identifier }
+                guard let value = element.value as? Int8, value != 0 else { return identifier }
                 return identifier + String(UnicodeScalar(UInt8(value)))
             }
             return identifier
@@ -259,7 +259,9 @@ public class SBPlatformDestination: BaseDestination {
     /// sends a string to the SwiftyBeaver Platform server, returns ok if status 200 and HTTP status
     func sendToServerAsync(_ str: String?, complete: (ok: Bool, status: Int) -> ()) {
 
+        // swiftlint:disable conditional_binding_cascade
         if let payload = str, let queue = self.queue {
+        // swiftlint:enable conditional_binding_cascade
 
             // create operation queue which uses current serial queue of destination
             let operationQueue = OperationQueue()
@@ -598,7 +600,7 @@ public class SBPlatformDestination: BaseDestination {
         if Thread.isMainThread {
             return "main"
         } else {
-            if let threadName = Thread.current.name where !threadName.isEmpty {
+            if let threadName = Thread.current.name, !threadName.isEmpty {
                 return threadName
             } else {
                 return String(format: "%p", Thread.current)
