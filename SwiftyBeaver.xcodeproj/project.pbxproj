@@ -302,9 +302,9 @@
 			productReference = ACE597951C18830D0031451F /* SwiftyBeaver.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		ACE597971C18832E0031451F /* SwiftyBeaver (OSX) */ = {
+		ACE597971C18832E0031451F /* SwiftyBeaver (macOS) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = ACE597A31C18832E0031451F /* Build configuration list for PBXNativeTarget "SwiftyBeaver (OSX)" */;
+			buildConfigurationList = ACE597A31C18832E0031451F /* Build configuration list for PBXNativeTarget "SwiftyBeaver (macOS)" */;
 			buildPhases = (
 				ACE597981C18832E0031451F /* Sources */,
 				ACE5979D1C18832E0031451F /* Frameworks */,
@@ -315,7 +315,7 @@
 			);
 			dependencies = (
 			);
-			name = "SwiftyBeaver (OSX)";
+			name = "SwiftyBeaver (macOS)";
 			productName = SwiftyBeaver;
 			productReference = ACE597A61C18832E0031451F /* SwiftyBeaver.framework */;
 			productType = "com.apple.product-type.framework";
@@ -367,7 +367,7 @@
 				9EDCE3ED1C09D211002FA4A7 /* SwiftyBeaverTests */,
 				ACE597751C1882DF0031451F /* SwiftyBeaver (watchOS) */,
 				ACE597861C18830D0031451F /* SwiftyBeaver (tvOS) */,
-				ACE597971C18832E0031451F /* SwiftyBeaver (OSX) */,
+				ACE597971C18832E0031451F /* SwiftyBeaver (macOS) */,
 			);
 		};
 /* End PBXProject section */
@@ -690,6 +690,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "watchsimulator watchos";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				VALID_ARCHS = "$(ARCHS_STANDARD)";
 			};
 			name = Debug;
@@ -712,6 +713,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "watchsimulator watchos";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 				VALID_ARCHS = "$(ARCHS_STANDARD)";
 			};
 			name = Release;
@@ -734,6 +736,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "appletvsimulator appletvos";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				VALID_ARCHS = "$(ARCHS_STANDARD)";
 			};
 			name = Debug;
@@ -756,6 +759,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "appletvsimulator appletvos";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 				VALID_ARCHS = "$(ARCHS_STANDARD)";
 			};
 			name = Release;
@@ -779,6 +783,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Debug;
@@ -802,6 +807,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Release;
@@ -854,7 +860,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		ACE597A31C18832E0031451F /* Build configuration list for PBXNativeTarget "SwiftyBeaver (OSX)" */ = {
+		ACE597A31C18832E0031451F /* Build configuration list for PBXNativeTarget "SwiftyBeaver (macOS)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				ACE597A41C18832E0031451F /* Debug */,

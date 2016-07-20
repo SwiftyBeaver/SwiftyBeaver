@@ -111,7 +111,7 @@ class SBPlatformDestinationTests: XCTestCase {
 
         // invalid address
         platform.serverURL = NSURL(string: "https://notexisting.swiftybeaver.com")! as URL
-        let exp = expectation(withDescription: "returns false due to invalid URL")
+        let exp = expectation(description: "returns false due to invalid URL")
 
         platform.sendToServerAsync(jsonStr) {
             ok, status in
@@ -123,7 +123,7 @@ class SBPlatformDestinationTests: XCTestCase {
         // invalid app ID
         platform.serverURL = correctURL
         platform.appID = "abc"
-        let exp2 = expectation(withDescription: "returns false due to invalid app ID")
+        let exp2 = expectation(description: "returns false due to invalid app ID")
 
         platform.sendToServerAsync(jsonStr) {
             ok, status in
@@ -135,7 +135,7 @@ class SBPlatformDestinationTests: XCTestCase {
         // invalid secret
         platform.appID = Secrets.Platform.appID
         platform.appSecret += "invalid"
-        let exp3 = expectation(withDescription: "returns false due to invalid secret")
+        let exp3 = expectation(description: "returns false due to invalid secret")
 
         platform.sendToServerAsync(jsonStr) {
             ok, status in
@@ -158,7 +158,7 @@ class SBPlatformDestinationTests: XCTestCase {
             exp4.fulfill()
         }
         */
-        waitForExpectations(withTimeout: 5, handler: nil)
+        waitForExpectations(timeout: 5, handler: nil)
 
     }
 
