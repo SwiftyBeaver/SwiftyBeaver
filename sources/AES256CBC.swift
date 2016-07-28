@@ -43,7 +43,7 @@ final class AES256CBC {
             let ivRange = str.startIndex..<str.index(str.startIndex, offsetBy: 16)
             let iv = str.substring(with: ivRange)
             let encryptedString = str.replacingOccurrences(of: iv, with: "",
-                options: NSString.CompareOptions.literal, range: nil) // remove IV
+                options: NSString.CompareOptions.literalSearch, range: nil) // remove IV
 
             do {
                 let decryptedString = try aesDecrypt(encryptedString, key: password, iv: iv)
@@ -63,7 +63,7 @@ final class AES256CBC {
         let data = str.data(using: String.Encoding.utf8)!
         let enc = try Data.withBytes(bytes: AESCipher(key: keyData.arrayOfBytes(),
             iv: ivData.arrayOfBytes()).encrypt(bytes: data.arrayOfBytes()))
-        let base64String: String = enc.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+        let base64String: String = enc.base64EncodedString(NSData.Base64EncodingOptions(rawValue: 0))
         let result = String(base64String)
         return result
     }
