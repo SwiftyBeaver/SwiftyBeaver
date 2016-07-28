@@ -64,6 +64,7 @@ public class SBPlatformDestination: BaseDestination {
     var points = 0
 
     public var serverURL = URL(string: "https://api.swiftybeaver.com/api/entries/")!
+    private let minAllowedThreshold = 1  // over-rules SendingPoints.Threshold
     private let maxAllowedThreshold = 1000  // over-rules SendingPoints.Threshold
     private var sendingInProgress = false
     private var initialSending = true
@@ -164,7 +165,7 @@ public class SBPlatformDestination: BaseDestination {
             points += newPoints
             toNSLog("current sending points: \(points)")
 
-            if points >= sendingPoints.Threshold || points > maxAllowedThreshold {
+            if (points >= sendingPoints.Threshold && points >= minAllowedThreshold) || points > maxAllowedThreshold {
                 toNSLog("\(points) points is >= threshold")
                 // above threshold, send to server
                 sendNow()
