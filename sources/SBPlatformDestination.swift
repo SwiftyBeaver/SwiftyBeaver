@@ -108,10 +108,14 @@ public class SBPlatformDestination: BaseDestination {
                 }
             }
         } else {
-            let path: NSSearchPathDirectory = OS == "tvOS" ? .CachesDirectory : .DocumentDirectory
-    
-            // iOS, watchOS, etc. are using the document directory of the app
-            if let url = fileManager.URLsForDirectory(path, inDomains: .UserDomainMask).first {
+            // iOS, watchOS, etc. are using the app’s document directory, tvOS can just use the caches directory
+            #if os(tvOS)
+                let saveDir: NSSearchPathDirectory = .CachesDirectory
+            #else
+                let saveDir: NSSearchPathDirectory = .DocumentDirectory
+            #endif
+            
+            if let url = fileManager.URLsForDirectory(saveDir, inDomains: .UserDomainMask).first {
                 baseURL = url
             }
         }
