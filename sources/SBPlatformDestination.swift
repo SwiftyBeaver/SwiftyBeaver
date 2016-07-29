@@ -116,7 +116,7 @@ public class SBPlatformDestination: BaseDestination {
             #else
                 let saveDir: FileManager.SearchPathDirectory = .documentDirectory
             #endif
-            
+
             if let url = fileManager.urlsForDirectory(saveDir, inDomains: .userDomainMask).first {
                 baseURL = url
             }
