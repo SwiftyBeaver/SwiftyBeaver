@@ -143,7 +143,11 @@ class SwiftyBeaverTests: XCTestCase {
         file.dateFormat = "HH:mm:ss.SSS"
         log.addDestination(file)
 
-        XCTAssertTrue(console.colored)
+        #if swift(>=2.3)
+            XCTAssertFalse(console.colored)
+        #else
+            XCTAssertTrue(console.colored)
+        #endif
         XCTAssertTrue(file.colored)
 
         log.verbose("not so important")
@@ -162,7 +166,11 @@ class SwiftyBeaverTests: XCTestCase {
         let console = ConsoleDestination()
         log.addDestination(console)
 
-        XCTAssertTrue(console.colored)
+        #if swift(>=2.3)
+            XCTAssertFalse(console.colored)
+        #else
+            XCTAssertTrue(console.colored)
+        #endif
 
         // change default color
         console.levelColor.Verbose = "fg255,0,255;"
@@ -193,7 +201,11 @@ class SwiftyBeaverTests: XCTestCase {
         log.addDestination(file)
 
         console.coloredLines = true
-        XCTAssertTrue(console.colored)
+        #if swift(>=2.3)
+            XCTAssertFalse(console.colored)
+        #else
+            XCTAssertTrue(console.colored)
+        #endif
         XCTAssertTrue(console.coloredLines)
         file.coloredLines = true
         XCTAssertTrue(file.colored)
