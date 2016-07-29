@@ -114,7 +114,7 @@ public class SBPlatformDestination: BaseDestination {
             #else
                 let saveDir: NSSearchPathDirectory = .DocumentDirectory
             #endif
-            
+
             if let url = fileManager.URLsForDirectory(saveDir, inDomains: .UserDomainMask).first {
                 baseURL = url
             }

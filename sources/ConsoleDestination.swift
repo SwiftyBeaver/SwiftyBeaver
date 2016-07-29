@@ -15,6 +15,12 @@ public class ConsoleDestination: BaseDestination {
 
     override public var defaultHashValue: Int {return 1}
 
+    #if swift(>=2.3)
+        // no color output for Xcode 8+
+        // because there is currently no color plugin existing
+        override public var colored = false
+    #endif
+
     public override init() {
         super.init()
     }
