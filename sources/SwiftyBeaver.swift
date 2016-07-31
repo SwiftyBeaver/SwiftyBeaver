@@ -30,6 +30,7 @@ public class SwiftyBeaver {
     // MARK: Destination Handling
 
     /// returns boolean about success
+    @discardableResult
     public class func addDestination(_ destination: BaseDestination) -> Bool {
         if destinations.contains(destination) {
             return false
@@ -39,6 +40,7 @@ public class SwiftyBeaver {
     }
 
     /// returns boolean about success
+    @discardableResult
     public class func removeDestination(_ destination: BaseDestination) -> Bool {
         if destinations.contains(destination) == false {
             return false
