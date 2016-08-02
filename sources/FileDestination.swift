@@ -22,10 +22,10 @@ public class FileDestination: BaseDestination {
         var baseURL: NSURL?
 
         if OS == "OSX" {
-            if let url = fileManager.urlsForDirectory(.cachesDirectory, inDomains: .userDomainMask).first {
+            if let url = fileManager.urls(for:.cachesDirectory, in: .userDomainMask).first {
                 baseURL = url
                 // try to use ~/Library/Caches/APP NAME instead of ~/Library/Caches
-                if let appName = Bundle.main.objectForInfoDictionaryKey("CFBundleExecutable") as? String {
+                if let appName = Bundle.main.object(forInfoDictionaryKey: "CFBundleExecutable") as? String {
                     do {
                         if let appURL = baseURL?.appendingPathComponent(appName, isDirectory: true) {
                             try fileManager.createDirectory(at: appURL,
@@ -39,7 +39,7 @@ public class FileDestination: BaseDestination {
             }
         } else {
             // iOS, watchOS, etc. are using the caches directory
-            if let url = fileManager.urlsForDirectory(.cachesDirectory, inDomains: .userDomainMask).first {
+            if let url = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first {
                 baseURL = url
             }
         }

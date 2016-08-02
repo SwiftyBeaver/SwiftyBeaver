@@ -151,7 +151,7 @@ final class AES256CBC {
 
 final private class AESCipher {
 
-    enum Error: ErrorProtocol {
+    enum AESCipherError: Error {
         case BlockSizeExceeded
         case InvalidKeyOrInitializationVector
         case InvalidInitializationVector
@@ -715,7 +715,7 @@ final private class AESCipher {
 
     func decrypt(bytes: [UInt8]) throws -> [UInt8] {
         if bytes.count % AESCipher.blockSize != 0 {
-            throw Error.BlockSizeExceeded
+            throw AESCipherError.BlockSizeExceeded
         }
 
         let blocks = bytes.chunks(chunksize: AESCipher.blockSize)
@@ -952,7 +952,7 @@ private extension AESCipher {
             // swiftlint:disable conditional_binding_cascade
             let iiv = iv.data(using: String.Encoding.utf8, allowLossyConversion: false)?.arrayOfBytes() else {
             // swiftlint:enable conditional_binding_cascade
-            throw Error.InvalidKeyOrInitializationVector
+            throw AESCipherError.InvalidKeyOrInitializationVector
         }
 
         try self.init(key: kkey, iv: iiv)
@@ -966,7 +966,7 @@ private typealias CipherOperationOnBlock = (block: [UInt8]) -> [UInt8]?
 
 private struct CBCBlockMode {
 
-    enum BlockError: ErrorProtocol {
+    enum BlockError: Error {
         case MissingInitializationVector
     }
 
@@ -1014,7 +1014,7 @@ private struct CBCBlockMode {
 
 private struct PKCS7 {
 
-    enum Error: ErrorProtocol {
+    enum PKCS7Error: Error {
         case InvalidPaddingValue
     }
 
@@ -1075,10 +1075,10 @@ private func rotateLeft(_ v: UInt32, _ n: UInt32) -> UInt32 {
 }
 
 private protocol BitshiftOperationsType {
-    func << (lhs: Self, rhs: Self) -> Self
-    func >> (lhs: Self, rhs: Self) -> Self
-    func <<= (lhs: inout Self, rhs: Self)
-    func >>= (lhs: inout Self, rhs: Self)
+    static func << (lhs: Self, rhs: Self) -> Self
+    static func >> (lhs: Self, rhs: Self) -> Self
+    static func <<= (lhs: inout Self, rhs: Self)
+    static func >>= (lhs: inout Self, rhs: Self)
 }
 
 private protocol ByteConvertible {
@@ -1158,7 +1158,7 @@ private func toUInt32Array(slice: ArraySlice<UInt8>) -> Array<UInt32> {
 private func arrayOfBytes<T>(value: T, length: Int? = nil) -> [UInt8] {
     let totalBytes = length ?? sizeof(T.self)
 
-    let valuePointer = UnsafeMutablePointer<T>(allocatingCapacity: 1)
+    let valuePointer = UnsafeMutablePointer<T>.allocate(capacity: 1)
     valuePointer.pointee = value
 
     let bytesPointer = UnsafeMutablePointer<UInt8>(valuePointer)
@@ -1168,7 +1168,7 @@ private func arrayOfBytes<T>(value: T, length: Int? = nil) -> [UInt8] {
     }
 
     valuePointer.deinitialize()
-    valuePointer.deallocateCapacity(1)
+    valuePointer.deallocate(capacity: 1)
 
     return bytes
 }

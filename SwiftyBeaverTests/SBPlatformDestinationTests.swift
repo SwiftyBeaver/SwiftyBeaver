@@ -228,7 +228,7 @@ class SBPlatformDestinationTests: XCTestCase {
             return
         }
 
-        let dict = platform.analytics(platform.analyticsFileURL, update: false)
+        let dict = platform.analytics(platform.analyticsFileURL!, update: false)
         print(dict)
         if let uuid = dict["uuid"] as? String {
             XCTAssertEqual(uuid.characters.count, 36)
@@ -247,11 +247,11 @@ class SBPlatformDestinationTests: XCTestCase {
             XCTAssertEqual(userName, "")
         }
 
-        XCTAssertTrue(platform.saveDictToFile(dict, url: platform.analyticsFileURL))
+        XCTAssertTrue(platform.saveDictToFile(dict, url: platform.analyticsFileURL!))
 
         // set userName
         platform.analyticsUserName = "foo@bar.com"
-        let dict2 = platform.analytics(platform.analyticsFileURL, update: false)
+        let dict2 = platform.analytics(platform.analyticsFileURL!, update: false)
         if let userName = dict2["userName"] as? String {
             XCTAssertEqual(userName, "foo@bar.com")
         }

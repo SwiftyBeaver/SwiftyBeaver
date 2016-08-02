@@ -31,7 +31,7 @@ import Foundation
 #endif
 
 #if os(iOS) || os(tvOS)
-    var DEVICE_NAME = UIDevice.current().name
+    var DEVICE_NAME = UIDevice.current.name
 #else
     // under watchOS UIDevice is not existing, http://apple.co/26ch5J1
     let DEVICE_NAME = ""
@@ -69,9 +69,9 @@ public class SBPlatformDestination: BaseDestination {
     private var sendingInProgress = false
     private var initialSending = true
 
-    var entriesFileURL = URL(string: "")!
-    var sendingFileURL = URL(string: "")!
-    var analyticsFileURL = URL(string: "")!
+    var entriesFileURL = URL(string: "")
+    var sendingFileURL = URL(string: "")
+    var analyticsFileURL = URL(string: "")
 
     // analytics
     var uuid = ""
@@ -92,12 +92,12 @@ public class SBPlatformDestination: BaseDestination {
         var baseURL: URL?
 
         if OS == "OSX" {
-            if let url = fileManager.urlsForDirectory(.applicationSupportDirectory, inDomains: .userDomainMask).first {
+            if let url = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first {
                 baseURL = url
                 // try to use ~/Library/Application Support/APP NAME instead of ~/Library/Application Support
-                if let appName = Bundle.main.objectForInfoDictionaryKey("CFBundleExecutable") as? String {
+                if let appName = Bundle.main.object(forInfoDictionaryKey: "CFBundleExecutable") as? String {
                     do {
-                        if let appURL = try baseURL?.appendingPathComponent(appName, isDirectory: true) {
+                        if let appURL = baseURL?.appendingPathComponent(appName, isDirectory: true) {
                             try fileManager.createDirectory(at: appURL,
                                                             withIntermediateDirectories: true, attributes: nil)
                             baseURL = appURL
@@ -117,28 +117,27 @@ public class SBPlatformDestination: BaseDestination {
                 let saveDir: FileManager.SearchPathDirectory = .documentDirectory
             #endif
 
-            if let url = fileManager.urlsForDirectory(saveDir, inDomains: .userDomainMask).first {
+            if let url = fileManager.urls(for: saveDir, in: .userDomainMask).first {
                 baseURL = url
             }
 
         }
 
         if let baseURL = baseURL {
-            do {
-                entriesFileURL = try baseURL.appendingPathComponent("sbplatform_entries.json",
-                                                                    isDirectory: false)
-                sendingFileURL = try baseURL.appendingPathComponent("sbplatform_entries_sending.json",
-                                                                    isDirectory: false)
-                analyticsFileURL = try baseURL.appendingPathComponent("sbplatform_analytics.json",
-                                                                      isDirectory: false)
-            } catch let error as NSError {
-                // it is too early in the class lifetime to be able to use toNSLog()
-                print("Warning! Could not set URLs. \(error)")
-            }
+            entriesFileURL = baseURL.appendingPathComponent("sbplatform_entries.json",
+                                                            isDirectory: false)
+            sendingFileURL = baseURL.appendingPathComponent("sbplatform_entries_sending.json",
+                                                            isDirectory: false)
+            analyticsFileURL = baseURL.appendingPathComponent("sbplatform_analytics.json",
+                                                              isDirectory: false)
 
             // get, update loaded and save analytics data to file on start
-            let dict = analytics(analyticsFileURL, update: true)
-            let _ = saveDictToFile(dict, url: analyticsFileURL)
+            if let analyticsFileURL = analyticsFileURL {
+                let dict = analytics(analyticsFileURL, update: true)
+                let _ = saveDictToFile(dict, url: analyticsFileURL)
+            } else {
+              print("Warning! Could not set URLs. analyticsFileURL does not exist")
+            }
         }
     }
 
@@ -162,7 +161,7 @@ public class SBPlatformDestination: BaseDestination {
 
         if let str = jsonString {
             toNSLog("saving '\(msg)' to file")
-            let _ = saveToFile(str, url: entriesFileURL)
+            let _ = saveToFile(str, url: entriesFileURL!)
             //toNSLog(entriesFileURL.path!)
 
             // now decide if the stored log entries should be sent to the server
@@ -180,7 +179,7 @@ public class SBPlatformDestination: BaseDestination {
                 initialSending = false
                 // first logging at this session
                 // send if json file still contains old log entries
-                if let logEntries = logsFromFile(entriesFileURL) {
+                if let logEntries = logsFromFile(entriesFileURL!) {
                     let lines = logEntries.count
                     if lines > 1 {
                         var msg = "initialSending: \(points) points is below threshold "
@@ -215,7 +214,7 @@ public class SBPlatformDestination: BaseDestination {
             //let (jsonString, lines) = logsFromFile(sendingFileURL)
             var lines = 0
 
-            guard let logEntries = logsFromFile(sendingFileURL) else {
+            guard let logEntries = logsFromFile(sendingFileURL!) else {
                 sendingInProgress = false
                 return
             }
@@ -228,7 +227,7 @@ public class SBPlatformDestination: BaseDestination {
                 // merge device and analytics dictionaries
                 let deviceDetailsDict = deviceDetails()
 
-                var analyticsDict = analytics(analyticsFileURL)
+                var analyticsDict = analytics(analyticsFileURL!)
 
                 for key in deviceDetailsDict.keys {
                     analyticsDict[key] = deviceDetailsDict[key] as AnyObject?
@@ -250,7 +249,7 @@ public class SBPlatformDestination: BaseDestination {
 
                             self.toNSLog("Sent \(lines) encrypted log entries to server, received ok: \(ok)")
                             if ok {
-                                let _ = self.deleteFile(self.sendingFileURL)
+                                let _ = self.deleteFile(self.sendingFileURL!)
                             }
                             self.sendingInProgress = false
                             self.points = 0
@@ -356,7 +355,7 @@ public class SBPlatformDestination: BaseDestination {
     /// returns boolean about success
     func saveToFile(_ str: String, url: URL, overwrite: Bool = false) -> Bool {
         do {
-            if fileManager.fileExists(atPath: url.path!) == false || overwrite {
+            if fileManager.fileExists(atPath: url.path) == false || overwrite {
                 // create file if not existing
                 let line = str + "\n"
                 try line.write(to: url, atomically: true, encoding: String.Encoding.utf8)
@@ -377,12 +376,12 @@ public class SBPlatformDestination: BaseDestination {
     }
 
     func sendFileExists() -> Bool {
-        return fileManager.fileExists(atPath: sendingFileURL.path!)
+        return fileManager.fileExists(atPath: sendingFileURL!.path)
     }
 
     func renameJsonToSendFile() -> Bool {
         do {
-            try fileManager.moveItem(at: entriesFileURL, to: sendingFileURL)
+            try fileManager.moveItem(at: entriesFileURL!, to: sendingFileURL!)
             return true
         } catch let error as NSError {
             toNSLog("SwiftyBeaver Platform Destination could not rename json file. \(error)")
@@ -395,7 +394,7 @@ public class SBPlatformDestination: BaseDestination {
         var lines = 0
         do {
             // try to read file, decode every JSON line and put dict from each line in array
-            let fileContent = try NSString(contentsOfFile: url.path!, encoding: String.Encoding.utf8.rawValue)
+            let fileContent = try NSString(contentsOfFile: url.path, encoding: String.Encoding.utf8.rawValue)
             let linesArray = fileContent.components(separatedBy: "\n")
             var dicts = [[String: AnyObject]()] // array of dictionaries
             for lineJSON in linesArray {
@@ -487,7 +486,7 @@ public class SBPlatformDestination: BaseDestination {
         dict["firstAppBuild"] = appBuild() as AnyObject
         dict["appBuild"] = appBuild() as AnyObject
 
-        if let loadedDict = dictFromFile(analyticsFileURL) {
+        if let loadedDict = dictFromFile(analyticsFileURL!) {
             if let val = loadedDict["firstStart"] as? Double {
                 dict["firstStart"] = val as AnyObject?
             }
@@ -530,7 +529,7 @@ public class SBPlatformDestination: BaseDestination {
 
     /// Returns the current app version string (like 1.2.5) or empty string on error
     func appVersion() -> String {
-        if let version = Bundle.main.objectForInfoDictionaryKey("CFBundleShortVersionString") as? String {
+        if let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String {
                 return version
         }
         return ""
@@ -565,7 +564,7 @@ public class SBPlatformDestination: BaseDestination {
     func dictFromFile(_ url: URL) -> [String:AnyObject]? {
         do {
             // try to read file, decode every JSON line and put dict from each line in array
-            let fileContent = try NSString(contentsOfFile: url.path!, encoding: String.Encoding.utf8.rawValue)
+            let fileContent = try NSString(contentsOfFile: url.path, encoding: String.Encoding.utf8.rawValue)
             // try to parse json string into dict
             if let data = fileContent.data(using: String.Encoding.utf8.rawValue) {
                 do {
