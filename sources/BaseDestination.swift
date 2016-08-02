@@ -97,7 +97,7 @@ public class BaseDestination: Hashable, Equatable {
     public init() {
         let uuid = NSUUID().uuidString
         let queueLabel = "swiftybeaver-queue-" + uuid
-        queue = DispatchQueue(label: queueLabel, attributes: .serial, target: queue)
+        queue = DispatchQueue(label: queueLabel, target: queue)
         addFilter(filter: Filters.Level.atLeast(level: minLevel))
     }
 
