@@ -1,4 +1,4 @@
-<p align="center"><img src="https://cloud.githubusercontent.com/assets/564725/13137893/1b8eced2-d624-11e5-9264-3416ff821657.png" width="280" alt="SwiftyBeaver"><br/><b>Colorful</b>, extensible, <b>lightweight</b> logging for Swift 2 & 3.<br/>Great for <b>development & release</b> with support for Console, File & cloud platforms.<br/>NEW: Log <b>during release</b> to the conveniently built-in SwiftyBeaver Platform and Mac App!<br/><br/>
+<p align="center"><img src="https://cloud.githubusercontent.com/assets/564725/13137893/1b8eced2-d624-11e5-9264-3416ff821657.png" width="280" alt="SwiftyBeaver"><br/><b>Colorful</b>, extensible, <b>lightweight</b> logging for Swift 2 & <a href="https://github.com/SwiftyBeaver/SwiftyBeaver/tree/swift3">Swift 3</a>.<br/>Great for <b>development & release</b> with support for Console, File & cloud platforms.<br/>NEW: Log <b>during release</b> to the conveniently built-in SwiftyBeaver Platform and Mac App!<br/><br/>
 
 <a href="http://docs.swiftybeaver.com">Docs</a> |
 <a href="https://swiftybeaver.com">Website</a> |
