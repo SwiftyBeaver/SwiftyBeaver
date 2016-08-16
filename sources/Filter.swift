@@ -19,7 +19,7 @@ import Foundation
 /// target must pass in order for the message to be logged. At least one non-required
 /// filter must pass in order for the message to be logged
 public protocol FilterType : class {
-    func apply(value: AnyObject) -> Bool
+    func apply(value: Any) -> Bool
     func getTarget() -> Filter.TargetType
     func isRequired() -> Bool
 }
@@ -76,7 +76,7 @@ public class LogLevelFilter: Filter, FilterType {
         super.init(target: .LogLevel(minLevel), required: true)
     }
 
-    public func apply(value: AnyObject) -> Bool {
+    public func apply(value: Any) -> Bool {
         guard let messageLevel = value as? Int else {
             return false
         }
@@ -102,7 +102,7 @@ public class CompareFilter: Filter, FilterType {
         super.init(target: target, required: required)
     }
 
-    public func apply(value: AnyObject) -> Bool {
+    public func apply(value: Any) -> Bool {
         guard let value = value as? String else {
             return false
         }

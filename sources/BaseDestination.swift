@@ -294,7 +294,7 @@ public class BaseDestination: Hashable, Equatable {
         return logLevelFilters.filter {
             filter in
 
-            return filter.apply(value: level.rawValue as AnyObject)
+            return filter.apply(value: level.rawValue)
         }.count == logLevelFilters.count
     }
 
@@ -307,20 +307,20 @@ public class BaseDestination: Hashable, Equatable {
 
             switch filter.getTarget() {
             case .LogLevel(_):
-                passes = filter.apply(value: level.rawValue as AnyObject)
+                passes = filter.apply(value: level.rawValue)
 
             case .Path(_):
-                passes = filter.apply(value: path as AnyObject)
+                passes = filter.apply(value: path)
 
             case .Function(_):
-                passes = filter.apply(value: function as AnyObject)
+                passes = filter.apply(value: function)
 
             case .Message(_):
                 guard let message = message else {
                     return false
                 }
 
-                passes = filter.apply(value: message as AnyObject)
+                passes = filter.apply(value: message)
             }
 
             return passes

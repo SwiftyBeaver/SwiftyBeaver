@@ -148,14 +148,14 @@ public class SBPlatformDestination: BaseDestination {
 
         var jsonString: String?
 
-        let dict: [String: AnyObject] = [
-            "timestamp": NSDate().timeIntervalSince1970 as AnyObject,
-            "level": level.rawValue as AnyObject,
-            "message": msg as AnyObject,
-            "thread": thread as AnyObject,
-            "fileName": path.components(separatedBy: "/").last! as AnyObject,
-            "function": function as AnyObject,
-            "line":line as AnyObject]
+        let dict: [String: Any] = [
+            "timestamp": NSDate().timeIntervalSince1970,
+            "level": level.rawValue,
+            "message": msg,
+            "thread": thread,
+            "fileName": path.components(separatedBy: "/").last!,
+            "function": function,
+            "line":line]
 
         jsonString = jsonStringFromDict(dict)
 
@@ -223,17 +223,17 @@ public class SBPlatformDestination: BaseDestination {
 
 
             if lines > 0 {
-                var payload = [String:AnyObject]()
+                var payload = [String:Any]()
                 // merge device and analytics dictionaries
                 let deviceDetailsDict = deviceDetails()
 
                 var analyticsDict = analytics(analyticsFileURL!)
 
                 for key in deviceDetailsDict.keys {
-                    analyticsDict[key] = deviceDetailsDict[key] as AnyObject?
+                    analyticsDict[key] = deviceDetailsDict[key]
                 }
-                payload["device"] = analyticsDict as AnyObject
-                payload["entries"] = logEntries as AnyObject
+                payload["device"] = analyticsDict
+                payload["entries"] = logEntries
 
                 if let str = jsonStringFromDict(payload) {
                     //toNSLog(str)  // uncomment to see full payload
@@ -291,7 +291,7 @@ public class SBPlatformDestination: BaseDestination {
             // POST parameters
             let params = ["payload": payload]
             do {
-                request.httpBody = try JSONSerialization.data(withJSONObject: params as AnyObject, options: [])
+                request.httpBody = try JSONSerialization.data(withJSONObject: params, options: [])
             } catch let error as NSError {
                 toNSLog("Error! Could not create JSON for server payload. \(error)")
             }
@@ -390,13 +390,13 @@ public class SBPlatformDestination: BaseDestination {
     }
 
     /// returns optional array of log dicts from a file which has 1 json string per line
-    func logsFromFile(_ url: URL) -> [[String:AnyObject]]? {
+    func logsFromFile(_ url: URL) -> [[String:Any]]? {
         var lines = 0
         do {
             // try to read file, decode every JSON line and put dict from each line in array
             let fileContent = try NSString(contentsOfFile: url.path, encoding: String.Encoding.utf8.rawValue)
             let linesArray = fileContent.components(separatedBy: "\n")
-            var dicts = [[String: AnyObject]()] // array of dictionaries
+            var dicts = [[String: Any]()] // array of dictionaries
             for lineJSON in linesArray {
                 lines += 1
                 if lineJSON.characters.first == "{" && lineJSON.characters.last == "}" {
@@ -404,7 +404,7 @@ public class SBPlatformDestination: BaseDestination {
                     if let data = lineJSON.data(using: String.Encoding.utf8) {
                         do {
                             if let dict = try JSONSerialization.jsonObject(with: data,
-                                options: .mutableContainers) as? [String:AnyObject] {
+                                options: .mutableContainers) as? [String:Any] {
                                 if !dict.isEmpty {
                                     dicts.append(dict)
                                 }
@@ -470,58 +470,58 @@ public class SBPlatformDestination: BaseDestination {
     }
 
     /// returns (updated) analytics dict, optionally loaded from file.
-    func analytics(_ url: URL, update: Bool = false) -> [String:AnyObject] {
+    func analytics(_ url: URL, update: Bool = false) -> [String:Any] {
 
-        var dict = [String:AnyObject]()
+        var dict = [String:Any]()
         let now = NSDate().timeIntervalSince1970
 
         uuid =  NSUUID().uuidString
-        dict["uuid"] = uuid as AnyObject
-        dict["firstStart"] = now as AnyObject
-        dict["lastStart"] = now as AnyObject
-        dict["starts"] = 1 as AnyObject
-        dict["userName"] = analyticsUserName as AnyObject
-        dict["firstAppVersion"] = appVersion() as AnyObject
-        dict["appVersion"] = appVersion() as AnyObject
-        dict["firstAppBuild"] = appBuild() as AnyObject
-        dict["appBuild"] = appBuild() as AnyObject
+        dict["uuid"] = uuid
+        dict["firstStart"] = now
+        dict["lastStart"] = now
+        dict["starts"] = 1
+        dict["userName"] = analyticsUserName
+        dict["firstAppVersion"] = appVersion()
+        dict["appVersion"] = appVersion()
+        dict["firstAppBuild"] = appBuild()
+        dict["appBuild"] = appBuild()
 
         if let loadedDict = dictFromFile(analyticsFileURL!) {
             if let val = loadedDict["firstStart"] as? Double {
-                dict["firstStart"] = val as AnyObject?
+                dict["firstStart"] = val
             }
             if let val = loadedDict["lastStart"] as? Double {
                 if update {
-                    dict["lastStart"] = now as AnyObject
+                    dict["lastStart"] = now
                 } else {
-                    dict["lastStart"] = val as AnyObject?
+                    dict["lastStart"] = val
                 }
             }
             if let val = loadedDict["starts"] as? Int {
                 if update {
-                    dict["starts"] = val + 1 as AnyObject?
+                    dict["starts"] = val + 1
                 } else {
-                    dict["starts"] = val as AnyObject?
+                    dict["starts"] = val
                 }
             }
             if let val = loadedDict["uuid"] as? String {
-                dict["uuid"] = val as AnyObject?
+                dict["uuid"] = val
                 uuid = val
             }
             if let val = loadedDict["userName"] as? String {
                 if update && !analyticsUserName.isEmpty {
-                    dict["userName"] = analyticsUserName as AnyObject
+                    dict["userName"] = analyticsUserName
                 } else {
                     if !val.isEmpty {
-                        dict["userName"] = val as AnyObject?
+                        dict["userName"] = val
                     }
                 }
             }
             if let val = loadedDict["firstAppVersion"] as? String {
-                dict["firstAppVersion"] = val as AnyObject?
+                dict["firstAppVersion"] = val
             }
             if let val = loadedDict["firstAppBuild"] as? Int {
-                dict["firstAppBuild"] = val as AnyObject?
+                dict["firstAppBuild"] = val
             }
         }
         return dict
@@ -546,11 +546,11 @@ public class SBPlatformDestination: BaseDestination {
     }
 
     // turns dict into JSON-encoded string
-    func jsonStringFromDict(_ dict: [String: AnyObject]) -> String? {
+    func jsonStringFromDict(_ dict: [String: Any]) -> String? {
         var jsonString: String?
         // try to create JSON string
         do {
-            let jsonData = try JSONSerialization.data(withJSONObject: dict as AnyObject, options: [])
+            let jsonData = try JSONSerialization.data(withJSONObject: dict, options: [])
             if let str = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue) as? String {
                 jsonString = str
             }
@@ -561,7 +561,7 @@ public class SBPlatformDestination: BaseDestination {
     }
 
     /// returns optional dict from a json encoded file
-    func dictFromFile(_ url: URL) -> [String:AnyObject]? {
+    func dictFromFile(_ url: URL) -> [String:Any]? {
         do {
             // try to read file, decode every JSON line and put dict from each line in array
             let fileContent = try NSString(contentsOfFile: url.path, encoding: String.Encoding.utf8.rawValue)
@@ -569,7 +569,7 @@ public class SBPlatformDestination: BaseDestination {
             if let data = fileContent.data(using: String.Encoding.utf8.rawValue) {
                 do {
                     return try JSONSerialization.jsonObject(with: data,
-                        options: .mutableContainers) as? [String:AnyObject]
+                        options: .mutableContainers) as? [String:Any]
                 } catch let error {
                     toNSLog("SwiftyBeaver Platform Destination could not parse file \(url). \(error)")
                 }
@@ -581,7 +581,7 @@ public class SBPlatformDestination: BaseDestination {
     }
 
     // turns dict into JSON and saves it to file
-    func saveDictToFile(_ dict: [String: AnyObject], url: URL) -> Bool {
+    func saveDictToFile(_ dict: [String: Any], url: URL) -> Bool {
         let jsonString = jsonStringFromDict(dict)
 
         if let str = jsonString {

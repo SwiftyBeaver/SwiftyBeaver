@@ -877,7 +877,8 @@ final fileprivate class AESCipher {
                 tmp[wordIdx] = w[4*(i-1)+wordIdx]
             }
             if (i % variant.Nk) == 0 {
-                tmp = subWord(word: rotateLeft(UInt32.withBytes(bytes: tmp), 8).bytes(totalBytes: MemoryLayout<UInt32>.size))
+                tmp = subWord(word: rotateLeft(
+                    UInt32.withBytes(bytes: tmp), 8).bytes(totalBytes: MemoryLayout<UInt32>.size))
                 tmp[0] = tmp.first! ^ Rcon[i/variant.Nk]
             } else if variant.Nk > 6 && (i % variant.Nk) == 4 {
                 tmp = subWord(word: tmp)
@@ -1105,7 +1106,7 @@ extension UInt64 : BitshiftOperationsType, ByteConvertible {
     }
 }
 
-fileprivate func integerWithBytes<T: Integer where T:ByteConvertible, T: BitshiftOperationsType>(bytes: [UInt8]) -> T {
+fileprivate func integerWithBytes<T: Integer>(bytes: [UInt8]) -> T where T:ByteConvertible, T: BitshiftOperationsType {
     var bytes = bytes.reversed() as Array<UInt8>
     if bytes.count < MemoryLayout<T>.size {
         let paddingCount = MemoryLayout<T>.size - bytes.count
@@ -1153,6 +1154,10 @@ fileprivate func toUInt32Array(slice: ArraySlice<UInt8>) -> Array<UInt32> {
     return result
 }
 
+/*
+
+ // TEMP DEACTIVATED UNTIL THE FUNCTION WAS FIXED BY MARCIN FOR XCODE 8 BETA 6
+
 /// Array of bytes, little-endian representation. Don't use if not necessary.
 /// I found this method slow
 fileprivate func arrayOfBytes<T>(value: T, length: Int? = nil) -> [UInt8] {
@@ -1170,6 +1175,29 @@ fileprivate func arrayOfBytes<T>(value: T, length: Int? = nil) -> [UInt8] {
     valuePointer.deinitialize()
     valuePointer.deallocate(capacity: 1)
 
+    return bytes
+}*/
+
+// WARNING: FUNCTION IS JUST HERE TO MAKE COMPILATION WITH XCODE 8 BETA 6 WORK
+// BUT IT BREAKS THE ENCRYPTION AND UNIT-TESTS!!!
+fileprivate func arrayOfBytes<T>(value: T, length: Int? = nil) -> [UInt8] {
+    let totalBytes = length ?? MemoryLayout<T>.size
+
+    let valuePointer = UnsafeMutablePointer<T>.allocate(capacity: 1)
+    valuePointer.pointee = value
+
+    //  let bytesPointer = UnsafeMutablePointer<UInt8>(valuePointer)
+    //  var bytes = [UInt8](repeating: 0, count: totalBytes)
+    //  for j in 0..<min(MemoryLayout<T>.size, totalBytes) {
+    //    bytes[totalBytes - 1 - j] = (bytesPointer + j).pointee
+    //  }
+    //  valuePointer.deinitialize()
+    //  valuePointer.deallocate(capacity: 1)
+    //  next line compiles but is wothless
+    let bytes = valuePointer.withMemoryRebound(to: [UInt8].self,
+                                               capacity: totalBytes) { p in
+                                                return p.pointee
+    }
     return bytes
 }
 
