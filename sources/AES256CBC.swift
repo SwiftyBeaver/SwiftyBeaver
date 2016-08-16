@@ -1161,15 +1161,18 @@ fileprivate func arrayOfBytes<T>(value: T, length: Int? = nil) -> [UInt8] {
     let valuePointer = UnsafeMutablePointer<T>.allocate(capacity: 1)
     valuePointer.pointee = value
 
-  let bytesPointer = UnsafeMutablePointer<UInt8>(valuePointer)
-    var bytes = [UInt8](repeating: 0, count: totalBytes)
-    for j in 0..<min(MemoryLayout<T>.size, totalBytes) {
-        bytes[totalBytes - 1 - j] = (bytesPointer + j).pointee
+//  let bytesPointer = UnsafeMutablePointer<UInt8>(valuePointer)
+//  var bytes = [UInt8](repeating: 0, count: totalBytes)
+//  for j in 0..<min(MemoryLayout<T>.size, totalBytes) {
+//    bytes[totalBytes - 1 - j] = (bytesPointer + j).pointee
+//  }
+//  valuePointer.deinitialize()
+//  valuePointer.deallocate(capacity: 1)
+//  next line compiles but is wothless 
+    let bytes = valuePointer.withMemoryRebound(to: [UInt8].self,
+                                                     capacity: totalBytes) { p in
+      return p.pointee
     }
-
-    valuePointer.deinitialize()
-    valuePointer.deallocate(capacity: 1)
-
     return bytes
 }
 
