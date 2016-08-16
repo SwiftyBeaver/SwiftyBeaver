@@ -100,7 +100,7 @@ class SwiftyBeaverTests: XCTestCase {
 
         // add file
         let file = FileDestination()
-        file.logFileURL = NSURL(string: "file:///tmp/testSwiftyBeaver.log")!
+        file.logFileURL = URL(string: "file:///tmp/testSwiftyBeaver.log")!
         XCTAssertTrue(log.addDestination(file))
         XCTAssertEqual(log.countDestinations(), 3)
         log.verbose("default file msg 1")
@@ -109,7 +109,7 @@ class SwiftyBeaverTests: XCTestCase {
 
         // log to another file
         let file2 = FileDestination()
-        file2.logFileURL = NSURL(string: "file:///tmp/testSwiftyBeaver2.log")!
+        file2.logFileURL = URL(string: "file:///tmp/testSwiftyBeaver2.log")!
         file2.detailOutput = false
         file2.dateFormat = "HH:mm:ss.SSS"
         file2.minLevel = SwiftyBeaver.Level.Debug
@@ -138,7 +138,7 @@ class SwiftyBeaverTests: XCTestCase {
 
         // add file
         let file = FileDestination()
-        file.logFileURL = NSURL(string: "file:///tmp/testSwiftyBeaver.log")!
+        file.logFileURL = URL(string: "file:///tmp/testSwiftyBeaver.log")!
         file.detailOutput = false
         file.dateFormat = "HH:mm:ss.SSS"
         XCTAssertTrue(log.addDestination(file))
@@ -187,7 +187,7 @@ class SwiftyBeaverTests: XCTestCase {
 
         // add file
         let file = FileDestination()
-        file.logFileURL = NSURL(string: "file:///tmp/testSwiftyBeaver.log")!
+        file.logFileURL = URL(string: "file:///tmp/testSwiftyBeaver.log")!
         file.detailOutput = false
         file.dateFormat = "HH:mm:ss.SSS"
         XCTAssertTrue(log.addDestination(file))

@@ -32,19 +32,19 @@ class FilterTests: XCTestCase {
     func test_level_loggedLevelIsGreaterThanFilter_answersTrue() {
         let filter = Filters.Level.atLeast(level:.Info)
         let logLevel = SwiftyBeaver.Level.Warning
-        XCTAssertTrue(filter.apply(value: logLevel.rawValue))
+        XCTAssertTrue(filter.apply(value: logLevel.rawValue as AnyObject))
     }
 
     func test_level_loggedLevelIsEqualFilter_answersTrue() {
         let filter = Filters.Level.atLeast(level:.Info)
         let logLevel = SwiftyBeaver.Level.Info
-        XCTAssertTrue(filter.apply(value: logLevel.rawValue))
+        XCTAssertTrue(filter.apply(value: logLevel.rawValue as AnyObject))
     }
 
     func test_level_loggedLevelIsLessThanFilter_answersFalse() {
         let filter = Filters.Level.atLeast(level:.Info)
         let logLevel = SwiftyBeaver.Level.Debug
-        XCTAssertFalse(filter.apply(value: logLevel.rawValue))
+        XCTAssertFalse(filter.apply(value: logLevel.rawValue as AnyObject))
     }
 
     //
@@ -154,125 +154,125 @@ class FilterTests: XCTestCase {
     //
     func test_pathStartsWith_hasOneValueAndIsCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Path.startsWith(prefixes: "/first", caseSensitive: true)
-        XCTAssertTrue(filter.apply(value: "/first/path/to/anywhere"))
+        XCTAssertTrue(filter.apply(value: "/first/path/to/anywhere" as AnyObject))
     }
 
     func test_pathStartsWith_hasOneValueAndIsNotCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Path.startsWith(prefixes: "/First", caseSensitive: false)
-        XCTAssertTrue(filter.apply(value: "/first/path/to/anywhere"))
+        XCTAssertTrue(filter.apply(value: "/first/path/to/anywhere" as AnyObject))
     }
 
     func test_pathStartsWith_hasOneValueAndIsCaseSensitiveAndDoesNotMatch_answersFalse() {
         let filter = Filters.Path.startsWith(prefixes: "/First", caseSensitive: true)
-        XCTAssertFalse(filter.apply(value: "/first/path/to/anywhere"))
+        XCTAssertFalse(filter.apply(value: "/first/path/to/anywhere" as AnyObject))
     }
 
     func test_pathStartsWith_hasMultipleValuesAndIsCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Path.startsWith(prefixes: "/first", "/second", caseSensitive: true)
-        XCTAssertTrue(filter.apply(value: "/second/path/to/anywhere"))
+        XCTAssertTrue(filter.apply(value: "/second/path/to/anywhere" as AnyObject))
     }
 
     func test_pathStartsWith_hasMultipleValuesAndIsNotCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Path.startsWith(prefixes: "/First", "/Second", caseSensitive: false)
-        XCTAssertTrue(filter.apply(value: "/second/path/to/anywhere"))
+        XCTAssertTrue(filter.apply(value: "/second/path/to/anywhere" as AnyObject))
     }
 
     func test_pathStartsWith_hasMultipleValuesAndIsCaseSensitiveAndDoesNotMatch_answersFalse() {
         let filter = Filters.Path.startsWith(prefixes: "/First", "/Second", caseSensitive: true)
-        XCTAssertFalse(filter.apply(value: "/second/path/to/anywhere"))
+        XCTAssertFalse(filter.apply(value: "/second/path/to/anywhere" as AnyObject))
     }
 
     func test_pathContains_hasOneValueAndIsCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Path.contains(strings: "/path", caseSensitive: true)
-        XCTAssertTrue(filter.apply(value: "/first/path/to/anywhere"))
+        XCTAssertTrue(filter.apply(value: "/first/path/to/anywhere" as AnyObject))
     }
 
     func test_pathContains_hasOneValueAndIsNotCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Path.contains(strings: "/Path", caseSensitive: false)
-        XCTAssertTrue(filter.apply(value: "/first/path/to/anywhere"))
+        XCTAssertTrue(filter.apply(value: "/first/path/to/anywhere" as AnyObject))
     }
 
     func test_pathContains_hasOneValueAndIsCaseSensitiveAndDoesNotMatch_answersFalse() {
         let filter = Filters.Path.contains(strings: "/Path", caseSensitive: true)
-        XCTAssertFalse(filter.apply(value: "/first/path/to/anywhere"))
+        XCTAssertFalse(filter.apply(value: "/first/path/to/anywhere" as AnyObject))
     }
 
     func test_pathContains_hasMultipleValuesAndIsCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Path.contains(strings: "/pathway", "/path", caseSensitive: true)
-        XCTAssertTrue(filter.apply(value: "/first/path/to/anywhere"))
+        XCTAssertTrue(filter.apply(value: "/first/path/to/anywhere" as AnyObject))
     }
 
     func test_pathContains_hasMultipleValuesAndIsNotCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Path.contains(strings: "/Pathway", "/Path", caseSensitive: false)
-        XCTAssertTrue(filter.apply(value: "/first/path/to/anywhere"))
+        XCTAssertTrue(filter.apply(value: "/first/path/to/anywhere" as AnyObject))
     }
 
     func test_pathContains_hasMultipleValuesAndIsCaseSensitiveAndDoesNotMatch_answersFalse() {
         let filter = Filters.Path.contains(strings: "/Pathway", "/Path", caseSensitive: true)
-        XCTAssertFalse(filter.apply(value: "/first/path/to/anywhere"))
+        XCTAssertFalse(filter.apply(value: "/first/path/to/anywhere" as AnyObject))
     }
 
     func test_pathEndsWith_hasOneValueAndIsCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Path.endsWith(suffixes: "/anywhere", caseSensitive: true)
-        XCTAssertTrue(filter.apply(value: "/first/path/to/anywhere"))
+        XCTAssertTrue(filter.apply(value: "/first/path/to/anywhere" as AnyObject))
     }
 
     func test_pathEndsWith_hasOneValueAndIsNotCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Path.endsWith(suffixes: "/Anywhere", caseSensitive: false)
-        XCTAssertTrue(filter.apply(value: "/first/path/to/anywhere"))
+        XCTAssertTrue(filter.apply(value: "/first/path/to/anywhere" as AnyObject))
     }
 
     func test_pathEndsWith_hasOneValueAndIsCaseSensitiveAndDoesNotMatch_answersFalse() {
         let filter = Filters.Path.endsWith(suffixes: "/Anywhere", caseSensitive: true)
-        XCTAssertFalse(filter.apply(value: "/first/path/to/anywhere"))
+        XCTAssertFalse(filter.apply(value: "/first/path/to/anywhere" as AnyObject))
     }
 
     func test_pathEndsWith_hasMultipleValuesAndIsCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Path.endsWith(suffixes: "/nowhere", "/anywhere", caseSensitive: true)
-        XCTAssertTrue(filter.apply(value: "/first/path/to/anywhere"))
+        XCTAssertTrue(filter.apply(value: "/first/path/to/anywhere" as AnyObject))
     }
 
     func test_pathEndsWith_hasMultipleValuesAndIsNotCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Path.endsWith(suffixes: "/Nowhere", "/Anywhere", caseSensitive: false)
-        XCTAssertTrue(filter.apply(value: "/first/path/to/anywhere"))
+        XCTAssertTrue(filter.apply(value: "/first/path/to/anywhere" as AnyObject))
     }
 
     func test_pathEndsWith_hasMultipleValuesAndIsCaseSensitiveAndDoesNotMatch_answersFalse() {
         let filter = Filters.Path.endsWith(suffixes: "/Nowhere", "/Anywhere", caseSensitive: true)
-        XCTAssertFalse(filter.apply(value: "/first/path/to/anywhere"))
+        XCTAssertFalse(filter.apply(value: "/first/path/to/anywhere" as AnyObject))
     }
 
     func test_pathEquals_hasOneValueAndIsCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Path.equals(strings: "/first/path/to/anywhere", caseSensitive: true)
-        XCTAssertTrue(filter.apply(value: "/first/path/to/anywhere"))
+        XCTAssertTrue(filter.apply(value: "/first/path/to/anywhere" as AnyObject))
     }
 
     func test_pathEquals_hasOneValueAndIsNotCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Path.equals(strings: "/First/path/to/Anywhere", caseSensitive: false)
-        XCTAssertTrue(filter.apply(value: "/first/path/to/anywhere"))
+        XCTAssertTrue(filter.apply(value: "/first/path/to/anywhere" as AnyObject))
     }
 
     func test_pathEquals_hasOneValueAndIsCaseSensitiveAndDoesNotMatch_answersFalse() {
         let filter = Filters.Path.equals(strings: "/First/path/to/Anywhere", caseSensitive: true)
-        XCTAssertFalse(filter.apply(value: "/first/path/to/anywhere"))
+        XCTAssertFalse(filter.apply(value: "/first/path/to/anywhere" as AnyObject))
     }
 
     func test_pathEquals_hasMultipleValuesAndIsCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Path.equals(strings: "/second/path/to/anywhere",
                                          "/first/path/to/anywhere", caseSensitive: true)
-        XCTAssertTrue(filter.apply(value: "/first/path/to/anywhere"))
+        XCTAssertTrue(filter.apply(value: "/first/path/to/anywhere" as AnyObject))
     }
 
     func test_pathEquals_hasMultipleValuesAndIsNotCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Path.equals(strings: "/Second/path/to/nowhere",
                                          "/First/Path/To/Anywhere", caseSensitive: false)
-        XCTAssertTrue(filter.apply(value: "/first/path/to/anywhere"))
+        XCTAssertTrue(filter.apply(value: "/first/path/to/anywhere" as AnyObject))
     }
 
     func test_pathEquals_hasMultipleValuesAndIsCaseSensitiveAndDoesNotMatch_answersFalse() {
         let filter = Filters.Path.equals(strings: "/Second/path/to/anywhere",
                                          "/First/path/to/Anywhere", caseSensitive: true)
-        XCTAssertFalse(filter.apply(value: "/first/path/to/anywhere"))
+        XCTAssertFalse(filter.apply(value: "/first/path/to/anywhere" as AnyObject))
     }
 
     //
@@ -372,122 +372,122 @@ class FilterTests: XCTestCase {
     //
     func test_functionStartsWith_hasOneValueAndIsCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Function.startsWith(prefixes: "myFunc", caseSensitive: true)
-        XCTAssertTrue(filter.apply(value: "myFunction"))
+        XCTAssertTrue(filter.apply(value: "myFunction" as AnyObject))
     }
 
     func test_functionStartsWith_hasOneValueAndIsNotCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Function.startsWith(prefixes: "MyFunc", caseSensitive: false)
-        XCTAssertTrue(filter.apply(value: "myFunc"))
+        XCTAssertTrue(filter.apply(value: "myFunc" as AnyObject))
     }
 
     func test_functionStartsWith_hasOneValueAndIsCaseSensitiveAndDoesNotMatch_answersFalse() {
         let filter = Filters.Function.startsWith(prefixes: "MyFunc", caseSensitive: true)
-        XCTAssertFalse(filter.apply(value: "myFunc"))
+        XCTAssertFalse(filter.apply(value: "myFunc" as AnyObject))
     }
 
     func test_functionStartsWith_hasMultipleValuesAndIsCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Function.startsWith(prefixes: "yourFunc", "myFunc", caseSensitive: true)
-        XCTAssertTrue(filter.apply(value: "myFunc"))
+        XCTAssertTrue(filter.apply(value: "myFunc" as AnyObject))
     }
 
     func test_functionStartsWith_hasMultipleValuesAndIsNotCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Function.startsWith(prefixes: "YourFunc", "MyFunc", caseSensitive: false)
-        XCTAssertTrue(filter.apply(value: "myFunc"))
+        XCTAssertTrue(filter.apply(value: "myFunc" as AnyObject))
     }
 
     func test_functionStartsWith_hasMultipleValuesAndIsCaseSensitiveAndDoesNotMatch_answersFalse() {
         let filter = Filters.Function.startsWith(prefixes: "YourFunc", "MyFunc", caseSensitive: true)
-        XCTAssertFalse(filter.apply(value: "myFunc"))
+        XCTAssertFalse(filter.apply(value: "myFunc" as AnyObject))
     }
 
     func test_functionContains_hasOneValueAndIsCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Function.contains(strings: "Func", caseSensitive: true)
-        XCTAssertTrue(filter.apply(value: "myFunc"))
+        XCTAssertTrue(filter.apply(value: "myFunc" as AnyObject))
     }
 
     func test_functionContains_hasOneValueAndIsNotCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Function.contains(strings: "Func", caseSensitive: false)
-        XCTAssertTrue(filter.apply(value: "myfunc"))
+        XCTAssertTrue(filter.apply(value: "myfunc" as AnyObject))
     }
 
     func test_functionContains_hasOneValueAndIsCaseSensitiveAndDoesNotMatch_answersFalse() {
         let filter = Filters.Function.contains(strings: "Func", caseSensitive: true)
-        XCTAssertFalse(filter.apply(value: "myfunc"))
+        XCTAssertFalse(filter.apply(value: "myfunc" as AnyObject))
     }
 
     func test_functionContains_hasMultipleValuesAndIsCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Function.contains(strings: "doSomething", "Func", caseSensitive: true)
-        XCTAssertTrue(filter.apply(value: "myFunc"))
+        XCTAssertTrue(filter.apply(value: "myFunc" as AnyObject))
     }
 
     func test_functionContains_hasMultipleValuesAndIsNotCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Function.contains(strings: "DoSomething", "func", caseSensitive: false)
-        XCTAssertTrue(filter.apply(value: "myFunc"))
+        XCTAssertTrue(filter.apply(value: "myFunc" as AnyObject))
     }
 
     func test_functionContains_hasMultipleValuesAndIsCaseSensitiveAndDoesNotMatch_answersFalse() {
         let filter = Filters.Function.contains(strings: "DoSomething", "Func", caseSensitive: true)
-        XCTAssertFalse(filter.apply(value: "myfunc"))
+        XCTAssertFalse(filter.apply(value: "myfunc" as AnyObject))
     }
 
     func test_functionEndsWith_hasOneValueAndIsCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Function.endsWith(suffixes: "Func", caseSensitive: true)
-        XCTAssertTrue(filter.apply(value: "myFunc"))
+        XCTAssertTrue(filter.apply(value: "myFunc" as AnyObject))
     }
 
     func test_functionEndsWith_hasOneValueAndIsNotCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Function.endsWith(suffixes: "Func", caseSensitive: false)
-        XCTAssertTrue(filter.apply(value: "myfunc"))
+        XCTAssertTrue(filter.apply(value: "myfunc" as AnyObject))
     }
 
     func test_functionEndsWith_hasOneValueAndIsCaseSensitiveAndDoesNotMatch_answersFalse() {
         let filter = Filters.Function.endsWith(suffixes: "Func", caseSensitive: true)
-        XCTAssertFalse(filter.apply(value: "myfunc"))
+        XCTAssertFalse(filter.apply(value: "myfunc" as AnyObject))
     }
 
     func test_functionEndsWith_hasMultipleValuesAndIsCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Function.endsWith(suffixes: "doSomething", "Func", caseSensitive: true)
-        XCTAssertTrue(filter.apply(value: "myFunc"))
+        XCTAssertTrue(filter.apply(value: "myFunc" as AnyObject))
     }
 
     func test_functionEndsWith_hasMultipleValuesAndIsNotCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Function.endsWith(suffixes: "DoSomething", "Func", caseSensitive: false)
-        XCTAssertTrue(filter.apply(value: "myfunc"))
+        XCTAssertTrue(filter.apply(value: "myfunc" as AnyObject))
     }
 
     func test_functionEndsWith_hasMultipleValuesAndIsCaseSensitiveAndDoesNotMatch_answersFalse() {
         let filter = Filters.Function.endsWith(suffixes: "DoSomething", "Func", caseSensitive: true)
-        XCTAssertFalse(filter.apply(value: "myfunc"))
+        XCTAssertFalse(filter.apply(value: "myfunc" as AnyObject))
     }
 
     func test_functionEquals_hasOneValueAndIsCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Function.equals(strings: "myFunc", caseSensitive: true)
-        XCTAssertTrue(filter.apply(value: "myFunc"))
+        XCTAssertTrue(filter.apply(value: "myFunc" as AnyObject))
     }
 
     func test_functionEquals_hasOneValueAndIsNotCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Function.equals(strings: "myFunc", caseSensitive: false)
-        XCTAssertTrue(filter.apply(value: "myfunc"))
+        XCTAssertTrue(filter.apply(value: "myfunc" as AnyObject))
     }
 
     func test_functionEquals_hasOneValueAndIsCaseSensitiveAndDoesNotMatch_answersFalse() {
         let filter = Filters.Function.equals(strings: "myFunc", caseSensitive: true)
-        XCTAssertFalse(filter.apply(value: "myfunc"))
+        XCTAssertFalse(filter.apply(value: "myfunc" as AnyObject))
     }
 
     func test_functionEquals_hasMultipleValuesAndIsCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Function.equals(strings: "yourFunc", "myFunc", caseSensitive: true)
-        XCTAssertTrue(filter.apply(value: "myFunc"))
+        XCTAssertTrue(filter.apply(value: "myFunc" as AnyObject))
     }
 
     func test_functionEquals_hasMultipleValuesAndIsNotCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Function.equals(strings: "yourFunc", "myFunc", caseSensitive: false)
-        XCTAssertTrue(filter.apply(value: "myFunc"))
+        XCTAssertTrue(filter.apply(value: "myFunc" as AnyObject))
     }
 
     func test_functionEquals_hasMultipleValuesAndIsCaseSensitiveAndDoesNotMatch_answersFalse() {
         let filter = Filters.Function.equals(strings: "yourFunc", "myFunc", caseSensitive: true)
-        XCTAssertFalse(filter.apply(value: "myfunc"))
+        XCTAssertFalse(filter.apply(value: "myfunc" as AnyObject))
     }
 
     //
@@ -597,125 +597,125 @@ class FilterTests: XCTestCase {
     //
     func test_messageStartsWith_hasOneValueAndIsCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Message.startsWith(prefixes: "Hello", caseSensitive: true)
-        XCTAssertTrue(filter.apply(value: "Hello there, SwiftyBeaver!"))
+        XCTAssertTrue(filter.apply(value: "Hello there, SwiftyBeaver!" as AnyObject))
     }
 
     func test_messageStartsWith_hasOneValueAndIsNotCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Message.startsWith(prefixes: "hello", caseSensitive: false)
-        XCTAssertTrue(filter.apply(value: "Hello there, SwiftyBeaver!"))
+        XCTAssertTrue(filter.apply(value: "Hello there, SwiftyBeaver!" as AnyObject))
     }
 
     func test_messageStartsWith_hasOneValueAndIsCaseSensitiveAndDoesNotMatch_answersFalse() {
         let filter = Filters.Message.startsWith(prefixes: "hello", caseSensitive: true)
-        XCTAssertFalse(filter.apply(value: "Hello there, SwiftyBeaver!"))
+        XCTAssertFalse(filter.apply(value: "Hello there, SwiftyBeaver!" as AnyObject))
     }
 
     func test_messageStartsWith_hasMultipleValuesAndIsCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Message.startsWith(prefixes: "Goodbye", "Hello", caseSensitive: true)
-        XCTAssertTrue(filter.apply(value: "Hello there, SwiftyBeaver!"))
+        XCTAssertTrue(filter.apply(value: "Hello there, SwiftyBeaver!" as AnyObject))
     }
 
     func test_messageStartsWith_hasMultipleValuesAndIsNotCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Message.startsWith(prefixes: "goodbye", "hello", caseSensitive: false)
-        XCTAssertTrue(filter.apply(value: "Hello there, SwiftyBeaver!"))
+        XCTAssertTrue(filter.apply(value: "Hello there, SwiftyBeaver!" as AnyObject))
     }
 
     func test_messageStartsWith_hasMultipleValuesAndIsCaseSensitiveAndDoesNotMatch_answersFalse() {
         let filter = Filters.Message.startsWith(prefixes: "goodbye", "hello", caseSensitive: true)
-        XCTAssertFalse(filter.apply(value: "Hello there, SwiftyBeaver!"))
+        XCTAssertFalse(filter.apply(value: "Hello there, SwiftyBeaver!" as AnyObject))
     }
 
     func test_messageContains_hasOneValueAndIsCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Message.contains(strings: "there", caseSensitive: true)
-        XCTAssertTrue(filter.apply(value: "Hello there, SwiftyBeaver!"))
+        XCTAssertTrue(filter.apply(value: "Hello there, SwiftyBeaver!" as AnyObject))
     }
 
     func test_messageContains_hasOneValueAndIsNotCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Message.contains(strings: "There", caseSensitive: false)
-        XCTAssertTrue(filter.apply(value: "Hello there, SwiftyBeaver!"))
+        XCTAssertTrue(filter.apply(value: "Hello there, SwiftyBeaver!" as AnyObject))
     }
 
     func test_messageContains_hasOneValueAndIsCaseSensitiveAndDoesNotMatch_answersFalse() {
         let filter = Filters.Message.contains(strings: "There", caseSensitive: true)
-        XCTAssertFalse(filter.apply(value: "Hello there, SwiftyBeaver!"))
+        XCTAssertFalse(filter.apply(value: "Hello there, SwiftyBeaver!" as AnyObject))
     }
 
     func test_messageContains_hasMultipleValuesAndIsCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Message.contains(strings: "their", "there", caseSensitive: true)
-        XCTAssertTrue(filter.apply(value: "Hello there, SwiftyBeaver!"))
+        XCTAssertTrue(filter.apply(value: "Hello there, SwiftyBeaver!" as AnyObject))
     }
 
     func test_messageContains_hasMultipleValuesAndIsNotCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Message.contains(strings: "Their", "There", caseSensitive: false)
-        XCTAssertTrue(filter.apply(value: "Hello there, SwiftyBeaver!"))
+        XCTAssertTrue(filter.apply(value: "Hello there, SwiftyBeaver!" as AnyObject))
     }
 
     func test_messageContains_hasMultipleValuesAndIsCaseSensitiveAndDoesNotMatch_answersFalse() {
         let filter = Filters.Message.contains(strings: "Their", "There", caseSensitive: true)
-        XCTAssertFalse(filter.apply(value: "Hello there, SwiftyBeaver!"))
+        XCTAssertFalse(filter.apply(value: "Hello there, SwiftyBeaver!" as AnyObject))
     }
 
     func test_messageEndsWith_hasOneValueAndIsCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Message.endsWith(suffixes: "SwiftyBeaver!", caseSensitive: true)
-        XCTAssertTrue(filter.apply(value: "Hello there, SwiftyBeaver!"))
+        XCTAssertTrue(filter.apply(value: "Hello there, SwiftyBeaver!" as AnyObject))
     }
 
     func test_messageEndsWith_hasOneValueAndIsNotCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Message.endsWith(suffixes: "swiftybeaver!", caseSensitive: false)
-        XCTAssertTrue(filter.apply(value: "Hello there, SwiftyBeaver!"))
+        XCTAssertTrue(filter.apply(value: "Hello there, SwiftyBeaver!" as AnyObject))
     }
 
     func test_messageEndsWith_hasOneValueAndIsCaseSensitiveAndDoesNotMatch_answersFalse() {
         let filter = Filters.Message.endsWith(suffixes: "swiftybeaver!", caseSensitive: true)
-        XCTAssertFalse(filter.apply(value: "Hello there, SwiftyBeaver!"))
+        XCTAssertFalse(filter.apply(value: "Hello there, SwiftyBeaver!" as AnyObject))
     }
 
     func test_messageEndsWith_hasMultipleValuesAndIsCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Message.endsWith(suffixes: "SluggishMink!", "SwiftyBeaver!", caseSensitive: true)
-        XCTAssertTrue(filter.apply(value: "Hello there, SwiftyBeaver!"))
+        XCTAssertTrue(filter.apply(value: "Hello there, SwiftyBeaver!" as AnyObject))
     }
 
     func test_messageEndsWith_hasMultipleValuesAndIsNotCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Message.endsWith(suffixes: "sluggishmink!", "swiftybeaver!", caseSensitive: false)
-        XCTAssertTrue(filter.apply(value: "Hello there, SwiftyBeaver!"))
+        XCTAssertTrue(filter.apply(value: "Hello there, SwiftyBeaver!" as AnyObject))
     }
 
     func test_messageEndsWith_hasMultipleValuesAndIsCaseSensitiveAndDoesNotMatch_answersFalse() {
         let filter = Filters.Message.endsWith(suffixes: "sluggishmink!!", "swiftybeaver!", caseSensitive: true)
-        XCTAssertFalse(filter.apply(value: "Hello there, SwiftyBeaver!"))
+        XCTAssertFalse(filter.apply(value: "Hello there, SwiftyBeaver!" as AnyObject))
     }
 
     func test_messageEquals_hasOneValueAndIsCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Message.equals(strings: "Hello there, SwiftyBeaver!", caseSensitive: true)
-        XCTAssertTrue(filter.apply(value: "Hello there, SwiftyBeaver!"))
+        XCTAssertTrue(filter.apply(value: "Hello there, SwiftyBeaver!" as AnyObject))
     }
 
     func test_messageEquals_hasOneValueAndIsNotCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Message.equals(strings: "hello there, swiftybeaver!", caseSensitive: false)
-        XCTAssertTrue(filter.apply(value: "Hello there, SwiftyBeaver!"))
+        XCTAssertTrue(filter.apply(value: "Hello there, SwiftyBeaver!" as AnyObject))
     }
 
     func test_messageEquals_hasOneValueAndIsCaseSensitiveAndDoesNotMatch_answersFalse() {
         let filter = Filters.Message.equals(strings: "hello there, swiftybeaver!", caseSensitive: true)
-        XCTAssertFalse(filter.apply(value: "Hello there, SwiftyBeaver!"))
+        XCTAssertFalse(filter.apply(value: "Hello there, SwiftyBeaver!" as AnyObject))
     }
 
     func test_messageEquals_hasMultipleValuesAndIsCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Message.equals(strings: "Goodbye, SluggishMink!",
                                             "Hello there, SwiftyBeaver!", caseSensitive: true)
-        XCTAssertTrue(filter.apply(value: "Hello there, SwiftyBeaver!"))
+        XCTAssertTrue(filter.apply(value: "Hello there, SwiftyBeaver!" as AnyObject))
     }
 
     func test_messageEquals_hasMultipleValuesAndIsNotCaseSensitiveAndMatches_answersTrue() {
         let filter = Filters.Message.equals(strings: "goodbye, sluggishmink!",
                                             "hello there, swiftybeaver!", caseSensitive: false)
-        XCTAssertTrue(filter.apply(value: "Hello there, SwiftyBeaver!"))
+        XCTAssertTrue(filter.apply(value: "Hello there, SwiftyBeaver!" as AnyObject))
     }
 
     func test_messageEquals_hasMultipleValuesAndIsCaseSensitiveAndDoesNotMatch_answersFalse() {
         let filter = Filters.Message.equals(strings: "goodbye, sluggishmink!",
                                             "hello there, swiftybeaver!", caseSensitive: true)
-        XCTAssertFalse(filter.apply(value: "Hello there, SwiftyBeaver!"))
+        XCTAssertFalse(filter.apply(value: "Hello there, SwiftyBeaver!" as AnyObject))
     }
 
     // Helper functions

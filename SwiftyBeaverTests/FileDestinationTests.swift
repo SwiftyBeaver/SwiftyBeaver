@@ -28,7 +28,7 @@ class FileDestinationTests: XCTestCase {
 
         // add file
         let file = FileDestination()
-        file.logFileURL = NSURL(string: "file://" + path)!
+        file.logFileURL = URL(string: "file://" + path)
         file.detailOutput = false
         file.dateFormat = ""
         file.colored = false
@@ -66,9 +66,9 @@ class FileDestinationTests: XCTestCase {
         let path = folder + "/testSBF.log"
         deleteFile(path: path)
 
-        // in conversion from path String to NSURL you need to replace " " with "%20"
+        // in conversion from path String to URL you need to replace " " with "%20"
         let pathReadyForURL = path.replacingOccurrences(of: " ", with: "%20")
-        let fileURL = NSURL(string: "file://" + pathReadyForURL)
+        let fileURL = URL(string: "file://" + pathReadyForURL)
         XCTAssertNotNil(fileURL)
         guard let url = fileURL else { return }
 
