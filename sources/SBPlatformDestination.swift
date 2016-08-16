@@ -263,7 +263,7 @@ public class SBPlatformDestination: BaseDestination {
     }
 
     /// sends a string to the SwiftyBeaver Platform server, returns ok if status 200 and HTTP status
-    func sendToServerAsync(_ str: String?, complete: (ok: Bool, status: Int) -> ()) {
+    func sendToServerAsync(_ str: String?, complete: @escaping (_ ok: Bool, _ status: Int) -> ()) {
 
         // swiftlint:disable conditional_binding_cascade
         if let payload = str, let queue = self.queue {
@@ -324,7 +324,7 @@ public class SBPlatformDestination: BaseDestination {
                         }
                     }
                 }
-                return complete(ok: ok, status: status)
+                return complete(ok, status)
             }
             task.resume()
         }
@@ -479,7 +479,7 @@ public class SBPlatformDestination: BaseDestination {
         dict["uuid"] = uuid as AnyObject
         dict["firstStart"] = now as AnyObject
         dict["lastStart"] = now as AnyObject
-        dict["starts"] = 1
+        dict["starts"] = 1 as AnyObject
         dict["userName"] = analyticsUserName as AnyObject
         dict["firstAppVersion"] = appVersion() as AnyObject
         dict["appVersion"] = appVersion() as AnyObject

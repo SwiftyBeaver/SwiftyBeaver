@@ -65,7 +65,7 @@ final class AES256CBC {
             iv: ivData.arrayOfBytes()).encrypt(bytes: data.arrayOfBytes()))
         let base64String: String = enc.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
         let result = String(base64String)
-        return result
+        return result!
     }
 
     /// returns decrypted string, IV must be 16 chars long
@@ -114,7 +114,7 @@ final class AES256CBC {
                 }
             }
             // get ASCII character from random decimal value
-            let char = String(UnicodeScalar(decValue))
+          let char = String(describing: UnicodeScalar(decValue))
             text = text + char
             // remove double spaces if existing
             text = text.replacingOccurrences(of: "  ", with: " ")
@@ -149,7 +149,7 @@ final class AES256CBC {
 
 // MARK: - AESCipher
 
-final private class AESCipher {
+final fileprivate class AESCipher {
 
     enum AESCipherError: Error {
         case BlockSizeExceeded
@@ -198,7 +198,7 @@ final private class AESCipher {
     private lazy var sBoxInv: [UInt32] = self.sBoxes.invSBox
 
     // Parameters for Linear Congruence Generators
-    private let Rcon: [UInt8] = [
+    fileprivate let Rcon: [UInt8] = [
         0x8d, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1b, 0x36, 0x6c, 0xd8, 0xab, 0x4d, 0x9a,
         0x2f, 0x5e, 0xbc, 0x63, 0xc6, 0x97, 0x35, 0x6a, 0xd4, 0xb3, 0x7d, 0xfa, 0xef, 0xc5, 0x91, 0x39,
         0x72, 0xe4, 0xd3, 0xbd, 0x61, 0xc2, 0x9f, 0x25, 0x4a, 0x94, 0x33, 0x66, 0xcc, 0x83, 0x1d, 0x3a,
@@ -216,7 +216,7 @@ final private class AESCipher {
         0xc6, 0x97, 0x35, 0x6a, 0xd4, 0xb3, 0x7d, 0xfa, 0xef, 0xc5, 0x91, 0x39, 0x72, 0xe4, 0xd3, 0xbd,
         0x61, 0xc2, 0x9f, 0x25, 0x4a, 0x94, 0x33, 0x66, 0xcc, 0x83, 0x1d, 0x3a, 0x74, 0xe8, 0xcb, 0x8d]
 
-    private let T0: [UInt32] = [0xa56363c6, 0x847c7cf8, 0x997777ee, 0x8d7b7bf6, 0xdf2f2ff, 0xbd6b6bd6,
+    fileprivate let T0: [UInt32] = [0xa56363c6, 0x847c7cf8, 0x997777ee, 0x8d7b7bf6, 0xdf2f2ff, 0xbd6b6bd6,
         0xb16f6fde, 0x54c5c591, 0x50303060, 0x3010102, 0xa96767ce, 0x7d2b2b56, 0x19fefee7, 0x62d7d7b5,
         0xe6abab4d, 0x9a7676ec, 0x45caca8f, 0x9d82821f, 0x40c9c989, 0x877d7dfa, 0x15fafaef, 0xeb5959b2,
         0xc947478e, 0xbf0f0fb, 0xecadad41, 0x67d4d4b3, 0xfda2a25f, 0xeaafaf45, 0xbf9c9c23, 0xf7a4a453,
@@ -250,7 +250,7 @@ final private class AESCipher {
         0xc6424284, 0xb86868d0, 0xc3414182, 0xb0999929, 0x772d2d5a, 0x110f0f1e, 0xcbb0b07b, 0xfc5454a8,
         0xd6bbbb6d, 0x3a16162c]
 
-    private let T0_INV: [UInt32] = [0x50a7f451, 0x5365417e, 0xc3a4171a, 0x965e273a, 0xcb6bab3b, 0xf1459d1f,
+    fileprivate let T0_INV: [UInt32] = [0x50a7f451, 0x5365417e, 0xc3a4171a, 0x965e273a, 0xcb6bab3b, 0xf1459d1f,
         0xab58faac, 0x9303e34b, 0x55fa3020, 0xf66d76ad, 0x9176cc88, 0x254c02f5, 0xfcd7e54f, 0xd7cb2ac5,
         0x80443526, 0x8fa362b5, 0x495ab1de, 0x671bba25, 0x980eea45, 0xe1c0fe5d, 0x2752fc3, 0x12f04c81,
         0xa397468d, 0xc6f9d36b, 0xe75f8f03, 0x959c9215, 0xeb7a6dbf, 0xda595295, 0x2d83bed4, 0xd3217458,
@@ -284,7 +284,7 @@ final private class AESCipher {
         0x8b493c28, 0x41950dff, 0x7101a839, 0xdeb30c08, 0x9ce4b4d8, 0x90c15664, 0x6184cb7b, 0x70b632d5,
         0x745c6c48, 0x4257b8d0]
 
-    private let T1: [UInt32] = [0x6363c6a5, 0x7c7cf884, 0x7777ee99, 0x7b7bf68d, 0xf2f2ff0d, 0x6b6bd6bd,
+    fileprivate let T1: [UInt32] = [0x6363c6a5, 0x7c7cf884, 0x7777ee99, 0x7b7bf68d, 0xf2f2ff0d, 0x6b6bd6bd,
         0x6f6fdeb1, 0xc5c59154, 0x30306050, 0x1010203, 0x6767cea9, 0x2b2b567d, 0xfefee719, 0xd7d7b562,
         0xabab4de6, 0x7676ec9a, 0xcaca8f45, 0x82821f9d, 0xc9c98940, 0x7d7dfa87, 0xfafaef15, 0x5959b2eb,
         0x47478ec9, 0xf0f0fb0b, 0xadad41ec, 0xd4d4b367, 0xa2a25ffd, 0xafaf45ea, 0x9c9c23bf, 0xa4a453f7,
@@ -318,7 +318,7 @@ final private class AESCipher {
         0x424284c6, 0x6868d0b8, 0x414182c3, 0x999929b0, 0x2d2d5a77, 0xf0f1e11, 0xb0b07bcb, 0x5454a8fc,
         0xbbbb6dd6, 0x16162c3a]
 
-    private let T1_INV: [UInt32] = [0xa7f45150, 0x65417e53, 0xa4171ac3, 0x5e273a96, 0x6bab3bcb,
+    fileprivate let T1_INV: [UInt32] = [0xa7f45150, 0x65417e53, 0xa4171ac3, 0x5e273a96, 0x6bab3bcb,
         0x459d1ff1, 0x58faacab, 0x3e34b93, 0xfa302055, 0x6d76adf6, 0x76cc8891, 0x4c02f525, 0xd7e54ffc,
         0xcb2ac5d7, 0x44352680, 0xa362b58f, 0x5ab1de49, 0x1bba2567, 0xeea4598, 0xc0fe5de1, 0x752fc302,
         0xf04c8112, 0x97468da3, 0xf9d36bc6, 0x5f8f03e7, 0x9c921595, 0x7a6dbfeb, 0x595295da, 0x83bed42d,
@@ -352,7 +352,7 @@ final private class AESCipher {
         0x493c288b, 0x950dff41, 0x1a83971, 0xb30c08de, 0xe4b4d89c, 0xc1566490, 0x84cb7b61, 0xb632d570,
         0x5c6c4874, 0x57b8d042]
 
-    private let T2: [UInt32] =  [0x63c6a563, 0x7cf8847c, 0x77ee9977, 0x7bf68d7b, 0xf2ff0df2, 0x6bd6bd6b,
+    fileprivate let T2: [UInt32] =  [0x63c6a563, 0x7cf8847c, 0x77ee9977, 0x7bf68d7b, 0xf2ff0df2, 0x6bd6bd6b,
         0x6fdeb16f, 0xc59154c5, 0x30605030, 0x1020301, 0x67cea967, 0x2b567d2b, 0xfee719fe, 0xd7b562d7,
         0xab4de6ab, 0x76ec9a76, 0xca8f45ca, 0x821f9d82, 0xc98940c9, 0x7dfa877d, 0xfaef15fa, 0x59b2eb59,
         0x478ec947, 0xf0fb0bf0, 0xad41ecad, 0xd4b367d4, 0xa25ffda2, 0xaf45eaaf, 0x9c23bf9c, 0xa453f7a4,
@@ -386,7 +386,7 @@ final private class AESCipher {
         0x4284c642, 0x68d0b868, 0x4182c341, 0x9929b099, 0x2d5a772d, 0xf1e110f, 0xb07bcbb0, 0x54a8fc54,
         0xbb6dd6bb, 0x162c3a16]
 
-    private let T2_INV: [UInt32] = [0xf45150a7, 0x417e5365, 0x171ac3a4, 0x273a965e, 0xab3bcb6b, 0x9d1ff145,
+    fileprivate let T2_INV: [UInt32] = [0xf45150a7, 0x417e5365, 0x171ac3a4, 0x273a965e, 0xab3bcb6b, 0x9d1ff145,
         0xfaacab58, 0xe34b9303, 0x302055fa, 0x76adf66d, 0xcc889176, 0x2f5254c, 0xe54ffcd7, 0x2ac5d7cb,
         0x35268044, 0x62b58fa3, 0xb1de495a, 0xba25671b, 0xea45980e, 0xfe5de1c0, 0x2fc30275, 0x4c8112f0,
         0x468da397, 0xd36bc6f9, 0x8f03e75f, 0x9215959c, 0x6dbfeb7a, 0x5295da59, 0xbed42d83, 0x7458d321,
@@ -420,7 +420,7 @@ final private class AESCipher {
         0x3c288b49, 0xdff4195, 0xa8397101, 0xc08deb3, 0xb4d89ce4, 0x566490c1, 0xcb7b6184, 0x32d570b6,
         0x6c48745c, 0xb8d04257]
 
-    private let T3: [UInt32] = [0xc6a56363, 0xf8847c7c, 0xee997777, 0xf68d7b7b, 0xff0df2f2, 0xd6bd6b6b,
+    fileprivate let T3: [UInt32] = [0xc6a56363, 0xf8847c7c, 0xee997777, 0xf68d7b7b, 0xff0df2f2, 0xd6bd6b6b,
         0xdeb16f6f, 0x9154c5c5, 0x60503030, 0x2030101, 0xcea96767, 0x567d2b2b, 0xe719fefe, 0xb562d7d7,
         0x4de6abab, 0xec9a7676, 0x8f45caca, 0x1f9d8282, 0x8940c9c9, 0xfa877d7d, 0xef15fafa, 0xb2eb5959,
         0x8ec94747, 0xfb0bf0f0, 0x41ecadad, 0xb367d4d4, 0x5ffda2a2, 0x45eaafaf, 0x23bf9c9c, 0x53f7a4a4,
@@ -454,7 +454,7 @@ final private class AESCipher {
         0xd0b86868, 0x82c34141, 0x29b09999, 0x5a772d2d, 0x1e110f0f, 0x7bcbb0b0, 0xa8fc5454,
         0x6dd6bbbb, 0x2c3a1616]
 
-    private let T3_INV: [UInt32] = [0x5150a7f4, 0x7e536541, 0x1ac3a417, 0x3a965e27, 0x3bcb6bab, 0x1ff1459d,
+    fileprivate let T3_INV: [UInt32] = [0x5150a7f4, 0x7e536541, 0x1ac3a417, 0x3a965e27, 0x3bcb6bab, 0x1ff1459d,
         0xacab58fa, 0x4b9303e3, 0x2055fa30, 0xadf66d76, 0x889176cc, 0xf5254c02, 0x4ffcd7e5, 0xc5d7cb2a,
         0x26804435, 0xb58fa362, 0xde495ab1, 0x25671bba, 0x45980eea, 0x5de1c0fe, 0xc302752f, 0x8112f04c,
         0x8da39746, 0x6bc6f9d3, 0x3e75f8f, 0x15959c92, 0xbfeb7a6d, 0x95da5952, 0xd42d83be, 0x58d32174,
@@ -488,7 +488,7 @@ final private class AESCipher {
         0xff41950d, 0x397101a8, 0x8deb30c, 0xd89ce4b4, 0x6490c156, 0x7b6184cb, 0xd570b632,
         0x48745c6c, 0xd04257b8]
 
-    private var U1: [UInt32] = [0x0, 0xb0d090e, 0x161a121c, 0x1d171b12, 0x2c342438, 0x27392d36, 0x3a2e3624,
+    fileprivate var U1: [UInt32] = [0x0, 0xb0d090e, 0x161a121c, 0x1d171b12, 0x2c342438, 0x27392d36, 0x3a2e3624,
         0x31233f2a, 0x58684870, 0x5365417e, 0x4e725a6c, 0x457f5362, 0x745c6c48, 0x7f516546, 0x62467e54,
         0x694b775a, 0xb0d090e0, 0xbbdd99ee, 0xa6ca82fc, 0xadc78bf2, 0x9ce4b4d8, 0x97e9bdd6, 0x8afea6c4,
         0x81f3afca, 0xe8b8d890, 0xe3b5d19e, 0xfea2ca8c, 0xf5afc382, 0xc48cfca8, 0xcf81f5a6, 0xd296eeb4,
@@ -522,7 +522,7 @@ final private class AESCipher {
         0xfbff0efd, 0x92b479a7, 0x99b970a9, 0x84ae6bbb, 0x8fa362b5, 0xbe805d9f, 0xb58d5491,
         0xa89a4f83, 0xa397468d]
 
-    private var U2: [UInt32] = [0x0, 0xd090e0b, 0x1a121c16, 0x171b121d, 0x3424382c, 0x392d3627,
+    fileprivate var U2: [UInt32] = [0x0, 0xd090e0b, 0x1a121c16, 0x171b121d, 0x3424382c, 0x392d3627,
         0x2e36243a, 0x233f2a31, 0x68487058, 0x65417e53, 0x725a6c4e, 0x7f536245, 0x5c6c4874, 0x5165467f,
         0x467e5462, 0x4b775a69, 0xd090e0b0, 0xdd99eebb, 0xca82fca6, 0xc78bf2ad, 0xe4b4d89c, 0xe9bdd697,
         0xfea6c48a, 0xf3afca81, 0xb8d890e8, 0xb5d19ee3, 0xa2ca8cfe, 0xafc382f5, 0x8cfca8c4, 0x81f5a6cf,
@@ -556,7 +556,7 @@ final private class AESCipher {
         0xf207f3f0, 0xff0efdfb, 0xb479a792, 0xb970a999, 0xae6bbb84, 0xa362b58f, 0x805d9fbe, 0x8d5491b5,
         0x9a4f83a8, 0x97468da3]
 
-    private var U3: [UInt32] = [0x0, 0x90e0b0d, 0x121c161a, 0x1b121d17, 0x24382c34, 0x2d362739,
+    fileprivate var U3: [UInt32] = [0x0, 0x90e0b0d, 0x121c161a, 0x1b121d17, 0x24382c34, 0x2d362739,
         0x36243a2e, 0x3f2a3123, 0x48705868, 0x417e5365, 0x5a6c4e72, 0x5362457f, 0x6c48745c, 0x65467f51,
         0x7e546246, 0x775a694b, 0x90e0b0d0, 0x99eebbdd, 0x82fca6ca, 0x8bf2adc7, 0xb4d89ce4, 0xbdd697e9,
         0xa6c48afe, 0xafca81f3, 0xd890e8b8, 0xd19ee3b5, 0xca8cfea2, 0xc382f5af, 0xfca8c48c, 0xf5a6cf81,
@@ -590,7 +590,7 @@ final private class AESCipher {
         0x7f3f0f2, 0xefdfbff, 0x79a792b4, 0x70a999b9, 0x6bbb84ae, 0x62b58fa3, 0x5d9fbe80, 0x5491b58d,
         0x4f83a89a, 0x468da397]
 
-    private var U4: [UInt32] = [0x0, 0xe0b0d09, 0x1c161a12, 0x121d171b, 0x382c3424, 0x3627392d,
+    fileprivate var U4: [UInt32] = [0x0, 0xe0b0d09, 0x1c161a12, 0x121d171b, 0x382c3424, 0x3627392d,
         0x243a2e36, 0x2a31233f, 0x70586848, 0x7e536541, 0x6c4e725a, 0x62457f53, 0x48745c6c, 0x467f5165,
         0x5462467e, 0x5a694b77, 0xe0b0d090, 0xeebbdd99, 0xfca6ca82, 0xf2adc78b, 0xd89ce4b4, 0xd697e9bd,
         0xc48afea6, 0xca81f3af, 0x90e8b8d8, 0x9ee3b5d1, 0x8cfea2ca, 0x82f5afc3, 0xa8c48cfc, 0xa6cf81f5,
@@ -650,7 +650,7 @@ final private class AESCipher {
         return try blockMode.encryptBlocks(blocks: blocks, iv: self.iv, cipherOperation: encryptBlock)
     }
 
-    private func encryptBlock(block: [UInt8]) -> [UInt8]? {
+    fileprivate func encryptBlock(block: [UInt8]) -> [UInt8]? {
         let rounds = self.variant.Nr
         let rk = self.expandedKey
         var b = toUInt32Array(slice: block[block.startIndex..<block.endIndex])
@@ -724,7 +724,7 @@ final private class AESCipher {
 
     }
 
-    private func decryptBlock(block: [UInt8]) -> [UInt8]? {
+    fileprivate func decryptBlock(block: [UInt8]) -> [UInt8]? {
         let rounds = self.variant.Nr
         let rk = expandedKeyInv
         var b = toUInt32Array(slice: block[block.startIndex..<block.endIndex])
@@ -807,7 +807,7 @@ final private class AESCipher {
         return out
     }
 
-    private func expandKeyInv(key: [UInt8], variant: AESVariant) -> [[UInt32]] {
+    fileprivate func expandKeyInv(key: [UInt8], variant: AESVariant) -> [[UInt32]] {
         let rounds = variant.Nr
         var rk2: [[UInt32]] = expandKey(key: key, variant: variant)
 
@@ -830,7 +830,7 @@ final private class AESCipher {
         return rk2
     }
 
-    private func expandKey(key: [UInt8], variant: AESVariant) -> [[UInt32]] {
+    fileprivate func expandKey(key: [UInt8], variant: AESVariant) -> [[UInt32]] {
 
         func convertExpandedKey(expanded: [UInt8]) -> [[UInt32]] {
             var arr = [UInt32]()
@@ -877,7 +877,7 @@ final private class AESCipher {
                 tmp[wordIdx] = w[4*(i-1)+wordIdx]
             }
             if (i % variant.Nk) == 0 {
-                tmp = subWord(word: rotateLeft(UInt32.withBytes(bytes: tmp), 8).bytes(totalBytes: sizeof(UInt32.self)))
+                tmp = subWord(word: rotateLeft(UInt32.withBytes(bytes: tmp), 8).bytes(totalBytes: MemoryLayout<UInt32>.size))
                 tmp[0] = tmp.first! ^ Rcon[i/variant.Nk]
             } else if variant.Nk > 6 && (i % variant.Nk) == 4 {
                 tmp = subWord(word: tmp)
@@ -892,25 +892,25 @@ final private class AESCipher {
     }
 }
 
-private extension AESCipher {
+fileprivate extension AESCipher {
 
-    private func B0(x: UInt32) -> UInt32 {
+    fileprivate func B0(x: UInt32) -> UInt32 {
         return x & 0xFF
     }
 
-    private func B1(x: UInt32) -> UInt32 {
+    fileprivate func B1(x: UInt32) -> UInt32 {
         return (x >> 8) & 0xFF
     }
 
-    private func B2(x: UInt32) -> UInt32 {
+    fileprivate func B2(x: UInt32) -> UInt32 {
         return (x >> 16) & 0xFF
     }
 
-    private func B3(x: UInt32) -> UInt32 {
+    fileprivate func B3(x: UInt32) -> UInt32 {
         return (x >> 24) & 0xFF
     }
 
-    private func F1(x0: UInt32, _ x1: UInt32, _ x2: UInt32, _ x3: UInt32) -> UInt32 {
+    fileprivate func F1(x0: UInt32, _ x1: UInt32, _ x2: UInt32, _ x3: UInt32) -> UInt32 {
         var result: UInt32 = 0
         result |= UInt32(B1(x: T0[Int(x0 & 255)]))
         result |= UInt32(B1(x: T0[Int((x1 >> 8) & 255)])) << 8
@@ -919,7 +919,7 @@ private extension AESCipher {
         return result
     }
 
-    private func calculateSBox() -> (sBox: [UInt32], invSBox: [UInt32]) {
+    fileprivate func calculateSBox() -> (sBox: [UInt32], invSBox: [UInt32]) {
         var sbox = [UInt32](repeating: 0, count: 256)
         var invsbox = sbox
         sbox[0] = 0x63
@@ -945,7 +945,7 @@ private extension AESCipher {
 
 // MARK: Foundation
 
-private extension AESCipher {
+fileprivate extension AESCipher {
     convenience init(key: String, iv: String) throws {
         guard let kkey = key.data(using: String.Encoding.utf8,
             allowLossyConversion: false)?.arrayOfBytes(),
@@ -962,15 +962,15 @@ private extension AESCipher {
 // MARK: - CBC
 
 // I have no better name for that
-private typealias CipherOperationOnBlock = (block: [UInt8]) -> [UInt8]?
+fileprivate typealias CipherOperationOnBlock = (_ block: [UInt8]) -> [UInt8]?
 
-private struct CBCBlockMode {
+fileprivate struct CBCBlockMode {
 
     enum BlockError: Error {
         case MissingInitializationVector
     }
 
-    private func encryptBlocks(blocks: [[UInt8]], iv: [UInt8]?,
+    fileprivate func encryptBlocks(blocks: [[UInt8]], iv: [UInt8]?,
         cipherOperation: CipherOperationOnBlock) throws -> [UInt8] {
         precondition(!blocks.isEmpty)
         guard let iv = iv else {
@@ -981,7 +981,7 @@ private struct CBCBlockMode {
         out.reserveCapacity(blocks.count * blocks[blocks.startIndex].count)
         var prevCiphertext = iv // for the first time prevCiphertext = iv
         for plaintext in blocks {
-            if let encrypted = cipherOperation(block: xor(a: prevCiphertext, plaintext)) {
+            if let encrypted = cipherOperation(xor(a: prevCiphertext, plaintext)) {
                 out.append(contentsOf: encrypted)
                 prevCiphertext = encrypted
             }
@@ -989,7 +989,7 @@ private struct CBCBlockMode {
         return out
     }
 
-    private func decryptBlocks(blocks: [[UInt8]], iv: [UInt8]?,
+    fileprivate func decryptBlocks(blocks: [[UInt8]], iv: [UInt8]?,
         cipherOperation: CipherOperationOnBlock) throws -> [UInt8] {
         precondition(!blocks.isEmpty)
         guard let iv = iv else {
@@ -1000,7 +1000,7 @@ private struct CBCBlockMode {
         out.reserveCapacity(blocks.count * blocks[blocks.startIndex].count)
         var prevCiphertext = iv // for the first time prevCiphertext = iv
         for ciphertext in blocks {
-            if let decrypted = cipherOperation(block: ciphertext) { // decrypt
+            if let decrypted = cipherOperation(ciphertext) { // decrypt
                 out.append(contentsOf: xor(a: prevCiphertext, decrypted))
             }
             prevCiphertext = ciphertext
@@ -1012,7 +1012,7 @@ private struct CBCBlockMode {
 
 // MARK: - Padding
 
-private struct PKCS7 {
+fileprivate struct PKCS7 {
 
     enum PKCS7Error: Error {
         case InvalidPaddingValue
@@ -1057,7 +1057,7 @@ private struct PKCS7 {
 
 // MARK: - Utils
 
-private func xor(a: [UInt8], _ b: [UInt8]) -> [UInt8] {
+fileprivate func xor(a: [UInt8], _ b: [UInt8]) -> [UInt8] {
     var xored = [UInt8](repeating: 0, count: min(a.count, b.count))
     for i in 0..<xored.count {
         xored[i] = a[i] ^ b[i]
@@ -1066,22 +1066,22 @@ private func xor(a: [UInt8], _ b: [UInt8]) -> [UInt8] {
 }
 
 
-private func rotateLeft(_ v: UInt8, _ n: UInt8) -> UInt8 {
+fileprivate func rotateLeft(_ v: UInt8, _ n: UInt8) -> UInt8 {
     return ((v << n) & 0xFF) | (v >> (8 - n))
 }
 
-private func rotateLeft(_ v: UInt32, _ n: UInt32) -> UInt32 {
+fileprivate func rotateLeft(_ v: UInt32, _ n: UInt32) -> UInt32 {
     return ((v << n) & 0xFFFFFFFF) | (v >> (32 - n))
 }
 
-private protocol BitshiftOperationsType {
+fileprivate protocol BitshiftOperationsType {
     static func << (lhs: Self, rhs: Self) -> Self
     static func >> (lhs: Self, rhs: Self) -> Self
     static func <<= (lhs: inout Self, rhs: Self)
     static func >>= (lhs: inout Self, rhs: Self)
 }
 
-private protocol ByteConvertible {
+fileprivate protocol ByteConvertible {
     init(_ value: UInt8)
     init(truncatingBitPattern: UInt64)
 }
@@ -1091,7 +1091,7 @@ extension Int8   : BitshiftOperationsType, ByteConvertible { }
 extension Int16  : BitshiftOperationsType, ByteConvertible { }
 extension Int32  : BitshiftOperationsType, ByteConvertible { }
 extension Int64  : BitshiftOperationsType, ByteConvertible {
-    private init(truncatingBitPattern value: UInt64) {
+    fileprivate init(truncatingBitPattern value: UInt64) {
         self = Int64(bitPattern: value)
     }
 }
@@ -1100,21 +1100,21 @@ extension UInt8  : BitshiftOperationsType, ByteConvertible { }
 extension UInt16 : BitshiftOperationsType, ByteConvertible { }
 extension UInt32 : BitshiftOperationsType, ByteConvertible { }
 extension UInt64 : BitshiftOperationsType, ByteConvertible {
-    private init(truncatingBitPattern value: UInt64) {
+    fileprivate init(truncatingBitPattern value: UInt64) {
         self = value
     }
 }
 
-private func integerWithBytes<T: Integer where T:ByteConvertible, T: BitshiftOperationsType>(bytes: [UInt8]) -> T {
+fileprivate func integerWithBytes<T: Integer where T:ByteConvertible, T: BitshiftOperationsType>(bytes: [UInt8]) -> T {
     var bytes = bytes.reversed() as Array<UInt8>
-    if bytes.count < sizeof(T.self) {
-        let paddingCount = sizeof(T.self) - bytes.count
+    if bytes.count < MemoryLayout<T>.size {
+        let paddingCount = MemoryLayout<T>.size - bytes.count
         if paddingCount > 0 {
             bytes += [UInt8](repeating: 0, count: paddingCount)
         }
     }
 
-    if sizeof(T.self) == 1 {
+    if MemoryLayout<T>.size == 1 {
         return T(truncatingBitPattern: UInt64(bytes.first!))
     }
 
@@ -1125,23 +1125,23 @@ private func integerWithBytes<T: Integer where T:ByteConvertible, T: BitshiftOpe
     return result
 }
 
-private extension UInt32 {
+fileprivate extension UInt32 {
 
-    private func bytes(totalBytes: Int = sizeof(UInt32.self)) -> [UInt8] {
+    fileprivate func bytes(totalBytes: Int = MemoryLayout<UInt32>.size) -> [UInt8] {
         return arrayOfBytes(value: self, length: totalBytes)
     }
 
     /** Int with array bytes (little-endian) */
-    private static func withBytes(bytes: [UInt8]) -> UInt32 {
+    fileprivate static func withBytes(bytes: [UInt8]) -> UInt32 {
         return integerWithBytes(bytes: bytes)
     }
 }
 
-private func toUInt32Array(slice: ArraySlice<UInt8>) -> Array<UInt32> {
+fileprivate func toUInt32Array(slice: ArraySlice<UInt8>) -> Array<UInt32> {
     var result = Array<UInt32>()
     result.reserveCapacity(16)
 
-    for idx in stride(from: slice.startIndex, to: slice.endIndex, by: sizeof(UInt32.self)) {
+    for idx in stride(from: slice.startIndex, to: slice.endIndex, by: MemoryLayout<UInt32>.size) {
         let val1: UInt32 = (UInt32(slice[slice.index(idx, offsetBy: 3)]) << 24)
         let val2: UInt32 = (UInt32(slice[slice.index(idx, offsetBy: 2)]) << 16)
         let val3: UInt32 = (UInt32(slice[slice.index(idx, offsetBy: 1)]) << 8)
@@ -1155,28 +1155,31 @@ private func toUInt32Array(slice: ArraySlice<UInt8>) -> Array<UInt32> {
 
 /// Array of bytes, little-endian representation. Don't use if not necessary.
 /// I found this method slow
-private func arrayOfBytes<T>(value: T, length: Int? = nil) -> [UInt8] {
-    let totalBytes = length ?? sizeof(T.self)
+fileprivate func arrayOfBytes<T>(value: T, length: Int? = nil) -> [UInt8] {
+    let totalBytes = length ?? MemoryLayout<T>.size
 
     let valuePointer = UnsafeMutablePointer<T>.allocate(capacity: 1)
     valuePointer.pointee = value
 
-    let bytesPointer = UnsafeMutablePointer<UInt8>(valuePointer)
-    var bytes = [UInt8](repeating: 0, count: totalBytes)
-    for j in 0..<min(sizeof(T.self), totalBytes) {
-        bytes[totalBytes - 1 - j] = (bytesPointer + j).pointee
+//  let bytesPointer = UnsafeMutablePointer<UInt8>(valuePointer)
+//  var bytes = [UInt8](repeating: 0, count: totalBytes)
+//  for j in 0..<min(MemoryLayout<T>.size, totalBytes) {
+//    bytes[totalBytes - 1 - j] = (bytesPointer + j).pointee
+//  }
+//  valuePointer.deinitialize()
+//  valuePointer.deallocate(capacity: 1)
+//  next line compiles but is wothless 
+    let bytes = valuePointer.withMemoryRebound(to: [UInt8].self,
+                                                     capacity: totalBytes) { p in
+      return p.pointee
     }
-
-    valuePointer.deinitialize()
-    valuePointer.deallocate(capacity: 1)
-
     return bytes
 }
 
-private extension Array {
+fileprivate extension Array {
 
     /** split in chunks with given chunk size */
-    private func chunks(chunksize: Int) -> [Array<Element>] {
+    fileprivate func chunks(chunksize: Int) -> [Array<Element>] {
         var words = [[Element]]()
         words.reserveCapacity(self.count / chunksize)
         var idx = chunksize
@@ -1193,21 +1196,21 @@ private extension Array {
     }
 }
 
-private extension Data {
+fileprivate extension Data {
 
     /*
     public func toHexString() -> String {
         return self.arrayOfBytes().toHexString()
     }*/
 
-    static private func withBytes(bytes: [UInt8]) -> NSData {
+    static fileprivate func withBytes(bytes: [UInt8]) -> NSData {
         return NSData(bytes: bytes, length: bytes.count)
     }
 
-    private func arrayOfBytes() -> Array<UInt8> {
-        let count = self.count / sizeof(UInt8.self)
+    fileprivate func arrayOfBytes() -> Array<UInt8> {
+        let count = self.count / MemoryLayout<UInt8>.size
         var bytesArray = Array<UInt8>(repeating: 0, count: count)
-        (self as NSData).getBytes(&bytesArray, length: count * sizeof(UInt8.self))
+        (self as NSData).getBytes(&bytesArray, length: count * MemoryLayout<UInt8>.size)
         return bytesArray
     }
 }

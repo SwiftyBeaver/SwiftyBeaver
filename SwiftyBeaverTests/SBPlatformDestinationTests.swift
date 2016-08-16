@@ -110,7 +110,7 @@ class SBPlatformDestinationTests: XCTestCase {
         let correctURL = platform.serverURL
 
         // invalid address
-        platform.serverURL = NSURL(string: "https://notexisting.swiftybeaver.com")! as URL
+        platform.serverURL = URL(string: "https://notexisting.swiftybeaver.com")! as URL
         let exp = expectation(description: "returns false due to invalid URL")
 
         platform.sendToServerAsync(jsonStr) {
@@ -168,8 +168,8 @@ class SBPlatformDestinationTests: XCTestCase {
 
         // add logging to SwiftyBeaver Platform
         platform.showNSLog = true
-        //let jsonFile = NSURL(string: "file:///tmp/testSBPlatform.json")!
-        //deleteFile(NSURL(string: String(jsonFile) + ".send")!)
+        //let jsonFile = URL(string: "file:///tmp/testSBPlatform.json")!
+        //deleteFile(URL(string: String(jsonFile) + ".send")!)
 
         platform.appID = Secrets.Platform.appID
         platform.appSecret = Secrets.Platform.appSecret
@@ -261,7 +261,7 @@ class SBPlatformDestinationTests: XCTestCase {
 
 
     /// helper function to delete temp file before test
-    func deleteFile(url: NSURL) -> Bool {
+    func deleteFile(url: URL) -> Bool {
         do {
             try FileManager.default.removeItem(at: url as URL)
             return true

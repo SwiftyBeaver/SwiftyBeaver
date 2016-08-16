@@ -11,7 +11,7 @@ import Foundation
 
 public class FileDestination: BaseDestination {
 
-    public var logFileURL: NSURL?
+    public var logFileURL: URL?
 
     override public var defaultHashValue: Int {return 2}
     let fileManager = FileManager.default
@@ -19,7 +19,7 @@ public class FileDestination: BaseDestination {
 
     public override init() {
         // platform-dependent logfile directory default
-        var baseURL: NSURL?
+        var baseURL: URL?
 
         if OS == "OSX" {
             if let url = fileManager.urls(for:.cachesDirectory, in: .userDomainMask).first {
@@ -84,7 +84,7 @@ public class FileDestination: BaseDestination {
     func saveToFile(str: String) -> Bool {
         guard let url = logFileURL else { return false }
         do {
-            if fileManager.fileExists(atPath: url.path!) == false {
+            if fileManager.fileExists(atPath: url.path) == false {
                 // create file if not existing
                 let line = str + "\n"
                 try line.write(to: url as URL, atomically: true, encoding: String.Encoding.utf8)
