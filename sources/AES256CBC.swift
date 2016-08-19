@@ -86,36 +86,38 @@ final class AES256CBC {
         return randomText(32)
     }
 
+    /// Used for random text generation
+    private enum CharType: Int {
+        case LowerCase, UpperCase, Digit, Space
+
+        func randomCharacter() -> UInt8 {
+            switch self {
+            case .LowerCase:
+                return UInt8(arc4random_uniform(26)) + 97
+            case .UpperCase:
+                return UInt8(arc4random_uniform(26)) + 65
+            case .Digit:
+                return UInt8(arc4random_uniform(10)) + 48
+            case .Space:
+                return 32
+            }
+        }
+
+        static func random(_ justLowerCase: Bool, _ allowWhitespace: Bool) -> CharType {
+            if justLowerCase {
+                return .LowerCase
+            } else {
+                return CharType(rawValue: Int(arc4random_uniform(allowWhitespace ? 4 : 3)))!
+            }
+        }
+    }
+
     /// returns random text of a defined length.
     /// Optional bool parameter justLowerCase to just generate random lowercase text and
     /// whitespace to exclude the whitespace character
     class func randomText(_ length: Int, justLowerCase: Bool = false, whitespace: Bool = false) -> String {
-        enum CharType: Int {
-            case lowerCase, upperCase, digit, space
-
-            func randomCharacter() -> UInt8 {
-                switch self {
-                case .lowerCase:
-                    return UInt8(arc4random_uniform(26)) + 97
-                case .upperCase:
-                    return UInt8(arc4random_uniform(26)) + 65
-                case .digit:
-                    return UInt8(arc4random_uniform(10)) + 48
-                case .space:
-                    return 32
-                }
-            }
-
-            static func random(_ justLowerCase: Bool, _ allowWhitespace: Bool) -> CharType {
-                if justLowerCase {
-                    return .lowerCase
-                } else {
-                    return CharType(rawValue: Int(arc4random_uniform(allowWhitespace ? 4 : 3)))!
-                }
-            }
-        }
-
         var chars = [UInt8]()
+
         while chars.count < length {
             let char = CharType.random(justLowerCase, whitespace).randomCharacter()
             if char == 32 && (chars.last ?? 0) == char {
@@ -1201,11 +1203,6 @@ fileprivate extension Array {
 
 fileprivate extension Data {
 
-    /*
-    public func toHexString() -> String {
-        return self.arrayOfBytes().toHexString()
-    }*/
-
     static fileprivate func withBytes(bytes: [UInt8]) -> NSData {
         return NSData(bytes: bytes, length: bytes.count)
     }
@@ -1217,19 +1214,3 @@ fileprivate extension Data {
         return bytesArray
     }
 }
-
-/*
-// Swift 2 compatible
-private extension NSData {
-    class private func withBytes(bytes: [UInt8]) -> NSData {
-        return NSData(bytes: bytes, length: bytes.count)
-    }
-
-    private func arrayOfBytes() -> [UInt8] {
-        let count = self.length / sizeof(UInt8)
-        var bytesArray = [UInt8](repeating: 0, count: count)
-        self.getBytes(&bytesArray, length:count * sizeof(UInt8))
-        return bytesArray
-    }
-}
-*/
