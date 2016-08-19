@@ -90,36 +90,41 @@ final class AES256CBC {
     /// Optional bool parameter justLowerCase to just generate random lowercase text and
     /// whitespace to exclude the whitespace character
     class func randomText(_ length: Int, justLowerCase: Bool = false, whitespace: Bool = false) -> String {
-        var text = ""
-        for _ in 1...length {
-            var decValue = 0  // ascii decimal value of a character
-            var charType = 3  // default is lowercase
-            if justLowerCase == false {
-                // randomize the character type
-                charType =  Int(arc4random_uniform(4))
-            }
-            switch charType {
-            case 1:  // digit: random Int between 48 and 57
-                decValue = Int(arc4random_uniform(10)) + 48
-            case 2:  // uppercase letter
-                decValue = Int(arc4random_uniform(26)) + 65
-            case 3:  // lowercase letter
-                decValue = Int(arc4random_uniform(26)) + 97
-            default:  // space character
-                if whitespace {
-                    decValue = 32
-                } else {
-                    // upper case letter
-                    decValue = Int(arc4random_uniform(26)) + 65
+        enum CharType: Int {
+            case lowerCase, upperCase, digit, space
+
+            func randomCharacter() -> UInt8 {
+                switch self {
+                case .lowerCase:
+                    return UInt8(arc4random_uniform(26)) + 97
+                case .upperCase:
+                    return UInt8(arc4random_uniform(26)) + 65
+                case .digit:
+                    return UInt8(arc4random_uniform(10)) + 48
+                case .space:
+                    return 32
                 }
             }
-            // get ASCII character from random decimal value
-          let char = String(describing: UnicodeScalar(decValue))
-            text = text + char
-            // remove double spaces if existing
-            text = text.replacingOccurrences(of: "  ", with: " ")
+
+            static func random(_ justLowerCase: Bool, _ allowWhitespace: Bool) -> CharType {
+                if justLowerCase {
+                    return .lowerCase
+                } else {
+                    return CharType(rawValue: Int(arc4random_uniform(allowWhitespace ? 4 : 3)))!
+                }
+            }
         }
-        return text
+
+        var chars = [UInt8]()
+        while chars.count < length {
+            let char = CharType.random(justLowerCase, whitespace).randomCharacter()
+            if char == 32 && (chars.last ?? 0) == char {
+                // do not allow two consecutive spaces
+                continue
+            }
+            chars.append(char)
+        }
+        return String(bytes: chars, encoding: .ascii)!
     }
 
 
@@ -1154,10 +1159,6 @@ fileprivate func toUInt32Array(slice: ArraySlice<UInt8>) -> Array<UInt32> {
     return result
 }
 
-/*
-
- // TEMP DEACTIVATED UNTIL THE FUNCTION WAS FIXED BY MARCIN FOR XCODE 8 BETA 6
-
 /// Array of bytes, little-endian representation. Don't use if not necessary.
 /// I found this method slow
 fileprivate func arrayOfBytes<T>(value: T, length: Int? = nil) -> [UInt8] {
@@ -1166,38 +1167,15 @@ fileprivate func arrayOfBytes<T>(value: T, length: Int? = nil) -> [UInt8] {
     let valuePointer = UnsafeMutablePointer<T>.allocate(capacity: 1)
     valuePointer.pointee = value
 
-  let bytesPointer = UnsafeMutablePointer<UInt8>(valuePointer)
     var bytes = [UInt8](repeating: 0, count: totalBytes)
-    for j in 0..<min(MemoryLayout<T>.size, totalBytes) {
-        bytes[totalBytes - 1 - j] = (bytesPointer + j).pointee
+    valuePointer.withMemoryRebound(to: UInt8.self, capacity: totalBytes) { bytesPointer in
+        for j in 0..<min(MemoryLayout<T>.size, totalBytes) {
+            bytes[totalBytes - 1 - j] = (bytesPointer + j).pointee
+        }
     }
-
     valuePointer.deinitialize()
     valuePointer.deallocate(capacity: 1)
 
-    return bytes
-}*/
-
-// WARNING: FUNCTION IS JUST HERE TO MAKE COMPILATION WITH XCODE 8 BETA 6 WORK
-// BUT IT BREAKS THE ENCRYPTION AND UNIT-TESTS!!!
-fileprivate func arrayOfBytes<T>(value: T, length: Int? = nil) -> [UInt8] {
-    let totalBytes = length ?? MemoryLayout<T>.size
-
-    let valuePointer = UnsafeMutablePointer<T>.allocate(capacity: 1)
-    valuePointer.pointee = value
-
-    //  let bytesPointer = UnsafeMutablePointer<UInt8>(valuePointer)
-    //  var bytes = [UInt8](repeating: 0, count: totalBytes)
-    //  for j in 0..<min(MemoryLayout<T>.size, totalBytes) {
-    //    bytes[totalBytes - 1 - j] = (bytesPointer + j).pointee
-    //  }
-    //  valuePointer.deinitialize()
-    //  valuePointer.deallocate(capacity: 1)
-    //  next line compiles but is wothless
-    let bytes = valuePointer.withMemoryRebound(to: [UInt8].self,
-                                               capacity: totalBytes) { p in
-                                                return p.pointee
-    }
     return bytes
 }
 
