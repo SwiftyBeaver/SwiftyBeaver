@@ -55,7 +55,6 @@ final class AES256CBC {
         return nil
     }
 
-
     /// returns encrypted string, IV must be 16 chars long
     private class func aesEncrypt(_ str: String, key: String, iv: String) throws -> String {
         let keyData = key.data(using: String.Encoding.utf8)!
@@ -128,9 +127,10 @@ final class AES256CBC {
         }
         return String(bytes: chars, encoding: .ascii)!
     }
-
-
 }
+
+
+
 
 
 // ========================================================================================
