@@ -339,6 +339,15 @@
 						CreatedOnToolsVersion = 7.1.1;
 						LastSwiftMigration = 0800;
 					};
+					ACE597751C1882DF0031451F = {
+						LastSwiftMigration = 0800;
+					};
+					ACE597861C18830D0031451F = {
+						LastSwiftMigration = 0800;
+					};
+					ACE597971C18832E0031451F = {
+						LastSwiftMigration = 0800;
+					};
 				};
 			};
 			buildConfigurationList = 9EDCE3DE1C09D211002FA4A7 /* Build configuration list for PBXProject "SwiftyBeaver" */;
@@ -683,6 +692,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "watchsimulator watchos";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 				VALID_ARCHS = "$(ARCHS_STANDARD)";
 			};
 			name = Debug;
@@ -705,6 +715,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "watchsimulator watchos";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 2.3;
 				VALID_ARCHS = "$(ARCHS_STANDARD)";
 			};
 			name = Release;
@@ -727,6 +738,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "appletvsimulator appletvos";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 				VALID_ARCHS = "$(ARCHS_STANDARD)";
 			};
 			name = Debug;
@@ -749,6 +761,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "appletvsimulator appletvos";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 2.3;
 				VALID_ARCHS = "$(ARCHS_STANDARD)";
 			};
 			name = Release;
@@ -772,6 +785,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Debug;
@@ -795,6 +809,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 2.3;
 				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Release;
