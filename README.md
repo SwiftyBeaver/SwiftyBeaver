@@ -1,4 +1,4 @@
-<p align="center"><img src="https://cloud.githubusercontent.com/assets/564725/13137893/1b8eced2-d624-11e5-9264-3416ff821657.png" width="280" alt="SwiftyBeaver"><br/><b>Colorful</b>, extensible, <b>lightweight</b> logging for Swift 2 & 3.<br/>Great for <b>development & release</b> with support for Console, File & cloud platforms.<br/>NEW: Log <b>during release</b> to the conveniently built-in SwiftyBeaver Platform and Mac App!<br/><br/>
+<p align="center"><img src="https://cloud.githubusercontent.com/assets/564725/13137893/1b8eced2-d624-11e5-9264-3416ff821657.png" width="280" alt="SwiftyBeaver"><br/><b>Colorful</b>, extensible, <b>lightweight</b> logging for Swift 3.<br/>Great for <b>development & release</b> with support for Console, File & cloud platforms.<br/>NEW: Log <b>during release</b> to the conveniently built-in SwiftyBeaver Platform and Mac App!<br/><br/>
 
 <a href="http://docs.swiftybeaver.com">Docs</a> |
 <a href="https://swiftybeaver.com">Website</a> |
@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-[![Language Swift 2 & 3](https://img.shields.io/badge/Language-Swift%202%20&%203-orange.svg)](https://developer.apple.com/swift) [![Travis Build Status](https://travis-ci.org/SwiftyBeaver/SwiftyBeaver.svg?branch=swift3)](https://travis-ci.org/SwiftyBeaver/SwiftyBeaver) [![Slack Status](https://slack.swiftybeaver.com/badge.svg)](https://slack.swiftybeaver.com) 
+[![Language Swift 3](https://img.shields.io/badge/Language-Swift%202%20&%203-orange.svg)](https://developer.apple.com/swift) [![Travis Build Status](https://travis-ci.org/SwiftyBeaver/SwiftyBeaver.svg?branch=swift3)](https://travis-ci.org/SwiftyBeaver/SwiftyBeaver) [![Slack Status](https://slack.swiftybeaver.com/badge.svg)](https://slack.swiftybeaver.com) 
 <br/>
 <p>
 ----
@@ -53,11 +53,27 @@ Conveniently access your logs during development & release with our [free Mac Ap
 
 ## Installation
 
-You can use [Carthage](https://github.com/Carthage/Carthage) to install SwiftyBeaver by adding that to your Cartfile:
+You can **use [Carthage](https://github.com/Carthage/Carthage) with SwiftyBeaver’s swift3 branch** in the following way (valid until the official release of Xcode 8):
 
-``` 
-github "SwiftyBeaver/SwiftyBeaver"
+At first, you need to switch your xcodebuild command to use the new Xcode 8 beta app instead of the default Xcode 7.3.1. Just replace the path with the one to your downloaded Xcode-beta.app. After that your xcodebuild should output Xcode 8.0:
+
 ```
+sudo xcode-select -s /Applications/Xcode-beta.app/Contents/Developer
+xcodebuild -version
+```
+
+Add the following line to the Cartfile of your Swift 3 compatible project to use the latest commit from SwiftyBeaver's swift3 branch:
+
+```
+github "SwiftyBeaver/SwiftyBeaver" "swift3"
+```
+
+You can revert your xcodebuild to use Xcode 7 again with:
+
+```
+sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+```
+
 
 #### via CocoaPods
 
