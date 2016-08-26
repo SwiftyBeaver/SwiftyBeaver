@@ -53,6 +53,8 @@ Conveniently access your logs during development & release with our [free Mac Ap
 
 ## Installation
 
+#### via Carthage
+
 You can **use [Carthage](https://github.com/Carthage/Carthage) with SwiftyBeaver’s swift3 branch** in the following way (valid until the official release of Xcode 8):
 
 At first, you need to switch your xcodebuild command to use the new Xcode 8 beta app instead of the default Xcode 7.3.1. Just replace the path with the one to your downloaded Xcode-beta.app. After that your xcodebuild should output Xcode 8.0:
