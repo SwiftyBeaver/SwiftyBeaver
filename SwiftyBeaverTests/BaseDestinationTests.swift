@@ -335,6 +335,7 @@ class BaseDestinationTests: XCTestCase {
         destination.addFilter(Filters.Path.contains("/ViewController", minLevel: .Debug))
         destination.addFilter(Filters.Function.contains("Func", minLevel: .Debug))
         destination.addFilter(Filters.Message.contains("World", minLevel: .Debug))
+        destination.addFilter(Filters.Message.excludes("bar", minLevel: .Debug))
         //destination.debugPrint = true
 
         // covered by filters
