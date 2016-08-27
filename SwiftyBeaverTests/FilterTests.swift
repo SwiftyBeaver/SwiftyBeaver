@@ -37,6 +37,11 @@ class FilterTests: XCTestCase {
         let filter = Filters.Path.contains("/some/path", required: true)
         XCTAssertTrue(filter.isRequired())
     }
+    
+    func test_path_excludesAndIsRequired_isRequiredFilter() {
+        let filter = Filters.Path.excludes("/some/path", required: true)
+        XCTAssertTrue(filter.isRequired())
+    }
 
     func test_path_endsWithAndIsRequired_isRequiredFilter() {
         let filter = Filters.Path.endsWith("/some/path", required: true)
@@ -55,6 +60,11 @@ class FilterTests: XCTestCase {
 
     func test_path_containsAndIsNotRequired_isNotRequiredFilter() {
         let filter = Filters.Path.contains("/some/path", required: false)
+        XCTAssertFalse(filter.isRequired())
+    }
+    
+    func test_path_excludesAndIsNotRequired_isNotRequiredFilter() {
+        let filter = Filters.Path.excludes("/some/path", required: false)
         XCTAssertFalse(filter.isRequired())
     }
 
@@ -80,6 +90,11 @@ class FilterTests: XCTestCase {
         let filter = Filters.Path.contains("/some/path", caseSensitive: true)
         XCTAssertTrue(isCaseSensitive(filter.getTarget()))
     }
+    
+    func test_path_excludesAndIsCaseSensitive_isCaseSensitive() {
+        let filter = Filters.Path.excludes("/some/path", caseSensitive: true)
+        XCTAssertTrue(isCaseSensitive(filter.getTarget()))
+    }
 
     func test_path_endsWithAndIsCaseSensitive_isCaseSensitive() {
         let filter = Filters.Path.endsWith("/some/path", caseSensitive: true)
@@ -98,6 +113,11 @@ class FilterTests: XCTestCase {
 
     func test_path_containsAndIsNotCaseSensitive_isNotCaseSensitive() {
         let filter = Filters.Path.contains("/some/path", caseSensitive: false)
+        XCTAssertFalse(isCaseSensitive(filter.getTarget()))
+    }
+    
+    func test_path_excludesAndIsNotCaseSensitive_isNotCaseSensitive() {
+        let filter = Filters.Path.excludes("/some/path", caseSensitive: false)
         XCTAssertFalse(isCaseSensitive(filter.getTarget()))
     }
 
@@ -172,6 +192,36 @@ class FilterTests: XCTestCase {
     func test_pathContains_hasMultipleValuesAndIsCaseSensitiveAndDoesNotMatch_answersFalse() {
         let filter = Filters.Path.contains("/Pathway", "/Path", caseSensitive: true)
         XCTAssertFalse(filter.apply("/first/path/to/anywhere"))
+    }
+    
+    func test_pathExcludes_hasOneValueAndIsCaseSensitiveAndMatches_answersTrue() {
+        let filter = Filters.Path.excludes("/path", caseSensitive: true)
+        XCTAssertTrue(filter.apply("/first/epath/to/anywhere"))
+    }
+    
+    func test_pathExcludes_hasOneValueAndIsNotCaseSensitiveAndMatches_answersTrue() {
+        let filter = Filters.Path.excludes("/Path", caseSensitive: false)
+        XCTAssertTrue(filter.apply("/first/epath/to/anywhere"))
+    }
+    
+    func test_pathExcludes_hasOneValueAndIsCaseSensitiveAndDoesNotMatch_answersFalse() {
+        let filter = Filters.Path.excludes("/Path", caseSensitive: true)
+        XCTAssertTrue(filter.apply("/first/path/to/anywhere"))
+    }
+    
+    func test_pathExcludes_hasMultipleValuesAndIsCaseSensitiveAndMatches_answersTrue() {
+        let filter = Filters.Path.excludes("/pathway", "/path", caseSensitive: true)
+        XCTAssertTrue(filter.apply("/first/path/to/anywhere"))
+    }
+    
+    func test_pathExcludes_hasMultipleValuesAndIsNotCaseSensitiveAndMatches_answersTrue() {
+        let filter = Filters.Path.excludes("/Pathway", "/Path", caseSensitive: false)
+        XCTAssertTrue(filter.apply("/first/path/to/anywhere"))
+    }
+    
+    func test_pathExcludes_hasMultipleValuesAndIsCaseSensitiveAndDoesNotMatch_answersFalse() {
+        let filter = Filters.Path.excludes("/Pathway", "/Path", caseSensitive: true)
+        XCTAssertTrue(filter.apply("/first/path/to/anywhere"))
     }
 
     func test_pathEndsWith_hasOneValueAndIsCaseSensitiveAndMatches_answersTrue() {
@@ -262,6 +312,11 @@ class FilterTests: XCTestCase {
         let filter = Filters.Function.contains("myFunc", required: true)
         XCTAssertTrue(filter.isRequired())
     }
+    
+    func test_function_excludesAndIsRequired_isRequiredFilter() {
+        let filter = Filters.Function.excludes("myFunc", required: true)
+        XCTAssertTrue(filter.isRequired())
+    }
 
     func test_function_endsWithAndIsRequired_isRequiredFilter() {
         let filter = Filters.Function.endsWith("myFunc", required: true)
@@ -280,6 +335,11 @@ class FilterTests: XCTestCase {
 
     func test_function_containsAndIsNotRequired_isNotRequiredFilter() {
         let filter = Filters.Function.contains("myFunc", required: false)
+        XCTAssertFalse(filter.isRequired())
+    }
+    
+    func test_function_excludesAndIsNotRequired_isNotRequiredFilter() {
+        let filter = Filters.Function.excludes("myFunc", required: false)
         XCTAssertFalse(filter.isRequired())
     }
 
@@ -305,6 +365,11 @@ class FilterTests: XCTestCase {
         let filter = Filters.Function.contains("myFunc", caseSensitive: true)
         XCTAssertTrue(isCaseSensitive(filter.getTarget()))
     }
+    
+    func test_function_excludesAndIsCaseSensitive_isCaseSensitive() {
+        let filter = Filters.Function.excludes("myFunc", caseSensitive: true)
+        XCTAssertTrue(isCaseSensitive(filter.getTarget()))
+    }
 
     func test_function_endsWithAndIsCaseSensitive_isCaseSensitive() {
         let filter = Filters.Function.endsWith("myFunc", caseSensitive: true)
@@ -318,6 +383,11 @@ class FilterTests: XCTestCase {
 
     func test_function_containsAndIsNotCaseSensitive_isNotCaseSensitive() {
         let filter = Filters.Function.contains("myFunc", caseSensitive: false)
+        XCTAssertFalse(isCaseSensitive(filter.getTarget()))
+    }
+    
+    func test_function_excludesAndIsNotCaseSensitive_isNotCaseSensitive() {
+        let filter = Filters.Function.excludes("myFunc", caseSensitive: false)
         XCTAssertFalse(isCaseSensitive(filter.getTarget()))
     }
 
@@ -387,6 +457,36 @@ class FilterTests: XCTestCase {
     func test_functionContains_hasMultipleValuesAndIsCaseSensitiveAndDoesNotMatch_answersFalse() {
         let filter = Filters.Function.contains("DoSomething", "Func", caseSensitive: true)
         XCTAssertFalse(filter.apply("myfunc"))
+    }
+    
+    func test_functionExcludes_hasOneValueAndIsCaseSensitiveAndMatches_answersTrue() {
+        let filter = Filters.Function.excludes("Func", caseSensitive: true)
+        XCTAssertFalse(filter.apply("myFunc"))
+    }
+    
+    func test_functionExcludes_hasOneValueAndIsNotCaseSensitiveAndMatches_answersTrue() {
+        let filter = Filters.Function.excludes("Func", caseSensitive: false)
+        XCTAssertFalse(filter.apply("myfunc"))
+    }
+    
+    func test_functionExcludes_hasOneValueAndIsCaseSensitiveAndDoesNotMatch_answersFalse() {
+        let filter = Filters.Function.excludes("Func", caseSensitive: true)
+        XCTAssertTrue(filter.apply("myfunc"))
+    }
+    
+    func test_functionExcludes_hasMultipleValuesAndIsCaseSensitiveAndMatches_answersTrue() {
+        let filter = Filters.Function.excludes("doSomething", "Func", caseSensitive: true)
+        XCTAssertTrue(filter.apply("myFunc"))
+    }
+    
+    func test_functionExcludes_hasMultipleValuesAndIsNotCaseSensitiveAndMatches_answersTrue() {
+        let filter = Filters.Function.excludes("DoSomething", "func", caseSensitive: false)
+        XCTAssertTrue(filter.apply("myFunc"))
+    }
+    
+    func test_functionExcludes_hasMultipleValuesAndIsCaseSensitiveAndDoesNotMatch_answersFalse() {
+        let filter = Filters.Function.excludes("DoSomething", "Func", caseSensitive: true)
+        XCTAssertTrue(filter.apply("myfunc"))
     }
 
     func test_functionEndsWith_hasOneValueAndIsCaseSensitiveAndMatches_answersTrue() {
@@ -477,6 +577,11 @@ class FilterTests: XCTestCase {
         let filter = Filters.Message.contains("there", required: true)
         XCTAssertTrue(filter.isRequired())
     }
+    
+    func test_message_excludesAndIsRequired_isRequiredFilter() {
+        let filter = Filters.Message.excludes("there", required: true)
+        XCTAssertTrue(filter.isRequired())
+    }
 
     func test_message_endsWithAndIsRequired_isRequiredFilter() {
         let filter = Filters.Message.endsWith("SwifyBeaver!", required: true)
@@ -495,6 +600,11 @@ class FilterTests: XCTestCase {
 
     func test_message_containsAndIsNotRequired_isNotRequiredFilter() {
         let filter = Filters.Message.contains("there", required: false)
+        XCTAssertFalse(filter.isRequired())
+    }
+    
+    func test_message_excludesAndIsNotRequired_isNotRequiredFilter() {
+        let filter = Filters.Message.excludes("there", required: false)
         XCTAssertFalse(filter.isRequired())
     }
 
@@ -520,6 +630,11 @@ class FilterTests: XCTestCase {
         let filter = Filters.Message.contains("there", caseSensitive: true)
         XCTAssertTrue(isCaseSensitive(filter.getTarget()))
     }
+    
+    func test_message_excludesAndIsCaseSensitive_isCaseSensitive() {
+        let filter = Filters.Message.excludes("there", caseSensitive: true)
+        XCTAssertTrue(isCaseSensitive(filter.getTarget()))
+    }
 
     func test_message_endsWithAndIsCaseSensitive_isCaseSensitive() {
         let filter = Filters.Message.endsWith("SwiftyBeaver!", caseSensitive: true)
@@ -538,6 +653,11 @@ class FilterTests: XCTestCase {
 
     func test_message_containsAndIsNotCaseSensitive_isNotCaseSensitive() {
         let filter = Filters.Message.contains("there", caseSensitive: false)
+        XCTAssertFalse(isCaseSensitive(filter.getTarget()))
+    }
+    
+    func test_message_excludesAndIsNotCaseSensitive_isNotCaseSensitive() {
+        let filter = Filters.Message.excludes("there", caseSensitive: false)
         XCTAssertFalse(isCaseSensitive(filter.getTarget()))
     }
 
@@ -612,6 +732,36 @@ class FilterTests: XCTestCase {
     func test_messageContains_hasMultipleValuesAndIsCaseSensitiveAndDoesNotMatch_answersFalse() {
         let filter = Filters.Message.contains("Their", "There", caseSensitive: true)
         XCTAssertFalse(filter.apply("Hello there, SwiftyBeaver!"))
+    }
+    
+    func test_messageExcludes_hasOneValueAndIsCaseSensitiveAndMatches_answersTrue() {
+        let filter = Filters.Message.excludes("there", caseSensitive: true)
+        XCTAssertFalse(filter.apply("Hello there, SwiftyBeaver!"))
+    }
+    
+    func test_messageExcludes_hasOneValueAndIsNotCaseSensitiveAndMatches_answersTrue() {
+        let filter = Filters.Message.excludes("There", caseSensitive: false)
+        XCTAssertFalse(filter.apply("Hello there, SwiftyBeaver!"))
+    }
+    
+    func test_messageExcludes_hasOneValueAndIsCaseSensitiveAndDoesNotMatch_answersFalse() {
+        let filter = Filters.Message.excludes("There", caseSensitive: true)
+        XCTAssertTrue(filter.apply("Hello there, SwiftyBeaver!"))
+    }
+    
+    func test_messageExcludes_hasMultipleValuesAndIsCaseSensitiveAndMatches_answersTrue() {
+        let filter = Filters.Message.excludes("their", "there", caseSensitive: true)
+        XCTAssertTrue(filter.apply("Hello there, SwiftyBeaver!"))
+    }
+    
+    func test_messageExcludes_hasMultipleValuesAndIsNotCaseSensitiveAndMatches_answersTrue() {
+        let filter = Filters.Message.excludes("Their", "There", caseSensitive: false)
+        XCTAssertTrue(filter.apply("Hello there, SwiftyBeaver!"))
+    }
+    
+    func test_messageExcludes_hasMultipleValuesAndIsCaseSensitiveAndDoesNotMatch_answersFalse() {
+        let filter = Filters.Message.excludes("Their", "There", caseSensitive: true)
+        XCTAssertTrue(filter.apply("Hello there, SwiftyBeaver!"))
     }
 
     func test_messageEndsWith_hasOneValueAndIsCaseSensitiveAndMatches_answersTrue() {
@@ -696,6 +846,9 @@ class FilterTests: XCTestCase {
 
         switch compareType {
         case let .Contains(_, caseSensitive):
+            isCaseSensitive = caseSensitive
+            
+        case let .Excludes(_, caseSensitive):
             isCaseSensitive = caseSensitive
 
         case let .StartsWith(_, caseSensitive):
