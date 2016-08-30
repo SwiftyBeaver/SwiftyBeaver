@@ -147,7 +147,7 @@ class BaseDestinationTests: XCTestCase {
 
     func test_shouldLevelBeLogged_hasMinLevelAndMatchingLevelAndEqualPath_True() {
         let destination = BaseDestination()
-        destination.minLevel = SwiftyBeaver.Level.Info
+        destination.minLevel = .Debug
         let filter = Filters.Path.equals("/world/beaver.swift", caseSensitive: true, required: true, minLevel: .Debug)
         destination.addFilter(filter)
         XCTAssertTrue(destination.shouldLevelBeLogged(.Debug,
@@ -290,7 +290,7 @@ class BaseDestinationTests: XCTestCase {
 
     func test_shouldLevelBeLogged_hasMatchingNonRequiredFilter_True() {
         let destination = BaseDestination()
-        destination.minLevel = .Info
+        destination.minLevel = .Debug
         destination.addFilter(Filters.Path.contains("/ViewController"))
         XCTAssertTrue(destination.shouldLevelBeLogged(.Debug,
             path: "/world/ViewController.swift",
@@ -330,7 +330,7 @@ class BaseDestinationTests: XCTestCase {
     func test_shouldLevelBeLogged_multipleNonRequiredFiltersAndGlobal_True() {
         // everything is logged on default
         let destination = BaseDestination()
-        destination.minLevel = .Info
+        destination.minLevel = .Debug
 
         destination.addFilter(Filters.Path.contains("/ViewController", minLevel: .Debug))
         destination.addFilter(Filters.Function.contains("Func", minLevel: .Debug))
@@ -343,14 +343,19 @@ class BaseDestinationTests: XCTestCase {
             path: "/world/ViewController.swift",
             function: "myFunc",
             message: "Hello World"))
+        
+        XCTAssertFalse(destination.shouldLevelBeLogged(.Verbose,
+            path: "/world/ViewController.swift",
+            function: "myFunc",
+            message: "Hello World"))
 
-        // not in filter but matching global minLevel
-        XCTAssertTrue(destination.shouldLevelBeLogged(.Info,
+        // Test minLevel < log level, to make sure excludes file isn't applied
+        XCTAssertFalse(destination.shouldLevelBeLogged(.Verbose,
             path: "hello.swift",
             function: "foo",
-            message: "bar"))
+            message: "rab"))
 
-        // not in filter and below global minLevel
+        // test that excludes keeps the log from showing
         XCTAssertFalse(destination.shouldLevelBeLogged(.Debug,
             path: "hello.swift",
             function: "foo",

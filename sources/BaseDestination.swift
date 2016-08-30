@@ -235,11 +235,11 @@ public class BaseDestination: Hashable, Equatable {
                 return false
             }
         } else {
-            if level.rawValue >= minLevel.rawValue {
+            if level.rawValue < minLevel.rawValue {
                 if debugPrint {
                     print("filters is not empty and level >= minLevel")
                 }
-                return true
+                return false
             }
         }
 
