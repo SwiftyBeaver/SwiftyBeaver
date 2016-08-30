@@ -349,13 +349,13 @@ class BaseDestinationTests: XCTestCase {
             function: "myFunc",
             message: "Hello World"))
 
-        // not in filter but matching global minLevel
-        XCTAssertFalse(destination.shouldLevelBeLogged(.Info,
+        // Test minLevel < log level, to make sure excludes file isn't applied
+        XCTAssertFalse(destination.shouldLevelBeLogged(.Verbose,
             path: "hello.swift",
             function: "foo",
-            message: "bar"))
+            message: "rab"))
 
-        // not in filter and below global minLevel
+        // test that excludes keeps the log from showing
         XCTAssertFalse(destination.shouldLevelBeLogged(.Debug,
             path: "hello.swift",
             function: "foo",
