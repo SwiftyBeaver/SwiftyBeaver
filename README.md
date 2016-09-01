@@ -85,9 +85,9 @@ To use [CocoaPods](https://cocoapods.org) just add this to your Podfile:
 pod 'SwiftyBeaver'
 ```
 
-#### via Swift Package Manager (Swift 2.2)
+#### via Swift Package Manager
 
-To use SwiftyBeaver as a [Swift Package Manager](https://swift.org/package-manager/) package just add the following in your Package.swift file.
+To use SwiftyBeaver as a [Swift Package Manager](https://swift.org/package-manager/) package just put the following in your Package.swift file. It uses the 0.0.0 tag which points to the latest Swift 3 version:
 
 ``` Swift
 import PackageDescription
@@ -95,7 +95,7 @@ import PackageDescription
 let package = Package(
 name: "HelloWorld",
 dependencies: [
-.Package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git", majorVersion: 0)
+.Package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git", majorVersion: 0, minor: 0)
 ]
 )
 ```
