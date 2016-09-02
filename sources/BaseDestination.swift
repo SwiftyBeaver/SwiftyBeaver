@@ -38,29 +38,29 @@ struct MinLevelFilter {
 }
 
 /// destination which all others inherit from. do not directly use
-public class BaseDestination: Hashable, Equatable {
+open class BaseDestination: Hashable, Equatable {
 
     /// if true additionally logs file, function & line
-    public var detailOutput = true
+    open var detailOutput = true
     /// adds colored log levels where possible
-    public var colored = true
+    open var colored = true
     /// colors entire log
-    public var coloredLines = false
+    open var coloredLines = false
     /// runs in own serial background thread for better performance
-    public var asynchronously = true
+    open var asynchronously = true
     /// do not log any message which has a lower level than this one
-    public var minLevel = SwiftyBeaver.Level.Verbose {
+    open var minLevel = SwiftyBeaver.Level.Verbose {
         didSet {
             // Craft a new level filter and add it
             self.addFilter(filter: Filters.Level.atLeast(level: minLevel))
         }
     }
     /// standard log format; set to "" to not log date at all
-    public var dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
+    open var dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
     /// set custom log level words for each level
-    public var levelString = LevelString()
+    open var levelString = LevelString()
     /// set custom log level colors for each level
-    public var levelColor = LevelColor()
+    open var levelColor = LevelColor()
 
     public struct LevelString {
         public var Verbose = "VERBOSE"
@@ -88,7 +88,7 @@ public class BaseDestination: Hashable, Equatable {
 
     // each destination class must have an own hashValue Int
     lazy public var hashValue: Int = self.defaultHashValue
-    public var defaultHashValue: Int {return 0}
+    open var defaultHashValue: Int {return 0}
 
     // each destination instance must have an own serial queue to ensure serial output
     // GCD gives it a prioritization between User Initiated and Utility
@@ -134,7 +134,7 @@ public class BaseDestination: Hashable, Equatable {
     /// send / store the formatted log message to the destination
     /// returns the formatted log message for processing by inheriting method
     /// and for unit tests (nil if error)
-    public func send(_ level: SwiftyBeaver.Level, msg: String, thread: String,
+    open func send(_ level: SwiftyBeaver.Level, msg: String, thread: String,
         path: String, function: String, line: Int) -> String? {
         var dateStr = ""
         var str = ""
