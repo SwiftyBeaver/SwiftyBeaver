@@ -335,7 +335,6 @@ class BaseDestinationTests: XCTestCase {
         destination.addFilter(Filters.Path.contains("/ViewController", minLevel: .Debug))
         destination.addFilter(Filters.Function.contains("Func", minLevel: .Debug))
         destination.addFilter(Filters.Message.contains("World", minLevel: .Debug))
-        destination.addFilter(Filters.Message.excludes("bar", minLevel: .Debug))
         //destination.debugPrint = true
 
         // covered by filters
@@ -344,12 +343,6 @@ class BaseDestinationTests: XCTestCase {
             function: "myFunc",
             message: "Hello World"))
 
-        // not in filter but matching global minLevel
-        XCTAssertTrue(destination.shouldLevelBeLogged(.Info,
-            path: "hello.swift",
-            function: "foo",
-            message: "bar"))
-
         // not in filter and below global minLevel
         XCTAssertFalse(destination.shouldLevelBeLogged(.Debug,
             path: "hello.swift",
@@ -357,4 +350,40 @@ class BaseDestinationTests: XCTestCase {
             message: "bar"))
     }
 
+    
+    
+    func test_shouldLevelBeLogged_excludeFilter_True() {
+        // everything is logged on default
+        let destination = BaseDestination()
+        destination.minLevel = .Error
+        
+        destination.addFilter(Filters.Path.contains("/ViewController", minLevel: .Debug))
+        destination.addFilter(Filters.Function.excludes("myFunc", minLevel: .Debug))
+        //destination.debugPrint = true
+        
+        // excluded
+        XCTAssertFalse(destination.shouldLevelBeLogged(.Debug,
+            path: "/world/ViewController.swift",
+            function: "myFunc",
+            message: "Hello World"))
+        
+        // excluded
+        XCTAssertFalse(destination.shouldLevelBeLogged(.Error,
+            path: "/world/ViewController.swift",
+            function: "myFunc",
+            message: "Hello World"))
+        
+        // not excluded, but below minLevel
+        XCTAssertFalse(destination.shouldLevelBeLogged(.Debug,
+            path: "/world/OtherViewController.swift",
+            function: "otherFunc",
+            message: "Hello World"))
+        
+        // not excluded, but above minLevel
+        XCTAssertTrue(destination.shouldLevelBeLogged(.Error,
+            path: "/world/OtherViewController.swift",
+            function: "otherFunc",
+            message: "Hello World"))
+    }
+    
 }

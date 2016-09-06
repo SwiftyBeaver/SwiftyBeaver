@@ -22,6 +22,7 @@ public protocol FilterType : class {
     func apply(value: AnyObject) -> Bool
     func getTarget() -> Filter.TargetType
     func isRequired() -> Bool
+    func isExclude() -> Bool
     func reachedMinLevel(level: SwiftyBeaver.Level) -> Bool
 }
 
@@ -65,7 +66,11 @@ public class Filter {
     public func isRequired() -> Bool {
         return self.required
     }
-
+    
+    public func isExclude() -> Bool {
+        return false
+    }
+    
     /// returns true of set minLevel is >= as given level
     public func reachedMinLevel(level: SwiftyBeaver.Level) -> Bool {
         //print("checking if given level \(level) >= \(minLevel)")
@@ -77,15 +82,12 @@ public class Filter {
 /// starts with, contains or ends with a specific string. CompareFilters can be
 /// case sensitive.
 public class CompareFilter: Filter, FilterType {
+    
+    private var filterComparisonType: Filter.ComparisonType?
+    
     override public init(target: Filter.TargetType, required: Bool, minLevel: SwiftyBeaver.Level) {
         super.init(target: target, required: required, minLevel: minLevel)
-    }
-
-    public func apply(value: AnyObject) -> Bool {
-        guard let value = value as? String else {
-            return false
-        }
-
+        
         let comparisonType: Filter.ComparisonType?
         switch self.getTarget() {
         case let .Function(comparison):
@@ -96,15 +98,22 @@ public class CompareFilter: Filter, FilterType {
 
         case let .Message(comparison):
             comparisonType = comparison
-
-        /*default:
-            comparisonType = nil*/
+            
+            /*default:
+             comparisonType = nil*/
         }
-
-        guard let filterComparisonType = comparisonType else {
+        self.filterComparisonType = comparisonType
+    }
+    
+    public func apply(value: AnyObject) -> Bool {
+        guard let value = value as? String else {
             return false
         }
-
+        
+        guard let filterComparisonType = self.filterComparisonType else {
+            return false
+        }
+        
         let matches: Bool
         switch filterComparisonType {
             case let .Contains(strings, caseSensitive):
@@ -144,6 +153,17 @@ public class CompareFilter: Filter, FilterType {
         }
 
         return matches
+    }
+    
+    override public func isExclude() -> Bool {
+        guard let filterComparisonType = self.filterComparisonType else { return false }
+        
+        switch filterComparisonType {
+        case .Excludes(_, _):
+            return true
+        default:
+            return false
+        }
     }
 }
 
