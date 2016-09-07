@@ -236,20 +236,20 @@ public class BaseDestination: Hashable, Equatable {
             }
         }
         
-        let (matchedExclude, allExclude) = passedExcludeFilters(level, path: path,
+        let (matchedExclude, allExclude) = passedExcludedFilters(level, path: path,
                                                                 function: function, message: message)
-        let isExcluded = allExclude > 0 && matchedExclude != allExclude
+        if allExclude > 0 && matchedExclude != allExclude {
+            if debugPrint {
+                print("filters is not empty and message was excluded")
+            }
+            return false
+        }
         
         if level.rawValue >= minLevel.rawValue {
             if debugPrint {
                 print("filters is not empty and level >= minLevel")
             }
-            return !isExcluded
-        } else if isExcluded {
-            if debugPrint {
-                print("filters is not empty and message was excluded")
-            }
-            return false
+            return true
         }
 
         let (matchedRequired, allRequired) = passedRequiredFilters(level, path: path,
@@ -286,7 +286,7 @@ public class BaseDestination: Hashable, Equatable {
                                function: String, message: String?) -> (Int, Int) {
         let requiredFilters = self.filters.filter {
             filter in
-            return filter.isRequired() && !filter.isExclude()
+            return filter.isRequired() && !filter.isExcluded()
         }
 
         let matchingFilters = applyFilters(requiredFilters, level: level, path: path,
@@ -303,7 +303,7 @@ public class BaseDestination: Hashable, Equatable {
                                            path: String, function: String, message: String?) -> (Int, Int) {
         let nonRequiredFilters = self.filters.filter {
             filter in
-            return !filter.isRequired() && !filter.isExclude()
+            return !filter.isRequired() && !filter.isExcluded()
         }
 
         let matchingFilters = applyFilters(nonRequiredFilters, level: level,
@@ -315,11 +315,11 @@ public class BaseDestination: Hashable, Equatable {
     }
     
     /// returns a tuple of matched and all exclude filters
-    func passedExcludeFilters(level: SwiftyBeaver.Level,
+    func passedExcludedFilters(level: SwiftyBeaver.Level,
                               path: String, function: String, message: String?) -> (Int, Int) {
         let excludeFilters = self.filters.filter {
             filter in
-            return filter.isExclude()
+            return filter.isExcluded()
         }
         
         let matchingFilters = applyFilters(excludeFilters, level: level,

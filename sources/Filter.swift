@@ -22,7 +22,7 @@ public protocol FilterType : class {
     func apply(value: AnyObject) -> Bool
     func getTarget() -> Filter.TargetType
     func isRequired() -> Bool
-    func isExclude() -> Bool
+    func isExcluded() -> Bool
     func reachedMinLevel(level: SwiftyBeaver.Level) -> Bool
 }
 
@@ -67,7 +67,7 @@ public class Filter {
         return self.required
     }
     
-    public func isExclude() -> Bool {
+    public func isExcluded() -> Bool {
         return false
     }
     
