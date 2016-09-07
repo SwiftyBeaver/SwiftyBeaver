@@ -155,7 +155,7 @@ public class CompareFilter: Filter, FilterType {
         return matches
     }
     
-    override public func isExclude() -> Bool {
+    override public func isExcluded() -> Bool {
         guard let filterComparisonType = self.filterComparisonType else { return false }
         
         switch filterComparisonType {
