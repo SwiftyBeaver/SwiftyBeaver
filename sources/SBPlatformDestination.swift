@@ -530,21 +530,6 @@ public class SBPlatformDestination: BaseDestination {
         return 0
     }
 
-    // turns dict into JSON-encoded string
-    func jsonStringFromDict(dict: [String: AnyObject]) -> String? {
-        var jsonString: String?
-        // try to create JSON string
-        do {
-            let jsonData = try NSJSONSerialization.dataWithJSONObject(dict, options: [])
-            if let str = NSString(data: jsonData, encoding: NSUTF8StringEncoding) as? String {
-                jsonString = str
-            }
-        } catch let error as NSError {
-            toNSLog("SwiftyBeaver Platform Destination could not create JSON from dict. \(error)")
-        }
-        return jsonString
-    }
-
     /// returns optional dict from a json encoded file
     func dictFromFile(url: NSURL) -> [String:AnyObject]? {
         do {

@@ -114,6 +114,11 @@ public class BaseDestination: Hashable, Equatable {
                     text += levelWord(level) + remainingPhrase
                 case "M":
                     text += msg + remainingPhrase
+                case "m":
+                    // json-encoded message
+                    let dict = ["message": msg]
+                    let jsonString = jsonStringFromDict(dict)
+                    text += jsonStringValue(jsonString, key: "message") + remainingPhrase
                 case "T":
                     text += thread + remainingPhrase
                 case "N":
@@ -222,6 +227,33 @@ public class BaseDestination: Hashable, Equatable {
         return dateStr
     }
 
+    /// returns the json-encoded string value
+    /// after it was encoded by jsonStringFromDict
+    func jsonStringValue(jsonString: String?, key: String) -> String {
+        guard let str = jsonString else {
+            return ""
+        }
+
+        let startIndex = str.startIndex.advancedBy(key.characters.count + 5)
+        let endIndex = str.endIndex.advancedBy(-2)
+        let range = Range(startIndex..<endIndex)
+        return str.substringWithRange(range)
+    }
+
+    // turns dict into JSON-encoded string
+    func jsonStringFromDict(dict: [String: AnyObject]) -> String? {
+        var jsonString: String?
+        // try to create JSON string
+        do {
+            let jsonData = try NSJSONSerialization.dataWithJSONObject(dict, options: [])
+            if let str = NSString(data: jsonData, encoding: NSUTF8StringEncoding) as? String {
+                jsonString = str
+            }
+        } catch let error as NSError {
+            print("SwiftyBeaver could not create JSON from dict. \(error)")
+        }
+        return jsonString
+    }
 
     ////////////////////////////////
     // MARK: Filters

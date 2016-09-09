@@ -59,18 +59,37 @@ class BaseDestinationTests: XCTestCase {
         XCTAssertEqual(str, "|main| VERBOSE: Hello")
 
         // format with date and color
+        let obj2 = BaseDestination()
         let formatter = NSDateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let dateStr = formatter.stringFromDate(NSDate())
 
-        obj.levelColor.Verbose = "?"
-        obj.escape = ">"
-        obj.reset = "<"
+        obj2.levelColor.Verbose = "?"
+        obj2.escape = ">"
+        obj2.reset = "<"
 
         format = "[$Dyyyy-MM-dd HH:mm:ss$d] |$T| $N.$F:$l $C$L$c: $M"
-        str = obj.formatMessage(format, level: .Verbose, msg: "Hello", thread: "main",
+        str = obj2.formatMessage(format, level: .Verbose, msg: "Hello", thread: "main",
                                 file: "/path/to/ViewController.swift", function: "testFunction()", line: 50)
         XCTAssertEqual(str, "[\(dateStr)] |main| ViewController.testFunction():50 >?VERBOSE<: Hello")
+
+        /*
+         WORKING !!!
+
+        // format with JSON message
+        // test was deactivated because it seems impossible to test for \\" in Swift?!
+        format = "$L: $m"
+        str = obj.formatMessage(format, level: .Verbose, msg: "Hello \"world\" yeah", thread: "main",
+                                file: "/path/to/ViewController.swift", function: "testFunction()", line: 50)
+        //XCTAssertEqual(str, "Hello \\"world\\" yeah")
+        print(str)
+
+        // JSON format, just message needs to be encoded -> IS WORKING!
+        format = "{\"level\": \"$L\", \"message\": \"$m\", \"line\":$l}"
+        str = obj.formatMessage(format, level: .Verbose, msg: "Hello \"world\" yeah", thread: "main",
+                                file: "/path/to/ViewController.swift", function: "testFunction()", line: 50)
+        print(str)
+        */
     }
 
     func testLevelWord() {
