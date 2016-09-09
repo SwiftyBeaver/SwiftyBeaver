@@ -78,32 +78,39 @@ public class SwiftyBeaver {
     /// log something generally unimportant (lowest priority)
     public class func verbose(@autoclosure message: () -> Any, _
         path: String = #file, _ function: String = #function, line: Int = #line) {
-        dispatch_send(Level.Verbose, message: message, thread: threadName(), path: path, function: function, line: line)
+        custom(.Verbose, message: message, path: path, function: function, line: line)
     }
 
     /// log something which help during debugging (low priority)
     public class func debug(@autoclosure message: () -> Any, _
         path: String = #file, _ function: String = #function, line: Int = #line) {
-        dispatch_send(Level.Debug, message: message, thread: threadName(), path: path, function: function, line: line)
+        custom(.Debug, message: message, path: path, function: function, line: line)
     }
 
     /// log something which you are really interested but which is not an issue or error (normal priority)
     public class func info(@autoclosure message: () -> Any, _
         path: String = #file, _ function: String = #function, line: Int = #line) {
-        dispatch_send(Level.Info, message: message, thread: threadName(), path: path, function: function, line: line)
+        custom(.Info, message: message, path: path, function: function, line: line)
     }
 
     /// log something which may cause big trouble soon (high priority)
     public class func warning(@autoclosure message: () -> Any, _
         path: String = #file, _ function: String = #function, line: Int = #line) {
-        dispatch_send(Level.Warning, message: message, thread: threadName(), path: path, function: function, line: line)
+        custom(.Warning, message: message, path: path, function: function, line: line)
     }
 
     /// log something which will keep you awake at night (highest priority)
     public class func error(@autoclosure message: () -> Any, _
         path: String = #file, _ function: String = #function, line: Int = #line) {
-        dispatch_send(Level.Error, message: message, thread: threadName(), path: path, function: function, line: line)
+        custom(.Error, message: message, path: path, function: function, line: line)
     }
+
+    /// custom logging to manually adjust values, should just be used by other frameworks
+    public class func custom(level: SwiftyBeaver.Level, @autoclosure message: () -> Any,
+        path: String = #file, function: String = #function, line: Int = #line) {
+        dispatch_send(level, message: message, thread: threadName(), path: path, function: function, line: line)
+    }
+
 
     /// internal helper which dispatches send to dedicated queue if minLevel is ok
     class func dispatch_send(level: SwiftyBeaver.Level, @autoclosure message: () -> Any,

@@ -350,40 +350,40 @@ class BaseDestinationTests: XCTestCase {
             message: "bar"))
     }
 
-    
-    
+
+
     func test_shouldLevelBeLogged_excludeFilter_True() {
         // everything is logged on default
         let destination = BaseDestination()
         destination.minLevel = .Error
-        
+
         destination.addFilter(Filters.Path.contains("/ViewController", minLevel: .Debug))
         destination.addFilter(Filters.Function.excludes("myFunc", minLevel: .Debug))
         //destination.debugPrint = true
-        
+
         // excluded
         XCTAssertFalse(destination.shouldLevelBeLogged(.Debug,
             path: "/world/ViewController.swift",
             function: "myFunc",
             message: "Hello World"))
-        
+
         // excluded
         XCTAssertFalse(destination.shouldLevelBeLogged(.Error,
             path: "/world/ViewController.swift",
             function: "myFunc",
             message: "Hello World"))
-        
+
         // not excluded, but below minLevel
         XCTAssertFalse(destination.shouldLevelBeLogged(.Debug,
             path: "/world/OtherViewController.swift",
             function: "otherFunc",
             message: "Hello World"))
-        
+
         // not excluded, but above minLevel
         XCTAssertTrue(destination.shouldLevelBeLogged(.Error,
             path: "/world/OtherViewController.swift",
             function: "otherFunc",
             message: "Hello World"))
     }
-    
+
 }

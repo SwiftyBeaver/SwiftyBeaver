@@ -235,7 +235,7 @@ public class BaseDestination: Hashable, Equatable {
                 return false
             }
         }
-        
+
         let (matchedExclude, allExclude) = passedExcludedFilters(level, path: path,
                                                                 function: function, message: message)
         if allExclude > 0 && matchedExclude != allExclude {
@@ -244,7 +244,7 @@ public class BaseDestination: Hashable, Equatable {
             }
             return false
         }
-        
+
         if level.rawValue >= minLevel.rawValue {
             if debugPrint {
                 print("filters is not empty and level >= minLevel")
@@ -266,7 +266,7 @@ public class BaseDestination: Hashable, Equatable {
                 if matchedNonRequired > 0 {
                     return true
                 }
-            } else if allExclude == 0  {
+            } else if allExclude == 0 {
                 // no optional is existing, so all is good
                 return true
             }
@@ -313,7 +313,7 @@ public class BaseDestination: Hashable, Equatable {
         }
         return (matchingFilters, nonRequiredFilters.count)
     }
-    
+
     /// returns a tuple of matched and all exclude filters
     func passedExcludedFilters(level: SwiftyBeaver.Level,
                               path: String, function: String, message: String?) -> (Int, Int) {
@@ -321,7 +321,7 @@ public class BaseDestination: Hashable, Equatable {
             filter in
             return filter.isExcluded()
         }
-        
+
         let matchingFilters = applyFilters(excludeFilters, level: level,
                                            path: path, function: function, message: message)
         if debugPrint {
@@ -329,7 +329,7 @@ public class BaseDestination: Hashable, Equatable {
         }
         return (matchingFilters, excludeFilters.count)
     }
-    
+
     func applyFilters(targetFilters: [FilterType], level: SwiftyBeaver.Level,
                       path: String, function: String, message: String?) -> Int {
         return targetFilters.filter {
