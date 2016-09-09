@@ -25,34 +25,67 @@ class BaseDestinationTests: XCTestCase {
         XCTAssertNotNil(obj.queue)
     }
 
-    func testFormattedDate() {
+
+    ////////////////////////////////
+    // MARK: Format
+    ////////////////////////////////
+
+    func testFormatMessage() {
+        let obj = BaseDestination()
+        var str = ""
+        var format = ""
+
         // empty format
-        var str = BaseDestination().formattedDate("")
+        str = obj.formatMessage(format, level: .Verbose, msg: "Hello", thread: "main",
+                                file: "/path/to/ViewController.swift", function: "testFunction()", line: 50)
         XCTAssertEqual(str, "")
-        // no time format
-        str = BaseDestination().formattedDate("--")
-        XCTAssertGreaterThanOrEqual(str, "--")
-        // HH:mm:ss
+
+        // format without variables
+        format = "Hello"
+        str = obj.formatMessage(format, level: .Verbose, msg: "Hello", thread: "main",
+                                file: "/path/to/ViewController.swift", function: "testFunction()", line: 50)
+        XCTAssertEqual(str, "Hello")
+
+        // weird format
+        format = "$"
+        str = obj.formatMessage(format, level: .Verbose, msg: "Hello", thread: "main",
+                                file: "/path/to/ViewController.swift", function: "testFunction()", line: 50)
+        XCTAssertEqual(str, "")
+
+        // basic format
+        format = "|$T| $L: $M"
+        str = obj.formatMessage(format, level: .Verbose, msg: "Hello", thread: "main",
+                                file: "/path/to/ViewController.swift", function: "testFunction()", line: 50)
+        XCTAssertEqual(str, "|main| VERBOSE: Hello")
+
+        // format with date and color
         let formatter = NSDateFormatter()
-        formatter.dateFormat = "HH:mm:ss"
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let dateStr = formatter.stringFromDate(NSDate())
-        str = BaseDestination().formattedDate(formatter.dateFormat)
-        XCTAssertEqual(str, dateStr)
+
+        obj.levelColor.Verbose = "?"
+        obj.escape = ">"
+        obj.reset = "<"
+
+        format = "[$Dyyyy-MM-dd HH:mm:ss$d] |$T| $N.$F:$l $C$L$c: $M"
+        str = obj.formatMessage(format, level: .Verbose, msg: "Hello", thread: "main",
+                                file: "/path/to/ViewController.swift", function: "testFunction()", line: 50)
+        XCTAssertEqual(str, "[\(dateStr)] |main| ViewController.testFunction():50 >?VERBOSE<: Hello")
     }
 
-    func testFormattedLevel() {
+    func testLevelWord() {
         let obj = BaseDestination()
         var str = ""
 
-        str = obj.formattedLevel(SwiftyBeaver.Level.Verbose)
+        str = obj.levelWord(SwiftyBeaver.Level.Verbose)
         XCTAssertNotNil(str, "VERBOSE")
-        str = obj.formattedLevel(SwiftyBeaver.Level.Debug)
+        str = obj.levelWord(SwiftyBeaver.Level.Debug)
         XCTAssertNotNil(str, "DEBUG")
-        str = obj.formattedLevel(SwiftyBeaver.Level.Info)
+        str = obj.levelWord(SwiftyBeaver.Level.Info)
         XCTAssertNotNil(str, "INFO")
-        str = obj.formattedLevel(SwiftyBeaver.Level.Warning)
+        str = obj.levelWord(SwiftyBeaver.Level.Warning)
         XCTAssertNotNil(str, "WARNING")
-        str = obj.formattedLevel(SwiftyBeaver.Level.Error)
+        str = obj.levelWord(SwiftyBeaver.Level.Error)
         XCTAssertNotNil(str, "ERROR")
 
         // custom level strings
@@ -62,52 +95,101 @@ class BaseDestinationTests: XCTestCase {
         obj.levelString.Warning = "Oh oh"
         obj.levelString.Error = "OMG!!!"
 
-        str = obj.formattedLevel(SwiftyBeaver.Level.Verbose)
+        str = obj.levelWord(SwiftyBeaver.Level.Verbose)
         XCTAssertNotNil(str, "Who cares")
-        str = obj.formattedLevel(SwiftyBeaver.Level.Debug)
+        str = obj.levelWord(SwiftyBeaver.Level.Debug)
         XCTAssertNotNil(str, "Look")
-        str = obj.formattedLevel(SwiftyBeaver.Level.Info)
+        str = obj.levelWord(SwiftyBeaver.Level.Info)
         XCTAssertNotNil(str, "Interesting")
-        str = obj.formattedLevel(SwiftyBeaver.Level.Warning)
+        str = obj.levelWord(SwiftyBeaver.Level.Warning)
         XCTAssertNotNil(str, "Oh oh")
-        str = obj.formattedLevel(SwiftyBeaver.Level.Error)
+        str = obj.levelWord(SwiftyBeaver.Level.Error)
         XCTAssertNotNil(str, "OMG!!!")
     }
 
-    func testFormattedMessage() {
+    func testColorForLevel() {
         let obj = BaseDestination()
         var str = ""
+
+        // empty on default
+        str = obj.colorForLevel(SwiftyBeaver.Level.Verbose)
+        XCTAssertNotNil(str, "")
+        str = obj.colorForLevel(SwiftyBeaver.Level.Debug)
+        XCTAssertNotNil(str, "")
+        str = obj.colorForLevel(SwiftyBeaver.Level.Info)
+        XCTAssertNotNil(str, "")
+        str = obj.colorForLevel(SwiftyBeaver.Level.Warning)
+        XCTAssertNotNil(str, "")
+        str = obj.colorForLevel(SwiftyBeaver.Level.Error)
+        XCTAssertNotNil(str, "")
+
+        // custom level color strings
+        obj.levelString.Verbose = "silver"
+        obj.levelString.Debug = "green"
+        obj.levelString.Info = "blue"
+        obj.levelString.Warning = "yellow"
+        obj.levelString.Error = "red"
+
+        str = obj.colorForLevel(SwiftyBeaver.Level.Verbose)
+        XCTAssertNotNil(str, "silver")
+        str = obj.colorForLevel(SwiftyBeaver.Level.Debug)
+        XCTAssertNotNil(str, "green")
+        str = obj.colorForLevel(SwiftyBeaver.Level.Info)
+        XCTAssertNotNil(str, "blue")
+        str = obj.colorForLevel(SwiftyBeaver.Level.Warning)
+        XCTAssertNotNil(str, "yellow")
+        str = obj.colorForLevel(SwiftyBeaver.Level.Error)
+        XCTAssertNotNil(str, "red")
+    }
+
+    func testFileNameOfFile() {
+        let obj = BaseDestination()
+        var str = ""
+
+        str = obj.fileNameOfFile("")
+        XCTAssertEqual(str, "")
+        str = obj.fileNameOfFile("foo.bar")
+        XCTAssertEqual(str, "foo.bar")
+        str = obj.fileNameOfFile("path/to/ViewController.swift")
+        XCTAssertEqual(str, "ViewController.swift")
+    }
+
+    func testFileNameOfFileWithoutSuffix() {
+        let obj = BaseDestination()
+        var str = ""
+
+        str = obj.fileNameWithoutSuffix("")
+        XCTAssertEqual(str, "")
+        str = obj.fileNameWithoutSuffix("/")
+        XCTAssertEqual(str, "")
+        str = obj.fileNameWithoutSuffix("foo")
+        XCTAssertEqual(str, "foo")
+        str = obj.fileNameWithoutSuffix("foo.bar")
+        XCTAssertEqual(str, "foo")
+        str = obj.fileNameWithoutSuffix("path/to/ViewController.swift")
+        XCTAssertEqual(str, "ViewController")
+    }
+
+    func testFormatDate() {
+        // empty format
+        var str = BaseDestination().formatDate("")
+        XCTAssertEqual(str, "")
+        // no time format
+        str = BaseDestination().formatDate("--")
+        XCTAssertGreaterThanOrEqual(str, "--")
+        // HH:mm:ss
+        // format with date and color
         let formatter = NSDateFormatter()
         formatter.dateFormat = "HH:mm:ss"
         let dateStr = formatter.stringFromDate(NSDate())
-
-        // logging to main thread does not output thread name
-        str = obj.formattedMessage(dateStr, levelString: "DEBUG", msg: "Hello", thread: "main",
-            path: "/path/to/ViewController.swift", function: "testFunction()", line: 50, detailOutput: false)
-        XCTAssertNotNil(str.rangeOfString("[\(dateStr)] DEBUG: Hello"))
-        XCTAssertNil(str.rangeOfString("main"))
-        XCTAssertNil(str.rangeOfString("|"))
-
-        str = obj.formattedMessage(dateStr, levelString: "DEBUG", msg: "Hello", thread: "myThread",
-            path: "/path/to/ViewController.swift", function: "testFunction()", line: 50, detailOutput: true)
-        XCTAssertNotNil(str.rangeOfString("[\(dateStr)] |myThread| ViewController.testFunction():50 DEBUG: Hello"))
-
-        str = obj.formattedMessage(dateStr, levelString: "DEBUG", msg: "Hello", thread: "",
-            path: "/path/to/ViewController.swift", function: "testFunction()", line: 50, detailOutput: true)
-        XCTAssertNotNil(str.rangeOfString("[\(dateStr)] ViewController.testFunction():50 DEBUG: Hello"))
-        XCTAssertNil(str.rangeOfString("|"))
+        str = BaseDestination().formatDate(formatter.dateFormat)
+        XCTAssertEqual(str, dateStr)
     }
 
-    func testFormattedMessageEmptyDate() {
-        let obj = BaseDestination()
-        var str = ""
-        let dateStr = obj.formattedDate("")
-        XCTAssertEqual(dateStr, "")
 
-        str = obj.formattedMessage(dateStr, levelString: "DEBUG", msg: "Hello", thread: "main",
-            path: "/path/to/ViewController.swift", function: "testFunction()", line: 50, detailOutput: false)
-        XCTAssertEqual(str, "DEBUG: Hello")
-    }
+    ////////////////////////////////
+    // MARK: Filters
+    ////////////////////////////////
 
     func test_init_noMinLevelSet() {
         let destination = BaseDestination()

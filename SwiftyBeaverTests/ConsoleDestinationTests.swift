@@ -19,13 +19,4 @@ class ConsoleDestinationTests: XCTestCase {
     override func tearDown() {
         super.tearDown()
     }
-
-    func testColoredState() {
-        let console = ConsoleDestination()
-        #if swift(>=2.3)
-            XCTAssertFalse(console.colored)
-        #else
-            XCTAssertTrue(console.colored)
-        #endif
-    }
 }

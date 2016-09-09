@@ -92,8 +92,7 @@ class SwiftyBeaverTests: XCTestCase {
         let console2 = ConsoleDestination()
         log.addDestination(console2)
         XCTAssertEqual(log.countDestinations(), 2)
-        console2.detailOutput = false
-        console2.dateFormat = "HH:mm:ss.SSS"
+        console2.format = "$L: $M"
         console2.minLevel = SwiftyBeaver.Level.Debug
         log.verbose("a verbose hello from hopefully just 1 console!")
         log.debug("a debug hello from 2 different consoles!")
@@ -110,8 +109,7 @@ class SwiftyBeaverTests: XCTestCase {
         // log to another file
         let file2 = FileDestination()
         file2.logFileURL = NSURL(string: "file:///tmp/testSwiftyBeaver2.log")!
-        file2.detailOutput = false
-        file2.dateFormat = "HH:mm:ss.SSS"
+        file2.format = "$L: $M"
         file2.minLevel = SwiftyBeaver.Level.Debug
         log.addDestination(file2)
         XCTAssertEqual(log.countDestinations(), 4)
@@ -121,101 +119,10 @@ class SwiftyBeaverTests: XCTestCase {
 
         // log to default file location
         let file3 = FileDestination()
-        file3.detailOutput = false
-        file3.dateFormat = "HH:mm:ss.SSS"
+        file3.format = "$L: $M"
         log.addDestination(file3)
         XCTAssertEqual(log.countDestinations(), 5)
         log.info("Logging to default log file \(file3.logFileURL)")
-    }
-
-    func testColors() {
-        let log = SwiftyBeaver.self
-        log.verbose("that should lead to nowhere")
-
-        // add console
-        let console = ConsoleDestination()
-        log.addDestination(console)
-
-        // add file
-        let file = FileDestination()
-        file.logFileURL = NSURL(string: "file:///tmp/testSwiftyBeaver.log")!
-        file.detailOutput = false
-        file.dateFormat = "HH:mm:ss.SSS"
-        log.addDestination(file)
-
-        #if swift(>=2.3)
-            XCTAssertFalse(console.colored)
-        #else
-            XCTAssertTrue(console.colored)
-        #endif
-        XCTAssertTrue(file.colored)
-
-        log.verbose("not so important")
-        log.debug("something to debug")
-        log.info("a nice information")
-        log.warning("oh no, that won’t be good")
-        log.error("ouch, an error did occur!")
-
-        XCTAssertEqual(log.countDestinations(), 2)
-    }
-
-    func testModifiedColors() {
-        let log = SwiftyBeaver.self
-
-        // add console
-        let console = ConsoleDestination()
-        log.addDestination(console)
-
-        #if swift(>=2.3)
-            XCTAssertFalse(console.colored)
-        #else
-            XCTAssertTrue(console.colored)
-        #endif
-
-        // change default color
-        console.levelColor.Verbose = "fg255,0,255;"
-        console.levelColor.Debug = "fg255,100,0;"
-        console.levelColor.Info = ""
-        console.levelColor.Warning = "fg255,255,255;"
-        console.levelColor.Error = "fg100,0,200;"
-
-        log.verbose("not so important, level in magenta")
-        log.debug("something to debug, level in orange")
-        log.info("a nice information, level in black")
-        log.warning("oh no, that won’t be good, level in white")
-        log.error("ouch, an error did occur!, level in purple")
-    }
-
-    func testColoredMessage() {
-        let log = SwiftyBeaver.self
-
-        // add console
-        let console = ConsoleDestination()
-        log.addDestination(console)
-
-        // add file
-        let file = FileDestination()
-        file.logFileURL = NSURL(string: "file:///tmp/testSwiftyBeaver.log")!
-        file.detailOutput = false
-        file.dateFormat = "HH:mm:ss.SSS"
-        log.addDestination(file)
-
-        console.coloredLines = true
-        #if swift(>=2.3)
-            XCTAssertFalse(console.colored)
-        #else
-            XCTAssertTrue(console.colored)
-        #endif
-        XCTAssertTrue(console.coloredLines)
-        file.coloredLines = true
-        XCTAssertTrue(file.colored)
-        XCTAssertTrue(file.coloredLines)
-
-        log.verbose("not so important")
-        log.debug("something to debug")
-        log.info("a nice information")
-        log.warning("oh no, that won’t be good")
-        log.error("ouch, an error did occur!")
     }
 
     func testDifferentMessageTypes() {
@@ -223,8 +130,7 @@ class SwiftyBeaverTests: XCTestCase {
 
         // add console
         let console = ConsoleDestination()
-        console.detailOutput = false
-        console.dateFormat = "HH:mm:ss.SSS"
+        console.format = "$L: $M"
         console.levelString.Info = "interesting number"
         log.addDestination(console)
 
@@ -242,7 +148,7 @@ class SwiftyBeaverTests: XCTestCase {
         let log = SwiftyBeaver.self
         // add console
         let console = ConsoleDestination()
-        console.dateFormat = "HH:mm:ss.SSS"
+        console.format = "$L: $M"
         log.addDestination(console)
         // should not create a compile error relating autoclosure
         log.info(instanceVar)
@@ -254,7 +160,7 @@ class SwiftyBeaverTests: XCTestCase {
 
         // add console
         let console = ConsoleDestination()
-        console.dateFormat = "HH:mm:ss.SSS"
+        console.format = "$L: $M"
         // set info level on default
         console.minLevel = .Info
 

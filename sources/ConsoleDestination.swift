@@ -15,16 +15,19 @@ public class ConsoleDestination: BaseDestination {
 
     override public var defaultHashValue: Int { return 1 }
 
-    #if swift(>=2.3)
-        override public var colored: Bool {
-            // in Xcode 8 no color is possible so it is always false
-            get { return false }
-            set {}
-        }
-    #endif
-
     public override init() {
         super.init()
+
+        #if swift(>=2.3)
+        #else
+            levelColor.Verbose = "fg150,178,193;"     // silver
+            levelColor.Debug = "fg32,155,124;"        // green
+            levelColor.Info = "fg70,204,221;"         // blue
+            levelColor.Warning = "fg253,202,78;"      // yellow
+            levelColor.Error = "fg243,36,73;"         // red
+            reset = "\u{001b}[;"
+            escape = "\u{001b}["
+        #endif
     }
 
     // print to Xcode Console. uses full base class functionality
