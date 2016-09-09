@@ -96,7 +96,7 @@ let log = SwiftyBeaver.self
 
 ```
 
-At the the beginning of your `AppDelegate:didFinishLaunchingWithOptions()` add the SwiftyBeaver log destinations (console, file, etc.) and then you can already do the following log level calls globally (**colors included**):
+At the the beginning of your `AppDelegate:didFinishLaunchingWithOptions()` add the SwiftyBeaver log destinations (console, file, etc.) and then you can already do the following log level calls globally:
 
 ``` Swift
 // add log destinations. at least one is needed!

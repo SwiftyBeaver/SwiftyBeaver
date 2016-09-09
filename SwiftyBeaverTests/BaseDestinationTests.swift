@@ -52,8 +52,8 @@ class BaseDestinationTests: XCTestCase {
                                 file: "/path/to/ViewController.swift", function: "testFunction()", line: 50)
         XCTAssertEqual(str, "")
 
-        // basic format
-        format = "|$T| $L: $M"
+        // basic format with ignored color and thread
+        format = "|$T| $C$L$c: $M"
         str = obj.formatMessage(format, level: .Verbose, msg: "Hello", thread: "main",
                                 file: "/path/to/ViewController.swift", function: "testFunction()", line: 50)
         XCTAssertEqual(str, "|main| VERBOSE: Hello")

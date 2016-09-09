@@ -28,7 +28,7 @@ let OS = "Unknown"
 public class BaseDestination: Hashable, Equatable {
 
     /// output format pattern, see documentation for syntax
-    public var format = "[$Dyyyy-MM-dd HH:mm:ss.SSS$d] $N.$F:$l $L: $M"
+    public var format = "[$Dyyyy-MM-dd HH:mm:ss.SSS$d] $N.$F:$l $C$L$c: $M"
 
     /// runs in own serial background thread for better performance
     public var asynchronously = true
@@ -60,8 +60,8 @@ public class BaseDestination: Hashable, Equatable {
         public var Error = ""
     }
 
-    var reset = "\u{001b}[;"
-    var escape = "\u{001b}["
+    var reset = ""
+    var escape = ""
 
     var filters = [FilterType]()
     let formatter = NSDateFormatter()
