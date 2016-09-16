@@ -92,7 +92,7 @@ pod 'SwiftyBeaver' '~> 0.7'
 For [Swift Package Manager](https://swift.org/package-manager/) add the following package to your Package.swift file. Just Swift 3 is supported:
 
 ``` Swift
-.Package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git")
+.Package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git", majorVersion: 1)
 ```
 
 <br/>
