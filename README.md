@@ -3,13 +3,13 @@
 <a href="http://docs.swiftybeaver.com">Docs</a> |
 <a href="https://swiftybeaver.com">Website</a> |
 <a href="https://slack.swiftybeaver.com">Slack</a> |
-<a href="https://twitter.com/SwiftyBeaver">Twitter</a> |
+<a href="https://twitter.com/SwiftyBeaver">Twitter</a> | 
 <a href="https://github.com/SwiftyBeaver/SwiftyBeaver/blob/master/LICENSE">License</a>
 <br/>
 </p>
 
 <p align="center">
-[![Language Swift 3](https://img.shields.io/badge/Language-Swift%202%20&%203-orange.svg)](https://swift.org) [![Travis Build Status](https://travis-ci.org/SwiftyBeaver/SwiftyBeaver.svg)](https://travis-ci.org/SwiftyBeaver/SwiftyBeaver) [![Slack Status](https://slack.swiftybeaver.com/badge.svg)](https://slack.swiftybeaver.com)
+[![Language Swift 3](https://img.shields.io/badge/Language-Swift%202%20&%203-orange.svg)](https://swift.org) [![Travis Build Status](https://travis-ci.org/SwiftyBeaver/SwiftyBeaver.svg)](https://travis-ci.org/SwiftyBeaver/SwiftyBeaver) [![Slack Status](https://slack.swiftybeaver.com/badge.svg)](https://slack.swiftybeaver.com) 
 <br/>
 <p>
 ----
