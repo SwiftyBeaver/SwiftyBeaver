@@ -18,15 +18,15 @@
 
 ### During Development: Colored Logging to Xcode Console
 
-<img src="https://cloud.githubusercontent.com/assets/564725/14951113/ea682b42-1056-11e6-824f-a6da82e2a0a8.png" width="637">
+<img src="https://cloud.githubusercontent.com/assets/564725/18608323/ac065a98-7ce6-11e6-8e1b-2a062d54a1d5.png" width="608">
 
-[Learn more](http://docs.swiftybeaver.com/article/9-log-to-xcode-console) about colored logging to Xcode Console.
+[Learn more](http://docs.swiftybeaver.com/article/9-log-to-xcode-console) about colored logging to Xcode 8 Console. **No need to hack Xcode 8** to get color!
 
 <br/>
 
 ### During Development: Colored Logging to File
 
-<img src="https://cloud.githubusercontent.com/assets/564725/14951092/d5948f44-1056-11e6-9f6e-81801a130661.png" width="659">
+<img src="https://cloud.githubusercontent.com/assets/564725/18608325/b7ecd4c2-7ce6-11e6-829b-7f8f9fe6ef2f.png" width="738">
 
 [Learn more](http://docs.swiftybeaver.com/article/10-log-to-file) about logging to file.
 
@@ -82,8 +82,20 @@ pod 'SwiftyBeaver'
 ```
 
 Swift 2:
-``` Swift
-pod 'SwiftyBeaver' '~> 0.7'
+``` Ruby
+target 'MyProject' do
+  use_frameworks!
+
+  # Pods for MyProject
+  pod 'SwiftyBeaver', '~> 0.7'
+end
+
+post_install do |installer|
+  installer.pods_project.build_configurations.each do |config|
+    # Configure Pod targets for Xcode 8 with Swift 2.3
+    config.build_settings['SWIFT_VERSION'] = '2.3'
+  end
+end
 ```
 
 <br/>
