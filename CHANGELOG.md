@@ -5,6 +5,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ----
 <br/>
+## 1.0.1 (2016-09-17)
+
+##### Added
+
+- Colored log level indicators for Xcode 8 Console by [@skreutzberger](https://github.com/skreutzberger)
+
+<br/>
 ## 1.0.0 (2016-09-15)
 
 ##### Added
