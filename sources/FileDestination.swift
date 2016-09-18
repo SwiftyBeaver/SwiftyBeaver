@@ -54,11 +54,11 @@ public class FileDestination: BaseDestination {
         // uses the 256-color table from http://bit.ly/1W1qJuH
         reset = "\u{001b}[0m"
         escape = "\u{001b}[38;5;"
-        levelColor.Verbose = "251m"     // silver
-        levelColor.Debug = "35m"        // green
-        levelColor.Info = "38m"         // blue
-        levelColor.Warning = "178m"     // yellow
-        levelColor.Error = "197m"       // red
+        levelColor.verbose = "251m"     // silver
+        levelColor.debug = "35m"        // green
+        levelColor.info = "38m"         // blue
+        levelColor.warning = "178m"     // yellow
+        levelColor.error = "197m"       // red
     }
 
     // append to file. uses full base class functionality

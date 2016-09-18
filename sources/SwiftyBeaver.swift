@@ -17,11 +17,11 @@ public class SwiftyBeaver {
     public static let build = 1000 // version 0.7.1 -> 710, UPDATE ON RELEASE!
 
     public enum Level: Int {
-        case Verbose = 0
-        case Debug = 1
-        case Info = 2
-        case Warning = 3
-        case Error = 4
+        case verbose = 0
+        case debug = 1
+        case info = 2
+        case warning = 3
+        case error = 4
     }
 
     // a set of active destinations
@@ -85,31 +85,31 @@ public class SwiftyBeaver {
     /// log something generally unimportant (lowest priority)
     public class func verbose(_ message: @autoclosure () -> Any, _
         file: String = #file, _ function: String = #function, line: Int = #line) {
-        custom(level: .Verbose, message: message, file: file, function: function, line: line)
+        custom(level: .verbose, message: message, file: file, function: function, line: line)
     }
 
     /// log something which help during debugging (low priority)
     public class func debug(_ message: @autoclosure () -> Any, _
         file: String = #file, _ function: String = #function, line: Int = #line) {
-        custom(level: .Debug, message: message, file: file, function: function, line: line)
+        custom(level: .debug, message: message, file: file, function: function, line: line)
     }
 
     /// log something which you are really interested but which is not an issue or error (normal priority)
     public class func info(_ message: @autoclosure () -> Any, _
         file: String = #file, _ function: String = #function, line: Int = #line) {
-        custom(level: .Info, message: message, file: file, function: function, line: line)
+        custom(level: .info, message: message, file: file, function: function, line: line)
     }
 
     /// log something which may cause big trouble soon (high priority)
     public class func warning(_ message: @autoclosure () -> Any, _
         file: String = #file, _ function: String = #function, line: Int = #line) {
-        custom(level: .Warning, message: message, file: file, function: function, line: line)
+        custom(level: .warning, message: message, file: file, function: function, line: line)
     }
 
     /// log something which will keep you awake at night (highest priority)
     public class func error(_ message: @autoclosure () -> Any, _
         file: String = #file, _ function: String = #function, line: Int = #line) {
-        custom(level: .Error, message: message, file: file, function: function, line: line)
+        custom(level: .error, message: message, file: file, function: function, line: line)
     }
 
     /// custom logging to manually adjust values, should just be used by other frameworks

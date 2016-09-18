@@ -93,7 +93,7 @@ class SwiftyBeaverTests: XCTestCase {
         XCTAssertTrue(log.addDestination(console2))
         XCTAssertEqual(log.countDestinations(), 2)
         console2.format = "$L: $M"
-        console2.minLevel = SwiftyBeaver.Level.Debug
+        console2.minLevel = SwiftyBeaver.Level.debug
         log.verbose("a verbose hello from hopefully just 1 console!")
         log.debug("a debug hello from 2 different consoles!")
 
@@ -110,7 +110,7 @@ class SwiftyBeaverTests: XCTestCase {
         let file2 = FileDestination()
         file2.logFileURL = URL(string: "file:///tmp/testSwiftyBeaver2.log")!
         console2.format = "$L: $M"
-        file2.minLevel = SwiftyBeaver.Level.Debug
+        file2.minLevel = SwiftyBeaver.Level.debug
         XCTAssertTrue(log.addDestination(file2))
         XCTAssertEqual(log.countDestinations(), 4)
         log.verbose("this should be in file 1")
@@ -156,11 +156,11 @@ class SwiftyBeaverTests: XCTestCase {
         XCTAssertTrue(log.addDestination(console))
 
         // change default color
-        console.levelColor.Verbose = "fg255,0,255;"
-        console.levelColor.Debug = "fg255,100,0;"
-        console.levelColor.Info = ""
-        console.levelColor.Warning = "fg255,255,255;"
-        console.levelColor.Error = "fg100,0,200;"
+        console.levelColor.verbose = "fg255,0,255;"
+        console.levelColor.debug = "fg255,100,0;"
+        console.levelColor.info = ""
+        console.levelColor.warning = "fg255,255,255;"
+        console.levelColor.error = "fg100,0,200;"
 
         log.verbose("not so important, level in magenta")
         log.debug("something to debug, level in orange")
@@ -175,7 +175,7 @@ class SwiftyBeaverTests: XCTestCase {
         // add console
         let console = ConsoleDestination()
         console.format = "$L: $M"
-        console.levelString.Info = "interesting number"
+        console.levelString.info = "interesting number"
         XCTAssertTrue(log.addDestination(console))
 
         log.verbose("My name is üÄölèå")
@@ -204,7 +204,7 @@ class SwiftyBeaverTests: XCTestCase {
         // add console
         let console = ConsoleDestination()
         // set info level on default
-        console.minLevel = .Info
+        console.minLevel = .info
 
         XCTAssertTrue(log.addDestination(console))
 

@@ -7,9 +7,10 @@
 #
 
 disabled_rules: # rule identifiers to exclude from running
-- valid_docs   # /// is valid and used by Xcode
+- valid_docs   # is valid and used by Xcode
 - cyclomatic_complexity
 - variable_name
+- type_name  # wants uppercase enum value chars which is uncommon in Swift 3
 
 opt_in_rules: # some rules are only opt-in
 - empty_count
@@ -49,7 +50,7 @@ variable_name:
   excluded:
     - translatesAutoresizingMaskIntoConstraints
 
-type_name:
-  min_length: 2
+# type_name:
+#  min_length: 2
 
 reporter: "xcode" # reporter type (xcode, json, csv, checkstyle)

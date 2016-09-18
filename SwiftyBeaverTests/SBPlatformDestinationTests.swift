@@ -68,7 +68,7 @@ class SBPlatformDestinationTests: XCTestCase {
         let file = "/file/path.swift"
         let function = "TestFunction()"
         let line = 123
-        let str = platform.send(.Verbose, msg: msg, thread: thread, file: file, function: function, line: line)
+        let str = platform.send(.verbose, msg: msg, thread: thread, file: file, function: function, line: line)
         XCTAssertNotNil(str)
         if let str = str {
             XCTAssertEqual(str.characters.first, "{")
@@ -84,16 +84,16 @@ class SBPlatformDestinationTests: XCTestCase {
     }
 
     func testSendingPointsFromLevel() {
-        var points = platform.sendingPointsForLevel(SwiftyBeaver.Level.Verbose)
-        XCTAssertEqual(points, platform.sendingPoints.Verbose)
-        points = platform.sendingPointsForLevel(SwiftyBeaver.Level.Debug)
-        XCTAssertEqual(points, platform.sendingPoints.Debug)
-        points = platform.sendingPointsForLevel(SwiftyBeaver.Level.Info)
-        XCTAssertEqual(points, platform.sendingPoints.Info)
-        points = platform.sendingPointsForLevel(SwiftyBeaver.Level.Warning)
-        XCTAssertEqual(points, platform.sendingPoints.Warning)
-        points = platform.sendingPointsForLevel(SwiftyBeaver.Level.Error)
-        XCTAssertEqual(points, platform.sendingPoints.Error)
+        var points = platform.sendingPointsForLevel(SwiftyBeaver.Level.verbose)
+        XCTAssertEqual(points, platform.sendingPoints.verbose)
+        points = platform.sendingPointsForLevel(SwiftyBeaver.Level.debug)
+        XCTAssertEqual(points, platform.sendingPoints.debug)
+        points = platform.sendingPointsForLevel(SwiftyBeaver.Level.info)
+        XCTAssertEqual(points, platform.sendingPoints.info)
+        points = platform.sendingPointsForLevel(SwiftyBeaver.Level.warning)
+        XCTAssertEqual(points, platform.sendingPoints.warning)
+        points = platform.sendingPointsForLevel(SwiftyBeaver.Level.error)
+        XCTAssertEqual(points, platform.sendingPoints.error)
     }
 
     func testSendToServerAsync() {
@@ -184,8 +184,8 @@ class SBPlatformDestinationTests: XCTestCase {
         //XCTAssertEqual(log.countDestinations(), 2)
 
         // send logs in chunks, use high threshold value to test performance
-        platform.sendingPoints.Threshold = 20
-        for index in 1...platform.sendingPoints.Threshold + 3 {
+        platform.sendingPoints.threshold = 20
+        for index in 1...platform.sendingPoints.threshold + 3 {
             // simulate work by doing a computing
             var x = 1.0
             for index2 in 1...50000 {
@@ -201,7 +201,7 @@ class SBPlatformDestinationTests: XCTestCase {
         XCTAssertTrue(log.flush(secondTimeout: 3))
 
         // do some further waiting for sending to complete
-        for _ in 1...platform.sendingPoints.Threshold + 3 {
+        for _ in 1...platform.sendingPoints.threshold + 3 {
             // simulate work by doing a computing
             var x = 1.0
             for index2 in 1...50000 {

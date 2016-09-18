@@ -52,12 +52,12 @@ public class SBPlatformDestination: BaseDestination {
 
     // when to send to server
     public struct SendingPoints {
-        public var Verbose = 0
-        public var Debug = 1
-        public var Info = 5
-        public var Warning = 8
-        public var Error = 10
-        public var Threshold = 10  // send to server if points reach that value
+        public var verbose = 0
+        public var debug = 1
+        public var info = 5
+        public var warning = 8
+        public var error = 10
+        public var threshold = 10  // send to server if points reach that value
     }
     public var sendingPoints = SendingPoints()
     public var showNSLog = false // executes toNSLog statements to debug the class
@@ -170,7 +170,7 @@ public class SBPlatformDestination: BaseDestination {
             points += newPoints
             toNSLog("current sending points: \(points)")
 
-            if (points >= sendingPoints.Threshold && points >= minAllowedThreshold) || points > maxAllowedThreshold {
+            if (points >= sendingPoints.threshold && points >= minAllowedThreshold) || points > maxAllowedThreshold {
                 toNSLog("\(points) points is >= threshold")
                 // above threshold, send to server
                 sendNow()
@@ -335,16 +335,16 @@ public class SBPlatformDestination: BaseDestination {
     func sendingPointsForLevel(_ level: SwiftyBeaver.Level) -> Int {
 
         switch level {
-        case SwiftyBeaver.Level.Debug:
-            return sendingPoints.Debug
-        case SwiftyBeaver.Level.Info:
-            return sendingPoints.Info
-        case SwiftyBeaver.Level.Warning:
-            return sendingPoints.Warning
-        case SwiftyBeaver.Level.Error:
-            return sendingPoints.Error
+        case SwiftyBeaver.Level.debug:
+            return sendingPoints.debug
+        case SwiftyBeaver.Level.info:
+            return sendingPoints.info
+        case SwiftyBeaver.Level.warning:
+            return sendingPoints.warning
+        case SwiftyBeaver.Level.error:
+            return sendingPoints.error
         default:
-            return sendingPoints.Verbose
+            return sendingPoints.verbose
         }
     }
 

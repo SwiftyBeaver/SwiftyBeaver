@@ -170,27 +170,27 @@ public class CompareFilter: Filter, FilterType {
 // Syntactic sugar for creating a function comparison filter
 public class FunctionFilterFactory {
     public static func startsWith(_ prefixes: String..., caseSensitive: Bool = false,
-                                  required: Bool = false, minLevel: SwiftyBeaver.Level = .Verbose) -> FilterType {
+                                  required: Bool = false, minLevel: SwiftyBeaver.Level = .verbose) -> FilterType {
         return CompareFilter(.Function(.StartsWith(prefixes, caseSensitive)), required: required, minLevel: minLevel)
     }
 
     public static func contains(_ strings: String..., caseSensitive: Bool = false,
-                                required: Bool = false, minLevel: SwiftyBeaver.Level = .Verbose) -> FilterType {
+                                required: Bool = false, minLevel: SwiftyBeaver.Level = .verbose) -> FilterType {
         return CompareFilter(.Function(.Contains(strings, caseSensitive)), required: required, minLevel: minLevel)
     }
 
     public static func excludes(_ strings: String..., caseSensitive: Bool = false,
-                                required: Bool = false, minLevel: SwiftyBeaver.Level = .Verbose) -> FilterType {
+                                required: Bool = false, minLevel: SwiftyBeaver.Level = .verbose) -> FilterType {
         return CompareFilter(.Function(.Excludes(strings, caseSensitive)), required: required, minLevel: minLevel)
     }
 
     public static func endsWith(_ suffixes: String..., caseSensitive: Bool = false,
-                                required: Bool = false, minLevel: SwiftyBeaver.Level = .Verbose) -> FilterType {
+                                required: Bool = false, minLevel: SwiftyBeaver.Level = .verbose) -> FilterType {
         return CompareFilter(.Function(.EndsWith(suffixes, caseSensitive)), required: required, minLevel: minLevel)
     }
 
     public static func equals(_ strings: String..., caseSensitive: Bool = false,
-                              required: Bool = false, minLevel: SwiftyBeaver.Level = .Verbose) -> FilterType {
+                              required: Bool = false, minLevel: SwiftyBeaver.Level = .verbose) -> FilterType {
         return CompareFilter(.Function(.Equals(strings, caseSensitive)), required: required, minLevel: minLevel)
     }
 }
@@ -198,27 +198,27 @@ public class FunctionFilterFactory {
 // Syntactic sugar for creating a message comparison filter
 public class MessageFilterFactory {
     public static func startsWith(_ prefixes: String..., caseSensitive: Bool = false,
-                                  required: Bool = false, minLevel: SwiftyBeaver.Level = .Verbose) -> FilterType {
+                                  required: Bool = false, minLevel: SwiftyBeaver.Level = .verbose) -> FilterType {
         return CompareFilter(.Message(.StartsWith(prefixes, caseSensitive)), required: required, minLevel: minLevel)
     }
 
     public static func contains(_ strings: String..., caseSensitive: Bool = false,
-                                required: Bool = false, minLevel: SwiftyBeaver.Level = .Verbose) -> FilterType {
+                                required: Bool = false, minLevel: SwiftyBeaver.Level = .verbose) -> FilterType {
         return CompareFilter(.Message(.Contains(strings, caseSensitive)), required: required, minLevel: minLevel)
     }
 
     public static func excludes(_ strings: String..., caseSensitive: Bool = false,
-                                required: Bool = false, minLevel: SwiftyBeaver.Level = .Verbose) -> FilterType {
+                                required: Bool = false, minLevel: SwiftyBeaver.Level = .verbose) -> FilterType {
         return CompareFilter(.Message(.Excludes(strings, caseSensitive)), required: required, minLevel: minLevel)
     }
 
     public static func endsWith(_ suffixes: String..., caseSensitive: Bool = false,
-                                required: Bool = false, minLevel: SwiftyBeaver.Level = .Verbose) -> FilterType {
+                                required: Bool = false, minLevel: SwiftyBeaver.Level = .verbose) -> FilterType {
         return CompareFilter(.Message(.EndsWith(suffixes, caseSensitive)), required: required, minLevel: minLevel)
     }
 
     public static func equals(_ strings: String..., caseSensitive: Bool = false,
-                              required: Bool = false, minLevel: SwiftyBeaver.Level = .Verbose) -> FilterType {
+                              required: Bool = false, minLevel: SwiftyBeaver.Level = .verbose) -> FilterType {
         return CompareFilter(.Message(.Equals(strings, caseSensitive)), required: required, minLevel: minLevel)
     }
 }
@@ -226,27 +226,27 @@ public class MessageFilterFactory {
 // Syntactic sugar for creating a path comparison filter
 public class PathFilterFactory {
     public static func startsWith(_ prefixes: String..., caseSensitive: Bool = false,
-                                  required: Bool = false, minLevel: SwiftyBeaver.Level = .Verbose) -> FilterType {
+                                  required: Bool = false, minLevel: SwiftyBeaver.Level = .verbose) -> FilterType {
         return CompareFilter(.Path(.StartsWith(prefixes, caseSensitive)), required: required, minLevel: minLevel)
     }
 
     public static func contains(_ strings: String..., caseSensitive: Bool = false,
-                                required: Bool = false, minLevel: SwiftyBeaver.Level = .Verbose) -> FilterType {
+                                required: Bool = false, minLevel: SwiftyBeaver.Level = .verbose) -> FilterType {
         return CompareFilter(.Path(.Contains(strings, caseSensitive)), required: required, minLevel: minLevel)
     }
 
     public static func excludes(_ strings: String..., caseSensitive: Bool = false,
-                                required: Bool = false, minLevel: SwiftyBeaver.Level = .Verbose) -> FilterType {
+                                required: Bool = false, minLevel: SwiftyBeaver.Level = .verbose) -> FilterType {
         return CompareFilter(.Path(.Excludes(strings, caseSensitive)), required: required, minLevel: minLevel)
     }
 
     public static func endsWith(_ suffixes: String..., caseSensitive: Bool = false,
-                                required: Bool = false, minLevel: SwiftyBeaver.Level = .Verbose) -> FilterType {
+                                required: Bool = false, minLevel: SwiftyBeaver.Level = .verbose) -> FilterType {
         return CompareFilter(.Path(.EndsWith(suffixes, caseSensitive)), required: required, minLevel: minLevel)
     }
 
     public static func equals(_ strings: String..., caseSensitive: Bool = false,
-                              required: Bool = false, minLevel: SwiftyBeaver.Level = .Verbose) -> FilterType {
+                              required: Bool = false, minLevel: SwiftyBeaver.Level = .verbose) -> FilterType {
         return CompareFilter(.Path(.Equals(strings, caseSensitive)), required: required, minLevel: minLevel)
     }
 }

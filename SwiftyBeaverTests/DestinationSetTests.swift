@@ -36,15 +36,15 @@ class DestinationSetTests: XCTestCase {
 
         // Test default log level of destinations
         log.destinations.forEach {
-            XCTAssertEqual($0.minLevel, SwiftyBeaver.Level.Verbose)
+            XCTAssertEqual($0.minLevel, SwiftyBeaver.Level.verbose)
         }
 
         // Change min log level for all destinations
-        log.destinations.forEach { $0.minLevel = .Info }
+        log.destinations.forEach { $0.minLevel = .info }
 
         // Test min level of destinations has changed
         log.destinations.forEach {
-            XCTAssertEqual($0.minLevel, SwiftyBeaver.Level.Info)
+            XCTAssertEqual($0.minLevel, SwiftyBeaver.Level.info)
         }
     }
 
