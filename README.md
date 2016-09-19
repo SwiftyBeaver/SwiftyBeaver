@@ -147,7 +147,7 @@ log.error("ouch, an error did occur!")  // prio 5, ERROR in red
 // log anything!
 log.verbose(123)
 log.info(-123.45678)
-log.warning(NSDate())
+log.warning(Date())
 log.error(["I", "like", "logs!"])
 log.error(["name": "Mr Beaver", "address": "7 Beaver Lodge"])
 ```
