@@ -5,6 +5,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ----
 <br/>
+## 1.0.2 (2016-09-19)
+
+##### Changed
+
+- Lowercase enum cases (`.Debug` -> `.debug`) to match Swift 3 convention by [@skreutzberger](https://github.com/skreutzberger)
+
+<br/>
 ## 1.0.1 (2016-09-17)
 
 ##### Added
