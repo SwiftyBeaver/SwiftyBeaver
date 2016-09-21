@@ -73,6 +73,20 @@ class BaseDestinationTests: XCTestCase {
                                  file: "/path/to/ViewController.swift", function: "testFunction()", line: 50)
         XCTAssertEqual(str, "[\(dateStr)] |main| ViewController.testFunction():50 >?VERBOSE<: Hello")
 
+
+        //  UTC datetime
+        let obj3 = BaseDestination()
+        let utcFormatter = DateFormatter()
+        utcFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        utcFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let utcDateStr = utcFormatter.string(from: NSDate() as Date)
+        str = BaseDestination().formatDate(utcFormatter.dateFormat, timeZone: "UTC")
+
+        format = "$Zyyyy-MM-dd HH:mm:ss$z"
+        str = obj3.formatMessage(format, level: .verbose, msg: "Hello", thread: "main",
+                                 file: "/path/to/ViewController.swift", function: "testFunction()", line: 50)
+        XCTAssertEqual(str, "\(utcDateStr)")
+
         /*
          WORKING !!!
 
@@ -201,6 +215,13 @@ class BaseDestinationTests: XCTestCase {
         let dateStr = formatter.string(from: NSDate() as Date)
         str = BaseDestination().formatDate(formatter.dateFormat)
         XCTAssertEqual(str, dateStr)
+        // test UTC
+        let utcFormatter = DateFormatter()
+        utcFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        utcFormatter.dateFormat = "HH:mm:ss"
+        let utcDateStr = utcFormatter.string(from: NSDate() as Date)
+        str = BaseDestination().formatDate(utcFormatter.dateFormat, timeZone: "UTC")
+        XCTAssertEqual(str, utcDateStr)
     }
 
 

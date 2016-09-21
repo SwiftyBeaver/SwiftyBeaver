@@ -143,6 +143,11 @@ open class BaseDestination: Hashable, Equatable {
                     text += formatDate(remainingPhrase)
                 case "d":
                     text += remainingPhrase
+                case "Z":
+                    // start of datetime format in UTC timezone
+                    text += formatDate(remainingPhrase, timeZone: "UTC")
+                case "z":
+                    text += remainingPhrase
                 case "C":
                     // color code ("" on default)
                     text += escape + colorForLevel(level) + remainingPhrase
@@ -227,8 +232,11 @@ open class BaseDestination: Hashable, Equatable {
     }
 
     /// returns a formatted date string
-    func formatDate(_ dateFormat: String) -> String {
-        //formatter.timeZone = NSTimeZone(abbreviation: "UTC")
+    /// optionally in a given abbreviated timezone like "UTC"
+    func formatDate(_ dateFormat: String, timeZone: String = "") -> String {
+        if !timeZone.isEmpty {
+            formatter.timeZone = TimeZone(abbreviation: timeZone)
+        }
         formatter.dateFormat = dateFormat
         let dateStr = formatter.string(from: NSDate() as Date)
         return dateStr
