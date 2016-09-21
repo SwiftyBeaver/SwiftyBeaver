@@ -5,6 +5,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ----
 <br/>
+## 1.0.3 (2016-09-21)
+
+##### Changed
+
+- New format key `$Z` outputs datetime as UTC by [@skreutzberger](https://github.com/skreutzberger)
+
+<br/>
 ## 1.0.2 (2016-09-19)
 
 ##### Changed
