@@ -90,8 +90,7 @@ public class SBPlatformDestination: BaseDestination {
 
         // setup where to write the json files
         var baseURL: URL?
-
-        if OS == "OSX" {
+        #if os(OSX)
             if let url = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first {
                 baseURL = url
                 // try to use ~/Library/Application Support/APP NAME instead of ~/Library/Application Support
@@ -102,14 +101,13 @@ public class SBPlatformDestination: BaseDestination {
                                                             withIntermediateDirectories: true, attributes: nil)
                             baseURL = appURL
                         }
-                    } catch let error as NSError {
+                    } catch let error {
                         // it is too early in the class lifetime to be able to use toNSLog()
                         print("Warning! Could not create folder ~/Library/Application Support/\(appName). \(error)")
                     }
                 }
             }
-
-        } else {
+        #else
             // iOS, watchOS, etc. are using the app’s document directory, tvOS can just use the caches directory
             #if os(tvOS)
                 let saveDir: FileManager.SearchPathDirectory = .cachesDirectory
@@ -117,11 +115,14 @@ public class SBPlatformDestination: BaseDestination {
                 let saveDir: FileManager.SearchPathDirectory = .documentDirectory
             #endif
 
-            if let url = fileManager.urls(for: saveDir, in: .userDomainMask).first {
-                baseURL = url
-            }
-
-        }
+            #if os(Linux)
+                baseURL = URL(string: "/var/cache")
+            #else
+                if let url = fileManager.urls(for: saveDir, in: .userDomainMask).first {
+                    baseURL = url
+                }
+            #endif
+        #endif
 
         if let baseURL = baseURL {
             entriesFileURL = baseURL.appendingPathComponent("sbplatform_entries.json",
@@ -149,7 +150,7 @@ public class SBPlatformDestination: BaseDestination {
         var jsonString: String?
 
         let dict: [String: Any] = [
-            "timestamp": NSDate().timeIntervalSince1970,
+            "timestamp": Date().timeIntervalSince1970,
             "level": level.rawValue,
             "message": msg,
             "thread": thread,
@@ -292,7 +293,7 @@ public class SBPlatformDestination: BaseDestination {
             let params = ["payload": payload]
             do {
                 request.httpBody = try JSONSerialization.data(withJSONObject: params, options: [])
-            } catch let error as NSError {
+            } catch let error {
                 toNSLog("Error! Could not create JSON for server payload. \(error)")
             }
             //toNSLog("sending params: \(params)")
@@ -362,7 +363,7 @@ public class SBPlatformDestination: BaseDestination {
             } else {
                 // append to end of file
                 let fileHandle = try FileHandle(forWritingTo: url)
-                fileHandle.seekToEndOfFile()
+                let _ = fileHandle.seekToEndOfFile()
                 let line = str + "\n"
                 let data = line.data(using: String.Encoding.utf8)!
                 fileHandle.write(data)
@@ -582,25 +583,33 @@ public class SBPlatformDestination: BaseDestination {
     /// log String to toNSLog. Used to debug the class logic
     func toNSLog(_ str: String) {
         if showNSLog {
-            NSLog("SBPlatform: \(str)")
+            #if os(Linux)
+                print("SBPlatform: \(str)")
+            #else
+                NSLog("SBPlatform: \(str)")
+            #endif
         }
     }
 
-    /// helper function for thread logging during development
-    func threadName() -> String {
-        if Thread.isMainThread {
-            return "main"
-        } else {
-            if let threadName = Thread.current.name, !threadName.isEmpty {
-                return threadName
-            } else {
-                return String(format: "%p", Thread.current)
-            }
+    /// returns the current thread name
+    class func threadName() -> String {
 
-            /*else if let queueName = NSString(utf8String:
-             dispatch_queue_get_label(DISPATCH_CURRENT_QUEUE_LABEL)) as String? where !queueName.isEmpty {
-             return queueName
-             } */
-        }
+        #if os(Linux)
+            // on 9/30/2016 not yet implemented in server-side Swift:
+            // > import Foundation
+            // > Thread.isMainThread
+            return ""
+        #else
+            if Thread.isMainThread {
+                return ""
+            } else {
+                let threadName = Thread.current.name
+                if let threadName = threadName, !threadName.isEmpty {
+                    return threadName
+                } else {
+                    return String(format: "%p", Thread.current)
+                }
+            }
+        #endif
     }
 }

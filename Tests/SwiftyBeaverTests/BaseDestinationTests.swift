@@ -7,6 +7,7 @@
 //  Some rights reserved: http://opensource.org/licenses/MIT
 //
 
+import Foundation
 import XCTest
 @testable import SwiftyBeaver
 
@@ -62,7 +63,7 @@ class BaseDestinationTests: XCTestCase {
         let obj2 = BaseDestination()
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        let dateStr = formatter.string(from: NSDate() as Date)
+        let dateStr = formatter.string(from: Date())
 
         obj2.levelColor.verbose = "?"
         obj2.escape = ">"
@@ -79,7 +80,7 @@ class BaseDestinationTests: XCTestCase {
         let utcFormatter = DateFormatter()
         utcFormatter.timeZone = TimeZone(abbreviation: "UTC")
         utcFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        let utcDateStr = utcFormatter.string(from: NSDate() as Date)
+        let utcDateStr = utcFormatter.string(from: Date())
         str = BaseDestination().formatDate(utcFormatter.dateFormat, timeZone: "UTC")
 
         format = "$Zyyyy-MM-dd HH:mm:ss$z"
@@ -212,14 +213,14 @@ class BaseDestinationTests: XCTestCase {
         // HH:mm:ss
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm:ss"
-        let dateStr = formatter.string(from: NSDate() as Date)
+        let dateStr = formatter.string(from: Date())
         str = BaseDestination().formatDate(formatter.dateFormat)
         XCTAssertEqual(str, dateStr)
         // test UTC
         let utcFormatter = DateFormatter()
         utcFormatter.timeZone = TimeZone(abbreviation: "UTC")
         utcFormatter.dateFormat = "HH:mm:ss"
-        let utcDateStr = utcFormatter.string(from: NSDate() as Date)
+        let utcDateStr = utcFormatter.string(from: Date())
         str = BaseDestination().formatDate(utcFormatter.dateFormat, timeZone: "UTC")
         XCTAssertEqual(str, utcDateStr)
     }
@@ -506,4 +507,38 @@ class BaseDestinationTests: XCTestCase {
                                                       message: "Hello World"))
     }
 
+    
+    // MARK: Linux allTests
+    
+    static let allTests = [
+        ("testFormatMessage", testFormatMessage),
+        ("testLevelWord", testLevelWord),
+        ("testColorForLevel", testColorForLevel),
+        ("testFileNameOfFile", testFileNameOfFile),
+        ("testFileNameOfFileWithoutSuffix", testFileNameOfFileWithoutSuffix),
+        ("testFormatDate", testFormatDate),
+        ("test_init_noMinLevelSet", test_init_noMinLevelSet),
+        ("test_init_minLevelSet", test_init_minLevelSet),
+        ("test_shouldLevelBeLogged_hasMinLevel_True", test_shouldLevelBeLogged_hasMinLevel_True),
+        ("test_shouldLevelBeLogged_hasMinLevel_False", test_shouldLevelBeLogged_hasMinLevel_False),
+        ("test_shouldLevelBeLogged_hasMinLevelAndMatchingLevelAndEqualPath_True", test_shouldLevelBeLogged_hasMinLevelAndMatchingLevelAndEqualPath_True),
+        ("test_shouldLevelBeLogged_hasMinLevelAndNoMatchingLevelButEqualPath_False", test_shouldLevelBeLogged_hasMinLevelAndNoMatchingLevelButEqualPath_False),
+        ("test_shouldLevelBeLogged_hasMinLevelAndOneEqualsPathFilterAndDoesNotPass_False", test_shouldLevelBeLogged_hasMinLevelAndOneEqualsPathFilterAndDoesNotPass_False),
+        ("test_shouldLevelBeLogged_hasLevelFilterAndTwoRequiredPathFiltersAndPasses_True", test_shouldLevelBeLogged_hasLevelFilterAndTwoRequiredPathFiltersAndPasses_True),
+        ("test_shouldLevelBeLogged_hasLevelFilterAndTwoRequiredPathFiltersAndDoesNotPass_False", test_shouldLevelBeLogged_hasLevelFilterAndTwoRequiredPathFiltersAndDoesNotPass_False),
+        ("test_shouldLevelBeLogged_hasLevelFilterARequiredPathFilterAndTwoRequiredMessageFiltersAndPasses_True", test_shouldLevelBeLogged_hasLevelFilterARequiredPathFilterAndTwoRequiredMessageFiltersAndPasses_True),
+        ("test_shouldLevelBeLogged_hasLevelFilterARequiredPathFilterAndTwoRequiredMessageFiltersAndDoesNotPass_False", test_shouldLevelBeLogged_hasLevelFilterARequiredPathFilterAndTwoRequiredMessageFiltersAndDoesNotPass_False),
+        ("test_shouldLevelBeLogged_hasLevelFilterCombinationOfAllOtherFiltersAndPasses_True", test_shouldLevelBeLogged_hasLevelFilterCombinationOfAllOtherFiltersAndPasses_True),
+        ("test_shouldLevelBeLogged_hasLevelFilterCombinationOfAllOtherFiltersAndDoesNotPass_False", test_shouldLevelBeLogged_hasLevelFilterCombinationOfAllOtherFiltersAndDoesNotPass_False),
+        ("test_shouldLevelBeLogged_hasLevelFilterCombinationOfOtherFiltersIncludingNonRequiredAndPasses_True", test_shouldLevelBeLogged_hasLevelFilterCombinationOfOtherFiltersIncludingNonRequiredAndPasses_True),
+        ("test_shouldLevelBeLogged_hasLevelFilterCombinationOfOtherFiltersIncludingNonRequired_True", test_shouldLevelBeLogged_hasLevelFilterCombinationOfOtherFiltersIncludingNonRequired_True),
+        ("test_shouldLevelBeLogged_hasLevelFilterCombinationOfOtherFiltersIncludingNonRequired_False", test_shouldLevelBeLogged_hasLevelFilterCombinationOfOtherFiltersIncludingNonRequired_False),
+        ("test_shouldLevelBeLogged_hasMatchingNonRequiredFilter_True", test_shouldLevelBeLogged_hasMatchingNonRequiredFilter_True),
+        ("test_shouldLevelBeLogged_hasNoMatchingNonRequiredFilter_False", test_shouldLevelBeLogged_hasNoMatchingNonRequiredFilter_False),
+        ("test_shouldLevelBeLogged_hasNoMatchingNonRequiredFilterAndMinLevel_False", test_shouldLevelBeLogged_hasNoMatchingNonRequiredFilterAndMinLevel_False),
+        ("test_shouldLevelBeLogged_noFilters_True", test_shouldLevelBeLogged_noFilters_True),
+        ("test_shouldLevelBeLogged_multipleNonRequiredFiltersAndGlobal_True", test_shouldLevelBeLogged_multipleNonRequiredFiltersAndGlobal_True),
+        ("test_shouldLevelBeLogged_excludeFilter_True", test_shouldLevelBeLogged_excludeFilter_True)
+    ]
+    
 }

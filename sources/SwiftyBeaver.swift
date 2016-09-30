@@ -61,23 +61,24 @@ public class SwiftyBeaver {
 
     /// returns the current thread name
     class func threadName() -> String {
-        if Thread.isMainThread {
-            return ""
-        } else {
-            let threadName = Thread.current.name
-            if let threadName = threadName, !threadName.isEmpty {
-                return threadName
-            } else {
-                return String(format: "%p", Thread.current)
-            }
 
-            /*
-             // had to remove the following block.
-             // dispatch_queue_get_label seems not to be existing anymore in Swift 3
-             else if let queueName = NSString(utf8String:
-             dispatch_queue_get_label(DISPATCH_CURRENT_QUEUE_LABEL)) as String? where !queueName.isEmpty {
-             return queueName*/
-        }
+        #if os(Linux)
+            // on 9/30/2016 not yet implemented in server-side Swift:
+            // > import Foundation
+            // > Thread.isMainThread
+            return ""
+        #else
+            if Thread.isMainThread {
+                return ""
+            } else {
+                let threadName = Thread.current.name
+                if let threadName = threadName, !threadName.isEmpty {
+                    return threadName
+                } else {
+                    return String(format: "%p", Thread.current)
+                }
+            }
+        #endif
     }
 
     // MARK: Levels

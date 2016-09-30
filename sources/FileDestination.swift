@@ -20,8 +20,7 @@ public class FileDestination: BaseDestination {
     public override init() {
         // platform-dependent logfile directory default
         var baseURL: URL?
-
-        if OS == "OSX" {
+        #if os(OSX)
             if let url = fileManager.urls(for:.cachesDirectory, in: .userDomainMask).first {
                 baseURL = url
                 // try to use ~/Library/Caches/APP NAME instead of ~/Library/Caches
@@ -37,12 +36,16 @@ public class FileDestination: BaseDestination {
                     }
                 }
             }
-        } else {
-            // iOS, watchOS, etc. are using the caches directory
-            if let url = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first {
-                baseURL = url
-            }
-        }
+        #else
+            #if os(Linux)
+                baseURL = URL(string: "/var/cache")
+            #else
+                // iOS, watchOS, etc. are using the caches directory
+                if let url = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first {
+                    baseURL = url
+                }
+            #endif
+        #endif
 
         if let baseURL = baseURL {
             logFileURL = baseURL.appendingPathComponent("swiftybeaver.log", isDirectory: false)
@@ -95,7 +98,7 @@ public class FileDestination: BaseDestination {
                     fileHandle = try FileHandle(forWritingTo: url as URL)
                 }
                 if let fileHandle = fileHandle {
-                    fileHandle.seekToEndOfFile()
+                    let _ = fileHandle.seekToEndOfFile()
                     let line = str + "\n"
                     let data = line.data(using: String.Encoding.utf8)!
                     fileHandle.write(data)

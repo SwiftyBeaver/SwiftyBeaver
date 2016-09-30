@@ -7,6 +7,7 @@
 //  Some rights reserved: http://opensource.org/licenses/MIT
 //
 
+import Foundation
 import XCTest
 @testable import SwiftyBeaver
 
@@ -110,7 +111,7 @@ class SBPlatformDestinationTests: XCTestCase {
         let correctURL = platform.serverURL
 
         // invalid address
-        platform.serverURL = NSURL(string: "https://notexisting.swiftybeaver.com")! as URL
+        platform.serverURL = URL(string: "https://notexisting.swiftybeaver.com")! as URL
         let exp = expectation(description: "returns false due to invalid URL")
 
         platform.sendToServerAsync(jsonStr) {
@@ -194,7 +195,7 @@ class SBPlatformDestinationTests: XCTestCase {
             }
 
             formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
-            let dateStr = formatter.string(from: NSDate() as Date)
+            let dateStr = formatter.string(from: Date())
 
             log.debug("msg \(index) - \(dateStr)")
         }
@@ -261,7 +262,7 @@ class SBPlatformDestinationTests: XCTestCase {
 
 
     /// helper function to delete temp file before test
-    func deleteFile(url: NSURL) -> Bool {
+    func deleteFile(url: URL) -> Bool {
         do {
             try FileManager.default.removeItem(at: url as URL)
             return true
@@ -270,4 +271,16 @@ class SBPlatformDestinationTests: XCTestCase {
         }
         return false
     }
+    
+    // MARK: Linux allTests
+    
+    static let allTests = [
+        ("testLoggingWithoutDestination", testLoggingWithoutDestination),
+        ("testSend", testSend),
+        ("testSendingPointsFromLevel", testSendingPointsFromLevel),
+        ("testSendToServerAsync", testSendToServerAsync),
+        ("testIntegration", testIntegration),
+        ("testDeviceDetails", testDeviceDetails),
+        ("testAnalytics", testAnalytics)
+    ]
 }

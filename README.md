@@ -185,6 +185,17 @@ More destination & system documentation is coming soon! <br/>Get support via Git
 
 
 <br/>
+
+## Server-side Swift
+
+We ❤️ server-side Swift 3 and SwiftyBeaver supports it out-of-the-box. To see SwiftyBeaver running in a Docker container on Ubuntu just go to your the project folder and type:
+
+```shell
+# create docker image, build SwiftyBeaver and run tests
+swift build --clean && docker build --rm -t swiftybeaver .
+```
+
+<br/>
 ## License
 
 SwiftyBeaver Framework is released under the [MIT License](https://github.com/SwiftyBeaver/SwiftyBeaver/blob/master/LICENSE).
