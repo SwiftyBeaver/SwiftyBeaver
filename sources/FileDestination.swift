@@ -9,6 +9,7 @@
 
 import Foundation
 
+
 public class FileDestination: BaseDestination {
 
     public var logFileURL: URL?
@@ -38,7 +39,7 @@ public class FileDestination: BaseDestination {
             }
         #else
             #if os(Linux)
-                baseURL = URL(string: "/var/cache")
+                baseURL = URL(fileURLWithPath: "/var/cache")
             #else
                 // iOS, watchOS, etc. are using the caches directory
                 if let url = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first {
@@ -90,7 +91,7 @@ public class FileDestination: BaseDestination {
             if fileManager.fileExists(atPath: url.path) == false {
                 // create file if not existing
                 let line = str + "\n"
-                try line.write(to: url as URL, atomically: true, encoding: String.Encoding.utf8)
+                try line.write(to: url, atomically: true, encoding: .utf8)
             } else {
                 // append to end of file
                 if fileHandle == nil {
@@ -100,8 +101,9 @@ public class FileDestination: BaseDestination {
                 if let fileHandle = fileHandle {
                     let _ = fileHandle.seekToEndOfFile()
                     let line = str + "\n"
-                    let data = line.data(using: String.Encoding.utf8)!
-                    fileHandle.write(data)
+                    if let data = line.data(using: String.Encoding.utf8) {
+                        fileHandle.write(data)
+                    }
                 }
             }
             return true
