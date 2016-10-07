@@ -130,8 +130,8 @@ public class SBPlatformDestination: BaseDestination {
 
         #if os(Linux)
             // get, update loaded and save analytics data to file on start
-            let _ = analytics(analyticsFileURL, update: true)
-            //let _ = saveDictToFile(dict, url: analyticsFileURL)
+            let dict = analytics(analyticsFileURL, update: true)
+            let _ = saveDictToFile(dict, url: analyticsFileURL)
         #else
             if let baseURL = baseURL {
                 // is just set for everything but not Linux
