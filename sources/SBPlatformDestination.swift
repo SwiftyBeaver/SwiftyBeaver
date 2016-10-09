@@ -290,7 +290,7 @@ public class SBPlatformDestination: BaseDestination {
             request.httpMethod = "POST"
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             request.addValue("application/json", forHTTPHeaderField: "Accept")
-            
+
             // basic auth header
             let credentials = "\(appID):\(appSecret)".data(using: String.Encoding.utf8)!
             let base64Credentials = credentials.base64EncodedString(options: [])

@@ -32,8 +32,8 @@ public class FileDestination: BaseDestination {
                                                             withIntermediateDirectories: true, attributes: nil)
                             baseURL = appURL
                         }
-                    } catch let error as NSError {
-                        print("Warning! Could not create folder /Library/Caches/\(appName). \(error)")
+                    } catch {
+                        print("Warning! Could not create folder /Library/Caches/\(appName)")
                     }
                 }
             }
@@ -107,8 +107,8 @@ public class FileDestination: BaseDestination {
                 }
             }
             return true
-        } catch let error {
-            print("SwiftyBeaver File Destination could not write to file \(url). \(error)")
+        } catch {
+            print("SwiftyBeaver File Destination could not write to file \(url).")
             return false
         }
     }
