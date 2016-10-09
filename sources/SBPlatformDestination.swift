@@ -273,9 +273,7 @@ public class SBPlatformDestination: BaseDestination {
     /// sends a string to the SwiftyBeaver Platform server, returns ok if status 200 and HTTP status
     func sendToServerAsync(_ str: String?, complete: @escaping (_ ok: Bool, _ status: Int) -> ()) {
 
-        // swiftlint:disable conditional_binding_cascade
         if let payload = str, let queue = self.queue, let serverURL = serverURL {
-        // swiftlint:enable conditional_binding_cascade
 
             // create operation queue which uses current serial queue of destination
             let operationQueue = OperationQueue()
@@ -285,12 +283,14 @@ public class SBPlatformDestination: BaseDestination {
                 URLSessionConfiguration.default,
                 delegate: nil, delegateQueue: operationQueue)
 
-            // assemble request
+            toNSLog("assembling request ...")
+
+             // assemble request
             var request = URLRequest(url: serverURL)
             request.httpMethod = "POST"
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             request.addValue("application/json", forHTTPHeaderField: "Accept")
-
+            
             // basic auth header
             let credentials = "\(appID):\(appSecret)".data(using: String.Encoding.utf8)!
             let base64Credentials = credentials.base64EncodedString(options: [])
@@ -304,16 +304,15 @@ public class SBPlatformDestination: BaseDestination {
                 toNSLog("Error! Could not create JSON for server payload.")
             }
             //toNSLog("sending params: \(params)")
-            //toNSLog("\n\nbefore sendToServer on thread '\(threadName())'")
+            toNSLog("sending ...")
 
             sendingInProgress = true
 
             // send request async to server on destination queue
-            let task = session.dataTask(with: request) {
-                _, response, error in
+            let task = session.dataTask(with: request) { _, response, error in
                 var ok = false
                 var status = 0
-                //toNSLog("callback of sendToServer on thread '\(self.threadName())'")
+                self.toNSLog("received response from server")
 
                 if let error = error {
                     // an error did occur
@@ -335,9 +334,9 @@ public class SBPlatformDestination: BaseDestination {
                 return complete(ok, status)
             }
             task.resume()
+            //while true {} // commenting this line causes a crash on Linux unit tests?!?
         }
     }
-
 
     /// returns sending points based on level
     func sendingPointsForLevel(_ level: SwiftyBeaver.Level) -> Int {

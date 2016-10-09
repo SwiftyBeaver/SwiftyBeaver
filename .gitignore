@@ -6,6 +6,7 @@
 Icon?
 
 Secrets.*
+_*
 
 ## Build generated
 build/
