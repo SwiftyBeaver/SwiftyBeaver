@@ -9,6 +9,7 @@
 
 import Foundation
 
+
 public class FileDestination: BaseDestination {
 
     public var logFileURL: URL?
@@ -20,8 +21,7 @@ public class FileDestination: BaseDestination {
     public override init() {
         // platform-dependent logfile directory default
         var baseURL: URL?
-
-        if OS == "OSX" {
+        #if os(OSX)
             if let url = fileManager.urls(for:.cachesDirectory, in: .userDomainMask).first {
                 baseURL = url
                 // try to use ~/Library/Caches/APP NAME instead of ~/Library/Caches
@@ -32,17 +32,21 @@ public class FileDestination: BaseDestination {
                                                             withIntermediateDirectories: true, attributes: nil)
                             baseURL = appURL
                         }
-                    } catch let error as NSError {
-                        print("Warning! Could not create folder /Library/Caches/\(appName). \(error)")
+                    } catch {
+                        print("Warning! Could not create folder /Library/Caches/\(appName)")
                     }
                 }
             }
-        } else {
-            // iOS, watchOS, etc. are using the caches directory
-            if let url = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first {
-                baseURL = url
-            }
-        }
+        #else
+            #if os(Linux)
+                baseURL = URL(fileURLWithPath: "/var/cache")
+            #else
+                // iOS, watchOS, etc. are using the caches directory
+                if let url = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first {
+                    baseURL = url
+                }
+            #endif
+        #endif
 
         if let baseURL = baseURL {
             logFileURL = baseURL.appendingPathComponent("swiftybeaver.log", isDirectory: false)
@@ -87,7 +91,7 @@ public class FileDestination: BaseDestination {
             if fileManager.fileExists(atPath: url.path) == false {
                 // create file if not existing
                 let line = str + "\n"
-                try line.write(to: url as URL, atomically: true, encoding: String.Encoding.utf8)
+                try line.write(to: url, atomically: true, encoding: .utf8)
             } else {
                 // append to end of file
                 if fileHandle == nil {
@@ -95,15 +99,16 @@ public class FileDestination: BaseDestination {
                     fileHandle = try FileHandle(forWritingTo: url as URL)
                 }
                 if let fileHandle = fileHandle {
-                    fileHandle.seekToEndOfFile()
+                    let _ = fileHandle.seekToEndOfFile()
                     let line = str + "\n"
-                    let data = line.data(using: String.Encoding.utf8)!
-                    fileHandle.write(data)
+                    if let data = line.data(using: String.Encoding.utf8) {
+                        fileHandle.write(data)
+                    }
                 }
             }
             return true
-        } catch let error {
-            print("SwiftyBeaver File Destination could not write to file \(url). \(error)")
+        } catch {
+            print("SwiftyBeaver File Destination could not write to file \(url).")
             return false
         }
     }

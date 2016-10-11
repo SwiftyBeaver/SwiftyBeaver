@@ -7,6 +7,7 @@
 //  Some rights reserved: http://opensource.org/licenses/MIT
 //
 
+import Foundation
 import XCTest
 @testable import SwiftyBeaver
 
@@ -229,4 +230,19 @@ class SwiftyBeaverTests: XCTestCase {
         f = "aFunc()"
         XCTAssertEqual(SwiftyBeaver.stripParams(function: f), "aFunc()")
     }
+    
+    
+    static let allTests = [
+        ("testAddDestination", testAddDestination),
+        ("testRemoveDestination", testRemoveDestination),
+        ("testLoggingWithoutDestination", testLoggingWithoutDestination),
+        ("testDestinationIntegration", testDestinationIntegration),
+        ("testColors", testColors),
+        ("testModifiedColors", testModifiedColors),
+        ("testDifferentMessageTypes", testDifferentMessageTypes),
+        ("testAutoClosure", testAutoClosure),
+        ("testLongRunningTaskIsNotExecutedWhenLoggingUnderMinLevel", testLongRunningTaskIsNotExecutedWhenLoggingUnderMinLevel),
+        ("testVersionAndBuild", testVersionAndBuild),
+        ("testStripParams", testStripParams),
+    ]
 }

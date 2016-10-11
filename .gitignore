@@ -6,10 +6,12 @@
 Icon?
 
 Secrets.*
+_*
 
 ## Build generated
 build/
 DerivedData
+swift-3.0-RELEASE-ubuntu14.04
 
 ## Various settings
 *.pbxuser

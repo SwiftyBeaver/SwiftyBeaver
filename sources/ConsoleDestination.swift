@@ -34,7 +34,11 @@ public class ConsoleDestination: BaseDestination {
 
         if let str = formattedString {
             if useNSLog {
-                NSLog("%@", str)
+                #if os(Linux)
+                    print(str)
+                #else
+                    NSLog("%@", str)
+                #endif
             } else {
                 print(str)
             }

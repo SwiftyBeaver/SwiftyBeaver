@@ -25,15 +25,15 @@ class AES256CBCTests: XCTestCase {
         let password = AES256CBC.randomText(32)
         let encrypted = AES256CBC.encryptString(str, password: password)
         XCTAssertNotNil(encrypted)
-        //NSLog("str: \(str)")
-        //NSLog("password: \(password)")
-        //NSLog("encrypted secret (IV is at first 16 chars): \(encrypted)")
+        //print("str: \(str)")
+        //print("password: \(password)")
+        //printn("encrypted secret (IV is at first 16 chars): \(encrypted)")
 
         if let encrypted = encrypted {
             XCTAssertGreaterThan(encrypted.characters.count, 16)
             // decrypt
             let decrypted = AES256CBC.decryptString(encrypted, password: password)
-            //NSLog("decrypted str: \(decrypted)")
+            //print("decrypted str: \(decrypted)")
             XCTAssertNotNil(decrypted)
             XCTAssertEqual(decrypted, str)
         }
@@ -106,7 +106,7 @@ class AES256CBCTests: XCTestCase {
     }
 
     func testRandomText() {
-        let length = 32
+        let length = 6
         let text = AES256CBC.randomText(length)
         let text2 = AES256CBC.randomText(length)
         XCTAssertEqual(text.characters.count, length)
@@ -126,4 +126,13 @@ class AES256CBCTests: XCTestCase {
         XCTAssertNil(pw2.range(of: " "))
     }
 
+    // MARK: Linux allTests
+    
+    static let allTests = [
+        ("testEncryptDecryptStringCycle", testEncryptDecryptStringCycle),
+        ("testEncryptString", testEncryptString),
+        ("testDecryptString", testDecryptString),
+        ("testRandomText", testRandomText),
+        ("testGeneratePassword", testGeneratePassword),
+    ]
 }

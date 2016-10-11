@@ -7,22 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		048E6BFA1CDBB68E00DC9116 /* DestinationSetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048E6BF91CDBB68E00DC9116 /* DestinationSetTests.swift */; };
-		54C189632F81D8BF9659C66B /* FilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C1856662C0326F8E96C1B8 /* FilterTests.swift */; };
 		9E195B0A1C6B3B4600D924CB /* AES256CBC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E195B091C6B3B4600D924CB /* AES256CBC.swift */; };
 		9E195B0B1C6B3B4600D924CB /* AES256CBC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E195B091C6B3B4600D924CB /* AES256CBC.swift */; };
 		9E195B0C1C6B3B4600D924CB /* AES256CBC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E195B091C6B3B4600D924CB /* AES256CBC.swift */; };
 		9E195B0D1C6B3B4600D924CB /* AES256CBC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E195B091C6B3B4600D924CB /* AES256CBC.swift */; };
-		9E195B0F1C6B3B6F00D924CB /* AES256CBCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E195B0E1C6B3B6F00D924CB /* AES256CBCTests.swift */; };
 		9E236E6C1D016E3600A2CBDC /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E236E6B1D016E3600A2CBDC /* Filter.swift */; };
+		9E2AEAD11D9BB46300F21B1F /* AES256CBCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEAC81D9BB46300F21B1F /* AES256CBCTests.swift */; };
+		9E2AEAD21D9BB46300F21B1F /* BaseDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEAC91D9BB46300F21B1F /* BaseDestinationTests.swift */; };
+		9E2AEAD31D9BB46300F21B1F /* DestinationSetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEACA1D9BB46300F21B1F /* DestinationSetTests.swift */; };
+		9E2AEAD41D9BB46300F21B1F /* FileDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEACB1D9BB46300F21B1F /* FileDestinationTests.swift */; };
+		9E2AEAD51D9BB46300F21B1F /* FilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEACC1D9BB46300F21B1F /* FilterTests.swift */; };
+		9E2AEAD61D9BB46300F21B1F /* SBPlatformDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEACD1D9BB46300F21B1F /* SBPlatformDestinationTests.swift */; };
+		9E2AEAD81D9BB46300F21B1F /* SecretsExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEACF1D9BB46300F21B1F /* SecretsExample.swift */; };
+		9E2AEAD91D9BB46300F21B1F /* SwiftyBeaverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEAD01D9BB46300F21B1F /* SwiftyBeaverTests.swift */; };
 		9E31D6291C185ECD004E0980 /* SwiftyBeaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E31D6281C185ECD004E0980 /* SwiftyBeaver.swift */; };
 		9E31D62E1C185EE3004E0980 /* BaseDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E31D62B1C185EE3004E0980 /* BaseDestination.swift */; };
 		9E31D62F1C185EE3004E0980 /* ConsoleDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E31D62C1C185EE3004E0980 /* ConsoleDestination.swift */; };
 		9E31D6301C185EE3004E0980 /* FileDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E31D62D1C185EE3004E0980 /* FileDestination.swift */; };
-		9E6CA9FC1C12BA7A009D9093 /* BaseDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6CA9FB1C12BA7A009D9093 /* BaseDestinationTests.swift */; };
 		9E6CAA481C148EC1009D9093 /* SwiftyBeaver.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 9E6CAA471C148EC1009D9093 /* SwiftyBeaver.podspec */; };
 		9E6CAA4A1C149579009D9093 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 9E6CAA491C149579009D9093 /* LICENSE */; };
-		9E88C4711D19301000B1289F /* FileDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E88C4701D19301000B1289F /* FileDestinationTests.swift */; };
 		9EA06DB51D083C9D001DB20A /* SBPlatformDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA06DB41D083C9D001DB20A /* SBPlatformDestination.swift */; };
 		9EA06DB61D083CA4001DB20A /* SBPlatformDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA06DB41D083C9D001DB20A /* SBPlatformDestination.swift */; };
 		9EA06DB71D083CA5001DB20A /* SBPlatformDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA06DB41D083C9D001DB20A /* SBPlatformDestination.swift */; };
@@ -30,10 +33,7 @@
 		9EA0A5491D06EBE500CF16AB /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E236E6B1D016E3600A2CBDC /* Filter.swift */; };
 		9EA0A54A1D06EBE500CF16AB /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E236E6B1D016E3600A2CBDC /* Filter.swift */; };
 		9EA0A54B1D06EBE500CF16AB /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E236E6B1D016E3600A2CBDC /* Filter.swift */; };
-		9EA53F8B1C561EE600B160AF /* SecretsExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA53F8A1C561EE600B160AF /* SecretsExample.swift */; };
-		9ED096FD1C521D3200FE3059 /* SBPlatformDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED096FC1C521D3200FE3059 /* SBPlatformDestinationTests.swift */; };
 		9EDCE3EF1C09D211002FA4A7 /* SwiftyBeaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EDCE3E41C09D211002FA4A7 /* SwiftyBeaver.framework */; };
-		9EDCE3F41C09D211002FA4A7 /* SwiftyBeaverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDCE3F31C09D211002FA4A7 /* SwiftyBeaverTests.swift */; };
 		ACE597771C1882DF0031451F /* ConsoleDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E31D62C1C185EE3004E0980 /* ConsoleDestination.swift */; };
 		ACE597781C1882DF0031451F /* SwiftyBeaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E31D6281C185ECD004E0980 /* SwiftyBeaver.swift */; };
 		ACE597791C1882DF0031451F /* FileDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E31D62D1C185EE3004E0980 /* FileDestination.swift */; };
@@ -65,13 +65,21 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		048E6BF91CDBB68E00DC9116 /* DestinationSetTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DestinationSetTests.swift; sourceTree = "<group>"; };
-		54C1856662C0326F8E96C1B8 /* FilterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterTests.swift; sourceTree = "<group>"; };
 		9E11A1DA1D92654E002112B6 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .swiftlint.yml; sourceTree = "<group>"; };
 		9E195B091C6B3B4600D924CB /* AES256CBC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AES256CBC.swift; path = sources/AES256CBC.swift; sourceTree = "<group>"; };
-		9E195B0E1C6B3B6F00D924CB /* AES256CBCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AES256CBCTests.swift; sourceTree = "<group>"; };
 		9E195B101C6B766D00D924CB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9E236E6B1D016E3600A2CBDC /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Filter.swift; path = sources/Filter.swift; sourceTree = "<group>"; };
+		9E2AEAC51D9BB43C00F21B1F /* LinuxMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LinuxMain.swift; path = Tests/LinuxMain.swift; sourceTree = "<group>"; };
+		9E2AEAC61D9BB44700F21B1F /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Tests/Info.plist; sourceTree = "<group>"; };
+		9E2AEAC81D9BB46300F21B1F /* AES256CBCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AES256CBCTests.swift; path = Tests/SwiftyBeaverTests/AES256CBCTests.swift; sourceTree = "<group>"; };
+		9E2AEAC91D9BB46300F21B1F /* BaseDestinationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseDestinationTests.swift; path = Tests/SwiftyBeaverTests/BaseDestinationTests.swift; sourceTree = "<group>"; };
+		9E2AEACA1D9BB46300F21B1F /* DestinationSetTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DestinationSetTests.swift; path = Tests/SwiftyBeaverTests/DestinationSetTests.swift; sourceTree = "<group>"; };
+		9E2AEACB1D9BB46300F21B1F /* FileDestinationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FileDestinationTests.swift; path = Tests/SwiftyBeaverTests/FileDestinationTests.swift; sourceTree = "<group>"; };
+		9E2AEACC1D9BB46300F21B1F /* FilterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FilterTests.swift; path = Tests/SwiftyBeaverTests/FilterTests.swift; sourceTree = "<group>"; };
+		9E2AEACD1D9BB46300F21B1F /* SBPlatformDestinationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBPlatformDestinationTests.swift; path = Tests/SwiftyBeaverTests/SBPlatformDestinationTests.swift; sourceTree = "<group>"; };
+		9E2AEACE1D9BB46300F21B1F /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Secrets.swift; path = Tests/SwiftyBeaverTests/Secrets.swift; sourceTree = "<group>"; };
+		9E2AEACF1D9BB46300F21B1F /* SecretsExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SecretsExample.swift; path = Tests/SwiftyBeaverTests/SecretsExample.swift; sourceTree = "<group>"; };
+		9E2AEAD01D9BB46300F21B1F /* SwiftyBeaverTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyBeaverTests.swift; path = Tests/SwiftyBeaverTests/SwiftyBeaverTests.swift; sourceTree = "<group>"; };
 		9E31D6281C185ECD004E0980 /* SwiftyBeaver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyBeaver.swift; path = sources/SwiftyBeaver.swift; sourceTree = "<group>"; };
 		9E31D62B1C185EE3004E0980 /* BaseDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseDestination.swift; path = sources/BaseDestination.swift; sourceTree = "<group>"; };
 		9E31D62C1C185EE3004E0980 /* ConsoleDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConsoleDestination.swift; path = sources/ConsoleDestination.swift; sourceTree = "<group>"; };
@@ -79,19 +87,13 @@
 		9E43ACA21D0FFBAC00BD02C6 /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 		9E4BBDFA1C09EB7F00220716 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		9E4BBDFE1C0A01D000220716 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		9E6CA9FB1C12BA7A009D9093 /* BaseDestinationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDestinationTests.swift; sourceTree = "<group>"; };
 		9E6CAA471C148EC1009D9093 /* SwiftyBeaver.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SwiftyBeaver.podspec; sourceTree = "<group>"; };
 		9E6CAA491C149579009D9093 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		9E74FEA81CD74AFA0024DD76 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
-		9E88C4701D19301000B1289F /* FileDestinationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileDestinationTests.swift; sourceTree = "<group>"; };
 		9EA06DB41D083C9D001DB20A /* SBPlatformDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBPlatformDestination.swift; path = sources/SBPlatformDestination.swift; sourceTree = "<group>"; };
-		9EA53F881C561E4C00B160AF /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
-		9EA53F8A1C561EE600B160AF /* SecretsExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecretsExample.swift; sourceTree = "<group>"; };
-		9ED096FC1C521D3200FE3059 /* SBPlatformDestinationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBPlatformDestinationTests.swift; sourceTree = "<group>"; };
+		9EA8054D1D9BB54100348BC6 /* Dockerfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Dockerfile; sourceTree = "<group>"; };
 		9EDCE3E41C09D211002FA4A7 /* SwiftyBeaver.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyBeaver.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EDCE3EE1C09D211002FA4A7 /* SwiftyBeaverTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftyBeaverTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		9EDCE3F31C09D211002FA4A7 /* SwiftyBeaverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyBeaverTests.swift; sourceTree = "<group>"; };
-		9EDCE3F51C09D211002FA4A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ACE597841C1882DF0031451F /* SwiftyBeaver.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyBeaver.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACE597951C18830D0031451F /* SwiftyBeaver.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyBeaver.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACE597A61C18832E0031451F /* SwiftyBeaver.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyBeaver.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -137,6 +139,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9E2AEAC31D9BB3D000F21B1F /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				9E2AEAC61D9BB44700F21B1F /* Info.plist */,
+				9E2AEAC51D9BB43C00F21B1F /* LinuxMain.swift */,
+				9E2AEAC41D9BB3E700F21B1F /* SwiftyBeaverTests */,
+			);
+			name = Tests;
+			sourceTree = "<group>";
+		};
+		9E2AEAC41D9BB3E700F21B1F /* SwiftyBeaverTests */ = {
+			isa = PBXGroup;
+			children = (
+				9E2AEAC81D9BB46300F21B1F /* AES256CBCTests.swift */,
+				9E2AEAC91D9BB46300F21B1F /* BaseDestinationTests.swift */,
+				9E2AEACA1D9BB46300F21B1F /* DestinationSetTests.swift */,
+				9E2AEACB1D9BB46300F21B1F /* FileDestinationTests.swift */,
+				9E2AEACC1D9BB46300F21B1F /* FilterTests.swift */,
+				9E2AEACD1D9BB46300F21B1F /* SBPlatformDestinationTests.swift */,
+				9E2AEACE1D9BB46300F21B1F /* Secrets.swift */,
+				9E2AEACF1D9BB46300F21B1F /* SecretsExample.swift */,
+				9E2AEAD01D9BB46300F21B1F /* SwiftyBeaverTests.swift */,
+			);
+			name = SwiftyBeaverTests;
+			sourceTree = "<group>";
+		};
 		9E31D62A1C185ED0004E0980 /* sources */ = {
 			isa = PBXGroup;
 			children = (
@@ -158,12 +186,13 @@
 				9E11A1DA1D92654E002112B6 /* .swiftlint.yml */,
 				9E43ACA21D0FFBAC00BD02C6 /* .travis.yml */,
 				9E6CAA491C149579009D9093 /* LICENSE */,
+				9EA8054D1D9BB54100348BC6 /* Dockerfile */,
 				9E195B101C6B766D00D924CB /* Info.plist */,
 				9E74FEA81CD74AFA0024DD76 /* CHANGELOG.md */,
 				9E4BBDFE1C0A01D000220716 /* README.md */,
 				9E6CAA471C148EC1009D9093 /* SwiftyBeaver.podspec */,
 				9E31D62A1C185ED0004E0980 /* sources */,
-				9EDCE3F21C09D211002FA4A7 /* SwiftyBeaverTests */,
+				9E2AEAC31D9BB3D000F21B1F /* Tests */,
 				9EDCE3E51C09D211002FA4A7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -178,23 +207,6 @@
 				ACE597A61C18832E0031451F /* SwiftyBeaver.framework */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		9EDCE3F21C09D211002FA4A7 /* SwiftyBeaverTests */ = {
-			isa = PBXGroup;
-			children = (
-				9E195B0E1C6B3B6F00D924CB /* AES256CBCTests.swift */,
-				9E6CA9FB1C12BA7A009D9093 /* BaseDestinationTests.swift */,
-				9EDCE3F51C09D211002FA4A7 /* Info.plist */,
-				9ED096FC1C521D3200FE3059 /* SBPlatformDestinationTests.swift */,
-				9EDCE3F31C09D211002FA4A7 /* SwiftyBeaverTests.swift */,
-				9EA53F881C561E4C00B160AF /* Secrets.swift */,
-				9EA53F8A1C561EE600B160AF /* SecretsExample.swift */,
-				048E6BF91CDBB68E00DC9116 /* DestinationSetTests.swift */,
-				54C1856662C0326F8E96C1B8 /* FilterTests.swift */,
-				9E88C4701D19301000B1289F /* FileDestinationTests.swift */,
-			);
-			path = SwiftyBeaverTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -469,14 +481,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9EA53F8B1C561EE600B160AF /* SecretsExample.swift in Sources */,
-				9ED096FD1C521D3200FE3059 /* SBPlatformDestinationTests.swift in Sources */,
-				9E88C4711D19301000B1289F /* FileDestinationTests.swift in Sources */,
-				9EDCE3F41C09D211002FA4A7 /* SwiftyBeaverTests.swift in Sources */,
-				048E6BFA1CDBB68E00DC9116 /* DestinationSetTests.swift in Sources */,
-				9E195B0F1C6B3B6F00D924CB /* AES256CBCTests.swift in Sources */,
-				9E6CA9FC1C12BA7A009D9093 /* BaseDestinationTests.swift in Sources */,
-				54C189632F81D8BF9659C66B /* FilterTests.swift in Sources */,
+				9E2AEAD61D9BB46300F21B1F /* SBPlatformDestinationTests.swift in Sources */,
+				9E2AEAD51D9BB46300F21B1F /* FilterTests.swift in Sources */,
+				9E2AEAD31D9BB46300F21B1F /* DestinationSetTests.swift in Sources */,
+				9E2AEAD81D9BB46300F21B1F /* SecretsExample.swift in Sources */,
+				9E2AEAD11D9BB46300F21B1F /* AES256CBCTests.swift in Sources */,
+				9E2AEAD41D9BB46300F21B1F /* FileDestinationTests.swift in Sources */,
+				9E2AEAD91D9BB46300F21B1F /* SwiftyBeaverTests.swift in Sources */,
+				9E2AEAD21D9BB46300F21B1F /* BaseDestinationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -670,11 +682,13 @@
 		9EDCE3FC1C09D211002FA4A7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = SwiftyBeaverTests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.SwiftyBeaver.SwiftyBeaverTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -682,8 +696,9 @@
 		9EDCE3FD1C09D211002FA4A7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = SwiftyBeaverTests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.SwiftyBeaver.SwiftyBeaverTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";

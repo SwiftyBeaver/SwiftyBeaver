@@ -6,6 +6,7 @@
 //  Copyright © 2016 Sebastian Kreutzberger. All rights reserved.
 //
 
+import Foundation
 import XCTest
 @testable import SwiftyBeaver
 
@@ -128,4 +129,11 @@ class FileDestinationTests: XCTestCase {
             print("Unable to create directory \(error.debugDescription)")
         }
     }
+    
+    // MARK: Linux allTests
+    
+    static let allTests = [
+        ("testFileIsWritten", testFileIsWritten),
+        ("testFileIsWrittenToFolderWithSpaces", testFileIsWrittenToFolderWithSpaces),
+    ]
 }

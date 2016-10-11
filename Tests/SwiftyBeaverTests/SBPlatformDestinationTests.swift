@@ -7,6 +7,7 @@
 //  Some rights reserved: http://opensource.org/licenses/MIT
 //
 
+import Foundation
 import XCTest
 @testable import SwiftyBeaver
 
@@ -68,6 +69,7 @@ class SBPlatformDestinationTests: XCTestCase {
         let file = "/file/path.swift"
         let function = "TestFunction()"
         let line = 123
+        platform.showNSLog = true
         let str = platform.send(.verbose, msg: msg, thread: thread, file: file, function: function, line: line)
         XCTAssertNotNil(str)
         if let str = str {
@@ -110,7 +112,9 @@ class SBPlatformDestinationTests: XCTestCase {
         let correctURL = platform.serverURL
 
         // invalid address
-        platform.serverURL = NSURL(string: "https://notexisting.swiftybeaver.com")! as URL
+        if let serverURL = URL(string: "https://notexisting.swiftybeaver.com") {
+            platform.serverURL = serverURL
+        }
         let exp = expectation(description: "returns false due to invalid URL")
 
         platform.sendToServerAsync(jsonStr) {
@@ -194,7 +198,7 @@ class SBPlatformDestinationTests: XCTestCase {
             }
 
             formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
-            let dateStr = formatter.string(from: NSDate() as Date)
+            let dateStr = formatter.string(from: Date())
 
             log.debug("msg \(index) - \(dateStr)")
         }
@@ -228,7 +232,7 @@ class SBPlatformDestinationTests: XCTestCase {
             return
         }
 
-        let dict = platform.analytics(platform.analyticsFileURL!, update: false)
+        let dict = platform.analytics(platform.analyticsFileURL, update: false)
         print(dict)
         if let uuid = dict["uuid"] as? String {
             XCTAssertEqual(uuid.characters.count, 36)
@@ -247,11 +251,11 @@ class SBPlatformDestinationTests: XCTestCase {
             XCTAssertEqual(userName, "")
         }
 
-        XCTAssertTrue(platform.saveDictToFile(dict, url: platform.analyticsFileURL!))
+        XCTAssertTrue(platform.saveDictToFile(dict, url: platform.analyticsFileURL))
 
         // set userName
         platform.analyticsUserName = "foo@bar.com"
-        let dict2 = platform.analytics(platform.analyticsFileURL!, update: false)
+        let dict2 = platform.analytics(platform.analyticsFileURL, update: false)
         if let userName = dict2["userName"] as? String {
             XCTAssertEqual(userName, "foo@bar.com")
         }
@@ -261,7 +265,7 @@ class SBPlatformDestinationTests: XCTestCase {
 
 
     /// helper function to delete temp file before test
-    func deleteFile(url: NSURL) -> Bool {
+    func deleteFile(url: URL) -> Bool {
         do {
             try FileManager.default.removeItem(at: url as URL)
             return true
@@ -270,4 +274,16 @@ class SBPlatformDestinationTests: XCTestCase {
         }
         return false
     }
+    
+    // MARK: Linux allTests
+    
+    static let allTests = [
+        ("testLoggingWithoutDestination", testLoggingWithoutDestination),
+        ("testSend", testSend),
+        ("testSendingPointsFromLevel", testSendingPointsFromLevel),
+        ("testSendToServerAsync", testSendToServerAsync),
+        ("testIntegration", testIntegration),
+        ("testDeviceDetails", testDeviceDetails),
+        ("testAnalytics", testAnalytics)
+    ]
 }
