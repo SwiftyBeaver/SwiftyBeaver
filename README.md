@@ -110,7 +110,6 @@ For [Swift Package Manager](https://swift.org/package-manager/) add the followin
 <br/>
 <br/>
 
-
 ## Usage
 
 Add that near the top of your `AppDelegate.swift` to be able to use SwiftyBeaver in your whole project.
@@ -155,6 +154,23 @@ log.error(["name": "Mr Beaver", "address": "7 Beaver Lodge"])
 <br/>
 <br/>
 
+## Server-side Swift
+
+We ❤️ server-side Swift 3 and SwiftyBeaver supports it **out-of-the-box**! Try for yourself and run SwiftyBeaver inside a Ubuntu Docker container. Just install Docker and then go to your the project folder on macOS or Ubuntu and type:
+
+```shell
+# create docker image, build SwiftyBeaver and run unit tests
+swift build --clean && docker build --rm -t swiftybeaver .
+
+# optionally log into container to run Swift CLI and do more stuff
+docker run --rm -it --privileged=true -v $PWD:/app swiftybeaver
+```
+
+Best: for the popular server-side Swift web framework [Vapor](https://github.com/vapor/vapor) you can use **[our Vapor logging provider](https://github.com/SwiftyBeaver/SwiftyBeaver-Vapor)** which makes server logging awesome again 🙌
+
+<br/>
+<br/>
+
 ## Documentation
 
 **Getting Started:**
@@ -185,19 +201,6 @@ More destination & system documentation is coming soon! <br/>Get support via Git
 
 
 <br/>
-
-## Server-side Swift
-
-We ❤️ server-side Swift 3 and SwiftyBeaver supports it out-of-the-box. To see SwiftyBeaver running in a Docker container on Ubuntu just go to your the project folder and type:
-
-```shell
-# create docker image, build SwiftyBeaver and run unit tests
-swift build --clean && docker build --rm -t swiftybeaver .
-
-# optionally log into container to run Swift CLI or further inspection
-docker run --rm -it --privileged=true -v $PWD:/app swiftybeaver
-```
-
 <br/>
 ## License
 
