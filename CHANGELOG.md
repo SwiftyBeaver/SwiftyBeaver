@@ -5,6 +5,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ----
 <br/>
+## 1.1.0 (2016-10-12)
+
+##### Added
+
+- Support for server-side Swift (macOS & Linux) [@skreutzberger](https://github.com/skreutzberger)
+
+<br/>
 ## 1.0.3 (2016-09-21)
 
 ##### Changed
