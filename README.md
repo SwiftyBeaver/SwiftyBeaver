@@ -178,7 +178,6 @@ Best: for the popular server-side Swift web framework [Vapor](https://github.com
 - [Features](http://docs.swiftybeaver.com/article/7-introduction)
 - [Installation](http://docs.swiftybeaver.com/article/5-installation)
 - [Basic Setup](http://docs.swiftybeaver.com/article/6-basic-setup)
-​
 
 **Logging Destinations:**
 
@@ -189,6 +188,7 @@ Best: for the popular server-side Swift web framework [Vapor](https://github.com
 **Advanced Topics:**
 
 - [Custom Format](http://docs.swiftybeaver.com/article/20-custom-format)
+- [Filters](http://docs.swiftybeaver.com/article/21-filters)
 
 **Stay Informed:**
 
