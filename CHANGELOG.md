@@ -9,7 +9,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ##### Added
 
-- Support for server-side Swift (macOS & Linux) [@skreutzberger](https://github.com/skreutzberger)
+- Support for server-side Swift (macOS & Linux) by [@skreutzberger](https://github.com/skreutzberger)
 
 <br/>
 ## 1.0.3 (2016-09-21)
