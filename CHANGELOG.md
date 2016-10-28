@@ -5,6 +5,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ----
 <br/>
+## 1.1.1 (2016-10-28)
+
+##### Added
+
+- Support for Xcode 8.1 by [@skreutzberger](https://github.com/skreutzberger)
+
+<br/>
 ## 1.1.0 (2016-10-12)
 
 ##### Added

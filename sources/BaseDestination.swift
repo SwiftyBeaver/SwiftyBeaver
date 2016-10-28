@@ -267,8 +267,8 @@ open class BaseDestination: Hashable, Equatable {
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: dict, options: [])
             jsonString = String(data: jsonData, encoding: .utf8)
-        } catch let error as NSError {
-            print("SwiftyBeaver could not create JSON from dict. \(error)")
+        } catch {
+            print("SwiftyBeaver could not create JSON from dict.")
         }
         return jsonString
     }
