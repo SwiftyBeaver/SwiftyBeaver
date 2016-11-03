@@ -113,8 +113,9 @@ public class FileDestination: BaseDestination {
         }
     }
     
-    @discardableResult
-    public func removeFile() -> Bool {
+    /// deletes log file.
+    /// returns true if file was removed or does not exist, false otherwise
+    public func deleteLogFile() -> Bool {
         guard let url = logFileURL, fileManager.fileExists(atPath: url.path) == true else { return true }
         do {
             try fileManager.removeItem(at: url)
