@@ -112,4 +112,18 @@ public class FileDestination: BaseDestination {
             return false
         }
     }
+    
+    /// deletes log file.
+    /// returns true if file was removed or does not exist, false otherwise
+    public func deleteLogFile() -> Bool {
+        guard let url = logFileURL, fileManager.fileExists(atPath: url.path) == true else { return true }
+        do {
+            try fileManager.removeItem(at: url)
+            fileHandle = nil
+            return true
+        } catch {
+            print("SwiftyBeaver File Destination could not remove file \(url).")
+            return false
+        }
+    }
 }
