@@ -9,7 +9,7 @@
 
 import Foundation
 
-public class SwiftyBeaver {
+open class SwiftyBeaver {
 
     /// version string of framework
     public static let version = "1.1.1"  // UPDATE ON RELEASE!
@@ -25,13 +25,13 @@ public class SwiftyBeaver {
     }
 
     // a set of active destinations
-    public private(set) static var destinations = Set<BaseDestination>()
+    open private(set) static var destinations = Set<BaseDestination>()
 
     // MARK: Destination Handling
 
     /// returns boolean about success
     @discardableResult
-    public class func addDestination(_ destination: BaseDestination) -> Bool {
+    open class func addDestination(_ destination: BaseDestination) -> Bool {
         if destinations.contains(destination) {
             return false
         }
@@ -41,7 +41,7 @@ public class SwiftyBeaver {
 
     /// returns boolean about success
     @discardableResult
-    public class func removeDestination(_ destination: BaseDestination) -> Bool {
+    open class func removeDestination(_ destination: BaseDestination) -> Bool {
         if destinations.contains(destination) == false {
             return false
         }
@@ -50,12 +50,12 @@ public class SwiftyBeaver {
     }
 
     /// if you need to start fresh
-    public class func removeAllDestinations() {
+    open class func removeAllDestinations() {
         destinations.removeAll()
     }
 
     /// returns the amount of destinations
-    public class func countDestinations() -> Int {
+    open class func countDestinations() -> Int {
         return destinations.count
     }
 
@@ -84,31 +84,31 @@ public class SwiftyBeaver {
     // MARK: Levels
 
     /// log something generally unimportant (lowest priority)
-    public class func verbose(_ message: @autoclosure () -> Any, _
+    open class func verbose(_ message: @autoclosure () -> Any, _
         file: String = #file, _ function: String = #function, line: Int = #line) {
         custom(level: .verbose, message: message, file: file, function: function, line: line)
     }
 
     /// log something which help during debugging (low priority)
-    public class func debug(_ message: @autoclosure () -> Any, _
+    open class func debug(_ message: @autoclosure () -> Any, _
         file: String = #file, _ function: String = #function, line: Int = #line) {
         custom(level: .debug, message: message, file: file, function: function, line: line)
     }
 
     /// log something which you are really interested but which is not an issue or error (normal priority)
-    public class func info(_ message: @autoclosure () -> Any, _
+    open class func info(_ message: @autoclosure () -> Any, _
         file: String = #file, _ function: String = #function, line: Int = #line) {
         custom(level: .info, message: message, file: file, function: function, line: line)
     }
 
     /// log something which may cause big trouble soon (high priority)
-    public class func warning(_ message: @autoclosure () -> Any, _
+    open class func warning(_ message: @autoclosure () -> Any, _
         file: String = #file, _ function: String = #function, line: Int = #line) {
         custom(level: .warning, message: message, file: file, function: function, line: line)
     }
 
     /// log something which will keep you awake at night (highest priority)
-    public class func error(_ message: @autoclosure () -> Any, _
+    open class func error(_ message: @autoclosure () -> Any, _
         file: String = #file, _ function: String = #function, line: Int = #line) {
         custom(level: .error, message: message, file: file, function: function, line: line)
     }
