@@ -38,6 +38,10 @@ open class SwiftyBeaver {
         destinations.insert(destination)
         return true
     }
+    
+    public class func add(destinations: [BaseDestination]) {
+        destinations.forEach { addDestination($0) }
+    }
 
     /// returns boolean about success
     @discardableResult
@@ -47,6 +51,10 @@ open class SwiftyBeaver {
         }
         destinations.remove(destination)
         return true
+    }
+    
+    public class func remove(destinations: [BaseDestination]) {
+        destinations.forEach { removeDestination($0) }
     }
 
     /// if you need to start fresh
