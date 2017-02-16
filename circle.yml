@@ -15,4 +15,4 @@ dependencies:
 
 test:
   override:
-    - docker run --name app_test swift test
+    - docker run --name app_test app swift test
