@@ -6,7 +6,6 @@
 //  Copyright © 2016 SwiftyBeaver. All rights reserved.
 //
 
-
 import Foundation
 
 /// cross-platform random numbers generator

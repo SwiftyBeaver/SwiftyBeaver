@@ -19,7 +19,6 @@ import Foundation
 
 */
 
-
 struct Secrets {
 
     struct Platform {

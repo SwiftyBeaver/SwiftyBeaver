@@ -117,36 +117,31 @@ public class CompareFilter: Filter, FilterType {
         let matches: Bool
         switch filterComparisonType {
         case let .Contains(strings, caseSensitive):
-            matches = !strings.filter {
-                string in
+            matches = !strings.filter { string in
                 return caseSensitive ? value.contains(string) :
                     value.lowercased().contains(string.lowercased())
                 }.isEmpty
 
         case let .Excludes(strings, caseSensitive):
-            matches = !strings.filter {
-                string in
+            matches = !strings.filter { string in
                 return caseSensitive ? !value.contains(string) :
                     !value.lowercased().contains(string.lowercased())
                 }.isEmpty
 
         case let .StartsWith(strings, caseSensitive):
-            matches = !strings.filter {
-                string in
+            matches = !strings.filter { string in
                 return caseSensitive ? value.hasPrefix(string) :
                     value.lowercased().hasPrefix(string.lowercased())
                 }.isEmpty
 
         case let .EndsWith(strings, caseSensitive):
-            matches = !strings.filter {
-                string in
+            matches = !strings.filter { string in
                 return caseSensitive ? value.hasSuffix(string) :
                     value.lowercased().hasSuffix(string.lowercased())
                 }.isEmpty
 
         case let .Equals(strings, caseSensitive):
-            matches = !strings.filter {
-                string in
+            matches = !strings.filter { string in
                 return caseSensitive ? value == string :
                     value.lowercased() == string.lowercased()
                 }.isEmpty

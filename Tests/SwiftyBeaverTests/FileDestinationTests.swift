@@ -55,7 +55,6 @@ class FileDestinationTests: XCTestCase {
         XCTAssertEqual(lines[3], "")
     }
 
-
     func testFileIsWrittenToFolderWithSpaces() {
         let log = SwiftyBeaver.self
 
@@ -99,7 +98,6 @@ class FileDestinationTests: XCTestCase {
         XCTAssertEqual(lines[3], "")
     }
 
-
     // MARK: Helper Functions
 
     // deletes a file if it is existing
@@ -129,11 +127,11 @@ class FileDestinationTests: XCTestCase {
             print("Unable to create directory \(error.debugDescription)")
         }
     }
-    
+
     // MARK: Linux allTests
-    
+
     static let allTests = [
         ("testFileIsWritten", testFileIsWritten),
-        ("testFileIsWrittenToFolderWithSpaces", testFileIsWrittenToFolderWithSpaces),
+        ("testFileIsWrittenToFolderWithSpaces", testFileIsWrittenToFolderWithSpaces)
     ]
 }

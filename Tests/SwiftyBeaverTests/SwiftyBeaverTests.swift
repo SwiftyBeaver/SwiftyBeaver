@@ -230,8 +230,7 @@ class SwiftyBeaverTests: XCTestCase {
         f = "aFunc()"
         XCTAssertEqual(SwiftyBeaver.stripParams(function: f), "aFunc()")
     }
-    
-    
+
     static let allTests = [
         ("testAddDestination", testAddDestination),
         ("testRemoveDestination", testRemoveDestination),
@@ -241,8 +240,9 @@ class SwiftyBeaverTests: XCTestCase {
         ("testModifiedColors", testModifiedColors),
         ("testDifferentMessageTypes", testDifferentMessageTypes),
         ("testAutoClosure", testAutoClosure),
-        ("testLongRunningTaskIsNotExecutedWhenLoggingUnderMinLevel", testLongRunningTaskIsNotExecutedWhenLoggingUnderMinLevel),
+        ("testLongRunningTaskIsNotExecutedWhenLoggingUnderMinLevel",
+            testLongRunningTaskIsNotExecutedWhenLoggingUnderMinLevel),
         ("testVersionAndBuild", testVersionAndBuild),
-        ("testStripParams", testStripParams),
+        ("testStripParams", testStripParams)
     ]
 }

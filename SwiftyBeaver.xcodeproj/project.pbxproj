@@ -165,7 +165,7 @@
 			name = SwiftyBeaverTests;
 			sourceTree = "<group>";
 		};
-		9E31D62A1C185ED0004E0980 /* sources */ = {
+		9E31D62A1C185ED0004E0980 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				9E195B091C6B3B4600D924CB /* AES256CBC.swift */,
@@ -176,7 +176,7 @@
 				9EA06DB41D083C9D001DB20A /* SBPlatformDestination.swift */,
 				9E31D6281C185ECD004E0980 /* SwiftyBeaver.swift */,
 			);
-			name = sources;
+			name = Sources;
 			sourceTree = "<group>";
 		};
 		9EDCE3DA1C09D211002FA4A7 = {
@@ -191,7 +191,7 @@
 				9E74FEA81CD74AFA0024DD76 /* CHANGELOG.md */,
 				9E4BBDFE1C0A01D000220716 /* README.md */,
 				9E6CAA471C148EC1009D9093 /* SwiftyBeaver.podspec */,
-				9E31D62A1C185ED0004E0980 /* sources */,
+				9E31D62A1C185ED0004E0980 /* Sources */,
 				9E2AEAC31D9BB3D000F21B1F /* Tests */,
 				9EDCE3E51C09D211002FA4A7 /* Products */,
 			);

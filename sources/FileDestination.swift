@@ -9,14 +9,13 @@
 
 import Foundation
 
-
 public class FileDestination: BaseDestination {
 
     public var logFileURL: URL?
 
     override public var defaultHashValue: Int {return 2}
     let fileManager = FileManager.default
-    var fileHandle: FileHandle? = nil
+    var fileHandle: FileHandle?
 
     public override init() {
         // platform-dependent logfile directory default
@@ -112,7 +111,7 @@ public class FileDestination: BaseDestination {
             return false
         }
     }
-    
+
     /// deletes log file.
     /// returns true if file was removed or does not exist, false otherwise
     public func deleteLogFile() -> Bool {

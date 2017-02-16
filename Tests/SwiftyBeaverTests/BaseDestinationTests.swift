@@ -26,7 +26,6 @@ class BaseDestinationTests: XCTestCase {
         XCTAssertNotNil(obj.queue)
     }
 
-
     ////////////////////////////////
     // MARK: Format
     ////////////////////////////////
@@ -73,7 +72,6 @@ class BaseDestinationTests: XCTestCase {
         str = obj2.formatMessage(format, level: .verbose, msg: "Hello", thread: "main",
                                  file: "/path/to/ViewController.swift", function: "testFunction()", line: 50)
         XCTAssertEqual(str, "[\(dateStr)] |main| ViewController.testFunction():50 >?VERBOSE<: Hello")
-
 
         //  UTC datetime
         let obj3 = BaseDestination()
@@ -225,7 +223,6 @@ class BaseDestinationTests: XCTestCase {
         XCTAssertEqual(str, utcDateStr)
     }
 
-
     ////////////////////////////////
     // MARK: Filters
     ////////////////////////////////
@@ -248,7 +245,6 @@ class BaseDestinationTests: XCTestCase {
         XCTAssertTrue(destination.shouldLevelBeLogged(SwiftyBeaver.Level.warning, path: "", function: ""))
         XCTAssertTrue(destination.shouldLevelBeLogged(SwiftyBeaver.Level.error, path: "", function: ""))
     }
-
 
     func test_shouldLevelBeLogged_hasMinLevel_True() {
         let destination = BaseDestination()
@@ -471,8 +467,6 @@ class BaseDestinationTests: XCTestCase {
                                                        message: "bar"))
     }
 
-
-
     func test_shouldLevelBeLogged_excludeFilter_True() {
         // everything is logged on default
         let destination = BaseDestination()
@@ -507,9 +501,8 @@ class BaseDestinationTests: XCTestCase {
                                                       message: "Hello World"))
     }
 
-    
     // MARK: Linux allTests
-    
+
     static let allTests = [
         ("testFormatMessage", testFormatMessage),
         ("testLevelWord", testLevelWord),
@@ -519,26 +512,44 @@ class BaseDestinationTests: XCTestCase {
         ("testFormatDate", testFormatDate),
         ("test_init_noMinLevelSet", test_init_noMinLevelSet),
         ("test_init_minLevelSet", test_init_minLevelSet),
-        ("test_shouldLevelBeLogged_hasMinLevel_True", test_shouldLevelBeLogged_hasMinLevel_True),
-        ("test_shouldLevelBeLogged_hasMinLevel_False", test_shouldLevelBeLogged_hasMinLevel_False),
-        ("test_shouldLevelBeLogged_hasMinLevelAndMatchingLevelAndEqualPath_True", test_shouldLevelBeLogged_hasMinLevelAndMatchingLevelAndEqualPath_True),
-        ("test_shouldLevelBeLogged_hasMinLevelAndNoMatchingLevelButEqualPath_False", test_shouldLevelBeLogged_hasMinLevelAndNoMatchingLevelButEqualPath_False),
-        ("test_shouldLevelBeLogged_hasMinLevelAndOneEqualsPathFilterAndDoesNotPass_False", test_shouldLevelBeLogged_hasMinLevelAndOneEqualsPathFilterAndDoesNotPass_False),
-        ("test_shouldLevelBeLogged_hasLevelFilterAndTwoRequiredPathFiltersAndPasses_True", test_shouldLevelBeLogged_hasLevelFilterAndTwoRequiredPathFiltersAndPasses_True),
-        ("test_shouldLevelBeLogged_hasLevelFilterAndTwoRequiredPathFiltersAndDoesNotPass_False", test_shouldLevelBeLogged_hasLevelFilterAndTwoRequiredPathFiltersAndDoesNotPass_False),
-        ("test_shouldLevelBeLogged_hasLevelFilterARequiredPathFilterAndTwoRequiredMessageFiltersAndPasses_True", test_shouldLevelBeLogged_hasLevelFilterARequiredPathFilterAndTwoRequiredMessageFiltersAndPasses_True),
-        ("test_shouldLevelBeLogged_hasLevelFilterARequiredPathFilterAndTwoRequiredMessageFiltersAndDoesNotPass_False", test_shouldLevelBeLogged_hasLevelFilterARequiredPathFilterAndTwoRequiredMessageFiltersAndDoesNotPass_False),
-        ("test_shouldLevelBeLogged_hasLevelFilterCombinationOfAllOtherFiltersAndPasses_True", test_shouldLevelBeLogged_hasLevelFilterCombinationOfAllOtherFiltersAndPasses_True),
-        ("test_shouldLevelBeLogged_hasLevelFilterCombinationOfAllOtherFiltersAndDoesNotPass_False", test_shouldLevelBeLogged_hasLevelFilterCombinationOfAllOtherFiltersAndDoesNotPass_False),
-        ("test_shouldLevelBeLogged_hasLevelFilterCombinationOfOtherFiltersIncludingNonRequiredAndPasses_True", test_shouldLevelBeLogged_hasLevelFilterCombinationOfOtherFiltersIncludingNonRequiredAndPasses_True),
-        ("test_shouldLevelBeLogged_hasLevelFilterCombinationOfOtherFiltersIncludingNonRequired_True", test_shouldLevelBeLogged_hasLevelFilterCombinationOfOtherFiltersIncludingNonRequired_True),
-        ("test_shouldLevelBeLogged_hasLevelFilterCombinationOfOtherFiltersIncludingNonRequired_False", test_shouldLevelBeLogged_hasLevelFilterCombinationOfOtherFiltersIncludingNonRequired_False),
-        ("test_shouldLevelBeLogged_hasMatchingNonRequiredFilter_True", test_shouldLevelBeLogged_hasMatchingNonRequiredFilter_True),
-        ("test_shouldLevelBeLogged_hasNoMatchingNonRequiredFilter_False", test_shouldLevelBeLogged_hasNoMatchingNonRequiredFilter_False),
-        ("test_shouldLevelBeLogged_hasNoMatchingNonRequiredFilterAndMinLevel_False", test_shouldLevelBeLogged_hasNoMatchingNonRequiredFilterAndMinLevel_False),
+        ("test_shouldLevelBeLogged_hasMinLevel_True",
+            test_shouldLevelBeLogged_hasMinLevel_True),
+        ("test_shouldLevelBeLogged_hasMinLevel_False",
+            test_shouldLevelBeLogged_hasMinLevel_False),
+        ("test_shouldLevelBeLogged_hasMinLevelAndMatchingLevelAndEqualPath_True",
+            test_shouldLevelBeLogged_hasMinLevelAndMatchingLevelAndEqualPath_True),
+        ("test_shouldLevelBeLogged_hasMinLevelAndNoMatchingLevelButEqualPath_False",
+            test_shouldLevelBeLogged_hasMinLevelAndNoMatchingLevelButEqualPath_False),
+        ("test_shouldLevelBeLogged_hasMinLevelAndOneEqualsPathFilterAndDoesNotPass_False",
+            test_shouldLevelBeLogged_hasMinLevelAndOneEqualsPathFilterAndDoesNotPass_False),
+        ("test_shouldLevelBeLogged_hasLevelFilterAndTwoRequiredPathFiltersAndPasses_True",
+            test_shouldLevelBeLogged_hasLevelFilterAndTwoRequiredPathFiltersAndPasses_True),
+        ("test_shouldLevelBeLogged_hasLevelFilterAndTwoRequiredPathFiltersAndDoesNotPass_False",
+            test_shouldLevelBeLogged_hasLevelFilterAndTwoRequiredPathFiltersAndDoesNotPass_False),
+        ("test_shouldLevelBeLogged_hasLevelFilterARequiredPathFilterAndTwoRequiredMessageFiltersAndPasses_True",
+            test_shouldLevelBeLogged_hasLevelFilterARequiredPathFilterAndTwoRequiredMessageFiltersAndPasses_True),
+        ("test_shouldLevelBeLogged_hasLevelFilterARequiredPathFilterAndTwoRequiredMessageFiltersAndDoesNotPass_False",
+            test_shouldLevelBeLogged_hasLevelFilterARequiredPathFilterAndTwoRequiredMessageFiltersAndDoesNotPass_False),
+        ("test_shouldLevelBeLogged_hasLevelFilterCombinationOfAllOtherFiltersAndPasses_True",
+            test_shouldLevelBeLogged_hasLevelFilterCombinationOfAllOtherFiltersAndPasses_True),
+        ("test_shouldLevelBeLogged_hasLevelFilterCombinationOfAllOtherFiltersAndDoesNotPass_False",
+            test_shouldLevelBeLogged_hasLevelFilterCombinationOfAllOtherFiltersAndDoesNotPass_False),
+        ("test_shouldLevelBeLogged_hasLevelFilterCombinationOfOtherFiltersIncludingNonRequiredAndPasses_True",
+            test_shouldLevelBeLogged_hasLevelFilterCombinationOfOtherFiltersIncludingNonRequiredAndPasses_True),
+        ("test_shouldLevelBeLogged_hasLevelFilterCombinationOfOtherFiltersIncludingNonRequired_True",
+            test_shouldLevelBeLogged_hasLevelFilterCombinationOfOtherFiltersIncludingNonRequired_True),
+        ("test_shouldLevelBeLogged_hasLevelFilterCombinationOfOtherFiltersIncludingNonRequired_False",
+            test_shouldLevelBeLogged_hasLevelFilterCombinationOfOtherFiltersIncludingNonRequired_False),
+        ("test_shouldLevelBeLogged_hasMatchingNonRequiredFilter_True",
+            test_shouldLevelBeLogged_hasMatchingNonRequiredFilter_True),
+        ("test_shouldLevelBeLogged_hasNoMatchingNonRequiredFilter_False",
+            test_shouldLevelBeLogged_hasNoMatchingNonRequiredFilter_False),
+        ("test_shouldLevelBeLogged_hasNoMatchingNonRequiredFilterAndMinLevel_False",
+            test_shouldLevelBeLogged_hasNoMatchingNonRequiredFilterAndMinLevel_False),
         ("test_shouldLevelBeLogged_noFilters_True", test_shouldLevelBeLogged_noFilters_True),
-        ("test_shouldLevelBeLogged_multipleNonRequiredFiltersAndGlobal_True", test_shouldLevelBeLogged_multipleNonRequiredFiltersAndGlobal_True),
+        ("test_shouldLevelBeLogged_multipleNonRequiredFiltersAndGlobal_True",
+            test_shouldLevelBeLogged_multipleNonRequiredFiltersAndGlobal_True),
         ("test_shouldLevelBeLogged_excludeFilter_True", test_shouldLevelBeLogged_excludeFilter_True)
     ]
-    
+
 }

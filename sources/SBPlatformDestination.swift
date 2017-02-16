@@ -37,18 +37,13 @@ import Foundation
     let DEVICE_NAME = ""
 #endif
 
-
 public class SBPlatformDestination: BaseDestination {
 
     public var appID = ""
     public var appSecret = ""
     public var encryptionKey = ""
     public var analyticsUserName = "" // user email, ID, name, etc.
-    public var analyticsUUID: String {
-        get {
-            return uuid
-        }
-    }
+    public var analyticsUUID: String { return uuid }
 
     // when to send to server
     public struct SendingPoints {
@@ -80,7 +75,6 @@ public class SBPlatformDestination: BaseDestination {
     override public var defaultHashValue: Int {return 3}
     let fileManager = FileManager.default
     let isoDateFormatter = DateFormatter()
-
 
     public init(appID: String, appSecret: String, encryptionKey: String) {
         super.init()
@@ -127,7 +121,6 @@ public class SBPlatformDestination: BaseDestination {
             #endif
         #endif
 
-
         #if os(Linux)
             // get, update loaded and save analytics data to file on start
             let dict = analytics(analyticsFileURL, update: true)
@@ -149,7 +142,6 @@ public class SBPlatformDestination: BaseDestination {
         #endif
     }
 
-
     // append to file, each line is a JSON dict
     override public func send(_ level: SwiftyBeaver.Level, msg: String, thread: String,
         file: String, function: String, line: Int) -> String? {
@@ -163,7 +155,7 @@ public class SBPlatformDestination: BaseDestination {
             "thread": thread,
             "fileName": file.components(separatedBy: "/").last!,
             "function": function,
-            "line":line]
+            "line": line]
 
         jsonString = jsonStringFromDict(dict)
 
@@ -202,7 +194,6 @@ public class SBPlatformDestination: BaseDestination {
         return jsonString
     }
 
-
     // MARK: Send-to-Server Logic
 
     /// does a (manual) sending attempt of all unsent log entries to SwiftyBeaver Platform
@@ -229,9 +220,8 @@ public class SBPlatformDestination: BaseDestination {
 
             lines = logEntries.count
 
-
             if lines > 0 {
-                var payload = [String:Any]()
+                var payload = [String: Any]()
                 // merge device and analytics dictionaries
                 let deviceDetailsDict = deviceDetails()
 
@@ -252,8 +242,7 @@ public class SBPlatformDestination: BaseDestination {
                         toNSLog(msg)
                         //toNSLog("Sending \(encryptedStr) ...")
 
-                        sendToServerAsync(encryptedStr) {
-                            ok, status in
+                        sendToServerAsync(encryptedStr) { ok, _ in
 
                             self.toNSLog("Sent \(lines) encrypted log entries to server, received ok: \(ok)")
                             if ok {
@@ -271,7 +260,7 @@ public class SBPlatformDestination: BaseDestination {
     }
 
     /// sends a string to the SwiftyBeaver Platform server, returns ok if status 200 and HTTP status
-    func sendToServerAsync(_ str: String?, complete: @escaping (_ ok: Bool, _ status: Int) -> ()) {
+    func sendToServerAsync(_ str: String?, complete: @escaping (_ ok: Bool, _ status: Int) -> Void) {
 
         if let payload = str, let queue = self.queue, let serverURL = serverURL {
 
@@ -355,7 +344,6 @@ public class SBPlatformDestination: BaseDestination {
         }
     }
 
-
     // MARK: File Handling
 
     /// appends a string as line to a file.
@@ -433,7 +421,6 @@ public class SBPlatformDestination: BaseDestination {
         return nil
     }
 
-
     /// returns AES-256 CBC encrypted optional string
     func encrypt(_ str: String) -> String? {
         return AES256CBC.encryptString(str, password: encryptionKey)
@@ -449,7 +436,6 @@ public class SBPlatformDestination: BaseDestination {
         }
         return false
     }
-
 
     // MARK: Device & Analytics
 
@@ -480,7 +466,7 @@ public class SBPlatformDestination: BaseDestination {
     /// returns (updated) analytics dict, optionally loaded from file.
     func analytics(_ url: URL, update: Bool = false) -> [String:Any] {
 
-        var dict = [String:Any]()
+        var dict = [String: Any]()
         let now = NSDate().timeIntervalSince1970
 
         uuid =  NSUUID().uuidString
@@ -567,7 +553,6 @@ public class SBPlatformDestination: BaseDestination {
         return nil
     }
 
-
     // turns dict into JSON and saves it to file
     func saveDictToFile(_ dict: [String: Any], url: URL) -> Bool {
         let jsonString = jsonStringFromDict(dict)
@@ -578,7 +563,6 @@ public class SBPlatformDestination: BaseDestination {
         }
         return false
     }
-
 
     // MARK: Debug Helpers
 

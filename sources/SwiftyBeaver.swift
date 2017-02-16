@@ -137,11 +137,11 @@ open class SwiftyBeaver {
                 let f = stripParams(function: function)
 
                 if dest.asynchronously {
-                    queue.async() {
+                    queue.async {
                         let _ = dest.send(level, msg: msgStr, thread: thread, file: file, function: f, line: line)
                     }
                 } else {
-                    queue.sync() {
+                    queue.sync {
                         let _ = dest.send(level, msg: msgStr, thread: thread, file: file, function: f, line: line)
                     }
                 }
@@ -181,7 +181,7 @@ open class SwiftyBeaver {
         if let indexOfBrace = f.characters.index(of: "(") {
             f = f.substring(to: indexOfBrace)
         }
-        f = f + "()"
+        f += "()"
         return f
     }
 }
