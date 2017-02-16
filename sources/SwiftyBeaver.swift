@@ -12,9 +12,9 @@ import Foundation
 open class SwiftyBeaver {
 
     /// version string of framework
-    public static let version = "1.1.1"  // UPDATE ON RELEASE!
+    public static let version = "1.1.2"  // UPDATE ON RELEASE!
     /// build number of framework
-    public static let build = 1110 // version 0.7.1 -> 710, UPDATE ON RELEASE!
+    public static let build = 1120 // version 0.7.1 -> 710, UPDATE ON RELEASE!
 
     public enum Level: Int {
         case verbose = 0
@@ -137,11 +137,11 @@ open class SwiftyBeaver {
                 let f = stripParams(function: function)
 
                 if dest.asynchronously {
-                    queue.async() {
+                    queue.async {
                         let _ = dest.send(level, msg: msgStr, thread: thread, file: file, function: f, line: line)
                     }
                 } else {
-                    queue.sync() {
+                    queue.sync {
                         let _ = dest.send(level, msg: msgStr, thread: thread, file: file, function: f, line: line)
                     }
                 }
@@ -181,7 +181,7 @@ open class SwiftyBeaver {
         if let indexOfBrace = f.characters.index(of: "(") {
             f = f.substring(to: indexOfBrace)
         }
-        f = f + "()"
+        f += "()"
         return f
     }
 }

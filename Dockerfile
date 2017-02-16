@@ -1,12 +1,13 @@
-FROM swiftdocker/swift
-# Set Swift Path
-# learn more at http://bit.ly/2dEKW7w
-ENV PATH /usr/bin:$PATH
+# use the latest stable Swift 3
+FROM swift
+# use the latest Swift 3.1 beta
+# FROM swiftdocker/swift:swift-3.1
+
+WORKDIR /code 
+
+COPY Package.swift /code/
+COPY ./Sources /code/Sources
+COPY ./Tests /code/Tests
+
 RUN swift --version
-RUN echo "Run container with --privileged=true to use Swift CLI"
-RUN mkdir /app
-#COPY . /app
-ADD . /app
-WORKDIR /app
 RUN swift build
-RUN swift test

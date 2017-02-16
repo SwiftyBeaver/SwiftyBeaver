@@ -31,7 +31,6 @@ let OS = "Android"
 let OS = "Unknown"
 #endif
 
-
 /// destination which all others inherit from. do not directly use
 open class BaseDestination: Hashable, Equatable {
 
@@ -92,13 +91,12 @@ open class BaseDestination: Hashable, Equatable {
     /// send / store the formatted log message to the destination
     /// returns the formatted log message for processing by inheriting method
     /// and for unit tests (nil if error)
-    open func send(_ level: SwiftyBeaver.Level, msg: String, thread: String,
-        file: String, function: String, line: Int) -> String? {
+    open func send(_ level: SwiftyBeaver.Level, msg: String, thread: String, file: String,
+        function: String, line: Int) -> String? {
 
         return formatMessage(format, level: level, msg: msg, thread: thread,
                              file: file, function: function, line: line)
     }
-
 
     ////////////////////////////////
     // MARK: Format
@@ -106,7 +104,7 @@ open class BaseDestination: Hashable, Equatable {
 
     /// returns the log message based on the format pattern
     func formatMessage(_ format: String, level: SwiftyBeaver.Level, msg: String, thread: String,
-                file: String, function: String, line: Int) -> String {
+        file: String, function: String, line: Int) -> String {
 
         var text = ""
         let phrases: [String] = format.components(separatedBy: "$")
@@ -360,8 +358,7 @@ open class BaseDestination: Hashable, Equatable {
     }
 
     func getFiltersTargeting(_ target: Filter.TargetType, fromFilters: [FilterType]) -> [FilterType] {
-        return fromFilters.filter {
-            filter in
+        return fromFilters.filter { filter in
             return filter.getTarget() == target
         }
     }
@@ -369,8 +366,7 @@ open class BaseDestination: Hashable, Equatable {
     /// returns a tuple of matched and all filters
     func passedRequiredFilters(_ level: SwiftyBeaver.Level, path: String,
                                function: String, message: String?) -> (Int, Int) {
-        let requiredFilters = self.filters.filter {
-            filter in
+        let requiredFilters = self.filters.filter { filter in
             return filter.isRequired() && !filter.isExcluded()
         }
 
@@ -386,8 +382,7 @@ open class BaseDestination: Hashable, Equatable {
     /// returns a tuple of matched and all filters
     func passedNonRequiredFilters(_ level: SwiftyBeaver.Level,
                                   path: String, function: String, message: String?) -> (Int, Int) {
-        let nonRequiredFilters = self.filters.filter {
-            filter in
+        let nonRequiredFilters = self.filters.filter { filter in
             return !filter.isRequired() && !filter.isExcluded()
         }
 
@@ -402,8 +397,7 @@ open class BaseDestination: Hashable, Equatable {
     /// returns a tuple of matched and all exclude filters
     func passedExcludedFilters(_ level: SwiftyBeaver.Level,
                                path: String, function: String, message: String?) -> (Int, Int) {
-        let excludeFilters = self.filters.filter {
-            filter in
+        let excludeFilters = self.filters.filter { filter in
             return filter.isExcluded()
         }
 
@@ -417,8 +411,7 @@ open class BaseDestination: Hashable, Equatable {
 
     func applyFilters(_ targetFilters: [FilterType], level: SwiftyBeaver.Level,
                       path: String, function: String, message: String?) -> Int {
-        return targetFilters.filter {
-            filter in
+        return targetFilters.filter { filter in
 
             let passes: Bool
 

@@ -127,12 +127,12 @@ class AES256CBCTests: XCTestCase {
     }
 
     // MARK: Linux allTests
-    
+
     static let allTests = [
         ("testEncryptDecryptStringCycle", testEncryptDecryptStringCycle),
         ("testEncryptString", testEncryptString),
         ("testDecryptString", testDecryptString),
         ("testRandomText", testRandomText),
-        ("testGeneratePassword", testGeneratePassword),
+        ("testGeneratePassword", testGeneratePassword)
     ]
 }

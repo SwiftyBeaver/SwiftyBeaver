@@ -5,6 +5,20 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ----
 <br/>
+## 1.1.2 (2017-02-16)
+
+##### Added
+
+- Support for Swift 3.1 by [@skreutzberger](https://github.com/skreutzberger)
+- Use of official Swift Docker images by [@skreutzberger](https://github.com/skreutzberger)
+- Method `deleteLogFile()` to manually delete log file by [@felipowsky](https://github.com/felipowsky)
+- Explicit deployment target for tvOS by [@Dschee](https://github.com/Dschee)
+
+##### Changed
+
+- `Public` is now `Open` in `SwiftyBeaver.swift` by [@skreutzberger](https://github.com/skreutzberger)
+
+<br/>
 ## 1.1.1 (2016-10-28)
 
 ##### Added

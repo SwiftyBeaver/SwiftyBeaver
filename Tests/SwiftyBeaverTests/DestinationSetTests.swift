@@ -77,12 +77,11 @@ class DestinationSetTests: XCTestCase {
         XCTAssertEqual(log.countDestinations(), 1)
     }
 
-    
     // MARK: Linux allTests
-    
+
     static let allTests = [
         ("testChangeDestinationsMinLogLevels", testChangeDestinationsMinLogLevels),
-        ("testRemoveConsoleDestinations", testRemoveConsoleDestinations),
-        
+        ("testRemoveConsoleDestinations", testRemoveConsoleDestinations)
+
     ]
 }

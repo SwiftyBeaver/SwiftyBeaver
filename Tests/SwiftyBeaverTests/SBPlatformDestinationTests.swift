@@ -11,7 +11,6 @@ import Foundation
 import XCTest
 @testable import SwiftyBeaver
 
-
 class SBPlatformDestinationTests: XCTestCase {
 
     var platform = SBPlatformDestination(appID: "", appSecret: "", encryptionKey: "")
@@ -117,8 +116,7 @@ class SBPlatformDestinationTests: XCTestCase {
         }
         let exp = expectation(description: "returns false due to invalid URL")
 
-        platform.sendToServerAsync(jsonStr) {
-            ok, status in
+        platform.sendToServerAsync(jsonStr) { ok, status in
             XCTAssertFalse(ok)
             XCTAssertEqual(status, 0)
             exp.fulfill()
@@ -129,8 +127,7 @@ class SBPlatformDestinationTests: XCTestCase {
         platform.appID = "abc"
         let exp2 = expectation(description: "returns false due to invalid app ID")
 
-        platform.sendToServerAsync(jsonStr) {
-            ok, status in
+        platform.sendToServerAsync(jsonStr) { ok, status in
             XCTAssertFalse(ok)
             XCTAssertEqual(status, 401)
             exp2.fulfill()
@@ -141,8 +138,7 @@ class SBPlatformDestinationTests: XCTestCase {
         platform.appSecret += "invalid"
         let exp3 = expectation(description: "returns false due to invalid secret")
 
-        platform.sendToServerAsync(jsonStr) {
-            ok, status in
+        platform.sendToServerAsync(jsonStr) { ok, status in
             XCTAssertFalse(ok)
             XCTAssertEqual(status, 401)
             exp3.fulfill()
@@ -262,8 +258,6 @@ class SBPlatformDestinationTests: XCTestCase {
         XCTAssertEqual(platform.analyticsUserName, "foo@bar.com")
     }
 
-
-
     /// helper function to delete temp file before test
     func deleteFile(url: URL) -> Bool {
         do {
@@ -274,9 +268,9 @@ class SBPlatformDestinationTests: XCTestCase {
         }
         return false
     }
-    
+
     // MARK: Linux allTests
-    
+
     static let allTests = [
         ("testLoggingWithoutDestination", testLoggingWithoutDestination),
         ("testSend", testSend),

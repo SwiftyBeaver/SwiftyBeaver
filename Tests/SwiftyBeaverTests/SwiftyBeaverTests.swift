@@ -123,7 +123,10 @@ class SwiftyBeaverTests: XCTestCase {
         console2.format = "$L: $M"
         XCTAssertTrue(log.addDestination(file3))
         XCTAssertEqual(log.countDestinations(), 5)
-        log.info("Logging to default log file \(file3.logFileURL)")
+        guard let f3URL = file3.logFileURL else {
+            return
+        }
+        log.info("Logging to default log file \(f3URL)")
     }
 
     func testColors() {
@@ -230,8 +233,7 @@ class SwiftyBeaverTests: XCTestCase {
         f = "aFunc()"
         XCTAssertEqual(SwiftyBeaver.stripParams(function: f), "aFunc()")
     }
-    
-    
+
     static let allTests = [
         ("testAddDestination", testAddDestination),
         ("testRemoveDestination", testRemoveDestination),
@@ -241,8 +243,9 @@ class SwiftyBeaverTests: XCTestCase {
         ("testModifiedColors", testModifiedColors),
         ("testDifferentMessageTypes", testDifferentMessageTypes),
         ("testAutoClosure", testAutoClosure),
-        ("testLongRunningTaskIsNotExecutedWhenLoggingUnderMinLevel", testLongRunningTaskIsNotExecutedWhenLoggingUnderMinLevel),
+        ("testLongRunningTaskIsNotExecutedWhenLoggingUnderMinLevel",
+            testLongRunningTaskIsNotExecutedWhenLoggingUnderMinLevel),
         ("testVersionAndBuild", testVersionAndBuild),
-        ("testStripParams", testStripParams),
+        ("testStripParams", testStripParams)
     ]
 }

@@ -7,7 +7,7 @@ XCTMain([
     testCase(DestinationSetTests.allTests),
     testCase(FileDestinationTests.allTests),
     testCase(SBPlatformDestinationTests.allTests),
-    testCase(SwiftyBeaverTests.allTests),
+    testCase(SwiftyBeaverTests.allTests)
 ])
 
 // All tests:

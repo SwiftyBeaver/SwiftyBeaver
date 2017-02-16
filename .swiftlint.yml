@@ -6,51 +6,32 @@
 #
 #
 
-disabled_rules: # rule identifiers to exclude from running
-- valid_docs   # is valid and used by Xcode
-- cyclomatic_complexity
-- variable_name
-- type_name  # wants uppercase enum value chars which is uncommon in Swift 3
-
-opt_in_rules: # some rules are only opt-in
-- empty_count
-#- missing_docs
-
-# Find all the available rules by running:
-# swiftlint rules
-
 included: # paths to include during linting. `--path` is ignored if present.
-- sources
-- SwiftyBeaver
-- SwiftyBeaverTests
+  - Sources
+  - Tests
 
 excluded: # paths to ignore during linting. Takes precedence over `included`.
-- Carthage
+  - Carthage
+  - Packages
+  - .build
 
-line_length: 121
+opt_in_rules: # some rules are only opt-in
+  - empty_count
 
-function_parameter_count:
-  warning: 10
-  error: 15
+disabled_rules: # rule identifiers to exclude from running
+- valid_docs   # /// is valid and used by Xcode
+- cyclomatic_complexity
+- variable_name
+- syntactic_sugar
+- type_body_length
+- function_body_length
+- file_length
+- vertical_parameter_alignment
+- function_parameter_count
 
-function_body_length:
-  warning: 120
-  error: 150
+line_length: 150
 
-type_body_length:
-  warning: 700
-  error: 1000
-
-file_length:
-  warning: 1500
-  error: 2000
-
-variable_name:
+type_name:
   min_length: 2
-  excluded:
-    - translatesAutoresizingMaskIntoConstraints
-
-# type_name:
-#  min_length: 2
 
 reporter: "xcode" # reporter type (xcode, json, csv, checkstyle)
