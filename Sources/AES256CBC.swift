@@ -89,7 +89,7 @@ final class AES256CBC {
         if !str.isEmpty && password.characters.count == 32 {
             let iv = randomText(16)
             let key = password
-            
+
             guard let encryptedString = try? aesEncrypt(str, key: key, iv: iv) else {
                 print("an error occured while encrypting")
                 return nil
