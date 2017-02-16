@@ -123,8 +123,8 @@ class FileDestinationTests: XCTestCase {
     func createFolder(path: String) {
         do {
             try FileManager.default.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
-        } catch let error as NSError {
-            print("Unable to create directory \(error.debugDescription)")
+        } catch {
+            print("Unable to create directory")
         }
     }
 

@@ -123,7 +123,10 @@ class SwiftyBeaverTests: XCTestCase {
         console2.format = "$L: $M"
         XCTAssertTrue(log.addDestination(file3))
         XCTAssertEqual(log.countDestinations(), 5)
-        log.info("Logging to default log file \(file3.logFileURL)")
+        guard let f3URL = file3.logFileURL else {
+            return
+        }
+        log.info("Logging to default log file \(f3URL)")
     }
 
     func testColors() {

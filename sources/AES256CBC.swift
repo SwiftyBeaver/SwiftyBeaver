@@ -50,35 +50,31 @@ final fileprivate class URandom {
     #if os(Linux)
     // runs a Shell command with arguments and returns the output or ""
     class func shell(_ command: String, args: [String] = []) -> String {
-    let task = Task() // just works on Linux
-    // let task = Process() use this for Apple devices!
-    /*
-     #if os(Linux)
-     let task = Task()
-     #else
-     let task = Process()
-     #endif
-     */
+        #if swift(>=3.1)
+        let task = Process() // for Apple devices & Swift 3.1+ on Linux
+        #else
+        let task = Task() // just works on Linux with Swift <3.1
+        #endif
 
-    task.launchPath = command
-    task.arguments = args
+        task.launchPath = command
+        task.arguments = args
 
-    let pipe = Pipe()
-    task.standardOutput = pipe
-    task.launch()
+        let pipe = Pipe()
+        task.standardOutput = pipe
+        task.launch()
 
-    let data = pipe.fileHandleForReading.readDataToEndOfFile()
-    let output: String? = String(data: data,
-    encoding: String.Encoding.utf8)
-    task.waitUntilExit()
+        let data = pipe.fileHandleForReading.readDataToEndOfFile()
+        let output: String? = String(data: data,
+        encoding: String.Encoding.utf8)
+        task.waitUntilExit()
 
-    if let output = output {
-    if !output.isEmpty {
-    // remove whitespaces and newline from start and end
-    return output.trimmingCharacters(in: .whitespacesAndNewlines)
-    }
-    }
-    return ""
+        if let output = output {
+        if !output.isEmpty {
+        // remove whitespaces and newline from start and end
+        return output.trimmingCharacters(in: .whitespacesAndNewlines)
+        }
+        }
+        return ""
     }
     #endif
 
@@ -93,14 +89,12 @@ final class AES256CBC {
         if !str.isEmpty && password.characters.count == 32 {
             let iv = randomText(16)
             let key = password
-
-            do {
-                let encryptedString = try aesEncrypt(str, key: key, iv: iv)
-                let ret = iv + encryptedString
-                return ret
-            } catch let err as NSError {
-                print(err.localizedDescription)
+            
+            guard let encryptedString = try? aesEncrypt(str, key: key, iv: iv) else {
+                print("an error occured while encrypting")
+                return nil
             }
+            return iv + encryptedString
         }
         return nil
     }
@@ -115,12 +109,11 @@ final class AES256CBC {
             let encryptedString = str.replacingOccurrences(of: iv, with: "",
                                         options: String.CompareOptions.literal, range: nil) // remove IV
 
-            do {
-                let decryptedString = try aesDecrypt(encryptedString, key: password, iv: iv)
-                return decryptedString
-            } catch let err as NSError {
-                print(err.localizedDescription)
+            guard let decryptedString = try? aesDecrypt(encryptedString, key: password, iv: iv) else {
+                print("an error occured while decrypting")
+                return nil
             }
+            return decryptedString
         }
         return nil
     }
