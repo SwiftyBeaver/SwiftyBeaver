@@ -262,6 +262,8 @@ public class SBPlatformDestination: BaseDestination {
     /// sends a string to the SwiftyBeaver Platform server, returns ok if status 200 and HTTP status
     func sendToServerAsync(_ str: String?, complete: @escaping (_ ok: Bool, _ status: Int) -> Void) {
 
+        let timeout = 10.0
+
         if let payload = str, let queue = self.queue, let serverURL = serverURL {
 
             // create operation queue which uses current serial queue of destination
@@ -275,7 +277,9 @@ public class SBPlatformDestination: BaseDestination {
             toNSLog("assembling request ...")
 
              // assemble request
-            var request = URLRequest(url: serverURL)
+             var request = URLRequest(url: serverURL,
+                                     cachePolicy: .reloadIgnoringLocalAndRemoteCacheData,
+                                     timeoutInterval: timeout)
             request.httpMethod = "POST"
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             request.addValue("application/json", forHTTPHeaderField: "Accept")
@@ -292,7 +296,7 @@ public class SBPlatformDestination: BaseDestination {
             } catch {
                 toNSLog("Error! Could not create JSON for server payload.")
             }
-            //toNSLog("sending params: \(params)")
+            toNSLog("sending params: \(params)")
             toNSLog("sending ...")
 
             sendingInProgress = true
