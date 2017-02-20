@@ -39,7 +39,7 @@ class SBPlatformDestinationTests: XCTestCase {
         print("\nTesting SBPlatform using\nApp ID: \(platform.appID)")
         print("App Secret: \(platform.appSecret)")
         print("Encryption Key: \(platform.encryptionKey)\n")
-        
+
     }
 
     override func tearDown() {
