@@ -36,9 +36,9 @@ class SBPlatformDestinationTests: XCTestCase {
                     appSecret: SBPlatformCredentials.appSecret,
                     encryptionKey: SBPlatformCredentials.encryptionKey)
         // uncomment to verify that the env vars "arrive" in the tests
-        print("\nTesting SBPlatform using\nApp ID: \(platform.appID)")
+        /*print("\nTesting SBPlatform using\nApp ID: \(platform.appID)")
         print("App Secret: \(platform.appSecret)")
-        print("Encryption Key: \(platform.encryptionKey)\n")
+        print("Encryption Key: \(platform.encryptionKey)\n")*/
 
     }
 
