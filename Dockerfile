@@ -1,7 +1,7 @@
 # use the latest stable Swift 3
-FROM swift
+#FROM swift
 # use the latest Swift 3.1 beta
-# FROM swiftdocker/swift:swift-3.1
+FROM swiftdocker/swift:swift-3.1
 
 WORKDIR /code 
 

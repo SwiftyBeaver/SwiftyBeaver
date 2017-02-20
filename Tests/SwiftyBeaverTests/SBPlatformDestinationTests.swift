@@ -16,38 +16,30 @@ class SBPlatformDestinationTests: XCTestCase {
     var platform = SBPlatformDestination(appID: "", appSecret: "", encryptionKey: "")
 
     struct SBPlatformCredentials {
-        var appID = ""
-        var appSecret = ""
-        var encryptionKey = ""
+        /*
+            use environment variables to inject platform credentials into the tests
+            set in Terminal via:
+
+            export SBPLATFORM_APP_ID=
+            export SBPLATFORM_APP_SECRET=
+            export SBPLATFORM_ENCRYPTION_KEY=
+        */
+        static let appID = ProcessInfo.processInfo.environment["SBPLATFORM_APP_ID"] ?? ""
+        static let appSecret = ProcessInfo.processInfo.environment["SBPLATFORM_APP_SECRET"] ?? ""
+        static let encryptionKey = ProcessInfo.processInfo.environment["SBPLATFORM_ENCRYPTION_KEY"] ?? ""
     }
 
     override func setUp() {
         super.setUp()
         SwiftyBeaver.removeAllDestinations()
+        platform = SBPlatformDestination(appID: SBPlatformCredentials.appID,
+                    appSecret: SBPlatformCredentials.appSecret,
+                    encryptionKey: SBPlatformCredentials.encryptionKey)
+        // uncomment to verify that the env vars "arrive" in the tests
+        /*print("\nTesting SBPlatform using\nApp ID: \(platform.appID)")
+        print("App Secret: \(platform.appSecret)")
+        print("Encryption Key: \(platform.encryptionKey)\n")*/
 
-        /*
-         ====================================
-         IMPORTANT!
-
-
-         Protect your own platform credentials which are required for the tests:
-
-         1. Create a copy of SecretsExample.swift and name it Secrets.swift
-         2. uncomment the Secrets struct which you can find in Secrets.swift
-         3. add your credentials to the Secrets struct in Secrets.swift
-
-
-         It is safe to store your credentials in Secrets.swift because it
-         is covered by .gitignore and is not added to Git SCM
-
-
-         NEVER ADD CREDENTIALS TO GIT, especially on open-source!
-         ====================================
-        */
-
-        platform = SBPlatformDestination(appID: Secrets.Platform.appID,
-            appSecret: Secrets.Platform.appSecret,
-            encryptionKey: Secrets.Platform.encryptionKey)
     }
 
     override func tearDown() {
@@ -98,12 +90,9 @@ class SBPlatformDestinationTests: XCTestCase {
     }
 
     func testSendToServerAsync() {
-        platform.appID = Secrets.Platform.appID
-        platform.appSecret = Secrets.Platform.appSecret
-        platform.encryptionKey = Secrets.Platform.encryptionKey
-
         if platform.appID.isEmpty || platform.appSecret.isEmpty || platform.encryptionKey.isEmpty {
             // leave the test on missing credentials
+            print("leaving SBPlatform tests due to empty credentials")
             return
         }
 
@@ -121,6 +110,7 @@ class SBPlatformDestinationTests: XCTestCase {
             XCTAssertEqual(status, 0)
             exp.fulfill()
         }
+        waitForExpectations(timeout: 11, handler: nil)
 
         // invalid app ID
         platform.serverURL = correctURL
@@ -132,9 +122,10 @@ class SBPlatformDestinationTests: XCTestCase {
             XCTAssertEqual(status, 401)
             exp2.fulfill()
         }
+        waitForExpectations(timeout: 11, handler: nil)
 
         // invalid secret
-        platform.appID = Secrets.Platform.appID
+        platform.appID = SBPlatformCredentials.appID
         platform.appSecret += "invalid"
         let exp3 = expectation(description: "returns false due to invalid secret")
 
@@ -146,9 +137,9 @@ class SBPlatformDestinationTests: XCTestCase {
 
         /*
         // that should work. deactivated to avoid "foobar" messages on serverpost
-        platform.appID = Secrets.Platform.appID
-        platform.appSecret = Secrets.Platform.appSecret
-        platform.encryptionKey = Secrets.Platform.encryptionKey
+        platform.appID = SBPlatformCredentials.appID
+        platform.appSecret = SBPlatformCredentials.appSecret
+        platform.encryptionKey = SBPlatformCredentials.encryptionKey
         let exp4 = expectationWithDescription("returns ok on valid request")
 
         platform.sendToServerAsync(jsonStr) {
@@ -158,7 +149,7 @@ class SBPlatformDestinationTests: XCTestCase {
             exp4.fulfill()
         }
         */
-        waitForExpectations(timeout: 5, handler: nil)
+        waitForExpectations(timeout: 11, handler: nil)
 
     }
 
@@ -168,12 +159,8 @@ class SBPlatformDestinationTests: XCTestCase {
 
         // add logging to SwiftyBeaver Platform
         platform.showNSLog = true
-        //let jsonFile = NSURL(string: "file:///tmp/testSBPlatform.json")!
+        //let jsonFile = NSURL(fileURLWithPath: "/tmp/testSBPlatform.json")!
         //deleteFile(NSURL(string: String(jsonFile) + ".send")!)
-
-        platform.appID = Secrets.Platform.appID
-        platform.appSecret = Secrets.Platform.appSecret
-        platform.encryptionKey = Secrets.Platform.encryptionKey
 
         if platform.appID.isEmpty || platform.appSecret.isEmpty || platform.encryptionKey.isEmpty {
             // leave the test on missing credentials
@@ -184,7 +171,7 @@ class SBPlatformDestinationTests: XCTestCase {
         //XCTAssertEqual(log.countDestinations(), 2)
 
         // send logs in chunks, use high threshold value to test performance
-        platform.sendingPoints.threshold = 20
+        platform.sendingPoints.threshold = 10
         for index in 1...platform.sendingPoints.threshold + 3 {
             // simulate work by doing a computing
             var x = 1.0
@@ -209,6 +196,9 @@ class SBPlatformDestinationTests: XCTestCase {
                 XCTAssertEqual(x, sqrt(Double(index2)))
             }
         }
+        print("waiting")
+        sleep(5)
+        print("finished")
     }
 
     func testDeviceDetails() {
