@@ -284,10 +284,15 @@ public class SBPlatformDestination: BaseDestination {
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             request.addValue("application/json", forHTTPHeaderField: "Accept")
 
-            // basic auth header
-            let credentials = "\(appID):\(appSecret)".data(using: String.Encoding.utf8)!
+            // basic auth header (just works on Linux for Swift 3.1+, macOS is fine)
+            guard let credentials = "\(appID):\(appSecret)".data(using: String.Encoding.utf8) else {
+                    toNSLog("Error! Could not set basic auth header")
+                    return complete(false, 0)
+            }
             let base64Credentials = credentials.base64EncodedString(options: [])
             request.setValue("Basic \(base64Credentials)", forHTTPHeaderField: "Authorization")
+            //toNSLog("\nrequest:")
+            //print(request)
 
             // POST parameters
             let params = ["payload": payload]
@@ -295,6 +300,7 @@ public class SBPlatformDestination: BaseDestination {
                 request.httpBody = try JSONSerialization.data(withJSONObject: params, options: [])
             } catch {
                 toNSLog("Error! Could not create JSON for server payload.")
+                return complete(false, 0)
             }
             toNSLog("sending params: \(params)")
             toNSLog("sending ...")

@@ -14,4 +14,5 @@ docker run -e SBPLATFORM_APP_ID=$SBPLATFORM_APP_ID \
 -e SBPLATFORM_APP_SECRET=$SBPLATFORM_APP_SECRET \
 -e SBPLATFORM_ENCRYPTION_KEY=$SBPLATFORM_ENCRYPTION_KEY \
 --name swiftybeaver_test --rm swiftybeaver swift test
+#--name swiftybeaver_test --rm swiftybeaver swift test -s SwiftyBeaverTests.SBPlatformDestinationTests
 echo "Finished tests, docker container were removed."
