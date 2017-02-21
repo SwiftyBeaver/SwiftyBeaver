@@ -93,26 +93,25 @@ class BaseDestinationTests: XCTestCase {
                                 file: "/path/to/ViewController.swift", function: "testFunction()", line: 50) else {
             XCTFail("str should not be nil"); return
         }
-        //print(str)
+        print(str)
         // decode JSON string into dict and compare if it is the the same
         guard let data = str.data(using: .utf8),
             let json = try? JSONSerialization.jsonObject(with: data, options: []),
             let dict = json as? [String:Any],
             let timestamp = dict["timestamp"] as? Double,
             let level = dict["level"] as? Int,
-            let msg = dict["msg"] as? String,
+            let message = dict["message"] as? String,
             let thread = dict["thread"] as? String,
             let file = dict["file"] as? String,
             let function = dict["function"] as? String,
             let line = dict["line"] as? Int else {
             XCTFail("dict and its properties should not be nil"); return
         }
-        XCTAssertGreaterThanOrEqual(timestamp, Date().timeIntervalSince1970)
+        XCTAssertGreaterThanOrEqual(timestamp, Date().timeIntervalSince1970 - 10)
         XCTAssertEqual(level, SwiftyBeaver.Level.info.rawValue)
-        XCTAssertEqual(msg, "hello world")
+        XCTAssertEqual(message, "hello world")
         XCTAssertEqual(thread, "main")
-        XCTAssertEqual(file, "hello world")
-        XCTAssertEqual(msg, "/path/to/ViewController.swift")
+        XCTAssertEqual(file, "/path/to/ViewController.swift")
         XCTAssertEqual(function, "testFunction()")
         XCTAssertEqual(line, 50)
     }
