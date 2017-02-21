@@ -85,23 +85,36 @@ class BaseDestinationTests: XCTestCase {
         str = obj3.formatMessage(format, level: .verbose, msg: "Hello", thread: "main",
                                  file: "/path/to/ViewController.swift", function: "testFunction()", line: 50)
         XCTAssertEqual(str, "\(utcDateStr)")
+    }
 
-        /*
-         WORKING !!!
-
-        // format with JSON message
-        // test was deactivated because it seems impossible to test for \\" in Swift 3?!
-        format = "$L: $m"
-        str = obj.formatMessage(format, level: .verbose, msg: "Hello \"world\" yeah", thread: "main",
-                                file: "/path/to/ViewController.swift", function: "testFunction()", line: 50)
-        print(str)
-
-        // JSON format, just message needs to be encoded -> IS WORKING!
-        format = "{\"level\": \"$L\", \"message\": \"$m\", \"line\":$l}"
-        str = obj.formatMessage(format, level: .verbose, msg: "Hello \"world\" yeah", thread: "main",
-                                file: "/path/to/ViewController.swift", function: "testFunction()", line: 50)
-        print(str)
-        */
+    func testMessageToJSON() {
+        let obj = BaseDestination()
+        guard let str = obj.messageToJSON(.info, msg: "hello world", thread: "main",
+                                file: "/path/to/ViewController.swift", function: "testFunction()", line: 50) else {
+            XCTFail("str should not be nil"); return
+        }
+        //print(str)
+        // decode JSON string into dict and compare if it is the the same
+        guard let data = str.data(using: .utf8),
+            let json = try? JSONSerialization.jsonObject(with: data, options: []),
+            let dict = json as? [String:Any],
+            let timestamp = dict["timestamp"] as? Double,
+            let level = dict["level"] as? Int,
+            let msg = dict["msg"] as? String,
+            let thread = dict["thread"] as? String,
+            let file = dict["file"] as? String,
+            let function = dict["function"] as? String,
+            let line = dict["line"] as? Int else {
+            XCTFail("dict and its properties should not be nil"); return
+        }
+        XCTAssertGreaterThanOrEqual(timestamp, Date().timeIntervalSince1970)
+        XCTAssertEqual(level, SwiftyBeaver.Level.info.rawValue)
+        XCTAssertEqual(msg, "hello world")
+        XCTAssertEqual(thread, "main")
+        XCTAssertEqual(file, "hello world")
+        XCTAssertEqual(msg, "/path/to/ViewController.swift")
+        XCTAssertEqual(function, "testFunction()")
+        XCTAssertEqual(line, 50)
     }
 
     func testLevelWord() {
@@ -499,6 +512,20 @@ class BaseDestinationTests: XCTestCase {
                                                       path: "/world/OtherViewController.swift",
                                                       function: "otherFunc",
                                                       message: "Hello World"))
+    }
+
+    /// turns dict into JSON-encoded string
+    func jsonStringFromDict(_ dict: [String: Any]) -> String? {
+        var jsonString: String?
+
+        // try to create JSON string
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: dict, options: [])
+            jsonString = String(data: jsonData, encoding: .utf8)
+        } catch {
+            print("SwiftyBeaver could not create JSON from dict.")
+        }
+        return jsonString
     }
 
     // MARK: Linux allTests
