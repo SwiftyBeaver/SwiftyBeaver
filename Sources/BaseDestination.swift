@@ -126,11 +126,6 @@ open class BaseDestination: Hashable, Equatable {
                     text += levelWord(level) + remainingPhrase
                 case "M":
                     text += msg + remainingPhrase
-                case "m":
-                    // json-encoded message
-                    let dict = ["message": msg]
-                    let jsonString = jsonStringFromDict(dict)
-                    text += jsonStringValue(jsonString, key: "message") + remainingPhrase
                 case "T":
                     text += thread + remainingPhrase
                 case "N":
