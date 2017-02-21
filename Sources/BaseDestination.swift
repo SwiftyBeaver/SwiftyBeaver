@@ -94,8 +94,14 @@ open class BaseDestination: Hashable, Equatable {
     open func send(_ level: SwiftyBeaver.Level, msg: String, thread: String, file: String,
         function: String, line: Int) -> String? {
 
-        return formatMessage(format, level: level, msg: msg, thread: thread,
-                             file: file, function: function, line: line)
+        if format.hasPrefix("$J") {
+            return messageToJSON(level, msg: msg, thread: thread,
+                                 file: file, function: function, line: line)
+
+        } else {
+            return formatMessage(format, level: level, msg: msg, thread: thread,
+                                 file: file, function: function, line: line)
+        }
     }
 
     ////////////////////////////////
@@ -120,11 +126,6 @@ open class BaseDestination: Hashable, Equatable {
                     text += levelWord(level) + remainingPhrase
                 case "M":
                     text += msg + remainingPhrase
-                case "m":
-                    // json-encoded message
-                    let dict = ["message": msg]
-                    let jsonString = jsonStringFromDict(dict)
-                    text += jsonStringValue(jsonString, key: "message") + remainingPhrase
                 case "T":
                     text += thread + remainingPhrase
                 case "N":
@@ -158,6 +159,20 @@ open class BaseDestination: Hashable, Equatable {
             }
         }
         return text
+    }
+
+    /// returns the log payload as optional JSON string
+    func messageToJSON(_ level: SwiftyBeaver.Level, msg: String,
+        thread: String, file: String, function: String, line: Int) -> String? {
+        let dict: [String: Any] = [
+            "timestamp": Date().timeIntervalSince1970,
+            "level": level.rawValue,
+            "message": msg,
+            "thread": thread,
+            "file": file,
+            "function": function,
+            "line": line]
+        return jsonStringFromDict(dict)
     }
 
     /// returns the string of a level
@@ -294,7 +309,8 @@ open class BaseDestination: Hashable, Equatable {
     }
 
     /// Answer whether the destination has any message filters
-    /// returns boolean and is used to decide whether to resolve the message before invoking shouldLevelBeLogged
+    /// returns boolean and is used to decide whether to resolve 
+    /// the message before invoking shouldLevelBeLogged
     func hasMessageFilters() -> Bool {
         return !getFiltersTargeting(Filter.TargetType.Message(.Equals([], true)),
                                     fromFilters: self.filters).isEmpty
