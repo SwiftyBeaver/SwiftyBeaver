@@ -344,11 +344,11 @@ open class BaseDestination: Hashable, Equatable {
             return false
         }
 
-        if level.rawValue >= minLevel.rawValue {
+        if level.rawValue < minLevel.rawValue {
             if debugPrint {
-                print("filters is not empty and level >= minLevel")
+                print("filters is not empty and level < minLevel")
             }
-            return true
+            return false
         }
 
         let (matchedRequired, allRequired) = passedRequiredFilters(level, path: path,
