@@ -5,6 +5,24 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ----
 <br/>
+## 1.1.3 (2017-02-22)
+
+##### Added
+
+- Output logging object as JSON with `.format = "$J"` by [@skreutzberger](https://github.com/skreutzberger)
+- Adjust internal filenames in SBPlatform destination by [@skreutzberger](https://github.com/skreutzberger)
+
+##### Changed
+
+- a filter’s `required` parameter is now also working for levels by [@picciano](https://github.com/picciano)
+
+
+##### Removed
+
+- The option to turn just the message into JSON with `.format = "$m"` by [@skreutzberger](https://github.com/skreutzberger)
+
+
+<br/>
 ## 1.1.2 (2017-02-16)
 
 ##### Added
