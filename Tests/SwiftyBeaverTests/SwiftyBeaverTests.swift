@@ -201,7 +201,7 @@ class SwiftyBeaverTests: XCTestCase {
         log.error(["I", "like", "logs!"])
         log.error(["beaver": "yeah", "age": 12])
 
-        XCTAssertEqual(log.countDestinations(), 1)
+        XCTAssertEqual(log.countDestinations(), 2)
     }
 
     func testAutoClosure() {
