@@ -76,7 +76,11 @@ public class SBPlatformDestination: BaseDestination {
     let fileManager = FileManager.default
     let isoDateFormatter = DateFormatter()
 
-    public init(appID: String, appSecret: String, encryptionKey: String) {
+    /// init platform with default internal filenames
+    public init(appID: String, appSecret: String, encryptionKey: String,
+        entriesFileName: String = "sbplatform_entries.json",
+        sendingfileName: String = "sbplatform_entries_sending.json",
+        analyticsFileName: String = "sbplatform_analytics.json") {
         super.init()
         self.appID = appID
         self.appSecret = appSecret
@@ -110,9 +114,9 @@ public class SBPlatformDestination: BaseDestination {
             #elseif os(Linux)
                 // Linux is using /var/cache
                 let baseDir = "/var/cache/"
-                entriesFileURL = URL(fileURLWithPath: baseDir + "sbplatform_entries.json")
-                sendingFileURL = URL(fileURLWithPath: baseDir + "sbplatform_entries_sending.json")
-                analyticsFileURL = URL(fileURLWithPath: baseDir + "sbplatform_analytics.json")
+                entriesFileURL = URL(fileURLWithPath: baseDir + entriesFileName)
+                sendingFileURL = URL(fileURLWithPath: baseDir + sendingfileName)
+                analyticsFileURL = URL(fileURLWithPath: baseDir + analyticsFileName)
             #else
                 // iOS and watchOS are using the app’s document directory
                 if let url = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first {
@@ -128,11 +132,11 @@ public class SBPlatformDestination: BaseDestination {
         #else
             if let baseURL = baseURL {
                 // is just set for everything but not Linux
-                entriesFileURL = baseURL.appendingPathComponent("sbplatform_entries.json",
+                entriesFileURL = baseURL.appendingPathComponent(entriesFileName,
                                                                 isDirectory: false)
-                sendingFileURL = baseURL.appendingPathComponent("sbplatform_entries_sending.json",
+                sendingFileURL = baseURL.appendingPathComponent(sendingfileName,
                                                                 isDirectory: false)
-                analyticsFileURL = baseURL.appendingPathComponent("sbplatform_analytics.json",
+                analyticsFileURL = baseURL.appendingPathComponent(analyticsFileName,
                                                                   isDirectory: false)
 
                 // get, update loaded and save analytics data to file on start
