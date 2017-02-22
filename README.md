@@ -130,7 +130,7 @@ let cloud = SBPlatformDestination(appID: "foo", appSecret: "bar", encryptionKey:
 
 // use custom format and set console output to short time, log level & message
 console.format = "$DHH:mm:ss$d $L $M"
-// or use this for JSON output: console.format = "%J"
+// or use this for JSON output: console.format = "$J"
 
 // add the destinations to SwiftyBeaver
 log.addDestination(console)
