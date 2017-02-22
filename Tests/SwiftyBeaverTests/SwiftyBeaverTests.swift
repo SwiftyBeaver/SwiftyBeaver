@@ -189,7 +189,19 @@ class SwiftyBeaverTests: XCTestCase {
         log.error(["I", "like", "logs!"])
         log.error(["beaver": "yeah", "age": 12])
 
-        XCTAssertEqual(log.countDestinations(), 1)
+        // JSON Logging
+        let jsonConsole = ConsoleDestination()
+        jsonConsole.format = "$J"
+        XCTAssertTrue(log.addDestination(jsonConsole))
+
+        log.verbose("My name is üÄölèå")
+        log.verbose(123)
+        log.info(-123.45678)
+        log.warning(NSDate())
+        log.error(["I", "like", "logs!"])
+        log.error(["beaver": "yeah", "age": 12])
+
+        XCTAssertEqual(log.countDestinations(), 2)
     }
 
     func testAutoClosure() {
