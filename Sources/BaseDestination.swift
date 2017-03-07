@@ -115,47 +115,45 @@ open class BaseDestination: Hashable, Equatable {
         var text = ""
         let phrases: [String] = format.components(separatedBy: "$")
 
-        for phrase in phrases {
-            if !phrase.isEmpty {
-                let firstChar = phrase[phrase.startIndex]
-                let rangeAfterFirstChar = phrase.index(phrase.startIndex, offsetBy: 1)..<phrase.endIndex
-                let remainingPhrase = phrase[rangeAfterFirstChar]
+        for phrase in phrases where !phrase.isEmpty {
+            let firstChar = phrase[phrase.startIndex]
+            let rangeAfterFirstChar = phrase.index(phrase.startIndex, offsetBy: 1)..<phrase.endIndex
+            let remainingPhrase = phrase[rangeAfterFirstChar]
 
-                switch firstChar {
-                case "L":
-                    text += levelWord(level) + remainingPhrase
-                case "M":
-                    text += msg + remainingPhrase
-                case "T":
-                    text += thread + remainingPhrase
-                case "N":
-                    // name of file without suffix
-                    text += fileNameWithoutSuffix(file) + remainingPhrase
-                case "n":
-                    // name of file with suffix
-                    text += fileNameOfFile(file) + remainingPhrase
-                case "F":
-                    text += function + remainingPhrase
-                case "l":
-                    text += String(line) + remainingPhrase
-                case "D":
-                    // start of datetime format
-                    text += formatDate(remainingPhrase)
-                case "d":
-                    text += remainingPhrase
-                case "Z":
-                    // start of datetime format in UTC timezone
-                    text += formatDate(remainingPhrase, timeZone: "UTC")
-                case "z":
-                    text += remainingPhrase
-                case "C":
-                    // color code ("" on default)
-                    text += escape + colorForLevel(level) + remainingPhrase
-                case "c":
-                    text += reset + remainingPhrase
-                default:
-                    text += phrase
-                }
+            switch firstChar {
+            case "L":
+                text += levelWord(level) + remainingPhrase
+            case "M":
+                text += msg + remainingPhrase
+            case "T":
+                text += thread + remainingPhrase
+            case "N":
+                // name of file without suffix
+                text += fileNameWithoutSuffix(file) + remainingPhrase
+            case "n":
+                // name of file with suffix
+                text += fileNameOfFile(file) + remainingPhrase
+            case "F":
+                text += function + remainingPhrase
+            case "l":
+                text += String(line) + remainingPhrase
+            case "D":
+                // start of datetime format
+                text += formatDate(remainingPhrase)
+            case "d":
+                text += remainingPhrase
+            case "Z":
+                // start of datetime format in UTC timezone
+                text += formatDate(remainingPhrase, timeZone: "UTC")
+            case "z":
+                text += remainingPhrase
+            case "C":
+                // color code ("" on default)
+                text += escape + colorForLevel(level) + remainingPhrase
+            case "c":
+                text += reset + remainingPhrase
+            default:
+                text += phrase
             }
         }
         return text
@@ -225,24 +223,12 @@ open class BaseDestination: Hashable, Equatable {
 
     /// returns the filename of a path
     func fileNameOfFile(_ file: String) -> String {
-        let fileParts = file.components(separatedBy: "/")
-        if let lastPart = fileParts.last {
-            return lastPart
-        }
-        return ""
+        return file.components(separatedBy: "/").last!
     }
 
     /// returns the filename without suffix (= file ending) of a path
     func fileNameWithoutSuffix(_ file: String) -> String {
-        let fileName = fileNameOfFile(file)
-
-        if !fileName.isEmpty {
-            let fileNameParts = fileName.components(separatedBy: ".")
-            if let firstPart = fileNameParts.first {
-                return firstPart
-            }
-        }
-        return ""
+        return fileNameOfFile(file).components(separatedBy: ".").first!
     }
 
     /// returns a formatted date string
@@ -297,15 +283,9 @@ open class BaseDestination: Hashable, Equatable {
 
     /// Remove a filter from the list of filters
     public func removeFilter(_ filter: FilterType) {
-        let index = filters.index {
-            return ObjectIdentifier($0) == ObjectIdentifier(filter)
+        if let filterIndex = filters.index(where: { $0 === filter }) {
+            filters.remove(at: filterIndex)
         }
-
-        guard let filterIndex = index else {
-            return
-        }
-
-        filters.remove(at: filterIndex)
     }
 
     /// Answer whether the destination has any message filters
@@ -437,13 +417,13 @@ open class BaseDestination: Hashable, Equatable {
             }
 
             switch filter.getTarget() {
-            case .Path(_):
+            case .Path:
                 passes = filter.apply(path)
 
-            case .Function(_):
+            case .Function:
                 passes = filter.apply(function)
 
-            case .Message(_):
+            case .Message:
                 guard let message = message else {
                     return false
                 }
@@ -455,16 +435,16 @@ open class BaseDestination: Hashable, Equatable {
             }.count
     }
 
-  /**
-    Triggered by main flush() method on each destination. Runs in background thread.
-   Use for destinations that buffer log items, implement this function to flush those
-   buffers to their final destination (web server...)
-   */
-  func flush() {
-    // no implementation in base destination needed
-  }
-}
+    /**
+     Triggered by main flush() method on each destination. Runs in background thread.
+     Use for destinations that buffer log items, implement this function to flush those
+     buffers to their final destination (web server...)
+     */
+    func flush() {
+        // no implementation in base destination needed
+    }
 
-public func == (lhs: BaseDestination, rhs: BaseDestination) -> Bool {
-    return ObjectIdentifier(lhs) == ObjectIdentifier(rhs)
+    public static func == (lhs: BaseDestination, rhs: BaseDestination) -> Bool {
+        return lhs === rhs
+    }
 }
