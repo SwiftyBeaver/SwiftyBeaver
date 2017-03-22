@@ -47,6 +47,7 @@ Conveniently access your logs during development & release with our [free Mac Ap
 - For **Swift 2** install SwiftyBeaver 0.7.0
 
 <br/>
+
 ### Carthage
 
 You can use [Carthage](https://github.com/Carthage/Carthage) to install SwiftyBeaver by adding that to your Cartfile:
@@ -62,6 +63,7 @@ github "SwiftyBeaver/SwiftyBeaver" ~> 0.7
 ```
 
 <br/>
+
 ### CocoaPods
 
 To use [CocoaPods](https://cocoapods.org) just add this to your Podfile:
@@ -89,6 +91,7 @@ end
 ```
 
 <br/>
+
 ### Swift Package Manager
 
 For [Swift Package Manager](https://swift.org/package-manager/) add the following package to your Package.swift file. Just Swift 3 is supported:
