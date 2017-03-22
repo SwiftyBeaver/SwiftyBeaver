@@ -193,6 +193,7 @@ More destination & system documentation is coming soon! <br/>Get support via Git
 
 <br/>
 <br/>
+
 ## License
 
 SwiftyBeaver Framework is released under the [MIT License](https://github.com/SwiftyBeaver/SwiftyBeaver/blob/master/LICENSE).
