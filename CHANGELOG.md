@@ -5,6 +5,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ----
 <br/>
+## 1.1.4 (2017-03-28)
+
+##### Added
+
+- console destination property `.useTerminalColors` by [@skreutzberger](https://github.com/skreutzberger)
+
+<br/>
 ## 1.1.3 (2017-02-22)
 
 ##### Added
