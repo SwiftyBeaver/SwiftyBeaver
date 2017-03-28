@@ -77,14 +77,12 @@
 		9E2AEACB1D9BB46300F21B1F /* FileDestinationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FileDestinationTests.swift; path = Tests/SwiftyBeaverTests/FileDestinationTests.swift; sourceTree = "<group>"; };
 		9E2AEACC1D9BB46300F21B1F /* FilterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FilterTests.swift; path = Tests/SwiftyBeaverTests/FilterTests.swift; sourceTree = "<group>"; };
 		9E2AEACD1D9BB46300F21B1F /* SBPlatformDestinationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBPlatformDestinationTests.swift; path = Tests/SwiftyBeaverTests/SBPlatformDestinationTests.swift; sourceTree = "<group>"; };
-		9E2AEACE1D9BB46300F21B1F /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Secrets.swift; path = Tests/SwiftyBeaverTests/Secrets.swift; sourceTree = "<group>"; };
 		9E2AEACF1D9BB46300F21B1F /* SecretsExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SecretsExample.swift; path = Tests/SwiftyBeaverTests/SecretsExample.swift; sourceTree = "<group>"; };
 		9E2AEAD01D9BB46300F21B1F /* SwiftyBeaverTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyBeaverTests.swift; path = Tests/SwiftyBeaverTests/SwiftyBeaverTests.swift; sourceTree = "<group>"; };
 		9E31D6281C185ECD004E0980 /* SwiftyBeaver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyBeaver.swift; path = sources/SwiftyBeaver.swift; sourceTree = "<group>"; };
 		9E31D62B1C185EE3004E0980 /* BaseDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseDestination.swift; path = sources/BaseDestination.swift; sourceTree = "<group>"; };
 		9E31D62C1C185EE3004E0980 /* ConsoleDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConsoleDestination.swift; path = sources/ConsoleDestination.swift; sourceTree = "<group>"; };
 		9E31D62D1C185EE3004E0980 /* FileDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FileDestination.swift; path = sources/FileDestination.swift; sourceTree = "<group>"; };
-		9E43ACA21D0FFBAC00BD02C6 /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 		9E4BBDFA1C09EB7F00220716 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		9E4BBDFE1C0A01D000220716 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		9E6CAA471C148EC1009D9093 /* SwiftyBeaver.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SwiftyBeaver.podspec; sourceTree = "<group>"; };
@@ -158,7 +156,6 @@
 				9E2AEACB1D9BB46300F21B1F /* FileDestinationTests.swift */,
 				9E2AEACC1D9BB46300F21B1F /* FilterTests.swift */,
 				9E2AEACD1D9BB46300F21B1F /* SBPlatformDestinationTests.swift */,
-				9E2AEACE1D9BB46300F21B1F /* Secrets.swift */,
 				9E2AEACF1D9BB46300F21B1F /* SecretsExample.swift */,
 				9E2AEAD01D9BB46300F21B1F /* SwiftyBeaverTests.swift */,
 			);
@@ -184,7 +181,6 @@
 			children = (
 				9E4BBDFA1C09EB7F00220716 /* .gitignore */,
 				9E11A1DA1D92654E002112B6 /* .swiftlint.yml */,
-				9E43ACA21D0FFBAC00BD02C6 /* .travis.yml */,
 				9E6CAA491C149579009D9093 /* LICENSE */,
 				9EA8054D1D9BB54100348BC6 /* Dockerfile */,
 				9E195B101C6B766D00D924CB /* Info.plist */,
