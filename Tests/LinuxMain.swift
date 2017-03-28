@@ -5,6 +5,7 @@ XCTMain([
     testCase(AES256CBCTests.allTests), // takes too long
     testCase(BaseDestinationTests.allTests),
     testCase(DestinationSetTests.allTests),
+    testCase(ConsoleDestinationTests.allTests),
     testCase(FileDestinationTests.allTests),
     testCase(SBPlatformDestinationTests.allTests),
     testCase(SwiftyBeaverTests.allTests)
