@@ -12,9 +12,9 @@ import Foundation
 open class SwiftyBeaver {
 
     /// version string of framework
-    public static let version = "1.1.3"  // UPDATE ON RELEASE!
+    public static let version = "1.1.4"  // UPDATE ON RELEASE!
     /// build number of framework
-    public static let build = 1130 // version 0.7.1 -> 710, UPDATE ON RELEASE!
+    public static let build = 1140 // version 0.7.1 -> 710, UPDATE ON RELEASE!
 
     public enum Level: Int {
         case verbose = 0
