@@ -8,7 +8,8 @@ XCTMain([
     testCase(ConsoleDestinationTests.allTests),
     testCase(FileDestinationTests.allTests),
     testCase(SBPlatformDestinationTests.allTests),
-    testCase(SwiftyBeaverTests.allTests)
+    testCase(SwiftyBeaverTests.allTests),
+    testCase(GoogleCloudDestinationTests.allTests)
 ])
 
 // All tests:
