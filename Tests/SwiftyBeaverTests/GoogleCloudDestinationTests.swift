@@ -37,8 +37,6 @@ class GoogleCloudDestinationTests: XCTestCase {
         let line = 123
 
         let gcpDestination = GoogleCloudDestination(serviceName: "TEST")
-        gcpDestination.minLevel = .verbose
-
         let str = gcpDestination.send(.verbose, msg: msg, thread: thread, file: file, function: function, line: line)
         XCTAssertNotNil(str)
         if let str = str {

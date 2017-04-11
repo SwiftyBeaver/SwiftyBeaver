@@ -25,7 +25,8 @@ public final class GoogleCloudDestination: BaseDestination {
         }
     }
 
-    override public func send(_ level: SwiftyBeaver.Level, msg: String, thread: String, file: String, function: String, line: Int) -> String? {
+    override public func send(_ level: SwiftyBeaver.Level, msg: String, thread: String,
+                              file: String, function: String, line: Int) -> String? {
 
         let gcpJSON: [String: Any] = [
             "serviceContext": [
@@ -43,7 +44,11 @@ public final class GoogleCloudDestination: BaseDestination {
         do {
             finalLogString = try jsonString(obj: gcpJSON)
         } catch {
-            let uncrashableLogString = "{\"context\":{\"reportLocation\":{\"filePath\": \"\(#file)\",\"functionName\":\"\(#function)\",\"lineNumber\":\(#line)},\"severity\":\"CRITICAL\",\"message\":\"Error encoding JSON log entry. You may be losing log messages!\"}"
+            let uncrashableLogString = "{\"context\":{\"reportLocation\":{\"filePath\": \"\(file)\"" +
+                ",\"functionName\":\"\(function)\"" +
+                ",\"lineNumber\":\(line)},\"severity\"" +
+                ":\"CRITICAL\",\"message\":\"Error encoding " +
+            "JSON log entry. You may be losing log messages!\"}"
             finalLogString = uncrashableLogString.description
         }
 
