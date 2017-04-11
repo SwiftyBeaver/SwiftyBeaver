@@ -5,6 +5,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ----
 <br/>
+## 1.2.0 (2017-04-11)
+
+##### Added
+
+- Google Cloud / Stackdriver destination by [@lgaches](https://github.com/lgaches)
+
+<br/>
 ## 1.1.4 (2017-03-28)
 
 ##### Added
