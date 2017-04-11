@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D1720E51E9C071000AB7833 /* GoogleCloudDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1720E41E9C071000AB7833 /* GoogleCloudDestination.swift */; };
+		4D1720E81E9C083600AB7833 /* GoogleCloudDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1720E71E9C083600AB7833 /* GoogleCloudDestinationTests.swift */; };
 		9E195B0A1C6B3B4600D924CB /* AES256CBC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E195B091C6B3B4600D924CB /* AES256CBC.swift */; };
 		9E195B0B1C6B3B4600D924CB /* AES256CBC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E195B091C6B3B4600D924CB /* AES256CBC.swift */; };
 		9E195B0C1C6B3B4600D924CB /* AES256CBC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E195B091C6B3B4600D924CB /* AES256CBC.swift */; };
@@ -65,6 +67,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4D1720E41E9C071000AB7833 /* GoogleCloudDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GoogleCloudDestination.swift; path = Sources/GoogleCloudDestination.swift; sourceTree = "<group>"; };
+		4D1720E71E9C083600AB7833 /* GoogleCloudDestinationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GoogleCloudDestinationTests.swift; path = Tests/SwiftyBeaverTests/GoogleCloudDestinationTests.swift; sourceTree = "<group>"; };
 		9E11A1DA1D92654E002112B6 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .swiftlint.yml; sourceTree = "<group>"; };
 		9E195B091C6B3B4600D924CB /* AES256CBC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AES256CBC.swift; path = sources/AES256CBC.swift; sourceTree = "<group>"; };
 		9E195B101C6B766D00D924CB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -158,6 +162,7 @@
 				9E2AEACD1D9BB46300F21B1F /* SBPlatformDestinationTests.swift */,
 				9E2AEACF1D9BB46300F21B1F /* SecretsExample.swift */,
 				9E2AEAD01D9BB46300F21B1F /* SwiftyBeaverTests.swift */,
+				4D1720E71E9C083600AB7833 /* GoogleCloudDestinationTests.swift */,
 			);
 			name = SwiftyBeaverTests;
 			sourceTree = "<group>";
@@ -172,6 +177,7 @@
 				9E236E6B1D016E3600A2CBDC /* Filter.swift */,
 				9EA06DB41D083C9D001DB20A /* SBPlatformDestination.swift */,
 				9E31D6281C185ECD004E0980 /* SwiftyBeaver.swift */,
+				4D1720E41E9C071000AB7833 /* GoogleCloudDestination.swift */,
 			);
 			name = Sources;
 			sourceTree = "<group>";
@@ -468,6 +474,7 @@
 				9E31D6291C185ECD004E0980 /* SwiftyBeaver.swift in Sources */,
 				9E31D6301C185EE3004E0980 /* FileDestination.swift in Sources */,
 				9E195B0A1C6B3B4600D924CB /* AES256CBC.swift in Sources */,
+				4D1720E51E9C071000AB7833 /* GoogleCloudDestination.swift in Sources */,
 				9EA06DB51D083C9D001DB20A /* SBPlatformDestination.swift in Sources */,
 				9E31D62E1C185EE3004E0980 /* BaseDestination.swift in Sources */,
 			);
@@ -484,6 +491,7 @@
 				9E2AEAD11D9BB46300F21B1F /* AES256CBCTests.swift in Sources */,
 				9E2AEAD41D9BB46300F21B1F /* FileDestinationTests.swift in Sources */,
 				9E2AEAD91D9BB46300F21B1F /* SwiftyBeaverTests.swift in Sources */,
+				4D1720E81E9C083600AB7833 /* GoogleCloudDestinationTests.swift in Sources */,
 				9E2AEAD21D9BB46300F21B1F /* BaseDestinationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
