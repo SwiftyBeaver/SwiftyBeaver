@@ -38,6 +38,11 @@
 
 Conveniently access your logs during development & release with our [free Mac App](https://swiftybeaver.com).
 
+
+### Google Cloud & More
+
+You can fully customize your log format, turn it into JSON, or create your own destinations. For example our [Google Cloud Destination](https://github.com/SwiftyBeaver/SwiftyBeaver/blob/master/Sources/GoogleCloudDestination.swift) is just another customized logging format which adds the powerful functionality of automatic server-side Swift logging when hosted on Google Cloud Platform.
+
 <br/><br/>
 
 
