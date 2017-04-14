@@ -51,7 +51,7 @@ public final class GoogleCloudDestination: BaseDestination {
             "JSON log entry. You may be losing log messages!\"}"
             finalLogString = uncrashableLogString.description
         }
-
+        print(finalLogString)
         return finalLogString
     }
 
