@@ -1,5 +1,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "SwiftyBeaver"
+    name: "SwiftyBeaver",
+    targets: [],
+    description: []
 )
