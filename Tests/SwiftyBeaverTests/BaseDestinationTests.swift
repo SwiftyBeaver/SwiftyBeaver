@@ -507,7 +507,7 @@ class BaseDestinationTests: XCTestCase {
                                                        message: "Hello World"))
 
         // not excluded, but above minLevel
-        XCTAssertFalse(destination.shouldLevelBeLogged(.error,
+        XCTAssertTrue(destination.shouldLevelBeLogged(.error,
                                                       path: "/world/OtherViewController.swift",
                                                       function: "otherFunc",
                                                       message: "Hello World"))
