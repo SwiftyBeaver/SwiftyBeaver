@@ -5,6 +5,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ----
 <br/>
+## 1.2.1 (2017-04-24)
+
+##### Fixed
+
+- Logic issue in filter by [@rajatk](https://github.com/rajatk)
+
+<br/>
 ## 1.2.0 (2017-04-11)
 
 ##### Added
