@@ -371,7 +371,7 @@ open class BaseDestination: Hashable, Equatable {
             return false
         }
 
-        return false
+        return true
     }
 
     func getFiltersTargeting(_ target: Filter.TargetType, fromFilters: [FilterType]) -> [FilterType] {
