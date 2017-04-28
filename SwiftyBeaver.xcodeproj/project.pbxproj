@@ -7,13 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4D1720E51E9C071000AB7833 /* GoogleCloudDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1720E41E9C071000AB7833 /* GoogleCloudDestination.swift */; };
 		4D1720E81E9C083600AB7833 /* GoogleCloudDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1720E71E9C083600AB7833 /* GoogleCloudDestinationTests.swift */; };
-		9E195B0A1C6B3B4600D924CB /* AES256CBC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E195B091C6B3B4600D924CB /* AES256CBC.swift */; };
-		9E195B0B1C6B3B4600D924CB /* AES256CBC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E195B091C6B3B4600D924CB /* AES256CBC.swift */; };
-		9E195B0C1C6B3B4600D924CB /* AES256CBC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E195B091C6B3B4600D924CB /* AES256CBC.swift */; };
-		9E195B0D1C6B3B4600D924CB /* AES256CBC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E195B091C6B3B4600D924CB /* AES256CBC.swift */; };
-		9E236E6C1D016E3600A2CBDC /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E236E6B1D016E3600A2CBDC /* Filter.swift */; };
 		9E2AEAD11D9BB46300F21B1F /* AES256CBCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEAC81D9BB46300F21B1F /* AES256CBCTests.swift */; };
 		9E2AEAD21D9BB46300F21B1F /* BaseDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEAC91D9BB46300F21B1F /* BaseDestinationTests.swift */; };
 		9E2AEAD31D9BB46300F21B1F /* DestinationSetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEACA1D9BB46300F21B1F /* DestinationSetTests.swift */; };
@@ -22,38 +16,23 @@
 		9E2AEAD61D9BB46300F21B1F /* SBPlatformDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEACD1D9BB46300F21B1F /* SBPlatformDestinationTests.swift */; };
 		9E2AEAD81D9BB46300F21B1F /* SecretsExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEACF1D9BB46300F21B1F /* SecretsExample.swift */; };
 		9E2AEAD91D9BB46300F21B1F /* SwiftyBeaverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEAD01D9BB46300F21B1F /* SwiftyBeaverTests.swift */; };
-		9E31D6291C185ECD004E0980 /* SwiftyBeaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E31D6281C185ECD004E0980 /* SwiftyBeaver.swift */; };
-		9E31D62E1C185EE3004E0980 /* BaseDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E31D62B1C185EE3004E0980 /* BaseDestination.swift */; };
-		9E31D62F1C185EE3004E0980 /* ConsoleDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E31D62C1C185EE3004E0980 /* ConsoleDestination.swift */; };
-		9E31D6301C185EE3004E0980 /* FileDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E31D62D1C185EE3004E0980 /* FileDestination.swift */; };
 		9E6CAA481C148EC1009D9093 /* SwiftyBeaver.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 9E6CAA471C148EC1009D9093 /* SwiftyBeaver.podspec */; };
 		9E6CAA4A1C149579009D9093 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 9E6CAA491C149579009D9093 /* LICENSE */; };
-		9EA06DB51D083C9D001DB20A /* SBPlatformDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA06DB41D083C9D001DB20A /* SBPlatformDestination.swift */; };
-		9EA06DB61D083CA4001DB20A /* SBPlatformDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA06DB41D083C9D001DB20A /* SBPlatformDestination.swift */; };
-		9EA06DB71D083CA5001DB20A /* SBPlatformDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA06DB41D083C9D001DB20A /* SBPlatformDestination.swift */; };
-		9EA06DB81D083CA5001DB20A /* SBPlatformDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA06DB41D083C9D001DB20A /* SBPlatformDestination.swift */; };
-		9EA0A5491D06EBE500CF16AB /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E236E6B1D016E3600A2CBDC /* Filter.swift */; };
-		9EA0A54A1D06EBE500CF16AB /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E236E6B1D016E3600A2CBDC /* Filter.swift */; };
-		9EA0A54B1D06EBE500CF16AB /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E236E6B1D016E3600A2CBDC /* Filter.swift */; };
 		9EDCE3EF1C09D211002FA4A7 /* SwiftyBeaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EDCE3E41C09D211002FA4A7 /* SwiftyBeaver.framework */; };
-		ACE597771C1882DF0031451F /* ConsoleDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E31D62C1C185EE3004E0980 /* ConsoleDestination.swift */; };
-		ACE597781C1882DF0031451F /* SwiftyBeaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E31D6281C185ECD004E0980 /* SwiftyBeaver.swift */; };
-		ACE597791C1882DF0031451F /* FileDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E31D62D1C185EE3004E0980 /* FileDestination.swift */; };
-		ACE5977A1C1882DF0031451F /* BaseDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E31D62B1C185EE3004E0980 /* BaseDestination.swift */; };
 		ACE5977E1C1882DF0031451F /* SwiftyBeaver.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 9E6CAA471C148EC1009D9093 /* SwiftyBeaver.podspec */; };
 		ACE5977F1C1882DF0031451F /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 9E6CAA491C149579009D9093 /* LICENSE */; };
-		ACE597881C18830D0031451F /* ConsoleDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E31D62C1C185EE3004E0980 /* ConsoleDestination.swift */; };
-		ACE597891C18830D0031451F /* SwiftyBeaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E31D6281C185ECD004E0980 /* SwiftyBeaver.swift */; };
-		ACE5978A1C18830D0031451F /* FileDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E31D62D1C185EE3004E0980 /* FileDestination.swift */; };
-		ACE5978B1C18830D0031451F /* BaseDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E31D62B1C185EE3004E0980 /* BaseDestination.swift */; };
 		ACE5978F1C18830D0031451F /* SwiftyBeaver.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 9E6CAA471C148EC1009D9093 /* SwiftyBeaver.podspec */; };
 		ACE597901C18830D0031451F /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 9E6CAA491C149579009D9093 /* LICENSE */; };
-		ACE597991C18832E0031451F /* ConsoleDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E31D62C1C185EE3004E0980 /* ConsoleDestination.swift */; };
-		ACE5979A1C18832E0031451F /* SwiftyBeaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E31D6281C185ECD004E0980 /* SwiftyBeaver.swift */; };
-		ACE5979B1C18832E0031451F /* FileDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E31D62D1C185EE3004E0980 /* FileDestination.swift */; };
-		ACE5979C1C18832E0031451F /* BaseDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E31D62B1C185EE3004E0980 /* BaseDestination.swift */; };
 		ACE597A01C18832E0031451F /* SwiftyBeaver.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 9E6CAA471C148EC1009D9093 /* SwiftyBeaver.podspec */; };
 		ACE597A11C18832E0031451F /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 9E6CAA491C149579009D9093 /* LICENSE */; };
+		CB5234061EB0EB4600739CFB /* AES256CBC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5233FE1EB0EB4600739CFB /* AES256CBC.swift */; };
+		CB5234071EB0EB4600739CFB /* BaseDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5233FF1EB0EB4600739CFB /* BaseDestination.swift */; };
+		CB5234081EB0EB4600739CFB /* ConsoleDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5234001EB0EB4600739CFB /* ConsoleDestination.swift */; };
+		CB5234091EB0EB4600739CFB /* FileDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5234011EB0EB4600739CFB /* FileDestination.swift */; };
+		CB52340A1EB0EB4600739CFB /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5234021EB0EB4600739CFB /* Filter.swift */; };
+		CB52340B1EB0EB4600739CFB /* GoogleCloudDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5234031EB0EB4600739CFB /* GoogleCloudDestination.swift */; };
+		CB52340C1EB0EB4600739CFB /* SBPlatformDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5234041EB0EB4600739CFB /* SBPlatformDestination.swift */; };
+		CB52340D1EB0EB4600739CFB /* SwiftyBeaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5234051EB0EB4600739CFB /* SwiftyBeaver.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,12 +46,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4D1720E41E9C071000AB7833 /* GoogleCloudDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GoogleCloudDestination.swift; path = Sources/GoogleCloudDestination.swift; sourceTree = "<group>"; };
 		4D1720E71E9C083600AB7833 /* GoogleCloudDestinationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GoogleCloudDestinationTests.swift; path = Tests/SwiftyBeaverTests/GoogleCloudDestinationTests.swift; sourceTree = "<group>"; };
 		9E11A1DA1D92654E002112B6 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .swiftlint.yml; sourceTree = "<group>"; };
-		9E195B091C6B3B4600D924CB /* AES256CBC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AES256CBC.swift; path = sources/AES256CBC.swift; sourceTree = "<group>"; };
 		9E195B101C6B766D00D924CB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9E236E6B1D016E3600A2CBDC /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Filter.swift; path = sources/Filter.swift; sourceTree = "<group>"; };
 		9E2AEAC51D9BB43C00F21B1F /* LinuxMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LinuxMain.swift; path = Tests/LinuxMain.swift; sourceTree = "<group>"; };
 		9E2AEAC61D9BB44700F21B1F /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Tests/Info.plist; sourceTree = "<group>"; };
 		9E2AEAC81D9BB46300F21B1F /* AES256CBCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AES256CBCTests.swift; path = Tests/SwiftyBeaverTests/AES256CBCTests.swift; sourceTree = "<group>"; };
@@ -83,22 +59,25 @@
 		9E2AEACD1D9BB46300F21B1F /* SBPlatformDestinationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBPlatformDestinationTests.swift; path = Tests/SwiftyBeaverTests/SBPlatformDestinationTests.swift; sourceTree = "<group>"; };
 		9E2AEACF1D9BB46300F21B1F /* SecretsExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SecretsExample.swift; path = Tests/SwiftyBeaverTests/SecretsExample.swift; sourceTree = "<group>"; };
 		9E2AEAD01D9BB46300F21B1F /* SwiftyBeaverTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyBeaverTests.swift; path = Tests/SwiftyBeaverTests/SwiftyBeaverTests.swift; sourceTree = "<group>"; };
-		9E31D6281C185ECD004E0980 /* SwiftyBeaver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyBeaver.swift; path = sources/SwiftyBeaver.swift; sourceTree = "<group>"; };
-		9E31D62B1C185EE3004E0980 /* BaseDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseDestination.swift; path = sources/BaseDestination.swift; sourceTree = "<group>"; };
-		9E31D62C1C185EE3004E0980 /* ConsoleDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConsoleDestination.swift; path = sources/ConsoleDestination.swift; sourceTree = "<group>"; };
-		9E31D62D1C185EE3004E0980 /* FileDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FileDestination.swift; path = sources/FileDestination.swift; sourceTree = "<group>"; };
 		9E4BBDFA1C09EB7F00220716 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		9E4BBDFE1C0A01D000220716 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		9E6CAA471C148EC1009D9093 /* SwiftyBeaver.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SwiftyBeaver.podspec; sourceTree = "<group>"; };
 		9E6CAA491C149579009D9093 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		9E74FEA81CD74AFA0024DD76 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
-		9EA06DB41D083C9D001DB20A /* SBPlatformDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBPlatformDestination.swift; path = sources/SBPlatformDestination.swift; sourceTree = "<group>"; };
 		9EA8054D1D9BB54100348BC6 /* Dockerfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Dockerfile; sourceTree = "<group>"; };
 		9EDCE3E41C09D211002FA4A7 /* SwiftyBeaver.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyBeaver.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EDCE3EE1C09D211002FA4A7 /* SwiftyBeaverTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftyBeaverTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACE597841C1882DF0031451F /* SwiftyBeaver.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyBeaver.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACE597951C18830D0031451F /* SwiftyBeaver.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyBeaver.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACE597A61C18832E0031451F /* SwiftyBeaver.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyBeaver.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CB5233FE1EB0EB4600739CFB /* AES256CBC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AES256CBC.swift; sourceTree = "<group>"; };
+		CB5233FF1EB0EB4600739CFB /* BaseDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDestination.swift; sourceTree = "<group>"; };
+		CB5234001EB0EB4600739CFB /* ConsoleDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsoleDestination.swift; sourceTree = "<group>"; };
+		CB5234011EB0EB4600739CFB /* FileDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileDestination.swift; sourceTree = "<group>"; };
+		CB5234021EB0EB4600739CFB /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
+		CB5234031EB0EB4600739CFB /* GoogleCloudDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleCloudDestination.swift; sourceTree = "<group>"; };
+		CB5234041EB0EB4600739CFB /* SBPlatformDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBPlatformDestination.swift; sourceTree = "<group>"; };
+		CB5234051EB0EB4600739CFB /* SwiftyBeaver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyBeaver.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,16 +149,16 @@
 		9E31D62A1C185ED0004E0980 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				9E195B091C6B3B4600D924CB /* AES256CBC.swift */,
-				9E31D62B1C185EE3004E0980 /* BaseDestination.swift */,
-				9E31D62C1C185EE3004E0980 /* ConsoleDestination.swift */,
-				9E31D62D1C185EE3004E0980 /* FileDestination.swift */,
-				9E236E6B1D016E3600A2CBDC /* Filter.swift */,
-				9EA06DB41D083C9D001DB20A /* SBPlatformDestination.swift */,
-				9E31D6281C185ECD004E0980 /* SwiftyBeaver.swift */,
-				4D1720E41E9C071000AB7833 /* GoogleCloudDestination.swift */,
+				CB5233FE1EB0EB4600739CFB /* AES256CBC.swift */,
+				CB5233FF1EB0EB4600739CFB /* BaseDestination.swift */,
+				CB5234001EB0EB4600739CFB /* ConsoleDestination.swift */,
+				CB5234011EB0EB4600739CFB /* FileDestination.swift */,
+				CB5234021EB0EB4600739CFB /* Filter.swift */,
+				CB5234031EB0EB4600739CFB /* GoogleCloudDestination.swift */,
+				CB5234041EB0EB4600739CFB /* SBPlatformDestination.swift */,
+				CB5234051EB0EB4600739CFB /* SwiftyBeaver.swift */,
 			);
-			name = Sources;
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		9EDCE3DA1C09D211002FA4A7 = {
@@ -469,14 +448,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9E236E6C1D016E3600A2CBDC /* Filter.swift in Sources */,
-				9E31D62F1C185EE3004E0980 /* ConsoleDestination.swift in Sources */,
-				9E31D6291C185ECD004E0980 /* SwiftyBeaver.swift in Sources */,
-				9E31D6301C185EE3004E0980 /* FileDestination.swift in Sources */,
-				9E195B0A1C6B3B4600D924CB /* AES256CBC.swift in Sources */,
-				4D1720E51E9C071000AB7833 /* GoogleCloudDestination.swift in Sources */,
-				9EA06DB51D083C9D001DB20A /* SBPlatformDestination.swift in Sources */,
-				9E31D62E1C185EE3004E0980 /* BaseDestination.swift in Sources */,
+				CB5234071EB0EB4600739CFB /* BaseDestination.swift in Sources */,
+				CB5234061EB0EB4600739CFB /* AES256CBC.swift in Sources */,
+				CB52340C1EB0EB4600739CFB /* SBPlatformDestination.swift in Sources */,
+				CB52340D1EB0EB4600739CFB /* SwiftyBeaver.swift in Sources */,
+				CB5234081EB0EB4600739CFB /* ConsoleDestination.swift in Sources */,
+				CB52340A1EB0EB4600739CFB /* Filter.swift in Sources */,
+				CB5234091EB0EB4600739CFB /* FileDestination.swift in Sources */,
+				CB52340B1EB0EB4600739CFB /* GoogleCloudDestination.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -500,13 +479,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9EA0A54B1D06EBE500CF16AB /* Filter.swift in Sources */,
-				ACE597771C1882DF0031451F /* ConsoleDestination.swift in Sources */,
-				ACE597781C1882DF0031451F /* SwiftyBeaver.swift in Sources */,
-				ACE597791C1882DF0031451F /* FileDestination.swift in Sources */,
-				9E195B0B1C6B3B4600D924CB /* AES256CBC.swift in Sources */,
-				9EA06DB61D083CA4001DB20A /* SBPlatformDestination.swift in Sources */,
-				ACE5977A1C1882DF0031451F /* BaseDestination.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -514,13 +486,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9EA0A54A1D06EBE500CF16AB /* Filter.swift in Sources */,
-				ACE597881C18830D0031451F /* ConsoleDestination.swift in Sources */,
-				ACE597891C18830D0031451F /* SwiftyBeaver.swift in Sources */,
-				ACE5978A1C18830D0031451F /* FileDestination.swift in Sources */,
-				9E195B0C1C6B3B4600D924CB /* AES256CBC.swift in Sources */,
-				9EA06DB71D083CA5001DB20A /* SBPlatformDestination.swift in Sources */,
-				ACE5978B1C18830D0031451F /* BaseDestination.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -528,13 +493,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9EA0A5491D06EBE500CF16AB /* Filter.swift in Sources */,
-				ACE597991C18832E0031451F /* ConsoleDestination.swift in Sources */,
-				ACE5979A1C18832E0031451F /* SwiftyBeaver.swift in Sources */,
-				ACE5979B1C18832E0031451F /* FileDestination.swift in Sources */,
-				9E195B0D1C6B3B4600D924CB /* AES256CBC.swift in Sources */,
-				9EA06DB81D083CA5001DB20A /* SBPlatformDestination.swift in Sources */,
-				ACE5979C1C18832E0031451F /* BaseDestination.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
