@@ -25,6 +25,30 @@
 		ACE597901C18830D0031451F /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 9E6CAA491C149579009D9093 /* LICENSE */; };
 		ACE597A01C18832E0031451F /* SwiftyBeaver.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 9E6CAA471C148EC1009D9093 /* SwiftyBeaver.podspec */; };
 		ACE597A11C18832E0031451F /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 9E6CAA491C149579009D9093 /* LICENSE */; };
+		CB0FC3071EB8ABA00094E03A /* AES256CBC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5233FE1EB0EB4600739CFB /* AES256CBC.swift */; };
+		CB0FC3081EB8ABA00094E03A /* BaseDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5233FF1EB0EB4600739CFB /* BaseDestination.swift */; };
+		CB0FC3091EB8ABA00094E03A /* ConsoleDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5234001EB0EB4600739CFB /* ConsoleDestination.swift */; };
+		CB0FC30A1EB8ABA00094E03A /* FileDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5234011EB0EB4600739CFB /* FileDestination.swift */; };
+		CB0FC30B1EB8ABA00094E03A /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5234021EB0EB4600739CFB /* Filter.swift */; };
+		CB0FC30C1EB8ABA00094E03A /* GoogleCloudDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5234031EB0EB4600739CFB /* GoogleCloudDestination.swift */; };
+		CB0FC30D1EB8ABA00094E03A /* SBPlatformDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5234041EB0EB4600739CFB /* SBPlatformDestination.swift */; };
+		CB0FC30E1EB8ABA00094E03A /* SwiftyBeaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5234051EB0EB4600739CFB /* SwiftyBeaver.swift */; };
+		CB0FC30F1EB8ABA10094E03A /* AES256CBC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5233FE1EB0EB4600739CFB /* AES256CBC.swift */; };
+		CB0FC3101EB8ABA10094E03A /* BaseDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5233FF1EB0EB4600739CFB /* BaseDestination.swift */; };
+		CB0FC3111EB8ABA10094E03A /* ConsoleDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5234001EB0EB4600739CFB /* ConsoleDestination.swift */; };
+		CB0FC3121EB8ABA10094E03A /* FileDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5234011EB0EB4600739CFB /* FileDestination.swift */; };
+		CB0FC3131EB8ABA10094E03A /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5234021EB0EB4600739CFB /* Filter.swift */; };
+		CB0FC3141EB8ABA10094E03A /* GoogleCloudDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5234031EB0EB4600739CFB /* GoogleCloudDestination.swift */; };
+		CB0FC3151EB8ABA10094E03A /* SBPlatformDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5234041EB0EB4600739CFB /* SBPlatformDestination.swift */; };
+		CB0FC3161EB8ABA10094E03A /* SwiftyBeaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5234051EB0EB4600739CFB /* SwiftyBeaver.swift */; };
+		CB0FC3171EB8ABA10094E03A /* AES256CBC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5233FE1EB0EB4600739CFB /* AES256CBC.swift */; };
+		CB0FC3181EB8ABA10094E03A /* BaseDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5233FF1EB0EB4600739CFB /* BaseDestination.swift */; };
+		CB0FC3191EB8ABA10094E03A /* ConsoleDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5234001EB0EB4600739CFB /* ConsoleDestination.swift */; };
+		CB0FC31A1EB8ABA10094E03A /* FileDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5234011EB0EB4600739CFB /* FileDestination.swift */; };
+		CB0FC31B1EB8ABA10094E03A /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5234021EB0EB4600739CFB /* Filter.swift */; };
+		CB0FC31C1EB8ABA10094E03A /* GoogleCloudDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5234031EB0EB4600739CFB /* GoogleCloudDestination.swift */; };
+		CB0FC31D1EB8ABA10094E03A /* SBPlatformDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5234041EB0EB4600739CFB /* SBPlatformDestination.swift */; };
+		CB0FC31E1EB8ABA10094E03A /* SwiftyBeaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5234051EB0EB4600739CFB /* SwiftyBeaver.swift */; };
 		CB5234061EB0EB4600739CFB /* AES256CBC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5233FE1EB0EB4600739CFB /* AES256CBC.swift */; };
 		CB5234071EB0EB4600739CFB /* BaseDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5233FF1EB0EB4600739CFB /* BaseDestination.swift */; };
 		CB5234081EB0EB4600739CFB /* ConsoleDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5234001EB0EB4600739CFB /* ConsoleDestination.swift */; };
@@ -479,6 +503,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB0FC30E1EB8ABA00094E03A /* SwiftyBeaver.swift in Sources */,
+				CB0FC3091EB8ABA00094E03A /* ConsoleDestination.swift in Sources */,
+				CB0FC30C1EB8ABA00094E03A /* GoogleCloudDestination.swift in Sources */,
+				CB0FC30B1EB8ABA00094E03A /* Filter.swift in Sources */,
+				CB0FC3071EB8ABA00094E03A /* AES256CBC.swift in Sources */,
+				CB0FC30A1EB8ABA00094E03A /* FileDestination.swift in Sources */,
+				CB0FC30D1EB8ABA00094E03A /* SBPlatformDestination.swift in Sources */,
+				CB0FC3081EB8ABA00094E03A /* BaseDestination.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -486,6 +518,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB0FC3161EB8ABA10094E03A /* SwiftyBeaver.swift in Sources */,
+				CB0FC3111EB8ABA10094E03A /* ConsoleDestination.swift in Sources */,
+				CB0FC3141EB8ABA10094E03A /* GoogleCloudDestination.swift in Sources */,
+				CB0FC3131EB8ABA10094E03A /* Filter.swift in Sources */,
+				CB0FC30F1EB8ABA10094E03A /* AES256CBC.swift in Sources */,
+				CB0FC3121EB8ABA10094E03A /* FileDestination.swift in Sources */,
+				CB0FC3151EB8ABA10094E03A /* SBPlatformDestination.swift in Sources */,
+				CB0FC3101EB8ABA10094E03A /* BaseDestination.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -493,6 +533,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB0FC31E1EB8ABA10094E03A /* SwiftyBeaver.swift in Sources */,
+				CB0FC3191EB8ABA10094E03A /* ConsoleDestination.swift in Sources */,
+				CB0FC31C1EB8ABA10094E03A /* GoogleCloudDestination.swift in Sources */,
+				CB0FC31B1EB8ABA10094E03A /* Filter.swift in Sources */,
+				CB0FC3171EB8ABA10094E03A /* AES256CBC.swift in Sources */,
+				CB0FC31A1EB8ABA10094E03A /* FileDestination.swift in Sources */,
+				CB0FC31D1EB8ABA10094E03A /* SBPlatformDestination.swift in Sources */,
+				CB0FC3181EB8ABA10094E03A /* BaseDestination.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
