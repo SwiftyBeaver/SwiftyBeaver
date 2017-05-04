@@ -5,6 +5,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ----
 <br/>
+## 1.2.2 (2017-05-04)
+
+##### Fixed
+
+- Issue while building for macOS, tvOS & watchOS by [@alex-can](https://github.com/alex-chan)
+- Issue while building on a case-sensitive file system by [@alex-can](https://github.com/alex-chan)
+
+<br/>
 ## 1.2.1 (2017-04-24)
 
 ##### Fixed
