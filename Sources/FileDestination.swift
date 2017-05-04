@@ -77,9 +77,7 @@ public class FileDestination: BaseDestination {
 
     deinit {
         // close file handle if set
-        if let fileHandle = fileHandle {
-            fileHandle.closeFile()
-        }
+        fileHandle?.closeFile()
     }
 
     /// appends a string as line to a file.
@@ -97,12 +95,11 @@ public class FileDestination: BaseDestination {
                     // initial setting of file handle
                     fileHandle = try FileHandle(forWritingTo: url as URL)
                 }
-                if let fileHandle = fileHandle {
-                    let _ = fileHandle.seekToEndOfFile()
-                    let line = str + "\n"
-                    if let data = line.data(using: String.Encoding.utf8) {
-                        fileHandle.write(data)
-                    }
+
+                let _ = fileHandle!.seekToEndOfFile()
+                let line = str + "\n"
+                if let data = line.data(using: String.Encoding.utf8) {
+                    fileHandle!.write(data)
                 }
             }
             return true
@@ -115,7 +112,7 @@ public class FileDestination: BaseDestination {
     /// deletes log file.
     /// returns true if file was removed or does not exist, false otherwise
     public func deleteLogFile() -> Bool {
-        guard let url = logFileURL, fileManager.fileExists(atPath: url.path) == true else { return true }
+        guard let url = logFileURL, fileManager.fileExists(atPath: url.path) else { return true }
         do {
             try fileManager.removeItem(at: url)
             fileHandle = nil
