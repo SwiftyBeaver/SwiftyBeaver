@@ -92,7 +92,7 @@ open class BaseDestination: Hashable, Equatable {
     /// returns the formatted log message for processing by inheriting method
     /// and for unit tests (nil if error)
     open func send(_ level: SwiftyBeaver.Level, msg: String, thread: String, file: String,
-        function: String, line: Int) -> String? {
+                   function: String, line: Int, context: Any? = nil) -> String? {
 
         if format.hasPrefix("$J") {
             return messageToJSON(level, msg: msg, thread: thread,
@@ -115,8 +115,7 @@ open class BaseDestination: Hashable, Equatable {
         var text = ""
         let phrases: [String] = format.components(separatedBy: "$")
 
-        for phrase in phrases {
-            if !phrase.isEmpty {
+        for phrase in phrases where !phrase.isEmpty {
                 let firstChar = phrase[phrase.startIndex]
                 let rangeAfterFirstChar = phrase.index(phrase.startIndex, offsetBy: 1)..<phrase.endIndex
                 let remainingPhrase = phrase[rangeAfterFirstChar]
@@ -156,7 +155,6 @@ open class BaseDestination: Hashable, Equatable {
                 default:
                     text += phrase
                 }
-            }
         }
         return text
     }

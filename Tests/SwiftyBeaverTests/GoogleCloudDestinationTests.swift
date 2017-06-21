@@ -49,9 +49,37 @@ class GoogleCloudDestinationTests: XCTestCase {
         }
     }
 
+    func testContextMessage() {
+        let msg = "test message\nNewlineäößø"
+        let thread = ""
+        let file = "/file/path.swift"
+        let function = "TestFunction()"
+        let line = 123
+
+        let gcd = GoogleCloudDestination(serviceName: "SwiftyBeaver")
+
+        let str = gcd.send(.verbose, msg: msg, thread: thread, file: file, function: function, line: line,
+                           context:  ["user": "Beaver", "httpRequest": ["method": "GET", "responseStatusCode": 200]])
+
+        XCTAssertNotNil(str)
+        if let str = str {
+            XCTAssertEqual(str.characters.first, "{")
+            XCTAssertEqual(str.characters.last, "}")
+            XCTAssertNotNil(str.range(of: "{\"service\":\"SwiftyBeaver\"}"))
+            XCTAssertNotNil(str.range(of: "\"severity\":\"DEBUG\""))
+            XCTAssertNotNil(str.range(of: "\"message\":\"test message\\nNewlineäößø\""))
+            XCTAssertNotNil(str.range(of: "\"functionName\":\"TestFunction()\""))
+            XCTAssertNotNil(str.range(of: "\"user\":\"Beaver\""))
+            XCTAssertNotNil(str.range(of: "\"method\":\"GET\""))
+            XCTAssertNotNil(str.range(of: "\"responseStatusCode\":200"))
+        }
+
+    }
+
     static var allTests = [
         ("testUseGoogleCloudPDestination", testUseGoogleCloudPDestination),
-        ("testSend", testSend)
+        ("testSend", testSend),
+        ("testContextMessage", testContextMessage)
     ]
 
 }
