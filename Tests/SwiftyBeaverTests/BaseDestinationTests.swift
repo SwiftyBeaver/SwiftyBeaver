@@ -109,7 +109,7 @@ class BaseDestinationTests: XCTestCase {
     func testMessageToJSON() {
         let obj = BaseDestination()
         guard let str = obj.messageToJSON(.info, msg: "hello world", thread: "main",
-                                file: "/path/to/ViewController.swift", function: "testFunction()", line: 50) else {
+                                          file: "/path/to/ViewController.swift", function: "testFunction()", line: 50, context: ["foo": "bar", "hello": 2]) else {
             XCTFail("str should not be nil"); return
         }
         print(str)
@@ -123,7 +123,8 @@ class BaseDestinationTests: XCTestCase {
             let thread = dict["thread"] as? String,
             let file = dict["file"] as? String,
             let function = dict["function"] as? String,
-            let line = dict["line"] as? Int else {
+            let line = dict["line"] as? Int,
+            let context = dict["context"] as? [String: Any] else {
             XCTFail("dict and its properties should not be nil"); return
         }
         XCTAssertGreaterThanOrEqual(timestamp, Date().timeIntervalSince1970 - 10)
@@ -133,6 +134,8 @@ class BaseDestinationTests: XCTestCase {
         XCTAssertEqual(file, "/path/to/ViewController.swift")
         XCTAssertEqual(function, "testFunction()")
         XCTAssertEqual(line, 50)
+        XCTAssertEqual(context["foo"] as? String, "bar")
+        XCTAssertEqual(context["hello"] as? Int, 2)
     }
 
     func testLevelWord() {
