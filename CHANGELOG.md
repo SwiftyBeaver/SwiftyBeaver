@@ -5,6 +5,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ----
 <br/>
+## 1.3.0 (2017-06-22)
+
+##### Added
+
+- New context parameter for more detailed logging by [@lgaches](https://github.com/lgaches)
+- Support for more watchOS versions by [@basememara](https://github.com/basememara)
+
+<br/>
 ## 1.2.2 (2017-05-04)
 
 ##### Fixed
