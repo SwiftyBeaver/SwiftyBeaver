@@ -26,7 +26,19 @@ public final class GoogleCloudDestination: BaseDestination {
     }
 
     override public func send(_ level: SwiftyBeaver.Level, msg: String, thread: String,
-                              file: String, function: String, line: Int) -> String? {
+                              file: String, function: String, line: Int, context: Any? = nil) -> String? {
+
+        let reportLocation: [String: Any] = ["filePath": file, "lineNumber": line, "functionName": function]
+        var gcpContext: [String: Any] = ["reportLocation": reportLocation]
+        if let context = context as? [String: Any] {
+            if let httpRequestContext =  context["httpRequest"] as? [String: Any] {
+                gcpContext["httpRequest"] = httpRequestContext
+            }
+
+            if let user = context["user"] as? String {
+                gcpContext["user"] = user
+            }
+        }
 
         let gcpJSON: [String: Any] = [
             "serviceContext": [
@@ -34,9 +46,7 @@ public final class GoogleCloudDestination: BaseDestination {
             ],
             "message": msg,
             "severity": level.severity,
-            "context": [
-                "reportLocation": ["filePath": file, "lineNumber": line, "functionName": function]
-            ]
+            "context": gcpContext
         ]
 
         let finalLogString: String

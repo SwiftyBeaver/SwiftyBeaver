@@ -85,12 +85,31 @@ class BaseDestinationTests: XCTestCase {
         str = obj3.formatMessage(format, level: .verbose, msg: "Hello", thread: "main",
                                  file: "/path/to/ViewController.swift", function: "testFunction()", line: 50)
         XCTAssertEqual(str, "\(utcDateStr)")
+
+        // context in different formats
+        let obj4 = BaseDestination()
+        format = "$L: $M $X"
+        str = obj4.formatMessage(format, level: .verbose, msg: "Hello", thread: "main",
+                                file: "/path/to/ViewController.swift", function: "testFunction()", line: 50, context: "Context!")
+        XCTAssertEqual(str, "VERBOSE: Hello Context!")
+
+        str = obj4.formatMessage(format, level: .verbose, msg: "Hello", thread: "main",
+                                file: "/path/to/ViewController.swift", function: "testFunction()", line: 50, context: 123)
+        XCTAssertEqual(str, "VERBOSE: Hello 123")
+
+        str = obj4.formatMessage(format, level: .verbose, msg: "Hello", thread: "main",
+                                file: "/path/to/ViewController.swift", function: "testFunction()", line: 50, context: [1, "a", 2])
+        XCTAssertEqual(str, "VERBOSE: Hello [1, \"a\", 2]")
+
+        str = obj4.formatMessage(format, level: .verbose, msg: "Hello", thread: "main",
+                                file: "/path/to/ViewController.swift", function: "testFunction()", line: 50, context: nil)
+        XCTAssertEqual(str, "VERBOSE: Hello ")
     }
 
     func testMessageToJSON() {
         let obj = BaseDestination()
         guard let str = obj.messageToJSON(.info, msg: "hello world", thread: "main",
-                                file: "/path/to/ViewController.swift", function: "testFunction()", line: 50) else {
+                                          file: "/path/to/ViewController.swift", function: "testFunction()", line: 50, context: ["foo": "bar", "hello": 2]) else {
             XCTFail("str should not be nil"); return
         }
         print(str)
@@ -104,7 +123,8 @@ class BaseDestinationTests: XCTestCase {
             let thread = dict["thread"] as? String,
             let file = dict["file"] as? String,
             let function = dict["function"] as? String,
-            let line = dict["line"] as? Int else {
+            let line = dict["line"] as? Int,
+            let context = dict["context"] as? [String: Any] else {
             XCTFail("dict and its properties should not be nil"); return
         }
         XCTAssertGreaterThanOrEqual(timestamp, Date().timeIntervalSince1970 - 10)
@@ -114,6 +134,8 @@ class BaseDestinationTests: XCTestCase {
         XCTAssertEqual(file, "/path/to/ViewController.swift")
         XCTAssertEqual(function, "testFunction()")
         XCTAssertEqual(line, 50)
+        XCTAssertEqual(context["foo"] as? String, "bar")
+        XCTAssertEqual(context["hello"] as? Int, 2)
     }
 
     func testLevelWord() {

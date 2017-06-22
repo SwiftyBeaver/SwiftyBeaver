@@ -31,12 +31,12 @@ class FileDestinationTests: XCTestCase {
         let file = FileDestination()
         file.logFileURL = URL(string: "file://" + path)!
         file.format = "$L: $M"
-        let _ = log.addDestination(file)
+        _ = log.addDestination(file)
 
         log.verbose("first line to log")
         log.debug("second line to log")
         log.info("third line to log")
-        let _ = log.flush(secondTimeout: 3)
+        _ = log.flush(secondTimeout: 3)
 
         // wait a bit until the logs are written to file
         for i in 1...100000 {
@@ -74,12 +74,12 @@ class FileDestinationTests: XCTestCase {
         let file = FileDestination()
         file.logFileURL = url
         file.format = "$L: $M"
-        let _ = log.addDestination(file)
+        _ = log.addDestination(file)
 
         log.verbose("first line to log")
         log.debug("second line to log")
         log.info("third line to log")
-        let _ = log.flush(secondTimeout: 3)
+        _ = log.flush(secondTimeout: 3)
 
         // wait a bit until the logs are written to file
         for i in 1...100000 {

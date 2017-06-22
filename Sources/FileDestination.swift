@@ -66,11 +66,11 @@ public class FileDestination: BaseDestination {
 
     // append to file. uses full base class functionality
     override public func send(_ level: SwiftyBeaver.Level, msg: String, thread: String,
-        file: String, function: String, line: Int) -> String? {
-        let formattedString = super.send(level, msg: msg, thread: thread, file: file, function: function, line: line)
+        file: String, function: String, line: Int, context: Any? = nil) -> String? {
+        let formattedString = super.send(level, msg: msg, thread: thread, file: file, function: function, line: line, context: context)
 
         if let str = formattedString {
-            let _ = saveToFile(str: str)
+            _ = saveToFile(str: str)
         }
         return formattedString
     }
@@ -98,7 +98,7 @@ public class FileDestination: BaseDestination {
                     fileHandle = try FileHandle(forWritingTo: url as URL)
                 }
                 if let fileHandle = fileHandle {
-                    let _ = fileHandle.seekToEndOfFile()
+                    _ = fileHandle.seekToEndOfFile()
                     let line = str + "\n"
                     if let data = line.data(using: String.Encoding.utf8) {
                         fileHandle.write(data)

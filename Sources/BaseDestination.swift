@@ -92,15 +92,15 @@ open class BaseDestination: Hashable, Equatable {
     /// returns the formatted log message for processing by inheriting method
     /// and for unit tests (nil if error)
     open func send(_ level: SwiftyBeaver.Level, msg: String, thread: String, file: String,
-        function: String, line: Int) -> String? {
+                   function: String, line: Int, context: Any? = nil) -> String? {
 
         if format.hasPrefix("$J") {
             return messageToJSON(level, msg: msg, thread: thread,
-                                 file: file, function: function, line: line)
+                                 file: file, function: function, line: line, context: context)
 
         } else {
             return formatMessage(format, level: level, msg: msg, thread: thread,
-                                 file: file, function: function, line: line)
+                                 file: file, function: function, line: line, context: context)
         }
     }
 
@@ -110,13 +110,12 @@ open class BaseDestination: Hashable, Equatable {
 
     /// returns the log message based on the format pattern
     func formatMessage(_ format: String, level: SwiftyBeaver.Level, msg: String, thread: String,
-        file: String, function: String, line: Int) -> String {
+        file: String, function: String, line: Int, context: Any? = nil) -> String {
 
         var text = ""
         let phrases: [String] = format.components(separatedBy: "$")
 
-        for phrase in phrases {
-            if !phrase.isEmpty {
+        for phrase in phrases where !phrase.isEmpty {
                 let firstChar = phrase[phrase.startIndex]
                 let rangeAfterFirstChar = phrase.index(phrase.startIndex, offsetBy: 1)..<phrase.endIndex
                 let remainingPhrase = phrase[rangeAfterFirstChar]
@@ -153,25 +152,37 @@ open class BaseDestination: Hashable, Equatable {
                     text += escape + colorForLevel(level) + remainingPhrase
                 case "c":
                     text += reset + remainingPhrase
+                case "X":
+                    // add the context
+                    if let cx = context {
+                        text += String(describing: cx).trimmingCharacters(in: .whitespacesAndNewlines) + remainingPhrase
+                    }
+                    /*
+                    if let contextString = context as? String {
+                        text += contextString + remainingPhrase
+                    }*/
                 default:
                     text += phrase
                 }
-            }
         }
         return text
     }
 
     /// returns the log payload as optional JSON string
     func messageToJSON(_ level: SwiftyBeaver.Level, msg: String,
-        thread: String, file: String, function: String, line: Int) -> String? {
-        let dict: [String: Any] = [
+        thread: String, file: String, function: String, line: Int, context: Any? = nil) -> String? {
+        var dict: [String: Any] = [
             "timestamp": Date().timeIntervalSince1970,
             "level": level.rawValue,
             "message": msg,
             "thread": thread,
             "file": file,
             "function": function,
-            "line": line]
+            "line": line
+            ]
+        if let cx = context {
+            dict["context"] = cx
+        }
         return jsonStringFromDict(dict)
     }
 
