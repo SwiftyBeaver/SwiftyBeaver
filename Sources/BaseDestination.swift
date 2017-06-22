@@ -178,7 +178,7 @@ open class BaseDestination: Hashable, Equatable {
             "thread": thread,
             "file": file,
             "function": function,
-            "line": line,
+            "line": line
             ]
         if let cx = context {
             dict["context"] = cx
