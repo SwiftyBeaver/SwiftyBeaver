@@ -359,22 +359,17 @@ open class BaseDestination: Hashable, Equatable {
                                                                    function: function, message: message)
         let (matchedNonRequired, allNonRequired) = passedNonRequiredFilters(level, path: path,
                                                                     function: function, message: message)
-        if allRequired > 0 {
-            if matchedRequired == allRequired {
-                return true
-            }
-        } else {
-            // no required filters are existing so at least 1 optional needs to match
-            if allNonRequired > 0 {
-                if matchedNonRequired > 0 {
-                    return true
-                }
-            } else if allExclude == 0 {
-                // no optional is existing, so all is good
-                return true
-            }
-        }
 
+        // If required filters exist, we should validate or invalidate the log if all of them pass or not
+        if allRequired > 0 {
+            return matchedRequired == allRequired
+        }
+        
+        // If a non-required filter matches, the log is validated
+        if allNonRequired > 0 && matchedNonRequired > 0 {
+            return true
+        }
+        
         if level.rawValue < minLevel.rawValue {
             if debugPrint {
                 print("filters is not empty and level < minLevel")
