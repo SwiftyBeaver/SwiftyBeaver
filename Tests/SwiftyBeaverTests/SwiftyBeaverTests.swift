@@ -74,6 +74,67 @@ class SwiftyBeaverTests: XCTestCase {
         XCTAssertTrue(log.removeDestination(file))
         XCTAssertEqual(log.countDestinations(), 0)
     }
+    
+    func testLogVerifiesIfShouldLogOnAllDestinations() {
+        let log = SwiftyBeaver.self
+        
+        let dest1 = MockDestination()
+        dest1.asynchronously = false
+        let dest2 = MockDestination()
+        dest2.asynchronously = false
+        
+        log.addDestination(dest1)
+        log.addDestination(dest2)
+        
+        log.dispatch_send(level: .warning, message: "Message", thread: "Thread", file: "File", function: "Function()", line: 123, context: "Context")
+        
+        XCTAssertEqual(dest1.shouldLogToLevel, SwiftyBeaver.Level.warning)
+        XCTAssertEqual(dest2.shouldLogToLevel, SwiftyBeaver.Level.warning)
+        
+        XCTAssertEqual(dest1.shouldLogPath, "File")
+        XCTAssertEqual(dest2.shouldLogPath, "File")
+        
+        XCTAssertEqual(dest1.shouldLogFunction, "Function()")
+        XCTAssertEqual(dest2.shouldLogFunction, "Function()")
+
+        XCTAssertEqual(dest1.shouldLogMessage, "Message")
+        XCTAssertEqual(dest2.shouldLogMessage, "Message")
+    }
+
+    func testLogCallsAllDestinations() {
+        let log = SwiftyBeaver.self
+        
+        let dest1 = MockDestination()
+        dest1.asynchronously = false
+        let dest2 = MockDestination()
+        dest2.asynchronously = false
+        
+        log.addDestination(dest1)
+        log.addDestination(dest2)
+        
+        log.dispatch_send(level: .warning, message: "Message", thread: "Thread", file: "File", function: "Function()", line: 123, context: "Context")
+        
+        XCTAssertEqual(dest1.didSendToLevel, SwiftyBeaver.Level.warning)
+        XCTAssertEqual(dest2.didSendToLevel, SwiftyBeaver.Level.warning)
+
+        XCTAssertEqual(dest1.didSendMessage, "Message")
+        XCTAssertEqual(dest2.didSendMessage, "Message")
+
+        XCTAssertEqual(dest1.didSendToThread, "Thread")
+        XCTAssertEqual(dest2.didSendToThread, "Thread")
+
+        XCTAssertEqual(dest1.didSendFile, "File")
+        XCTAssertEqual(dest2.didSendFile, "File")
+        
+        XCTAssertEqual(dest1.didSendFunction, "Function()")
+        XCTAssertEqual(dest2.didSendFunction, "Function()")
+
+        XCTAssertEqual(dest1.didSendLine, 123)
+        XCTAssertEqual(dest2.didSendLine, 123)
+        
+        XCTAssertEqual(dest1.didSendContext as? String, "Context")
+        XCTAssertEqual(dest2.didSendContext as? String, "Context")
+    }
 
     func testLoggingWithoutDestination() {
         let log = SwiftyBeaver.self
@@ -260,4 +321,43 @@ class SwiftyBeaverTests: XCTestCase {
         ("testVersionAndBuild", testVersionAndBuild),
         ("testStripParams", testStripParams)
     ]
+}
+
+
+private class MockDestination: BaseDestination {
+    var didSendToLevel: SwiftyBeaver.Level?
+    var didSendMessage: String?
+    var didSendToThread: String?
+    var didSendFile: String?
+    var didSendFunction: String?
+    var didSendLine: Int?
+    var didSendContext: (Any?)?
+    
+    override func send(_ level: SwiftyBeaver.Level, msg: String, thread: String, file: String, function: String, line: Int, context: Any?) -> String? {
+        didSendToLevel = level
+        didSendMessage = msg
+        didSendToThread = thread
+        didSendFile = file
+        didSendFunction = function
+        didSendLine = line
+        didSendContext = context
+        
+        return ""
+    }
+    
+    var shouldLogToLevel: SwiftyBeaver.Level?
+    var shouldLogPath: String?
+    var shouldLogFunction: String?
+    var shouldLogMessage: String?
+    override func shouldLevelBeLogged(_ level: SwiftyBeaver.Level, path: String, function: String, message: String?) -> Bool {
+        shouldLogToLevel = level
+        shouldLogPath = path
+        shouldLogFunction = function
+        shouldLogMessage = message
+        return true
+    }
+    
+    override func hasMessageFilters() -> Bool {
+        return true
+    }
 }
