@@ -293,7 +293,12 @@ public class SBPlatformDestination: BaseDestination {
                     toNSLog("Error! Could not set basic auth header")
                     return complete(false, 0)
             }
-            let base64Credentials = credentials.base64EncodedString(options: [])
+
+            #if os(Linux)
+            let base64Credentials = Base64.encode([UInt8](credentials))
+            #else
+            let base64Credentials = credentials.base64EncodedString(options: [])            
+            #endif
             request.setValue("Basic \(base64Credentials)", forHTTPHeaderField: "Authorization")
             //toNSLog("\nrequest:")
             //print(request)
