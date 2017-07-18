@@ -91,6 +91,15 @@ public class FileDestination: BaseDestination {
                 // create file if not existing
                 let line = str + "\n"
                 try line.write(to: url, atomically: true, encoding: .utf8)
+                
+                // set protection so the file can be written to when the device is locked
+                #if os(iOS) || os(watchOS) || os(macOS)
+                if #available(iOS 10.0, macOS 10.12, tvOS 10.0, watchOS 3.0, *) {
+                    var attributes = try fileManager.attributesOfItem(atPath: url.path)
+                    attributes[FileAttributeKey.protectionKey] = FileProtectionType.none
+                    try fileManager.setAttributes(attributes, ofItemAtPath: url.path)
+                }
+                #endif
             } else {
                 // append to end of file
                 if fileHandle == nil {
