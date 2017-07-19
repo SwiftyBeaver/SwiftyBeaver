@@ -6,6 +6,21 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 <br/>
 
+## 1.3.1 (2017-07-19)
+
+##### Added
+- Better solution to instable b64 encoding of Swift 3.1.x under Linux  by [@lgaches](https://github.com/lgaches)
+- Set file protection type when logfile is created by [@igorefremov](https://github.com/igorefremov)
+
+<br/>
+
+##### Fixed
+
+- Issue with validation of required filters by [@alessandroorru](https://github.com/alessandroorru)
+- Issue issue with multiple destinations with message filters by [@alessandroorru](https://github.com/alessandroorru)
+
+<br/>
+
 ## 1.3.0 (2017-06-22)
 
 ##### Added
