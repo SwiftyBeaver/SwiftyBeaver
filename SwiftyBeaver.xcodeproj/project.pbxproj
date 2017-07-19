@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		4D1720E81E9C083600AB7833 /* GoogleCloudDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1720E71E9C083600AB7833 /* GoogleCloudDestinationTests.swift */; };
+		4D331ADF1F1E8E1100B1C25E /* Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D331ADE1F1E8E1100B1C25E /* Base64.swift */; };
+		4D331AE01F1E8EA700B1C25E /* Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D331ADE1F1E8E1100B1C25E /* Base64.swift */; };
+		4D331AE11F1E8EAB00B1C25E /* Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D331ADE1F1E8E1100B1C25E /* Base64.swift */; };
+		4D331AE21F1E8EAC00B1C25E /* Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D331ADE1F1E8E1100B1C25E /* Base64.swift */; };
 		9E2AEAD11D9BB46300F21B1F /* AES256CBCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEAC81D9BB46300F21B1F /* AES256CBCTests.swift */; };
 		9E2AEAD21D9BB46300F21B1F /* BaseDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEAC91D9BB46300F21B1F /* BaseDestinationTests.swift */; };
 		9E2AEAD31D9BB46300F21B1F /* DestinationSetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEACA1D9BB46300F21B1F /* DestinationSetTests.swift */; };
@@ -71,6 +75,7 @@
 
 /* Begin PBXFileReference section */
 		4D1720E71E9C083600AB7833 /* GoogleCloudDestinationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GoogleCloudDestinationTests.swift; path = Tests/SwiftyBeaverTests/GoogleCloudDestinationTests.swift; sourceTree = "<group>"; };
+		4D331ADE1F1E8E1100B1C25E /* Base64.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Base64.swift; sourceTree = "<group>"; };
 		9E11A1DA1D92654E002112B6 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .swiftlint.yml; sourceTree = "<group>"; };
 		9E195B101C6B766D00D924CB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9E2AEAC51D9BB43C00F21B1F /* LinuxMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LinuxMain.swift; path = Tests/LinuxMain.swift; sourceTree = "<group>"; };
@@ -181,6 +186,7 @@
 				CB5234031EB0EB4600739CFB /* GoogleCloudDestination.swift */,
 				CB5234041EB0EB4600739CFB /* SBPlatformDestination.swift */,
 				CB5234051EB0EB4600739CFB /* SwiftyBeaver.swift */,
+				4D331ADE1F1E8E1100B1C25E /* Base64.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -445,6 +451,7 @@
 				CB5234061EB0EB4600739CFB /* AES256CBC.swift in Sources */,
 				CB52340C1EB0EB4600739CFB /* SBPlatformDestination.swift in Sources */,
 				CB52340D1EB0EB4600739CFB /* SwiftyBeaver.swift in Sources */,
+				4D331AE01F1E8EA700B1C25E /* Base64.swift in Sources */,
 				CB5234081EB0EB4600739CFB /* ConsoleDestination.swift in Sources */,
 				CB52340A1EB0EB4600739CFB /* Filter.swift in Sources */,
 				CB5234091EB0EB4600739CFB /* FileDestination.swift in Sources */,
@@ -476,6 +483,7 @@
 				CB0FC3091EB8ABA00094E03A /* ConsoleDestination.swift in Sources */,
 				CB0FC30C1EB8ABA00094E03A /* GoogleCloudDestination.swift in Sources */,
 				CB0FC30B1EB8ABA00094E03A /* Filter.swift in Sources */,
+				4D331AE21F1E8EAC00B1C25E /* Base64.swift in Sources */,
 				CB0FC3071EB8ABA00094E03A /* AES256CBC.swift in Sources */,
 				CB0FC30A1EB8ABA00094E03A /* FileDestination.swift in Sources */,
 				CB0FC30D1EB8ABA00094E03A /* SBPlatformDestination.swift in Sources */,
@@ -491,6 +499,7 @@
 				CB0FC3111EB8ABA10094E03A /* ConsoleDestination.swift in Sources */,
 				CB0FC3141EB8ABA10094E03A /* GoogleCloudDestination.swift in Sources */,
 				CB0FC3131EB8ABA10094E03A /* Filter.swift in Sources */,
+				4D331AE11F1E8EAB00B1C25E /* Base64.swift in Sources */,
 				CB0FC30F1EB8ABA10094E03A /* AES256CBC.swift in Sources */,
 				CB0FC3121EB8ABA10094E03A /* FileDestination.swift in Sources */,
 				CB0FC3151EB8ABA10094E03A /* SBPlatformDestination.swift in Sources */,
@@ -506,6 +515,7 @@
 				CB0FC3191EB8ABA10094E03A /* ConsoleDestination.swift in Sources */,
 				CB0FC31C1EB8ABA10094E03A /* GoogleCloudDestination.swift in Sources */,
 				CB0FC31B1EB8ABA10094E03A /* Filter.swift in Sources */,
+				4D331ADF1F1E8E1100B1C25E /* Base64.swift in Sources */,
 				CB0FC3171EB8ABA10094E03A /* AES256CBC.swift in Sources */,
 				CB0FC31A1EB8ABA10094E03A /* FileDestination.swift in Sources */,
 				CB0FC31D1EB8ABA10094E03A /* SBPlatformDestination.swift in Sources */,

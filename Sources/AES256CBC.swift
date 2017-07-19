@@ -174,7 +174,12 @@ final class AES256CBC {
         let data = str.data(using: String.Encoding.utf8)!
         let enc = try Data(bytes: AESCipher(key: keyData.bytes,
                                             iv: ivData.bytes).encrypt(bytes: data.bytes))
+
+        #if os(Linux)
+        return Base64.encode([UInt8](enc))
+        #else
         return enc.base64EncodedString(options: [])
+        #endif
     }
 
     /// returns decrypted string, IV must be 16 chars long
