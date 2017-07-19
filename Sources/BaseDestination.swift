@@ -364,12 +364,12 @@ open class BaseDestination: Hashable, Equatable {
         if allRequired > 0 {
             return matchedRequired == allRequired
         }
-        
+
         // If a non-required filter matches, the log is validated
         if allNonRequired > 0 && matchedNonRequired > 0 {
             return true
         }
-        
+
         if level.rawValue < minLevel.rawValue {
             if debugPrint {
                 print("filters is not empty and level < minLevel")

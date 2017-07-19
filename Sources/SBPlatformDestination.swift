@@ -297,7 +297,7 @@ public class SBPlatformDestination: BaseDestination {
             #if os(Linux)
             let base64Credentials = Base64.encode([UInt8](credentials))
             #else
-            let base64Credentials = credentials.base64EncodedString(options: [])            
+            let base64Credentials = credentials.base64EncodedString(options: [])
             #endif
             request.setValue("Basic \(base64Credentials)", forHTTPHeaderField: "Authorization")
             //toNSLog("\nrequest:")

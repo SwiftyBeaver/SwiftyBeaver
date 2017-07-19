@@ -328,14 +328,14 @@ class BaseDestinationTests: XCTestCase {
         destination.addFilter(Filters.Message.contains("Required", caseSensitive: false, required: true, minLevel: .info))
         XCTAssertFalse(destination.shouldLevelBeLogged(.info, path: "/hello/foo.swift", function: "initialize", message: "Test"))
     }
-    
+
     func test_shouldLevelBeLogged_hasMinLevelAndOneRequiredMessageFilterAndDoesPass_True() {
         let destination = BaseDestination()
         destination.minLevel = SwiftyBeaver.Level.error
         destination.addFilter(Filters.Message.contains("Required", caseSensitive: false, required: true, minLevel: .info))
         XCTAssertTrue(destination.shouldLevelBeLogged(.info, path: "/hello/foo.swift", function: "initialize", message: "Required Test"))
     }
-    
+
     func test_shouldLevelBeLogged_hasLevelFilterAndTwoRequiredPathFiltersAndPasses_True() {
         let destination = BaseDestination()
         destination.minLevel = SwiftyBeaver.Level.info

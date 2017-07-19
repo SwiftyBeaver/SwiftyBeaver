@@ -7,7 +7,7 @@
 #if os(Linux)
 import Foundation
 
-struct InvalidBase64 : Error {}
+struct InvalidBase64: Error {}
 
 struct Base64 {
     static func decode(_ string: String) throws -> [UInt8] {
@@ -35,7 +35,7 @@ struct Base64 {
             64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64,
             64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64,
             64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64,
-            64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64,
+            64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64
             ]
 
         let remainder = string.count % 4
