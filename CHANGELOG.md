@@ -6,6 +6,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 <br/>
 
+## 1.3.2 (2017-07-19)
+
+##### Fixed
+
+- Issue under macOS server-side Swift with file protection type by [@skreutzberger](https://github.com/skreutzberger)
+
+<br/>
+
 ## 1.3.1 (2017-07-19)
 
 ##### Added
