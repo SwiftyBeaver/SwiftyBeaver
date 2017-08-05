@@ -9,83 +9,30 @@
 import Foundation
 
 /// cross-platform random numbers generator
-/// on Linux it uses /dev/urandom which is slow but secure
-final fileprivate class URandom {
-
-    /// returns an unsigned random number between 0 and an upperBound
-    /// which is 4294967295 (unsigned 32bit max) on default
-    class func generate(_ upperBound: UInt32 = UInt32.max) -> UInt32 {
-        #if os(Linux)
-            // use the optional upperBound value to
-            // decice on the bit amount of the result
-            var bytes = 1 // on default UInt64
-
-            if upperBound > UInt32(UInt8.max) {
-                // > 255
-                bytes = 2
-            }
-            if upperBound > UInt32(UInt16.max) {
-                // > 65535 < 4294967296
-                bytes = 4
-            }
-
-            // read from /dev/urandom
-            let bytesArg = "-N" + String(bytes)
-
-            let args = ["-An", bytesArg, "-D", "/dev/urandom"]
-            let output = URandom.shell("/usr/bin/od", args: args)
-
-            //print("upperBound: \(upperBound), bytes: \(bytesArg), output: \(output)")
-            if let randomNumber = UInt32(output) {
-                let ret = randomNumber % upperBound
-                //print("generated \(bytes) bytes random number (0 - \(upperBound)): \(ret)")
-                return ret
-            }
-            return 0
-        #else
-            return arc4random_uniform(upperBound)
-        #endif
-    }
-
+public struct Random {
     #if os(Linux)
-    // runs a Shell command with arguments and returns the output or ""
-    class func shell(_ command: String, args: [String] = []) -> String {
-        #if swift(>=3.1)
-        let task = Process() // for Apple devices & Swift 3.1+ on Linux
-        #else
-        let task = Task() // just works on Linux with Swift <3.1
-        #endif
-
-        task.launchPath = command
-        task.arguments = args
-
-        let pipe = Pipe()
-        task.standardOutput = pipe
-        task.launch()
-
-        let data = pipe.fileHandleForReading.readDataToEndOfFile()
-        let output: String? = String(data: data,
-        encoding: String.Encoding.utf8)
-        task.waitUntilExit()
-
-        if let output = output {
-        if !output.isEmpty {
-        // remove whitespaces and newline from start and end
-        return output.trimmingCharacters(in: .whitespacesAndNewlines)
-        }
-        }
-        return ""
-    }
+    static var initialized = false
     #endif
 
+    public static func generate(_ upperBound: Int) -> Int {
+        #if os(Linux)
+            if !Random.initialized {
+                srandom(UInt32(time(nil)))
+                Random.initialized = true
+            }
+            return Int(random() % upperBound)
+        #else
+            return Int(arc4random_uniform(UInt32(upperBound)))
+        #endif
+    }
 }
 
-final class AES256CBC {
+final public class AES256CBC {
 
     /// returns optional encrypted string via AES-256CBC
     /// automatically generates and puts a random IV at first 16 chars
     /// the password must be exactly 32 chars long for AES-256
-    class func encryptString(_ str: String, password: String) -> String? {
+    public class func encryptString(_ str: String, password: String) -> String? {
         if !str.isEmpty && password.characters.count == 32 {
             let iv = randomText(16)
             let key = password
@@ -101,13 +48,12 @@ final class AES256CBC {
 
     /// returns optional decrypted string via AES-256CBC
     /// IV need to be at first 16 chars, password must be 32 chars long
-    class func decryptString(_ str: String, password: String) -> String? {
+    public class func decryptString(_ str: String, password: String) -> String? {
         if str.characters.count > 16 && password.characters.count == 32 {
             // get AES initialization vector from first 16 chars
-            let ivRange = str.startIndex..<str.index(str.startIndex, offsetBy: 16)
-            let iv = str.substring(with: ivRange)
+            let iv = str.substring(to: str.index(str.startIndex, offsetBy: 16))
             let encryptedString = str.replacingOccurrences(of: iv, with: "",
-                                        options: String.CompareOptions.literal, range: nil) // remove IV
+                                                           options: String.CompareOptions.literal, range: nil) // remove IV
 
             guard let decryptedString = try? aesDecrypt(encryptedString, key: password, iv: iv) else {
                 print("an error occured while decrypting")
@@ -120,14 +66,14 @@ final class AES256CBC {
 
     /// returns random string (uppercase & lowercase, no spaces) of 32 characters length
     /// which can be used as SHA-256 compatbile password
-    class func generatePassword() -> String {
+    public class func generatePassword() -> String {
         return randomText(32)
     }
 
     /// returns random text of a defined length.
     /// Optional bool parameter justLowerCase to just generate random lowercase text and
     /// whitespace to exclude the whitespace character
-    class func randomText(_ length: Int, justLowerCase: Bool = false, whitespace: Bool = false) -> String {
+    public class func randomText(_ length: Int, justLowerCase: Bool = false, whitespace: Bool = false) -> String {
         var chars = [UInt8]()
 
         while chars.count < length {
@@ -148,11 +94,11 @@ final class AES256CBC {
         func randomCharacter() -> UInt8 {
             switch self {
             case .LowerCase:
-                return UInt8(URandom.generate(26)) + 97
+                return UInt8(Random.generate(26)) + 97
             case .UpperCase:
-                return UInt8(URandom.generate(26)) + 65
+                return UInt8(Random.generate(26)) + 65
             case .Digit:
-                return UInt8(URandom.generate(10)) + 48
+                return UInt8(Random.generate(10)) + 48
             case .Space:
                 return 32
             }
@@ -162,7 +108,7 @@ final class AES256CBC {
             if justLowerCase {
                 return .LowerCase
             } else {
-                return CharType(rawValue: Int(URandom.generate(allowWhitespace ? 4 : 3)))!
+                return CharType(rawValue: Int(Random.generate(allowWhitespace ? 4 : 3)))!
             }
         }
     }
@@ -174,11 +120,11 @@ final class AES256CBC {
         let data = str.data(using: String.Encoding.utf8)!
         let enc = try Data(bytes: AESCipher(key: keyData.bytes,
                                             iv: ivData.bytes).encrypt(bytes: data.bytes))
-
+        // Swift 3.1.x has a bug with base64encoding under Linux, so we are using our own
         #if os(Linux)
-        return Base64.encode([UInt8](enc))
+            return Base64.encode([UInt8](enc))
         #else
-        return enc.base64EncodedString(options: [])
+            return enc.base64EncodedString(options: [])
         #endif
     }
 
@@ -186,11 +132,13 @@ final class AES256CBC {
     fileprivate class func aesDecrypt(_ str: String, key: String, iv: String) throws -> String {
         let keyData = key.data(using: String.Encoding.utf8)!
         let ivData = iv.data(using: String.Encoding.utf8)!
-        //let data = Data(base64Encoded: str, options: NSData.Base64DecodingOptions(rawValue: 0))!
         let data = Data(base64Encoded: str)!
         let dec = try Data(bytes: AESCipher(key: keyData.bytes,
                                             iv: ivData.bytes).decrypt(bytes: data.bytes))
-        return String(data: dec, encoding: String.Encoding.utf8)!
+        guard let decryptStr = String(data: dec, encoding: String.Encoding.utf8) else {
+            throw NSError(domain: "Invalid utf8 data", code: 0, userInfo: nil)
+        }
+        return decryptStr
     }
 
 }
@@ -220,7 +168,7 @@ fileprivate typealias Key = Array<UInt8>
 
 final private class AESCipher {
 
-    enum Error: Swift.Error {
+    public enum Error: Swift.Error {
         case blockSizeExceeded
         case dataPaddingRequired
         case invalidKeyOrInitializationVector
@@ -397,9 +345,7 @@ final private class AESCipher {
         }
 
         let blocks = bytes.chunks(size: AESCipher.blockSize)
-        return try PKCS7().remove(bytes: blockMode.decrypt(blocks: blocks,
-                                iv: self.iv, cipherOperation: decrypt),
-                                blockSize: AESCipher.blockSize)
+        return try PKCS7().remove(bytes: blockMode.decrypt(blocks: blocks, iv: self.iv, cipherOperation: decrypt), blockSize: AESCipher.blockSize)
     }
 
     private func decrypt(block: [UInt8]) -> [UInt8]? {
@@ -492,16 +438,24 @@ final private class AESCipher {
             var w: UInt32
 
             w = rk2[r][0]
-            rk2[r][0] = U1[Int(B0(w))] ^ U2[Int(B1(w))] ^ U3[Int(B2(w))] ^ U4[Int(B3(w))]
+            let u1 = U1[Int(B0(w))] ^ U2[Int(B1(w))]
+            let u2 = U3[Int(B2(w))] ^ U4[Int(B3(w))]
+            rk2[r][0] = u1 ^ u2
 
             w = rk2[r][1]
-            rk2[r][1] = U1[Int(B0(w))] ^ U2[Int(B1(w))] ^ U3[Int(B2(w))] ^ U4[Int(B3(w))]
+            let u11 = U1[Int(B0(w))] ^ U2[Int(B1(w))]
+            let u12 = U3[Int(B2(w))] ^ U4[Int(B3(w))]
+            rk2[r][1] = u11 ^ u12
 
             w = rk2[r][2]
-            rk2[r][2] = U1[Int(B0(w))] ^ U2[Int(B1(w))] ^ U3[Int(B2(w))] ^ U4[Int(B3(w))]
+            let u22 = U1[Int(B0(w))] ^ U2[Int(B1(w))]
+            let u23 = U3[Int(B2(w))] ^ U4[Int(B3(w))]
+            rk2[r][2] = u22 ^ u23
 
             w = rk2[r][3]
-            rk2[r][3] = U1[Int(B0(w))] ^ U2[Int(B1(w))] ^ U3[Int(B2(w))] ^ U4[Int(B3(w))]
+            let u33 = U1[Int(B0(w))] ^ U2[Int(B1(w))]
+            let u34 = U3[Int(B2(w))] ^ U4[Int(B3(w))]
+            rk2[r][3] = u33 ^ u34
         }
 
         return rk2
@@ -604,7 +558,12 @@ extension AESCipher {
         var p: UInt8 = 1, q: UInt8 = 1
 
         repeat {
-            p = p ^ (UInt8(truncatingBitPattern: Int(p) << 1) ^ ((p & 0x80) == 0x80 ? 0x1B : 0))
+            #if swift(>=4.0)
+                p = p ^ (UInt8(extendingOrTruncating: Int(p) << 1) ^ ((p & 0x80) == 0x80 ? 0x1B : 0))
+            #else
+                p = p ^ (UInt8(truncatingBitPattern: Int(p) << 1) ^ ((p & 0x80) == 0x80 ? 0x1B : 0))
+
+            #endif
             q ^= q << 1
             q ^= q << 2
             q ^= q << 4
@@ -624,7 +583,7 @@ extension AESCipher {
 
 extension AESCipher {
 
-    convenience init(key: String, iv: String) throws {
+    convenience public init(key: String, iv: String) throws {
         guard let kkey = key.data(using: String.Encoding.utf8, allowLossyConversion: false)?.bytes,
             // swiftlint:disable conditional_binding_cascade
             let iiv = iv.data(using: String.Encoding.utf8, allowLossyConversion: false)?.bytes else {
@@ -726,7 +685,7 @@ private struct PKCS7 {
 
 // MARK: - Utils
 
-fileprivate func xor(_ a: Array<UInt8>, _ b: Array<UInt8>) -> Array<UInt8> {
+private func xor(_ a: Array<UInt8>, _ b: Array<UInt8>) -> Array<UInt8> {
     var xored = Array<UInt8>(repeating: 0, count: min(a.count, b.count))
     for i in 0..<xored.count {
         xored[i] = a[i] ^ b[i]
@@ -734,24 +693,27 @@ fileprivate func xor(_ a: Array<UInt8>, _ b: Array<UInt8>) -> Array<UInt8> {
     return xored
 }
 
-fileprivate func rotateLeft(_ value: UInt8, by: UInt8) -> UInt8 {
+private func rotateLeft(_ value: UInt8, by: UInt8) -> UInt8 {
     return ((value << by) & 0xFF) | (value >> (8 - by))
 }
 
-fileprivate func rotateLeft(_ value: UInt32, by: UInt32) -> UInt32 {
+private func rotateLeft(_ value: UInt32, by: UInt32) -> UInt32 {
     return ((value << by) & 0xFFFFFFFF) | (value >> (32 - by))
 }
 
-fileprivate protocol BitshiftOperationsType {
+private protocol BitshiftOperationsType {
     static func << (lhs: Self, rhs: Self) -> Self
 }
 
-fileprivate protocol ByteConvertible {
+private protocol ByteConvertible {
     init(_ value: UInt8)
     init(truncatingBitPattern: UInt64)
 }
 
-extension UInt32 : BitshiftOperationsType, ByteConvertible { }
+#if swift(>=4.0)
+#else
+    extension UInt32 : BitshiftOperationsType, ByteConvertible { }
+#endif
 
 fileprivate extension UInt32 {
     init<T: Collection>(bytes: T) where T.Iterator.Element == UInt8, T.Index == Int {
@@ -763,7 +725,7 @@ fileprivate extension UInt32 {
     }
 }
 
-fileprivate func toUInt32Array(slice: ArraySlice<UInt8>) -> Array<UInt32> {
+private func toUInt32Array(slice: ArraySlice<UInt8>) -> Array<UInt32> {
     var result = Array<UInt32>()
     result.reserveCapacity(16)
     for idx in stride(from: slice.startIndex, to: slice.endIndex, by: MemoryLayout<UInt32>.size) {
@@ -780,7 +742,7 @@ fileprivate func toUInt32Array(slice: ArraySlice<UInt8>) -> Array<UInt32> {
 
 /// Array of bytes, little-endian representation. Don't use if not necessary.
 /// I found this method slow
-fileprivate func arrayOfBytes<T>(value: T, length: Int? = nil) -> Array<UInt8> {
+private func arrayOfBytes<T>(value: T, length: Int? = nil) -> Array<UInt8> {
     let totalBytes = length ?? MemoryLayout<T>.size
 
     let valuePointer = UnsafeMutablePointer<T>.allocate(capacity: 1)
@@ -799,11 +761,13 @@ fileprivate func arrayOfBytes<T>(value: T, length: Int? = nil) -> Array<UInt8> {
 }
 
 fileprivate extension Collection where Self.Iterator.Element == UInt8, Self.Index == Int {
-    func toInteger<T: Integer>() -> T where T: ByteConvertible, T: BitshiftOperationsType {
+    #if swift(>=4.0)
+    func toInteger<T>() -> T where T: FixedWidthInteger {
         if self.isEmpty {
             return 0
         }
 
+        let size = MemoryLayout<T>.size
         var bytes = self.reversed()
         if bytes.count < MemoryLayout<T>.size {
             let paddingCount = MemoryLayout<T>.size - bytes.count
@@ -812,8 +776,8 @@ fileprivate extension Collection where Self.Iterator.Element == UInt8, Self.Inde
             }
         }
 
-        if MemoryLayout<T>.size == 1 {
-            return T(truncatingBitPattern: UInt64(bytes[0]))
+        if size == 1 {
+            return T(extendingOrTruncating: UInt64(bytes[0]))
         }
 
         var result: T = 0
@@ -822,6 +786,31 @@ fileprivate extension Collection where Self.Iterator.Element == UInt8, Self.Inde
         }
         return result
     }
+    #else
+    func toInteger<T: Integer>() -> T where T: ByteConvertible, T: BitshiftOperationsType {
+    if self.isEmpty {
+    return 0
+    }
+
+    var bytes = self.reversed()
+    if bytes.count < MemoryLayout<T>.size {
+    let paddingCount = MemoryLayout<T>.size - bytes.count
+    if paddingCount > 0 {
+    bytes += Array<UInt8>(repeating: 0, count: paddingCount)
+    }
+    }
+
+    if MemoryLayout<T>.size == 1 {
+    return T(truncatingBitPattern: UInt64(bytes[0]))
+    }
+
+    var result: T = 0
+    for byte in bytes.reversed() {
+    result = result << 8 | T(byte)
+    }
+    return result
+    }
+    #endif
 }
 
 fileprivate extension Array {
@@ -845,3 +834,4 @@ fileprivate extension Data {
         return Array(self)
     }
 }
+
