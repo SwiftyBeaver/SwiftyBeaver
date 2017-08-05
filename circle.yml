@@ -14,4 +14,4 @@ dependencies:
 
 test:
   override:
-    - test_in_docker.sh
+    - ./test_in_docker.sh
