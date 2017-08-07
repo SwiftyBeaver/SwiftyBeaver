@@ -9,7 +9,7 @@
 import Foundation
 
 /// cross-platform random numbers generator
-public struct Random {
+fileprivate struct Random {
     #if os(Linux)
     static var initialized = false
     #endif
@@ -27,12 +27,12 @@ public struct Random {
     }
 }
 
-final public class AES256CBC {
+final class AES256CBC {
 
     /// returns optional encrypted string via AES-256CBC
     /// automatically generates and puts a random IV at first 16 chars
     /// the password must be exactly 32 chars long for AES-256
-    public class func encryptString(_ str: String, password: String) -> String? {
+    class func encryptString(_ str: String, password: String) -> String? {
         if !str.isEmpty && password.characters.count == 32 {
             let iv = randomText(16)
             let key = password
@@ -48,7 +48,7 @@ final public class AES256CBC {
 
     /// returns optional decrypted string via AES-256CBC
     /// IV need to be at first 16 chars, password must be 32 chars long
-    public class func decryptString(_ str: String, password: String) -> String? {
+    class func decryptString(_ str: String, password: String) -> String? {
         if str.characters.count > 16 && password.characters.count == 32 {
             // get AES initialization vector from first 16 chars
             let iv = str.substring(to: str.index(str.startIndex, offsetBy: 16))
@@ -66,14 +66,14 @@ final public class AES256CBC {
 
     /// returns random string (uppercase & lowercase, no spaces) of 32 characters length
     /// which can be used as SHA-256 compatbile password
-    public class func generatePassword() -> String {
+    class func generatePassword() -> String {
         return randomText(32)
     }
 
     /// returns random text of a defined length.
     /// Optional bool parameter justLowerCase to just generate random lowercase text and
     /// whitespace to exclude the whitespace character
-    public class func randomText(_ length: Int, justLowerCase: Bool = false, whitespace: Bool = false) -> String {
+    class func randomText(_ length: Int, justLowerCase: Bool = false, whitespace: Bool = false) -> String {
         var chars = [UInt8]()
 
         while chars.count < length {
@@ -168,7 +168,7 @@ fileprivate typealias Key = Array<UInt8>
 
 final private class AESCipher {
 
-    public enum Error: Swift.Error {
+    enum Error: Swift.Error {
         case blockSizeExceeded
         case dataPaddingRequired
         case invalidKeyOrInitializationVector
@@ -583,7 +583,7 @@ extension AESCipher {
 
 extension AESCipher {
 
-    convenience public init(key: String, iv: String) throws {
+    convenience init(key: String, iv: String) throws {
         guard let kkey = key.data(using: String.Encoding.utf8, allowLossyConversion: false)?.bytes,
             // swiftlint:disable conditional_binding_cascade
             let iiv = iv.data(using: String.Encoding.utf8, allowLossyConversion: false)?.bytes else {
@@ -685,7 +685,7 @@ private struct PKCS7 {
 
 // MARK: - Utils
 
-private func xor(_ a: Array<UInt8>, _ b: Array<UInt8>) -> Array<UInt8> {
+fileprivate func xor(_ a: Array<UInt8>, _ b: Array<UInt8>) -> Array<UInt8> {
     var xored = Array<UInt8>(repeating: 0, count: min(a.count, b.count))
     for i in 0..<xored.count {
         xored[i] = a[i] ^ b[i]
@@ -693,19 +693,19 @@ private func xor(_ a: Array<UInt8>, _ b: Array<UInt8>) -> Array<UInt8> {
     return xored
 }
 
-private func rotateLeft(_ value: UInt8, by: UInt8) -> UInt8 {
+fileprivate func rotateLeft(_ value: UInt8, by: UInt8) -> UInt8 {
     return ((value << by) & 0xFF) | (value >> (8 - by))
 }
 
-private func rotateLeft(_ value: UInt32, by: UInt32) -> UInt32 {
+fileprivate func rotateLeft(_ value: UInt32, by: UInt32) -> UInt32 {
     return ((value << by) & 0xFFFFFFFF) | (value >> (32 - by))
 }
 
-private protocol BitshiftOperationsType {
+fileprivate protocol BitshiftOperationsType {
     static func << (lhs: Self, rhs: Self) -> Self
 }
 
-private protocol ByteConvertible {
+fileprivate protocol ByteConvertible {
     init(_ value: UInt8)
     init(truncatingBitPattern: UInt64)
 }
@@ -725,7 +725,7 @@ fileprivate extension UInt32 {
     }
 }
 
-private func toUInt32Array(slice: ArraySlice<UInt8>) -> Array<UInt32> {
+fileprivate func toUInt32Array(slice: ArraySlice<UInt8>) -> Array<UInt32> {
     var result = Array<UInt32>()
     result.reserveCapacity(16)
     for idx in stride(from: slice.startIndex, to: slice.endIndex, by: MemoryLayout<UInt32>.size) {
@@ -742,7 +742,7 @@ private func toUInt32Array(slice: ArraySlice<UInt8>) -> Array<UInt32> {
 
 /// Array of bytes, little-endian representation. Don't use if not necessary.
 /// I found this method slow
-private func arrayOfBytes<T>(value: T, length: Int? = nil) -> Array<UInt8> {
+fileprivate func arrayOfBytes<T>(value: T, length: Int? = nil) -> Array<UInt8> {
     let totalBytes = length ?? MemoryLayout<T>.size
 
     let valuePointer = UnsafeMutablePointer<T>.allocate(capacity: 1)
@@ -788,27 +788,27 @@ fileprivate extension Collection where Self.Iterator.Element == UInt8, Self.Inde
     }
     #else
     func toInteger<T: Integer>() -> T where T: ByteConvertible, T: BitshiftOperationsType {
-    if self.isEmpty {
-    return 0
-    }
+        if self.isEmpty {
+            return 0
+        }
 
-    var bytes = self.reversed()
-    if bytes.count < MemoryLayout<T>.size {
-    let paddingCount = MemoryLayout<T>.size - bytes.count
-    if paddingCount > 0 {
-    bytes += Array<UInt8>(repeating: 0, count: paddingCount)
-    }
-    }
+        var bytes = self.reversed()
+        if bytes.count < MemoryLayout<T>.size {
+            let paddingCount = MemoryLayout<T>.size - bytes.count
+            if paddingCount > 0 {
+                bytes += Array<UInt8>(repeating: 0, count: paddingCount)
+            }
+        }
 
-    if MemoryLayout<T>.size == 1 {
-    return T(truncatingBitPattern: UInt64(bytes[0]))
-    }
+        if MemoryLayout<T>.size == 1 {
+            return T(truncatingBitPattern: UInt64(bytes[0]))
+        }
 
-    var result: T = 0
-    for byte in bytes.reversed() {
-    result = result << 8 | T(byte)
-    }
-    return result
+        var result: T = 0
+        for byte in bytes.reversed() {
+            result = result << 8 | T(byte)
+        }
+        return result
     }
     #endif
 }
