@@ -179,7 +179,11 @@ open class SwiftyBeaver {
     class func stripParams(function: String) -> String {
         var f = function
         if let indexOfBrace = f.characters.index(of: "(") {
+            #if swift(>=4.0)
+            f = String(f[..<indexOfBrace])
+            #else
             f = f.substring(to: indexOfBrace)
+            #endif
         }
         f += "()"
         return f

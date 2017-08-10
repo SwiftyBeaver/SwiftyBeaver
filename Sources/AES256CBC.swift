@@ -51,7 +51,12 @@ final class AES256CBC {
     class func decryptString(_ str: String, password: String) -> String? {
         if str.characters.count > 16 && password.characters.count == 32 {
             // get AES initialization vector from first 16 chars
+            #if swift(>=4.0)
+            let iv = String(str[..<str.index(str.startIndex, offsetBy: 16)])
+            #else
             let iv = str.substring(to: str.index(str.startIndex, offsetBy: 16))
+            #endif
+
             let encryptedString = str.replacingOccurrences(of: iv, with: "",
                                                            options: String.CompareOptions.literal, range: nil) // remove IV
 
@@ -559,7 +564,7 @@ extension AESCipher {
 
         repeat {
             #if swift(>=4.0)
-                p = p ^ (UInt8(extendingOrTruncating: Int(p) << 1) ^ ((p & 0x80) == 0x80 ? 0x1B : 0))
+                p = p ^ (UInt8(truncatingIfNeeded: Int(p) << 1) ^ ((p & 0x80) == 0x80 ? 0x1B : 0))
             #else
                 p = p ^ (UInt8(truncatingBitPattern: Int(p) << 1) ^ ((p & 0x80) == 0x80 ? 0x1B : 0))
 
@@ -777,7 +782,7 @@ fileprivate extension Collection where Self.Iterator.Element == UInt8, Self.Inde
         }
 
         if size == 1 {
-            return T(extendingOrTruncating: UInt64(bytes[0]))
+            return T(truncatingIfNeeded: UInt64(bytes[0]))
         }
 
         var result: T = 0
