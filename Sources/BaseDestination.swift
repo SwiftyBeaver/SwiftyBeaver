@@ -139,12 +139,20 @@ open class BaseDestination: Hashable, Equatable {
                     text += String(line) + remainingPhrase
                 case "D":
                     // start of datetime format
+                    #if swift(>=3.2)
+                    text += formatDate(String(remainingPhrase))
+                    #else
                     text += formatDate(remainingPhrase)
+                    #endif
                 case "d":
                     text += remainingPhrase
                 case "Z":
                     // start of datetime format in UTC timezone
+                    #if swift(>=3.2)
+                    text += formatDate(String(remainingPhrase), timeZone: "UTC")
+                    #else
                     text += formatDate(remainingPhrase, timeZone: "UTC")
+                    #endif
                 case "z":
                     text += remainingPhrase
                 case "C":
@@ -280,7 +288,11 @@ open class BaseDestination: Hashable, Equatable {
         let endIndex = str.index(str.startIndex,
                                  offsetBy: str.characters.count - 2)
         let range = str.index(str.startIndex, offsetBy: offset)..<endIndex
+        #if swift(>=3.2)
+        return String(str[range])
+        #else
         return str[range]
+        #endif
     }
 
     /// turns dict into JSON-encoded string

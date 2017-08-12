@@ -10,9 +10,8 @@ machine:
 
 dependencies:
   override:
-    - docker --version
-    - docker build --rm=false -t app .
+    - docker --version    
 
 test:
   override:
-    - docker run -e SBPLATFORM_APP_ID=$SBPLATFORM_APP_ID -e SBPLATFORM_APP_SECRET=$SBPLATFORM_APP_SECRET -e SBPLATFORM_ENCRYPTION_KEY=$SBPLATFORM_ENCRYPTION_KEY --name app_test app swift test
+    - ./test_in_docker.sh
