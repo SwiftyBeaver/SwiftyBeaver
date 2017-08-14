@@ -69,9 +69,19 @@ github "SwiftyBeaver/SwiftyBeaver" ~> 0.7
 
 <br/>
 
-### CocoaPods
+### Swift Package Manager
 
-To use [CocoaPods](https://cocoapods.org) just add this to your Podfile:
+For [Swift Package Manager](https://swift.org/package-manager/) add the following package to your Package.swift file. Just Swift 3 & 4 are supported:
+
+``` Swift
+.Package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git", majorVersion: 1)
+```
+
+### CocoaPods (deprecated)
+
+We discontinued support for Carthage due to its issues with latest Xcode and Swift versions. For SwiftyBeaver 1.4.0 or newer please use Carthage or SPM instead. 
+
+To use [CocoaPods](https://cocoapods.org) with SwiftyBeaver 1.3.0 or older with Xcode 8 just add this to your Podfile:
 
 Swift 3 & 4:
 ``` Swift
@@ -93,16 +103,6 @@ post_install do |installer|
     config.build_settings['SWIFT_VERSION'] = '2.3'
   end
 end
-```
-
-<br/>
-
-### Swift Package Manager
-
-For [Swift Package Manager](https://swift.org/package-manager/) add the following package to your Package.swift file. Just Swift 3 & 4 are supported:
-
-``` Swift
-.Package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git", majorVersion: 1)
 ```
 
 <br/>
