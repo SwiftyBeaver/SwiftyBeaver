@@ -81,7 +81,7 @@ For [Swift Package Manager](https://swift.org/package-manager/) add the followin
 
 ### CocoaPods (deprecated)
 
-We discontinued support for Carthage due to its issues with latest Xcode and Swift versions. For SwiftyBeaver 1.4.0 or newer please use Carthage or SPM instead. 
+We discontinued support for CocoaPods due to its issues with latest Xcode and Swift versions. For SwiftyBeaver 1.4.0 or newer please use Carthage or SPM instead. 
 
 To use [CocoaPods](https://cocoapods.org) with SwiftyBeaver 1.3.0 or older with Xcode 8 just add this to your Podfile:
 
