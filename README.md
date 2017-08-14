@@ -77,6 +77,8 @@ For [Swift Package Manager](https://swift.org/package-manager/) add the followin
 .Package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git", majorVersion: 1)
 ```
 
+<br/>
+
 ### CocoaPods (deprecated)
 
 We discontinued support for Carthage due to its issues with latest Xcode and Swift versions. For SwiftyBeaver 1.4.0 or newer please use Carthage or SPM instead. 
