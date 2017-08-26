@@ -9,14 +9,10 @@
 
 import Foundation
 
-public class SBPlatformDestination: BaseDestination {
-
-    public var appID = ""
-    public var appSecret = ""
-    public var encryptionKey = ""
+public class ElasticSearchDestination: BaseDestination {
     public var analyticsUserName = "" // user email, ID, name, etc.
     public var analyticsUUID: String { return uuid }
-
+    
     // when to send to server
     public struct SendingPoints {
         public var verbose = 0
@@ -30,7 +26,7 @@ public class SBPlatformDestination: BaseDestination {
     public var showNSLog = false // executes toNSLog statements to debug the class
     var points = 0
 
-    public var serverURL = URL(string: "https://api.swiftybeaver.com/api/entries/") // optional
+    public var esServerURL: URL
     public var entriesFileURL = URL(fileURLWithPath: "") // not optional
     public var sendingFileURL = URL(fileURLWithPath: "")
     public var analyticsFileURL = URL(fileURLWithPath: "")
@@ -49,14 +45,12 @@ public class SBPlatformDestination: BaseDestination {
     let isoDateFormatter = DateFormatter()
 
     /// init platform with default internal filenames
-    public init(appID: String, appSecret: String, encryptionKey: String,
+    public init(esServerURL: URL,
         entriesFileName: String = "sbplatform_entries.json",
         sendingfileName: String = "sbplatform_entries_sending.json",
         analyticsFileName: String = "sbplatform_analytics.json") {
+        self.esServerURL = esServerURL
         super.init()
-        self.appID = appID
-        self.appSecret = appSecret
-        self.encryptionKey = encryptionKey
 
         // setup where to write the json files
         var baseURL: URL?
@@ -212,21 +206,19 @@ public class SBPlatformDestination: BaseDestination {
                 if let str = jsonStringFromDict(payload) {
                     //toNSLog(str)  // uncomment to see full payload
                     toNSLog("Encrypting \(lines) log entries ...")
-                    if let encryptedStr = encrypt(str) {
-                        var msg = "Sending \(lines) encrypted log entries "
-                        msg += "(\(encryptedStr.characters.count) chars) to server ..."
-                        toNSLog(msg)
-                        //toNSLog("Sending \(encryptedStr) ...")
-
-                        sendToServerAsync(encryptedStr) { ok, _ in
-
-                            self.toNSLog("Sent \(lines) encrypted log entries to server, received ok: \(ok)")
-                            if ok {
-                                _ = self.deleteFile(self.sendingFileURL)
-                            }
-                            self.sendingInProgress = false
-                            self.points = 0
+                    var msg = "Sending \(lines) encrypted log entries "
+                    msg += "(\(str.characters.count) chars) to server ..."
+                    toNSLog(msg)
+                    //toNSLog("Sending \(encryptedStr) ...")
+                    
+                    sendToServerAsync(str) { ok, _ in
+                        
+                        self.toNSLog("Sent \(lines) encrypted log entries to server, received ok: \(ok)")
+                        if ok {
+                            _ = self.deleteFile(self.sendingFileURL)
                         }
+                        self.sendingInProgress = false
+                        self.points = 0
                     }
                 }
             } else {
@@ -240,7 +232,7 @@ public class SBPlatformDestination: BaseDestination {
 
         let timeout = 10.0
 
-        if let payload = str, let queue = self.queue, let serverURL = serverURL {
+        if let payload = str, let queue = self.queue {
 
             // create operation queue which uses current serial queue of destination
             let operationQueue = OperationQueue()
@@ -253,7 +245,7 @@ public class SBPlatformDestination: BaseDestination {
             toNSLog("assembling request ...")
 
              // assemble request
-             var request = URLRequest(url: serverURL,
+             var request = URLRequest(url: esServerURL,
                                      cachePolicy: .reloadIgnoringLocalAndRemoteCacheData,
                                      timeoutInterval: timeout)
             request.httpMethod = "POST"
@@ -261,17 +253,17 @@ public class SBPlatformDestination: BaseDestination {
             request.addValue("application/json", forHTTPHeaderField: "Accept")
 
             // basic auth header (just works on Linux for Swift 3.1+, macOS is fine)
-            guard let credentials = "\(appID):\(appSecret)".data(using: String.Encoding.utf8) else {
-                    toNSLog("Error! Could not set basic auth header")
-                    return complete(false, 0)
-            }
-
-            #if os(Linux)
-            let base64Credentials = Base64.encode([UInt8](credentials))
-            #else
-            let base64Credentials = credentials.base64EncodedString(options: [])
-            #endif
-            request.setValue("Basic \(base64Credentials)", forHTTPHeaderField: "Authorization")
+//            guard let credentials = "\(appID):\(appSecret)".data(using: String.Encoding.utf8) else {
+//                    toNSLog("Error! Could not set basic auth header")
+//                    return complete(false, 0)
+//            }
+//
+//            #if os(Linux)
+//            let base64Credentials = Base64.encode([UInt8](credentials))
+//            #else
+//            let base64Credentials = credentials.base64EncodedString(options: [])
+//            #endif
+//            request.setValue("Basic \(base64Credentials)", forHTTPHeaderField: "Authorization")
             //toNSLog("\nrequest:")
             //print(request)
 
@@ -413,9 +405,9 @@ public class SBPlatformDestination: BaseDestination {
     }
 
     /// returns AES-256 CBC encrypted optional string
-    func encrypt(_ str: String) -> String? {
-        return AES256CBC.encryptString(str, password: encryptionKey)
-    }
+//    func encrypt(_ str: String) -> String? {
+//        return AES256CBC.encryptString(str, password: encryptionKey)
+//    }
 
     /// Delete file to get started again
     func deleteFile(_ url: URL) -> Bool {
