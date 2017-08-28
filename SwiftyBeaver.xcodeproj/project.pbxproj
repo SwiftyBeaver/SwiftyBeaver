@@ -63,6 +63,7 @@
 		CB52340D1EB0EB4600739CFB /* SwiftyBeaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5234051EB0EB4600739CFB /* SwiftyBeaver.swift */; };
 		FFE9E13F1F51D7730057F402 /* ElasticSearchDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE9E13E1F51D7730057F402 /* ElasticSearchDestination.swift */; };
 		FFE9E1411F51DA710057F402 /* DeviceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE9E1401F51DA710057F402 /* DeviceInfo.swift */; };
+		FFE9E1431F536F140057F402 /* ElasticSearchDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE9E1421F536F140057F402 /* ElasticSearchDestinationTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,6 +112,7 @@
 		CB5234051EB0EB4600739CFB /* SwiftyBeaver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyBeaver.swift; sourceTree = "<group>"; };
 		FFE9E13E1F51D7730057F402 /* ElasticSearchDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElasticSearchDestination.swift; sourceTree = "<group>"; };
 		FFE9E1401F51DA710057F402 /* DeviceInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceInfo.swift; sourceTree = "<group>"; };
+		FFE9E1421F536F140057F402 /* ElasticSearchDestinationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ElasticSearchDestinationTests.swift; path = Tests/SwiftyBeaverTests/ElasticSearchDestinationTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				9E2AEAC81D9BB46300F21B1F /* AES256CBCTests.swift */,
+				FFE9E1421F536F140057F402 /* ElasticSearchDestinationTests.swift */,
 				9E2AEAC91D9BB46300F21B1F /* BaseDestinationTests.swift */,
 				9E2AEACA1D9BB46300F21B1F /* DestinationSetTests.swift */,
 				9E2AEACB1D9BB46300F21B1F /* FileDestinationTests.swift */,
@@ -471,6 +474,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFE9E1431F536F140057F402 /* ElasticSearchDestinationTests.swift in Sources */,
 				9E2AEAD61D9BB46300F21B1F /* SBPlatformDestinationTests.swift in Sources */,
 				9E2AEAD51D9BB46300F21B1F /* FilterTests.swift in Sources */,
 				9E2AEAD31D9BB46300F21B1F /* DestinationSetTests.swift in Sources */,

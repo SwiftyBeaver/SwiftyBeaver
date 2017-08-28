@@ -27,6 +27,9 @@ public class ElasticSearchDestination: BaseDestination {
     var points = 0
 
     public var esServerURL: URL
+    private var esLogIndex: String
+    private var esAnalyticsIndex: String
+    
     public var entriesFileURL = URL(fileURLWithPath: "") // not optional
     public var sendingFileURL = URL(fileURLWithPath: "")
     public var analyticsFileURL = URL(fileURLWithPath: "")
@@ -45,11 +48,13 @@ public class ElasticSearchDestination: BaseDestination {
     let isoDateFormatter = DateFormatter()
 
     /// init platform with default internal filenames
-    public init(esServerURL: URL,
-        entriesFileName: String = "sbplatform_entries.json",
-        sendingfileName: String = "sbplatform_entries_sending.json",
-        analyticsFileName: String = "sbplatform_analytics.json") {
-        self.esServerURL = esServerURL
+    public init(esServerURL: URL, esLogIndex: String = "sblog", esAnalyticsIndex: String = "sbanalytics",
+        entriesFileName: String = "elasticsearch_entries.json",
+        sendingfileName: String = "elasticsearch_entries_sending.json",
+        analyticsFileName: String = "elasticsearch_analytics.json") {
+        self.esServerURL = esServerURL.appendingPathComponent("_bulk")  // use bulk api
+        self.esLogIndex = esLogIndex.lowercased()       // elasticsearch index must be all lower case
+        self.esAnalyticsIndex = esAnalyticsIndex.lowercased()       // index must be all lower case
         super.init()
 
         // setup where to write the json files
@@ -119,6 +124,7 @@ public class ElasticSearchDestination: BaseDestination {
         var jsonString: String?
 
         let dict: [String: Any] = [
+            "uuid": analyticsUUID,
             "timestamp": Date().timeIntervalSince1970,
             "level": level.rawValue,
             "message": msg,
@@ -203,17 +209,17 @@ public class ElasticSearchDestination: BaseDestination {
                 payload["device"] = analyticsDict
                 payload["entries"] = logEntries
 
-                if let str = jsonStringFromDict(payload) {
-                    //toNSLog(str)  // uncomment to see full payload
-                    toNSLog("Encrypting \(lines) log entries ...")
-                    var msg = "Sending \(lines) encrypted log entries "
+                if let str = elasticBulkCmdFromDict(payload) {
+//                    toNSLog(str)  // uncomment to see full payload
+//                    toNSLog("Encrypting \(lines) log entries ...")
+                    var msg = "Sending \(lines) log entries "
                     msg += "(\(str.characters.count) chars) to server ..."
                     toNSLog(msg)
                     //toNSLog("Sending \(encryptedStr) ...")
                     
                     sendToServerAsync(str) { ok, _ in
                         
-                        self.toNSLog("Sent \(lines) encrypted log entries to server, received ok: \(ok)")
+                        self.toNSLog("Sent \(lines) log entries to server, received ok: \(ok)")
                         if ok {
                             _ = self.deleteFile(self.sendingFileURL)
                         }
@@ -268,23 +274,21 @@ public class ElasticSearchDestination: BaseDestination {
             //print(request)
 
             // POST parameters
-            let params = ["payload": payload]
-            do {
-                request.httpBody = try JSONSerialization.data(withJSONObject: params, options: [])
-            } catch {
-                toNSLog("Error! Could not create JSON for server payload.")
-                return complete(false, 0)
-            }
-            toNSLog("sending params: \(params)")
-            toNSLog("sending ...")
+            request.httpBody = payload.data(using: .utf8)
+   
+            toNSLog("Request body: \(request.httpBody!)")
 
             sendingInProgress = true
 
             // send request async to server on destination queue
-            let task = session.dataTask(with: request) { _, response, error in
+            let task = session.dataTask(with: request) { [unowned self] data, response, error in
                 var ok = false
                 var status = 0
                 self.toNSLog("received response from server")
+                
+                defer {
+                    complete(ok, status)
+                }
 
                 if let error = error {
                     // an error did occur
@@ -293,22 +297,63 @@ public class ElasticSearchDestination: BaseDestination {
                     if let response = response as? HTTPURLResponse {
                         status = response.statusCode
                         if status == 200 {
-                            // all went well, entries were uploaded to server
-                            ok = true
+                            ok = true       // to prevent logging getting stuck due to misformed entry, return ok if server was reached (200)
+                            // verify status codes for individual entries
+                            if let data = data {
+                                // TODO: provide better messaging on failure
+                                guard let json = try? JSONSerialization.jsonObject(with: data, options: []) else { return }
+                                guard let jsonDict = json as? [String: Any] else { return }
+                                guard let items = jsonDict["items"] as? [[String: Any]] else { return }
+                                for case let item in items {
+                                    guard let index = item["index"] as? [String: Any] else { break }
+                                    guard let status = index["status"] as? Int else { break }
+                                    if status != 201 {
+                                        self.toNSLog("Error! Failed to create entry (status code \(status))")
+                                    }
+                                }
+                            } // end if data
                         } else {
-                            // status code was not 200
-                            var msg = "Error! Sending entries to server failed "
+                            // status code was not 201
+                            var msg = "Error! Sending entries to server failed"
                             msg += "with status code \(status)"
                             self.toNSLog(msg)
                         }
                     }
-                }
-                return complete(ok, status)
-            }
+                } // end if error
+            } // end dataTask
             task.resume()
-            //while true {} // commenting this line causes a crash on Linux unit tests?!?
         }
     }
+    
+    /// turns dict into JSON-encoded string
+    func elasticBulkCmdFromDict(_ dict: [String: Any]) -> String? {
+        var elasticBulk: String?
+        
+        if let deviceInfo = dict["device"] {
+            do {
+                let jsonData = try JSONSerialization.data(withJSONObject: deviceInfo, options: [])
+                elasticBulk = "{ \"index\": { \"_index\": \"\(esAnalyticsIndex)\", \"_type\": \"\(esAnalyticsIndex)\" } }\n"
+                elasticBulk = "\(elasticBulk!)\(String(data: jsonData, encoding: .utf8) ?? "")\n"
+            } catch {
+                print("SwiftyBeaver could no create JSON from device info dict.")
+            }
+        }
+        
+        if let entries = dict["entries"] as? [[String: Any]] {
+            for entry in entries {
+                do {
+                    let jsonData = try JSONSerialization.data(withJSONObject: entry, options: [])
+                    elasticBulk = "\(elasticBulk ?? ""){ \"index\": { \"_index\": \"\(esLogIndex)\", \"_type\": \"\(esLogIndex)\" } }\n"
+                    elasticBulk = "\(elasticBulk!)\(String(data: jsonData, encoding: .utf8) ?? "")\n"
+                } catch {
+                    print("SwiftyBeaver could no create JSON from entries dict.")
+                }
+            }
+        }
+
+        return elasticBulk
+    }
+
 
     /// returns sending points based on level
     func sendingPointsForLevel(_ level: SwiftyBeaver.Level) -> Int {
@@ -553,9 +598,9 @@ public class ElasticSearchDestination: BaseDestination {
     func toNSLog(_ str: String) {
         if showNSLog {
             #if os(Linux)
-                print("SBPlatform: \(str)")
+                print("ElasticSearch: \(str)")
             #else
-                NSLog("SBPlatform: \(str)")
+                NSLog("ElasticSearch: \(str)")
             #endif
         }
     }
