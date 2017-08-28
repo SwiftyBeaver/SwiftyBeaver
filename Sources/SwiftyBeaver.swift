@@ -12,7 +12,7 @@ import Foundation
 open class SwiftyBeaver {
 
     /// version string of framework
-    public static let version = "1.4.0"  // UPDATE ON RELEASE!
+    public static let version = "1.4.1"  // UPDATE ON RELEASE!
     /// build number of framework
     public static let build = 1400 // version 0.7.1 -> 710, UPDATE ON RELEASE!
 
