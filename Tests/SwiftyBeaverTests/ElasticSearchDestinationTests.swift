@@ -18,14 +18,16 @@ class ElasticSearchDestinationTests: XCTestCase {
         super.setUp()
         SwiftyBeaver.removeAllDestinations()
         
-        elastic = ElasticSearchDestination(esServerURL: URL(string: "")!)
+        let serverUrl = URL(string: "https://example.com")!
+        let additionalHeaders = ["x-api-key": "01234567"]       // ex: auth header
+        elastic = ElasticSearchDestination(esServerURL: serverUrl, additionalHttpHeaders: additionalHeaders)
     }
     
     override func tearDown() {
         super.tearDown()
     }
     
-    func testUseGoogleCloudPDestination() {
+    func testUseElasticSearchDestination() {
         let log = SwiftyBeaver.self
         elastic.minLevel = .verbose
         XCTAssertTrue(log.addDestination(elastic))

@@ -29,6 +29,7 @@ public class ElasticSearchDestination: BaseDestination {
     public var esServerURL: URL
     private var esLogIndex: String
     private var esAnalyticsIndex: String
+    private var additionalHttpHeaders: [String: String]?
     
     public var entriesFileURL = URL(fileURLWithPath: "") // not optional
     public var sendingFileURL = URL(fileURLWithPath: "")
@@ -49,12 +50,14 @@ public class ElasticSearchDestination: BaseDestination {
 
     /// init platform with default internal filenames
     public init(esServerURL: URL, esLogIndex: String = "sblog", esAnalyticsIndex: String = "sbanalytics",
-        entriesFileName: String = "elasticsearch_entries.json",
-        sendingfileName: String = "elasticsearch_entries_sending.json",
-        analyticsFileName: String = "elasticsearch_analytics.json") {
+                additionalHttpHeaders: [String: String]? = nil,
+                entriesFileName: String = "elasticsearch_entries.json",
+                sendingfileName: String = "elasticsearch_entries_sending.json",
+                analyticsFileName: String = "elasticsearch_analytics.json") {
         self.esServerURL = esServerURL.appendingPathComponent("_bulk")  // use bulk api
         self.esLogIndex = esLogIndex.lowercased()       // elasticsearch index must be all lower case
         self.esAnalyticsIndex = esAnalyticsIndex.lowercased()       // index must be all lower case
+        self.additionalHttpHeaders = additionalHttpHeaders
         super.init()
 
         // setup where to write the json files
@@ -125,7 +128,7 @@ public class ElasticSearchDestination: BaseDestination {
 
         let dict: [String: Any] = [
             "uuid": analyticsUUID,
-            "timestamp": Date().timeIntervalSince1970,
+            "timestamp": Int(Date().timeIntervalSince1970 * 1000),      // epoch in milliseconds
             "level": level.rawValue,
             "message": msg,
             "thread": thread,
@@ -257,6 +260,13 @@ public class ElasticSearchDestination: BaseDestination {
             request.httpMethod = "POST"
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             request.addValue("application/json", forHTTPHeaderField: "Accept")
+            
+            // add additional headers specified in the init to the request
+            if let headers = additionalHttpHeaders {
+                for (field, value) in headers {
+                    request.addValue(value, forHTTPHeaderField: field)
+                }
+            }
 
             // basic auth header (just works on Linux for Swift 3.1+, macOS is fine)
 //            guard let credentials = "\(appID):\(appSecret)".data(using: String.Encoding.utf8) else {
@@ -309,6 +319,7 @@ public class ElasticSearchDestination: BaseDestination {
                                     guard let status = index["status"] as? Int else { break }
                                     if status != 201 {
                                         self.toNSLog("Error! Failed to create entry (status code \(status))")
+                                        self.toNSLog(jsonDict.description)
                                     }
                                 }
                             } // end if data
@@ -507,6 +518,7 @@ public class ElasticSearchDestination: BaseDestination {
         dict["appVersion"] = appVersion()
         dict["firstAppBuild"] = appBuild()
         dict["appBuild"] = appBuild()
+        dict["timestamp"] = Int(Date().timeIntervalSince1970 * 1000)      // epoch in milliseconds
 
         if let loadedDict = dictFromFile(analyticsFileURL) {
             if let val = loadedDict["firstStart"] as? Double {
