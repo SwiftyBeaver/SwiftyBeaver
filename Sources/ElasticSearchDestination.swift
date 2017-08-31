@@ -130,6 +130,7 @@ public class ElasticSearchDestination: BaseDestination {
             "uuid": analyticsUUID,
             "timestamp": Int(Date().timeIntervalSince1970 * 1000),      // epoch in milliseconds
             "level": level.rawValue,
+            "levelWord": levelWord(level).lowercased(),
             "message": msg,
             "thread": thread,
             "fileName": file.components(separatedBy: "/").last!,
@@ -328,6 +329,7 @@ public class ElasticSearchDestination: BaseDestination {
                             var msg = "Error! Sending entries to server failed"
                             msg += "with status code \(status)"
                             self.toNSLog(msg)
+                            self.toNSLog(String(data: data!, encoding: .utf8) ?? "No data")
                         }
                     }
                 } // end if error
