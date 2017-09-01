@@ -29,7 +29,8 @@ public class ElasticSearchDestination: BaseDestination {
     public var esServerURL: URL
     private var esLogIndex: String
     private var esAnalyticsIndex: String
-    private var additionalHttpHeaders: [String: String]?
+    
+    private var requestSigner: ((inout URLRequest) -> Void)?
     
     public var entriesFileURL = URL(fileURLWithPath: "") // not optional
     public var sendingFileURL = URL(fileURLWithPath: "")
@@ -50,14 +51,14 @@ public class ElasticSearchDestination: BaseDestination {
 
     /// init platform with default internal filenames
     public init(esServerURL: URL, esLogIndex: String = "sblog", esAnalyticsIndex: String = "sbanalytics",
-                additionalHttpHeaders: [String: String]? = nil,
+                requestSigner: ((inout URLRequest) -> Void)? = nil,
                 entriesFileName: String = "elasticsearch_entries.json",
                 sendingfileName: String = "elasticsearch_entries_sending.json",
                 analyticsFileName: String = "elasticsearch_analytics.json") {
         self.esServerURL = esServerURL.appendingPathComponent("_bulk")  // use bulk api
         self.esLogIndex = esLogIndex.lowercased()       // elasticsearch index must be all lower case
         self.esAnalyticsIndex = esAnalyticsIndex.lowercased()       // index must be all lower case
-        self.additionalHttpHeaders = additionalHttpHeaders
+        self.requestSigner = requestSigner
         super.init()
 
         // setup where to write the json files
@@ -215,7 +216,6 @@ public class ElasticSearchDestination: BaseDestination {
 
                 if let str = elasticBulkCmdFromDict(payload) {
 //                    toNSLog(str)  // uncomment to see full payload
-//                    toNSLog("Encrypting \(lines) log entries ...")
                     var msg = "Sending \(lines) log entries "
                     msg += "(\(str.characters.count) chars) to server ..."
                     toNSLog(msg)
@@ -261,28 +261,6 @@ public class ElasticSearchDestination: BaseDestination {
             request.httpMethod = "POST"
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             request.addValue("application/json", forHTTPHeaderField: "Accept")
-            
-            // add additional headers specified in the init to the request
-            if let headers = additionalHttpHeaders {
-                for (field, value) in headers {
-                    request.addValue(value, forHTTPHeaderField: field)
-                }
-            }
-
-            // basic auth header (just works on Linux for Swift 3.1+, macOS is fine)
-//            guard let credentials = "\(appID):\(appSecret)".data(using: String.Encoding.utf8) else {
-//                    toNSLog("Error! Could not set basic auth header")
-//                    return complete(false, 0)
-//            }
-//
-//            #if os(Linux)
-//            let base64Credentials = Base64.encode([UInt8](credentials))
-//            #else
-//            let base64Credentials = credentials.base64EncodedString(options: [])
-//            #endif
-//            request.setValue("Basic \(base64Credentials)", forHTTPHeaderField: "Authorization")
-            //toNSLog("\nrequest:")
-            //print(request)
 
             // POST parameters
             request.httpBody = payload.data(using: .utf8)
@@ -290,6 +268,9 @@ public class ElasticSearchDestination: BaseDestination {
             toNSLog("Request body: \(request.httpBody!)")
 
             sendingInProgress = true
+            
+            // perform request signing specified by the user in init
+            requestSigner?(&request)
 
             // send request async to server on destination queue
             let task = session.dataTask(with: request) { [unowned self] data, response, error in
@@ -461,11 +442,6 @@ public class ElasticSearchDestination: BaseDestination {
         }
         return nil
     }
-
-    /// returns AES-256 CBC encrypted optional string
-//    func encrypt(_ str: String) -> String? {
-//        return AES256CBC.encryptString(str, password: encryptionKey)
-//    }
 
     /// Delete file to get started again
     func deleteFile(_ url: URL) -> Bool {
