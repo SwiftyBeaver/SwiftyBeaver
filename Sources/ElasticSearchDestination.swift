@@ -254,8 +254,8 @@ public class ElasticSearchDestination: BaseDestination {
 
             toNSLog("assembling request ...")
 
-             // assemble request
-             var request = URLRequest(url: esServerURL,
+            // assemble request
+            var request = URLRequest(url: esServerURL,
                                      cachePolicy: .reloadIgnoringLocalAndRemoteCacheData,
                                      timeoutInterval: timeout)
             request.httpMethod = "POST"

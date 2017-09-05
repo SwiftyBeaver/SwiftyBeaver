@@ -18,12 +18,9 @@ class ElasticSearchDestinationTests: XCTestCase {
         super.setUp()
         SwiftyBeaver.removeAllDestinations()
         
-        let serverUrl = URL(string: "https://example.com")!
-        let additionalHeaders = ["x-api-key": "01234567"]       // ex: auth header
-        elastic = ElasticSearchDestination(esServerURL: serverUrl, additionalHttpHeaders: additionalHeaders)
         let serverUrl = URL(string: "https://youresurl.com")!
         elastic = ElasticSearchDestination(esServerURL: serverUrl, requestSigner: { request in
-            request.addValue("", forHTTPHeaderField: "")
+            request.addValue("your-api-key", forHTTPHeaderField: "x-api-key")
         })
     }
     
