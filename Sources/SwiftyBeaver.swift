@@ -84,44 +84,44 @@ open class SwiftyBeaver {
     // MARK: Levels
 
     /// log something generally unimportant (lowest priority)
-    open class func verbose(_ message: @autoclosure () -> Any, _
+    open class func verbose(_ message: (() -> Any)? = nil, _
         file: String = #file, _ function: String = #function, line: Int = #line, context: Any? = nil) {
         custom(level: .verbose, message: message, file: file, function: function, line: line, context: context)
     }
 
     /// log something which help during debugging (low priority)
-    open class func debug(_ message: @autoclosure () -> Any, _
+    open class func debug(_ message: (() -> Any)? = nil, _
         file: String = #file, _ function: String = #function, line: Int = #line, context: Any? = nil) {
         custom(level: .debug, message: message, file: file, function: function, line: line, context: context)
     }
 
     /// log something which you are really interested but which is not an issue or error (normal priority)
-    open class func info(_ message: @autoclosure () -> Any, _
+    open class func info(_ message: (() -> Any)? = nil, _
         file: String = #file, _ function: String = #function, line: Int = #line, context: Any? = nil) {
         custom(level: .info, message: message, file: file, function: function, line: line, context: context)
     }
 
     /// log something which may cause big trouble soon (high priority)
-    open class func warning(_ message: @autoclosure () -> Any, _
+    open class func warning(_ message: (() -> Any)? = nil, _
         file: String = #file, _ function: String = #function, line: Int = #line, context: Any? = nil) {
         custom(level: .warning, message: message, file: file, function: function, line: line, context: context)
     }
 
     /// log something which will keep you awake at night (highest priority)
-    open class func error(_ message: @autoclosure () -> Any, _
+    open class func error(_ message: (() -> Any)? = nil, _
         file: String = #file, _ function: String = #function, line: Int = #line, context: Any? = nil) {
         custom(level: .error, message: message, file: file, function: function, line: line, context: context)
     }
 
     /// custom logging to manually adjust values, should just be used by other frameworks
-    public class func custom(level: SwiftyBeaver.Level, message: @autoclosure () -> Any,
+    public class func custom(level: SwiftyBeaver.Level, message: (() -> Any)? = nil,
                              file: String = #file, function: String = #function, line: Int = #line, context: Any? = nil) {
         dispatch_send(level: level, message: message, thread: threadName(),
                       file: file, function: function, line: line, context: context)
     }
 
     /// internal helper which dispatches send to dedicated queue if minLevel is ok
-    class func dispatch_send(level: SwiftyBeaver.Level, message: @autoclosure () -> Any,
+    class func dispatch_send(level: SwiftyBeaver.Level, message: (() -> Any)? = nil,
         thread: String, file: String, function: String, line: Int, context: Any?) {
         var resolvedMessage: String?
         for dest in destinations {
@@ -130,10 +130,10 @@ open class SwiftyBeaver {
                 continue
             }
 
-            resolvedMessage = resolvedMessage == nil && dest.hasMessageFilters() ? "\(message())" : resolvedMessage
+            resolvedMessage = resolvedMessage == nil && dest.hasMessageFilters() ? "\(String(describing: message?()))" : resolvedMessage
             if dest.shouldLevelBeLogged(level, path: file, function: function, message: resolvedMessage) {
                 // try to convert msg object to String and put it on queue
-                let msgStr = resolvedMessage == nil ? "\(message())" : resolvedMessage!
+                let msgStr = resolvedMessage == nil ? "\(String(describing: message?()))" : resolvedMessage!
                 let f = stripParams(function: function)
 
                 if dest.asynchronously {
