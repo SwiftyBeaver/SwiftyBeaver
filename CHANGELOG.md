@@ -6,13 +6,20 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 <br/>
 
+## 1.4.1 (2017-09-18)
+
+##### Fixed
+
+- Disabled code coverage to fix app submission with Xcode 9 by [@NachoSoto](https://github.com/NachoSoto)
+
+<br/>
+
 ## 1.4.0 (2017-08-12)
 
 ##### Added
 
 - Support for latest Xcode 9 beta, Swift 3.2 & Swift 4 by [@lgaches](https://github.com/lgaches)
 - Less aggressive file protection type when logfile is created by [@igorefremov](https://github.com/igorefremov)
-
 
 <br/>
 
