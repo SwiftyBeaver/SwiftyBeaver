@@ -342,6 +342,7 @@ public class SBPlatformDestination: BaseDestination {
                 return complete(ok, status)
             }
             task.resume()
+            session.finishTasksAndInvalidate()
             //while true {} // commenting this line causes a crash on Linux unit tests?!?
         }
     }
