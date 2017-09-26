@@ -6,6 +6,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 <br/>
 
+## 1.4.2 (2017-09-26)
+
+##### Fixed
+
+- Fixed memory leak in SBPlatformDestination by [@drougojrom](https://github.com/drougojrom)
+
+<br/>
+
 ## 1.4.1 (2017-09-18)
 
 ##### Fixed
