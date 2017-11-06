@@ -20,15 +20,7 @@
 		9E2AEAD61D9BB46300F21B1F /* SBPlatformDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEACD1D9BB46300F21B1F /* SBPlatformDestinationTests.swift */; };
 		9E2AEAD81D9BB46300F21B1F /* SecretsExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEACF1D9BB46300F21B1F /* SecretsExample.swift */; };
 		9E2AEAD91D9BB46300F21B1F /* SwiftyBeaverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEAD01D9BB46300F21B1F /* SwiftyBeaverTests.swift */; };
-		9E6CAA481C148EC1009D9093 /* SwiftyBeaver.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 9E6CAA471C148EC1009D9093 /* SwiftyBeaver.podspec */; };
-		9E6CAA4A1C149579009D9093 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 9E6CAA491C149579009D9093 /* LICENSE */; };
 		9EDCE3EF1C09D211002FA4A7 /* SwiftyBeaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EDCE3E41C09D211002FA4A7 /* SwiftyBeaver.framework */; };
-		ACE5977E1C1882DF0031451F /* SwiftyBeaver.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 9E6CAA471C148EC1009D9093 /* SwiftyBeaver.podspec */; };
-		ACE5977F1C1882DF0031451F /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 9E6CAA491C149579009D9093 /* LICENSE */; };
-		ACE5978F1C18830D0031451F /* SwiftyBeaver.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 9E6CAA471C148EC1009D9093 /* SwiftyBeaver.podspec */; };
-		ACE597901C18830D0031451F /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 9E6CAA491C149579009D9093 /* LICENSE */; };
-		ACE597A01C18832E0031451F /* SwiftyBeaver.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 9E6CAA471C148EC1009D9093 /* SwiftyBeaver.podspec */; };
-		ACE597A11C18832E0031451F /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 9E6CAA491C149579009D9093 /* LICENSE */; };
 		CB0FC3071EB8ABA00094E03A /* AES256CBC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5233FE1EB0EB4600739CFB /* AES256CBC.swift */; };
 		CB0FC3081EB8ABA00094E03A /* BaseDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5233FF1EB0EB4600739CFB /* BaseDestination.swift */; };
 		CB0FC3091EB8ABA00094E03A /* ConsoleDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5234001EB0EB4600739CFB /* ConsoleDestination.swift */; };
@@ -401,8 +393,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9E6CAA481C148EC1009D9093 /* SwiftyBeaver.podspec in Resources */,
-				9E6CAA4A1C149579009D9093 /* LICENSE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -417,8 +407,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ACE5977E1C1882DF0031451F /* SwiftyBeaver.podspec in Resources */,
-				ACE5977F1C1882DF0031451F /* LICENSE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -426,8 +414,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ACE5978F1C18830D0031451F /* SwiftyBeaver.podspec in Resources */,
-				ACE597901C18830D0031451F /* LICENSE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -435,8 +421,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ACE597A01C18832E0031451F /* SwiftyBeaver.podspec in Resources */,
-				ACE597A11C18832E0031451F /* LICENSE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
