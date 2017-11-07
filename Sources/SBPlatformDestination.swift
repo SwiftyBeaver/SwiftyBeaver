@@ -242,7 +242,7 @@ public class SBPlatformDestination: BaseDestination {
                     toNSLog("Encrypting \(lines) log entries ...")
                     if let encryptedStr = encrypt(str) {
                         var msg = "Sending \(lines) encrypted log entries "
-                        msg += "(\(encryptedStr.characters.count) chars) to server ..."
+                        msg += "(\(encryptedStr.count) chars) to server ..."
                         toNSLog(msg)
                         //toNSLog("Sending \(encryptedStr) ...")
 
@@ -415,7 +415,7 @@ public class SBPlatformDestination: BaseDestination {
             var dicts = [[String: Any]()] // array of dictionaries
             for lineJSON in linesArray {
                 lines += 1
-                if lineJSON.characters.first == "{" && lineJSON.characters.last == "}" {
+                if lineJSON.first == "{" && lineJSON.last == "}" {
                     // try to parse json string into dict
                     if let data = lineJSON.data(using: .utf8) {
                         do {
