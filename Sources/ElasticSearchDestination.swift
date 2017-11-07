@@ -9,14 +9,10 @@
 
 import Foundation
 
-public class SBPlatformDestination: BaseDestination {
-
-    public var appID = ""
-    public var appSecret = ""
-    public var encryptionKey = ""
+public class ElasticSearchDestination: BaseDestination {
     public var analyticsUserName = "" // user email, ID, name, etc.
     public var analyticsUUID: String { return uuid }
-
+    
     // when to send to server
     public struct SendingPoints {
         public var verbose = 0
@@ -30,7 +26,12 @@ public class SBPlatformDestination: BaseDestination {
     public var showNSLog = false // executes toNSLog statements to debug the class
     var points = 0
 
-    public var serverURL = URL(string: "https://api.swiftybeaver.com/api/entries/") // optional
+    public var esServerURL: URL
+    private var esLogIndex: String
+    private var esAnalyticsIndex: String
+    
+    private var requestSigner: ((inout URLRequest) -> Void)?
+    
     public var entriesFileURL = URL(fileURLWithPath: "") // not optional
     public var sendingFileURL = URL(fileURLWithPath: "")
     public var analyticsFileURL = URL(fileURLWithPath: "")
@@ -49,14 +50,16 @@ public class SBPlatformDestination: BaseDestination {
     let isoDateFormatter = DateFormatter()
 
     /// init platform with default internal filenames
-    public init(appID: String, appSecret: String, encryptionKey: String,
-        entriesFileName: String = "sbplatform_entries.json",
-        sendingfileName: String = "sbplatform_entries_sending.json",
-        analyticsFileName: String = "sbplatform_analytics.json") {
+    public init(esServerURL: URL, esLogIndex: String = "sblog", esAnalyticsIndex: String = "sbanalytics",
+                requestSigner: ((inout URLRequest) -> Void)? = nil,
+                entriesFileName: String = "elasticsearch_entries.json",
+                sendingfileName: String = "elasticsearch_entries_sending.json",
+                analyticsFileName: String = "elasticsearch_analytics.json") {
+        self.esServerURL = esServerURL.appendingPathComponent("_bulk")  // use bulk api
+        self.esLogIndex = esLogIndex.lowercased()       // elasticsearch index must be all lower case
+        self.esAnalyticsIndex = esAnalyticsIndex.lowercased()       // index must be all lower case
+        self.requestSigner = requestSigner
         super.init()
-        self.appID = appID
-        self.appSecret = appSecret
-        self.encryptionKey = encryptionKey
 
         // setup where to write the json files
         var baseURL: URL?
@@ -125,8 +128,10 @@ public class SBPlatformDestination: BaseDestination {
         var jsonString: String?
 
         let dict: [String: Any] = [
-            "timestamp": Date().timeIntervalSince1970,
+            "uuid": analyticsUUID,
+            "timestamp": Int(Date().timeIntervalSince1970 * 1000),      // epoch in milliseconds
             "level": level.rawValue,
+            "levelWord": levelWord(level).lowercased(),
             "message": msg,
             "thread": thread,
             "fileName": file.components(separatedBy: "/").last!,
@@ -209,24 +214,21 @@ public class SBPlatformDestination: BaseDestination {
                 payload["device"] = analyticsDict
                 payload["entries"] = logEntries
 
-                if let str = jsonStringFromDict(payload) {
-                    //toNSLog(str)  // uncomment to see full payload
-                    toNSLog("Encrypting \(lines) log entries ...")
-                    if let encryptedStr = encrypt(str) {
-                        var msg = "Sending \(lines) encrypted log entries "
-                        msg += "(\(encryptedStr.characters.count) chars) to server ..."
-                        toNSLog(msg)
-                        //toNSLog("Sending \(encryptedStr) ...")
-
-                        sendToServerAsync(encryptedStr) { ok, _ in
-
-                            self.toNSLog("Sent \(lines) encrypted log entries to server, received ok: \(ok)")
-                            if ok {
-                                _ = self.deleteFile(self.sendingFileURL)
-                            }
-                            self.sendingInProgress = false
-                            self.points = 0
+                if let str = elasticBulkCmdFromDict(payload) {
+//                    toNSLog(str)  // uncomment to see full payload
+                    var msg = "Sending \(lines) log entries "
+                    msg += "(\(str.characters.count) chars) to server ..."
+                    toNSLog(msg)
+                    //toNSLog("Sending \(encryptedStr) ...")
+                    
+                    sendToServerAsync(str) { ok, _ in
+                        
+                        self.toNSLog("Sent \(lines) log entries to server, received ok: \(ok)")
+                        if ok {
+                            _ = self.deleteFile(self.sendingFileURL)
                         }
+                        self.sendingInProgress = false
+                        self.points = 0
                     }
                 }
             } else {
@@ -240,7 +242,7 @@ public class SBPlatformDestination: BaseDestination {
 
         let timeout = 10.0
 
-        if let payload = str, let queue = self.queue, let serverURL = serverURL {
+        if let payload = str, let queue = self.queue {
 
             // create operation queue which uses current serial queue of destination
             let operationQueue = OperationQueue()
@@ -252,47 +254,33 @@ public class SBPlatformDestination: BaseDestination {
 
             toNSLog("assembling request ...")
 
-             // assemble request
-             var request = URLRequest(url: serverURL,
+            // assemble request
+            var request = URLRequest(url: esServerURL,
                                      cachePolicy: .reloadIgnoringLocalAndRemoteCacheData,
                                      timeoutInterval: timeout)
             request.httpMethod = "POST"
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             request.addValue("application/json", forHTTPHeaderField: "Accept")
 
-            // basic auth header (just works on Linux for Swift 3.1+, macOS is fine)
-            guard let credentials = "\(appID):\(appSecret)".data(using: String.Encoding.utf8) else {
-                    toNSLog("Error! Could not set basic auth header")
-                    return complete(false, 0)
-            }
-
-            #if os(Linux)
-            let base64Credentials = Base64.encode([UInt8](credentials))
-            #else
-            let base64Credentials = credentials.base64EncodedString(options: [])
-            #endif
-            request.setValue("Basic \(base64Credentials)", forHTTPHeaderField: "Authorization")
-            //toNSLog("\nrequest:")
-            //print(request)
-
             // POST parameters
-            let params = ["payload": payload]
-            do {
-                request.httpBody = try JSONSerialization.data(withJSONObject: params, options: [])
-            } catch {
-                toNSLog("Error! Could not create JSON for server payload.")
-                return complete(false, 0)
-            }
-            toNSLog("sending params: \(params)")
-            toNSLog("sending ...")
+            request.httpBody = payload.data(using: .utf8)
+   
+            toNSLog("Request body: \(request.httpBody!)")
 
             sendingInProgress = true
+            
+            // perform request signing specified by the user in init
+            requestSigner?(&request)
 
             // send request async to server on destination queue
-            let task = session.dataTask(with: request) { _, response, error in
+            let task = session.dataTask(with: request) { [unowned self] data, response, error in
                 var ok = false
                 var status = 0
                 self.toNSLog("received response from server")
+                
+                defer {
+                    complete(ok, status)
+                }
 
                 if let error = error {
                     // an error did occur
@@ -301,23 +289,65 @@ public class SBPlatformDestination: BaseDestination {
                     if let response = response as? HTTPURLResponse {
                         status = response.statusCode
                         if status == 200 {
-                            // all went well, entries were uploaded to server
-                            ok = true
+                            ok = true       // to prevent logging getting stuck due to misformed entry, return ok if server was reached (200)
+                            // verify status codes for individual entries
+                            if let data = data {
+                                // TODO: provide better messaging on failure
+                                guard let json = try? JSONSerialization.jsonObject(with: data, options: []) else { return }
+                                guard let jsonDict = json as? [String: Any] else { return }
+                                guard let items = jsonDict["items"] as? [[String: Any]] else { return }
+                                for case let item in items {
+                                    guard let index = item["index"] as? [String: Any] else { break }
+                                    guard let status = index["status"] as? Int else { break }
+                                    if status != 201 {
+                                        self.toNSLog("Error! Failed to create entry (status code \(status))")
+                                        self.toNSLog(jsonDict.description)
+                                    }
+                                }
+                            } // end if data
                         } else {
-                            // status code was not 200
-                            var msg = "Error! Sending entries to server failed "
+                            // status code was not 201
+                            var msg = "Error! Sending entries to server failed"
                             msg += "with status code \(status)"
                             self.toNSLog(msg)
+                            self.toNSLog(String(data: data!, encoding: .utf8) ?? "No data")
                         }
                     }
-                }
-                return complete(ok, status)
-            }
+                } // end if error
+            } // end dataTask
             task.resume()
-            session.finishTasksAndInvalidate()
-            //while true {} // commenting this line causes a crash on Linux unit tests?!?
         }
     }
+    
+    /// turns dict into JSON-encoded string
+    func elasticBulkCmdFromDict(_ dict: [String: Any]) -> String? {
+        var elasticBulk: String?
+        
+        if let deviceInfo = dict["device"] {
+            do {
+                let jsonData = try JSONSerialization.data(withJSONObject: deviceInfo, options: [])
+                elasticBulk = "{ \"index\": { \"_index\": \"\(esAnalyticsIndex)\", \"_type\": \"\(esAnalyticsIndex)\" } }\n"
+                elasticBulk = "\(elasticBulk!)\(String(data: jsonData, encoding: .utf8) ?? "")\n"
+            } catch {
+                print("SwiftyBeaver could no create JSON from device info dict.")
+            }
+        }
+        
+        if let entries = dict["entries"] as? [[String: Any]] {
+            for entry in entries {
+                do {
+                    let jsonData = try JSONSerialization.data(withJSONObject: entry, options: [])
+                    elasticBulk = "\(elasticBulk ?? ""){ \"index\": { \"_index\": \"\(esLogIndex)\", \"_type\": \"\(esLogIndex)\" } }\n"
+                    elasticBulk = "\(elasticBulk!)\(String(data: jsonData, encoding: .utf8) ?? "")\n"
+                } catch {
+                    print("SwiftyBeaver could no create JSON from entries dict.")
+                }
+            }
+        }
+
+        return elasticBulk
+    }
+
 
     /// returns sending points based on level
     func sendingPointsForLevel(_ level: SwiftyBeaver.Level) -> Int {
@@ -413,11 +443,6 @@ public class SBPlatformDestination: BaseDestination {
         return nil
     }
 
-    /// returns AES-256 CBC encrypted optional string
-    func encrypt(_ str: String) -> String? {
-        return AES256CBC.encryptString(str, password: encryptionKey)
-    }
-
     /// Delete file to get started again
     func deleteFile(_ url: URL) -> Bool {
         do {
@@ -471,6 +496,7 @@ public class SBPlatformDestination: BaseDestination {
         dict["appVersion"] = appVersion()
         dict["firstAppBuild"] = appBuild()
         dict["appBuild"] = appBuild()
+        dict["timestamp"] = Int(Date().timeIntervalSince1970 * 1000)      // epoch in milliseconds
 
         if let loadedDict = dictFromFile(analyticsFileURL) {
             if let val = loadedDict["firstStart"] as? Double {
@@ -562,9 +588,9 @@ public class SBPlatformDestination: BaseDestination {
     func toNSLog(_ str: String) {
         if showNSLog {
             #if os(Linux)
-                print("SBPlatform: \(str)")
+                print("ElasticSearch: \(str)")
             #else
-                NSLog("SBPlatform: \(str)")
+                NSLog("ElasticSearch: \(str)")
             #endif
         }
     }

@@ -4,6 +4,7 @@ import XCTest
 XCTMain([
     testCase(AES256CBCTests.allTests), // takes too long
     testCase(BaseDestinationTests.allTests),
+    testCase(ElasticSearchTests.allTests),
     testCase(DestinationSetTests.allTests),
     testCase(ConsoleDestinationTests.allTests),
     testCase(FileDestinationTests.allTests),

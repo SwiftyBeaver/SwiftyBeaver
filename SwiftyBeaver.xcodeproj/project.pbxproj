@@ -53,6 +53,9 @@
 		CB52340B1EB0EB4600739CFB /* GoogleCloudDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5234031EB0EB4600739CFB /* GoogleCloudDestination.swift */; };
 		CB52340C1EB0EB4600739CFB /* SBPlatformDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5234041EB0EB4600739CFB /* SBPlatformDestination.swift */; };
 		CB52340D1EB0EB4600739CFB /* SwiftyBeaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5234051EB0EB4600739CFB /* SwiftyBeaver.swift */; };
+		FFE9E13F1F51D7730057F402 /* ElasticSearchDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE9E13E1F51D7730057F402 /* ElasticSearchDestination.swift */; };
+		FFE9E1411F51DA710057F402 /* DeviceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE9E1401F51DA710057F402 /* DeviceInfo.swift */; };
+		FFE9E1431F536F140057F402 /* ElasticSearchDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE9E1421F536F140057F402 /* ElasticSearchDestinationTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,6 +102,9 @@
 		CB5234031EB0EB4600739CFB /* GoogleCloudDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleCloudDestination.swift; sourceTree = "<group>"; };
 		CB5234041EB0EB4600739CFB /* SBPlatformDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBPlatformDestination.swift; sourceTree = "<group>"; };
 		CB5234051EB0EB4600739CFB /* SwiftyBeaver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyBeaver.swift; sourceTree = "<group>"; };
+		FFE9E13E1F51D7730057F402 /* ElasticSearchDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElasticSearchDestination.swift; sourceTree = "<group>"; };
+		FFE9E1401F51DA710057F402 /* DeviceInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceInfo.swift; sourceTree = "<group>"; };
+		FFE9E1421F536F140057F402 /* ElasticSearchDestinationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ElasticSearchDestinationTests.swift; path = Tests/SwiftyBeaverTests/ElasticSearchDestinationTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				9E2AEAC81D9BB46300F21B1F /* AES256CBCTests.swift */,
+				FFE9E1421F536F140057F402 /* ElasticSearchDestinationTests.swift */,
 				9E2AEAC91D9BB46300F21B1F /* BaseDestinationTests.swift */,
 				9E2AEACA1D9BB46300F21B1F /* DestinationSetTests.swift */,
 				9E2AEACB1D9BB46300F21B1F /* FileDestinationTests.swift */,
@@ -172,11 +179,13 @@
 			children = (
 				CB5233FE1EB0EB4600739CFB /* AES256CBC.swift */,
 				CB5233FF1EB0EB4600739CFB /* BaseDestination.swift */,
+				FFE9E1401F51DA710057F402 /* DeviceInfo.swift */,
 				CB5234001EB0EB4600739CFB /* ConsoleDestination.swift */,
 				CB5234011EB0EB4600739CFB /* FileDestination.swift */,
 				CB5234021EB0EB4600739CFB /* Filter.swift */,
 				CB5234031EB0EB4600739CFB /* GoogleCloudDestination.swift */,
 				CB5234041EB0EB4600739CFB /* SBPlatformDestination.swift */,
+				FFE9E13E1F51D7730057F402 /* ElasticSearchDestination.swift */,
 				CB5234051EB0EB4600739CFB /* SwiftyBeaver.swift */,
 				4D331ADE1F1E8E1100B1C25E /* Base64.swift */,
 			);
@@ -435,10 +444,12 @@
 				CB5234061EB0EB4600739CFB /* AES256CBC.swift in Sources */,
 				CB52340C1EB0EB4600739CFB /* SBPlatformDestination.swift in Sources */,
 				CB52340D1EB0EB4600739CFB /* SwiftyBeaver.swift in Sources */,
+				FFE9E1411F51DA710057F402 /* DeviceInfo.swift in Sources */,
 				4D331AE01F1E8EA700B1C25E /* Base64.swift in Sources */,
 				CB5234081EB0EB4600739CFB /* ConsoleDestination.swift in Sources */,
 				CB52340A1EB0EB4600739CFB /* Filter.swift in Sources */,
 				CB5234091EB0EB4600739CFB /* FileDestination.swift in Sources */,
+				FFE9E13F1F51D7730057F402 /* ElasticSearchDestination.swift in Sources */,
 				CB52340B1EB0EB4600739CFB /* GoogleCloudDestination.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -447,6 +458,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFE9E1431F536F140057F402 /* ElasticSearchDestinationTests.swift in Sources */,
 				9E2AEAD61D9BB46300F21B1F /* SBPlatformDestinationTests.swift in Sources */,
 				9E2AEAD51D9BB46300F21B1F /* FilterTests.swift in Sources */,
 				9E2AEAD31D9BB46300F21B1F /* DestinationSetTests.swift in Sources */,
