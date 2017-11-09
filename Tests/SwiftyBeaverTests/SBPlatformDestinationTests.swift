@@ -63,8 +63,8 @@ class SBPlatformDestinationTests: XCTestCase {
         let str = platform.send(.verbose, msg: msg, thread: thread, file: file, function: function, line: line)
         XCTAssertNotNil(str)
         if let str = str {
-            XCTAssertEqual(str.characters.first, "{")
-            XCTAssertEqual(str.characters.last, "}")
+            XCTAssertEqual(str.first, "{")
+            XCTAssertEqual(str.last, "}")
             XCTAssertNotNil(str.range(of: "\"line\":123"))
             XCTAssertNotNil(str.range(of: "\"message\":\"test message\\nNewlineäößø\""))
             XCTAssertNotNil(str.range(of: "\"fileName\":\"path.swift\""))
@@ -203,8 +203,8 @@ class SBPlatformDestinationTests: XCTestCase {
     func testDeviceDetails() {
         let device = platform.deviceDetails()
         XCTAssertEqual(device["os"], OS)
-        XCTAssertGreaterThan(device["os"]!.characters.count, 0)
-        XCTAssertGreaterThan(device["osVersion"]!.characters.count, 4)
+        XCTAssertGreaterThan(device["os"]!.count, 0)
+        XCTAssertGreaterThan(device["osVersion"]!.count, 4)
         XCTAssertEqual(device["hostName"], ProcessInfo.processInfo.hostName)
         XCTAssertEqual(device["deviceName"], DEVICE_NAME)
         XCTAssertEqual(device["deviceModel"], DEVICE_MODEL)
@@ -220,14 +220,14 @@ class SBPlatformDestinationTests: XCTestCase {
         let dict = platform.analytics(platform.analyticsFileURL, update: false)
         print(dict)
         if let uuid = dict["uuid"] as? String {
-            XCTAssertEqual(uuid.characters.count, 36)
+            XCTAssertEqual(uuid.count, 36)
             XCTAssertEqual(uuid, platform.analyticsUUID)
         }
         if let firstStart = dict["firstStart"] as? String {
-            XCTAssertEqual(firstStart.characters.count, 23)
+            XCTAssertEqual(firstStart.count, 23)
         }
         if let lastStart = dict["lastStart"] as? String {
-            XCTAssertEqual(lastStart.characters.count, 23)
+            XCTAssertEqual(lastStart.count, 23)
         }
         if let starts = dict["starts"] as? Int {
             XCTAssertGreaterThanOrEqual(starts, 1)
