@@ -6,6 +6,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 <br/>
 
+## 1.4.3 (2017-11-09)
+
+##### Added
+
+- Support for latest Xcode 9.1 by removing deprecation warning by [@tomekh7](https://github.com/tomekh7)
+- Reduced the overall size of the framework by [@NachoSoto](https://github.com/NachoSoto)
+- Improved support for Swift 4 via SPM by [@lgaches](https://github.com/lgaches)
+
+<br/>
+
 ## 1.4.2 (2017-09-26)
 
 ##### Fixed
