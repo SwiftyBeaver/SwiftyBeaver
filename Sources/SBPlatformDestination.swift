@@ -78,10 +78,12 @@ public class SBPlatformDestination: BaseDestination {
 
     /// init platform with default internal filenames
     public init(appID: String, appSecret: String, encryptionKey: String,
-        entriesFileName: String = "sbplatform_entries.json",
-        sendingfileName: String = "sbplatform_entries_sending.json",
-        analyticsFileName: String = "sbplatform_analytics.json") {
+                serverURL: URL? = URL(string: "https://api.swiftybeaver.com/api/entries/"),
+                entriesFileName: String = "sbplatform_entries.json",
+                sendingfileName: String = "sbplatform_entries_sending.json",
+                analyticsFileName: String = "sbplatform_analytics.json") {
         super.init()
+        self.serverURL = serverURL
         self.appID = appID
         self.appSecret = appSecret
         self.encryptionKey = encryptionKey
@@ -244,8 +246,6 @@ public class SBPlatformDestination: BaseDestination {
                         var msg = "Sending \(lines) encrypted log entries "
                         msg += "(\(encryptedStr.count) chars) to server ..."
                         toNSLog(msg)
-                        //toNSLog("Sending \(encryptedStr) ...")
-
                         sendToServerAsync(encryptedStr) { ok, _ in
 
                             self.toNSLog("Sent \(lines) encrypted log entries to server, received ok: \(ok)")

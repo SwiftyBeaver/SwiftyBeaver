@@ -20,10 +20,12 @@ class SBPlatformDestinationTests: XCTestCase {
             use environment variables to inject platform credentials into the tests
             set in Terminal via:
 
+            export SBPLATFORM_SERVER_URL=
             export SBPLATFORM_APP_ID=
             export SBPLATFORM_APP_SECRET=
             export SBPLATFORM_ENCRYPTION_KEY=
         */
+        static let serverURL = ProcessInfo.processInfo.environment["SBPLATFORM_SERVER_URL"] ?? "https://api.swiftybeaver.com/api/entries/"
         static let appID = ProcessInfo.processInfo.environment["SBPLATFORM_APP_ID"] ?? ""
         static let appSecret = ProcessInfo.processInfo.environment["SBPLATFORM_APP_SECRET"] ?? ""
         static let encryptionKey = ProcessInfo.processInfo.environment["SBPLATFORM_ENCRYPTION_KEY"] ?? ""
@@ -32,13 +34,18 @@ class SBPlatformDestinationTests: XCTestCase {
     override func setUp() {
         super.setUp()
         SwiftyBeaver.removeAllDestinations()
-        platform = SBPlatformDestination(appID: SBPlatformCredentials.appID,
-                    appSecret: SBPlatformCredentials.appSecret,
-                    encryptionKey: SBPlatformCredentials.encryptionKey)
+        platform = SBPlatformDestination(
+            appID:          SBPlatformCredentials.appID,
+            appSecret:      SBPlatformCredentials.appSecret,
+            encryptionKey:  SBPlatformCredentials.encryptionKey,
+            serverURL:      URL(string: SBPlatformCredentials.serverURL)
+        )
         // uncomment to verify that the env vars "arrive" in the tests
-        /*print("\nTesting SBPlatform using\nApp ID: \(platform.appID)")
+        print("\nTesting SBPlatform using")
+        print("Server URL: \(platform.serverURL!)")
+        print("App ID: \(platform.appID)")
         print("App Secret: \(platform.appSecret)")
-        print("Encryption Key: \(platform.encryptionKey)\n")*/
+        print("Encryption Key: \(platform.encryptionKey)\n")
     }
 
     override func tearDown() {
@@ -152,9 +159,8 @@ class SBPlatformDestinationTests: XCTestCase {
 
     }
 
-    func testIntegration() {
+    func testSingleSending() {
         let log = SwiftyBeaver.self
-        let formatter = DateFormatter()
 
         // add logging to SwiftyBeaver Platform
         platform.showNSLog = true
@@ -163,12 +169,52 @@ class SBPlatformDestinationTests: XCTestCase {
 
         if platform.appID.isEmpty || platform.appSecret.isEmpty || platform.encryptionKey.isEmpty {
             // leave the test on missing credentials
+            print("leaving SBPlatform test testIntegration() due to empty credentials")
             return
         }
 
         XCTAssertTrue(log.addDestination(platform))
         //XCTAssertEqual(log.countDestinations(), 2)
 
+        // send logs in chunks, use high threshold value to test performance
+        platform.sendingPoints.threshold = 10
+        log.verbose("a verbose message 1")
+        log.debug("a debug message 2")
+        log.info("an info message 3")
+        log.error("an error message 4")
+        
+        print("waiting")
+        // do some further waiting for sending to complete
+        for _ in 1...platform.sendingPoints.threshold + 3 {
+            // simulate work by doing a computing
+            var x = 1.0
+            for index2 in 1...50000 {
+                x = sqrt(Double(index2))
+                XCTAssertEqual(x, sqrt(Double(index2)))
+            }
+        }
+        sleep(5)
+        print("finished")
+    }
+    
+    func testIntegration() {
+        let log = SwiftyBeaver.self
+        let formatter = DateFormatter()
+        
+        // add logging to SwiftyBeaver Platform
+        platform.showNSLog = true
+        //let jsonFile = NSURL(fileURLWithPath: "/tmp/testSBPlatform.json")!
+        //deleteFile(NSURL(string: String(jsonFile) + ".send")!)
+        
+        if platform.appID.isEmpty || platform.appSecret.isEmpty || platform.encryptionKey.isEmpty {
+            // leave the test on missing credentials
+            print("leaving SBPlatform test testIntegration() due to empty credentials")
+            return
+        }
+        
+        XCTAssertTrue(log.addDestination(platform))
+        //XCTAssertEqual(log.countDestinations(), 2)
+        
         // send logs in chunks, use high threshold value to test performance
         platform.sendingPoints.threshold = 10
         for index in 1...platform.sendingPoints.threshold + 3 {
@@ -178,14 +224,14 @@ class SBPlatformDestinationTests: XCTestCase {
                 x = sqrt(Double(index2))
                 XCTAssertEqual(x, sqrt(Double(index2)))
             }
-
+            
             formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
             let dateStr = formatter.string(from: Date())
-
+            
             log.debug("msg \(index) - \(dateStr)")
         }
         XCTAssertTrue(log.flush(secondTimeout: 3))
-
+        
         // do some further waiting for sending to complete
         for _ in 1...platform.sendingPoints.threshold + 3 {
             // simulate work by doing a computing
