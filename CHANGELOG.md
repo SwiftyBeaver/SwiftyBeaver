@@ -6,6 +6,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 <br/>
 
+## 1.4.4 (2017-12-08)
+
+##### Added
+
+- Set a custom server URL already on platform destination init by [@skreutzberger](https://github.com/skreutzberger)
+
+<br/>
+
 ## 1.4.3 (2017-11-09)
 
 ##### Added
