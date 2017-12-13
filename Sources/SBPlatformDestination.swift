@@ -415,7 +415,7 @@ public class SBPlatformDestination: BaseDestination {
             var dicts = [[String: Any]()] // array of dictionaries
             for lineJSON in linesArray {
                 lines += 1
-                if lineJSON.first == "{" && lineJSON.last == "}" {
+                if lineJSON.firstChar == "{" && lineJSON.lastChar == "}" {
                     // try to parse json string into dict
                     if let data = lineJSON.data(using: .utf8) {
                         do {
