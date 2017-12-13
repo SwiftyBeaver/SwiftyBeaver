@@ -6,6 +6,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 <br/>
 
+## 1.5.0 (2017-12-13)
+
+##### Added
+
+- Cross-compatibility for Swift 3.1, 3.2 & 4 by [@skreutzberger](https://github.com/skreutzberger)
+
+<br/>
+
 ## 1.4.4 (2017-12-08)
 
 ##### Added
