@@ -294,7 +294,7 @@ class SwiftyBeaverTests: XCTestCase {
     }
 
     func testVersionAndBuild() {
-        XCTAssertGreaterThan(SwiftyBeaver.version.count, 4)
+        XCTAssertGreaterThan(SwiftyBeaver.version.length, 4)
         XCTAssertGreaterThan(SwiftyBeaver.build, 500)
     }
 

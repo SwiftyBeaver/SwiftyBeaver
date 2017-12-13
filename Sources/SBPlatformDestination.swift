@@ -244,7 +244,7 @@ public class SBPlatformDestination: BaseDestination {
                     toNSLog("Encrypting \(lines) log entries ...")
                     if let encryptedStr = encrypt(str) {
                         var msg = "Sending \(lines) encrypted log entries "
-                        msg += "(\(encryptedStr.count) chars) to server ..."
+                        msg += "(\(encryptedStr.length) chars) to server ..."
                         toNSLog(msg)
                         sendToServerAsync(encryptedStr) { ok, _ in
 

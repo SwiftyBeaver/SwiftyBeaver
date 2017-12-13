@@ -249,8 +249,8 @@ class SBPlatformDestinationTests: XCTestCase {
     func testDeviceDetails() {
         let device = platform.deviceDetails()
         XCTAssertEqual(device["os"], OS)
-        XCTAssertGreaterThan(device["os"]!.count, 0)
-        XCTAssertGreaterThan(device["osVersion"]!.count, 4)
+        XCTAssertGreaterThan(device["os"]!.length, 0)
+        XCTAssertGreaterThan(device["osVersion"]!.length, 4)
         XCTAssertEqual(device["hostName"], ProcessInfo.processInfo.hostName)
         XCTAssertEqual(device["deviceName"], DEVICE_NAME)
         XCTAssertEqual(device["deviceModel"], DEVICE_MODEL)
