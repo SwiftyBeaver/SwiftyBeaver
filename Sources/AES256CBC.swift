@@ -840,14 +840,3 @@ fileprivate extension Data {
     }
 }
 
-extension String {
-    /// cross-Swift-version-compatible characters count
-    var length: Int {
-        #if swift(>=3.2)
-            return self.count
-        #else
-            return self.characters.count
-        #endif
-    }
-}
-

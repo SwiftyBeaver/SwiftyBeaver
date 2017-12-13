@@ -178,7 +178,7 @@ open class SwiftyBeaver {
     /// removes the parameters from a function because it looks weird with a single param
     class func stripParams(function: String) -> String {
         var f = function
-        if let indexOfBrace = f.index(of: "(") {
+        if let indexOfBrace = f.find("(") {
             #if swift(>=4.0)
             f = String(f[..<indexOfBrace])
             #else
