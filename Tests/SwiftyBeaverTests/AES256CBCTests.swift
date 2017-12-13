@@ -30,7 +30,7 @@ class AES256CBCTests: XCTestCase {
         //printn("encrypted secret (IV is at first 16 chars): \(encrypted)")
 
         if let encrypted = encrypted {
-            XCTAssertGreaterThan(encrypted.count, 16)
+            XCTAssertGreaterThan(encrypted.length, 16)
             // decrypt
             let decrypted = AES256CBC.decryptString(encrypted, password: password)
             //print("decrypted str: \(decrypted)")
@@ -72,7 +72,7 @@ class AES256CBCTests: XCTestCase {
         //NSLog("encrypted: \(encrypted)")
 
         if let encrypted = encrypted {
-            XCTAssertGreaterThan(encrypted.count, 16)
+            XCTAssertGreaterThan(encrypted.length, 16)
             // decrypt
             let decrypted = AES256CBC.decryptString(encrypted, password: password)
             XCTAssertNotNil(decrypted)
@@ -109,8 +109,8 @@ class AES256CBCTests: XCTestCase {
         let length = 6
         let text = AES256CBC.randomText(length)
         let text2 = AES256CBC.randomText(length)
-        XCTAssertEqual(text.count, length)
-        XCTAssertEqual(text2.count, length)
+        XCTAssertEqual(text.length, length)
+        XCTAssertEqual(text2.length, length)
         XCTAssertNotEqual(text, text2)
         XCTAssertNil(text.range(of: " "))
         XCTAssertNil(text2.range(of: " "))
@@ -119,8 +119,8 @@ class AES256CBCTests: XCTestCase {
     func testGeneratePassword() {
         let pw = AES256CBC.generatePassword()
         let pw2 = AES256CBC.generatePassword()
-        XCTAssertEqual(pw.count, 32)
-        XCTAssertEqual(pw2.count, 32)
+        XCTAssertEqual(pw.length, 32)
+        XCTAssertEqual(pw2.length, 32)
         XCTAssertNotEqual(pw, pw2)
         XCTAssertNil(pw.range(of: " "))
         XCTAssertNil(pw2.range(of: " "))

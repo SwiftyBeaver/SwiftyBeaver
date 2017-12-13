@@ -20,6 +20,10 @@
 		9E2AEAD61D9BB46300F21B1F /* SBPlatformDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEACD1D9BB46300F21B1F /* SBPlatformDestinationTests.swift */; };
 		9E2AEAD81D9BB46300F21B1F /* SecretsExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEACF1D9BB46300F21B1F /* SecretsExample.swift */; };
 		9E2AEAD91D9BB46300F21B1F /* SwiftyBeaverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEAD01D9BB46300F21B1F /* SwiftyBeaverTests.swift */; };
+		9E8F38B61FE12E9800BE9A80 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8F38B51FE12E9800BE9A80 /* Extensions.swift */; };
+		9E8F38B81FE12E9800BE9A80 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8F38B51FE12E9800BE9A80 /* Extensions.swift */; };
+		9E8F38B91FE12E9800BE9A80 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8F38B51FE12E9800BE9A80 /* Extensions.swift */; };
+		9E8F38BA1FE12E9800BE9A80 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8F38B51FE12E9800BE9A80 /* Extensions.swift */; };
 		9EDCE3EF1C09D211002FA4A7 /* SwiftyBeaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EDCE3E41C09D211002FA4A7 /* SwiftyBeaver.framework */; };
 		CB0FC3071EB8ABA00094E03A /* AES256CBC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5233FE1EB0EB4600739CFB /* AES256CBC.swift */; };
 		CB0FC3081EB8ABA00094E03A /* BaseDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5233FF1EB0EB4600739CFB /* BaseDestination.swift */; };
@@ -85,6 +89,7 @@
 		9E6CAA471C148EC1009D9093 /* SwiftyBeaver.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SwiftyBeaver.podspec; sourceTree = "<group>"; };
 		9E6CAA491C149579009D9093 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		9E74FEA81CD74AFA0024DD76 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
+		9E8F38B51FE12E9800BE9A80 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = sources/Extensions.swift; sourceTree = SOURCE_ROOT; };
 		9EA8054D1D9BB54100348BC6 /* Dockerfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Dockerfile; sourceTree = "<group>"; };
 		9EDCE3E41C09D211002FA4A7 /* SwiftyBeaver.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyBeaver.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EDCE3EE1C09D211002FA4A7 /* SwiftyBeaverTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftyBeaverTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -179,6 +184,7 @@
 				CB5234041EB0EB4600739CFB /* SBPlatformDestination.swift */,
 				CB5234051EB0EB4600739CFB /* SwiftyBeaver.swift */,
 				4D331ADE1F1E8E1100B1C25E /* Base64.swift */,
+				9E8F38B51FE12E9800BE9A80 /* Extensions.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -436,6 +442,7 @@
 				CB52340C1EB0EB4600739CFB /* SBPlatformDestination.swift in Sources */,
 				CB52340D1EB0EB4600739CFB /* SwiftyBeaver.swift in Sources */,
 				4D331AE01F1E8EA700B1C25E /* Base64.swift in Sources */,
+				9E8F38B61FE12E9800BE9A80 /* Extensions.swift in Sources */,
 				CB5234081EB0EB4600739CFB /* ConsoleDestination.swift in Sources */,
 				CB52340A1EB0EB4600739CFB /* Filter.swift in Sources */,
 				CB5234091EB0EB4600739CFB /* FileDestination.swift in Sources */,
@@ -468,6 +475,7 @@
 				CB0FC30C1EB8ABA00094E03A /* GoogleCloudDestination.swift in Sources */,
 				CB0FC30B1EB8ABA00094E03A /* Filter.swift in Sources */,
 				4D331AE21F1E8EAC00B1C25E /* Base64.swift in Sources */,
+				9E8F38B81FE12E9800BE9A80 /* Extensions.swift in Sources */,
 				CB0FC3071EB8ABA00094E03A /* AES256CBC.swift in Sources */,
 				CB0FC30A1EB8ABA00094E03A /* FileDestination.swift in Sources */,
 				CB0FC30D1EB8ABA00094E03A /* SBPlatformDestination.swift in Sources */,
@@ -484,6 +492,7 @@
 				CB0FC3141EB8ABA10094E03A /* GoogleCloudDestination.swift in Sources */,
 				CB0FC3131EB8ABA10094E03A /* Filter.swift in Sources */,
 				4D331AE11F1E8EAB00B1C25E /* Base64.swift in Sources */,
+				9E8F38B91FE12E9800BE9A80 /* Extensions.swift in Sources */,
 				CB0FC30F1EB8ABA10094E03A /* AES256CBC.swift in Sources */,
 				CB0FC3121EB8ABA10094E03A /* FileDestination.swift in Sources */,
 				CB0FC3151EB8ABA10094E03A /* SBPlatformDestination.swift in Sources */,
@@ -500,6 +509,7 @@
 				CB0FC31C1EB8ABA10094E03A /* GoogleCloudDestination.swift in Sources */,
 				CB0FC31B1EB8ABA10094E03A /* Filter.swift in Sources */,
 				4D331ADF1F1E8E1100B1C25E /* Base64.swift in Sources */,
+				9E8F38BA1FE12E9800BE9A80 /* Extensions.swift in Sources */,
 				CB0FC3171EB8ABA10094E03A /* AES256CBC.swift in Sources */,
 				CB0FC31A1EB8ABA10094E03A /* FileDestination.swift in Sources */,
 				CB0FC31D1EB8ABA10094E03A /* SBPlatformDestination.swift in Sources */,

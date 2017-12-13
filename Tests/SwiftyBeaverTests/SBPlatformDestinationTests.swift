@@ -249,8 +249,8 @@ class SBPlatformDestinationTests: XCTestCase {
     func testDeviceDetails() {
         let device = platform.deviceDetails()
         XCTAssertEqual(device["os"], OS)
-        XCTAssertGreaterThan(device["os"]!.count, 0)
-        XCTAssertGreaterThan(device["osVersion"]!.count, 4)
+        XCTAssertGreaterThan(device["os"]!.length, 0)
+        XCTAssertGreaterThan(device["osVersion"]!.length, 4)
         XCTAssertEqual(device["hostName"], ProcessInfo.processInfo.hostName)
         XCTAssertEqual(device["deviceName"], DEVICE_NAME)
         XCTAssertEqual(device["deviceModel"], DEVICE_MODEL)
@@ -266,14 +266,14 @@ class SBPlatformDestinationTests: XCTestCase {
         let dict = platform.analytics(platform.analyticsFileURL, update: false)
         print(dict)
         if let uuid = dict["uuid"] as? String {
-            XCTAssertEqual(uuid.count, 36)
+            XCTAssertEqual(uuid.length, 36)
             XCTAssertEqual(uuid, platform.analyticsUUID)
         }
         if let firstStart = dict["firstStart"] as? String {
-            XCTAssertEqual(firstStart.count, 23)
+            XCTAssertEqual(firstStart.length, 23)
         }
         if let lastStart = dict["lastStart"] as? String {
-            XCTAssertEqual(lastStart.count, 23)
+            XCTAssertEqual(lastStart.length, 23)
         }
         if let starts = dict["starts"] as? Int {
             XCTAssertGreaterThanOrEqual(starts, 1)

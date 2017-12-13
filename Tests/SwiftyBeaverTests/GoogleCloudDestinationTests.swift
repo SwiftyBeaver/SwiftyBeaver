@@ -40,8 +40,8 @@ class GoogleCloudDestinationTests: XCTestCase {
         let str = gcpDestination.send(.verbose, msg: msg, thread: thread, file: file, function: function, line: line)
         XCTAssertNotNil(str)
         if let str = str {
-            XCTAssertEqual(str.first, "{")
-            XCTAssertEqual(str.last, "}")
+            XCTAssertEqual(str.firstChar, "{")
+            XCTAssertEqual(str.lastChar, "}")
             XCTAssertNotNil(str.range(of: "{\"service\":\"TEST\"}"))
             XCTAssertNotNil(str.range(of: "\"severity\":\"DEBUG\""))
             XCTAssertNotNil(str.range(of: "\"message\":\"test message\\nNewlineäößø\""))
@@ -63,8 +63,8 @@ class GoogleCloudDestinationTests: XCTestCase {
 
         XCTAssertNotNil(str)
         if let str = str {
-            XCTAssertEqual(str.first, "{")
-            XCTAssertEqual(str.last, "}")
+            XCTAssertEqual(str.firstChar, "{")
+            XCTAssertEqual(str.lastChar, "}")
             XCTAssertNotNil(str.range(of: "{\"service\":\"SwiftyBeaver\"}"))
             XCTAssertNotNil(str.range(of: "\"severity\":\"DEBUG\""))
             XCTAssertNotNil(str.range(of: "\"message\":\"test message\\nNewlineäößø\""))
