@@ -108,36 +108,29 @@ public class FileDestination: BaseDestination {
 }
 
 internal func defaultBaseURL(fileManager: FileManager = .default) -> URL? {
-    #if os(OSX)
-        if let url = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first {
-            
-            // try to use ~/Library/Caches/APP NAME instead of ~/Library/Caches
-            if let appName = Bundle.main.object(forInfoDictionaryKey: "CFBundleExecutable") as? String {
-                do {
-                    let appURL = url.appendingPathComponent(appName, isDirectory: true)
-
-                    try fileManager.createDirectory(
-                        at: appURL,
-                        withIntermediateDirectories: true,
-                        attributes: nil)
-                    return appURL
-                } catch {
-                    print("Warning! Could not create folder /Library/Caches/\(appName)")
-                }
-            }
-            
-            return url
-        }
+    #if os(Linux)
+        return URL(fileURLWithPath: "/var/cache")
     #else
-        #if os(Linux)
-            return URL(fileURLWithPath: "/var/cache")
+        guard let cachesURL = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first else { return nil }
+
+        #if os(OSX)
+            // try to use ~/Library/Caches/APP NAME instead of ~/Library/Caches
+            guard let appName = Bundle.main.object(forInfoDictionaryKey: "CFBundleExecutable") as? String else { return cachesURL }
+
+            do {
+                let appURL = cachesURL.appendingPathComponent(appName, isDirectory: true)
+                try fileManager.createDirectory(
+                    at: appURL,
+                    withIntermediateDirectories: true,
+                    attributes: nil)
+                return appURL
+            } catch {
+                print("Warning! Could not create folder /Library/Caches/\(appName)")
+                return cachesURL
+            }
         #else
             // iOS, watchOS, etc. are using the caches directory
-            if let url = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first {
-                return url
-            }
+            return cachesURL
         #endif
     #endif
-
-    return nil
 }
