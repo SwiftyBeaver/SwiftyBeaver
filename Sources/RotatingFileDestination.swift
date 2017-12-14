@@ -4,6 +4,7 @@
 //
 
 import struct Foundation.Date
+import class Foundation.DateFormatter
 
 public class RotatingFileDestination {
 
@@ -26,8 +27,21 @@ public class RotatingFileDestination {
         self.clock = clock
     }
 
+    public var currentFileName: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = rotation.dateFormat
+        let dateSuffix = formatter.string(from: clock.now())
+        return fileName.pathComponent(suffix: dateSuffix)
+    }
+
     public enum Rotation {
         case daily
+
+        public var dateFormat: String {
+            switch self {
+            case .daily: return "yyyy-MM-dd"
+            }
+        }
     }
 
     public struct FileName {
