@@ -21,14 +21,18 @@ class RotatingFileDestinationTests: XCTestCase {
         let destination = RotatingFileDestination()
 
         XCTAssertEqual(destination.fileName.name, "swiftybeaver")
+        XCTAssertEqual(destination.baseURL, defaultBaseURL())
         XCTAssertEqual(destination.fileName.pathExtension, "log")
         XCTAssertEqual(destination.rotation, .daily)
     }
 
     func testCurrentFileName() {
+        let irrelevantBaseURL: URL? = URL(fileURLWithPath: "irrelevant")
+
         XCTAssertEqual(
             RotatingFileDestination(
                 rotation: .daily,
+                logDirectoryURL: irrelevantBaseURL,
                 fileName: .init(name: "base", pathExtension: "ext"),
                 clock: ClockDouble(year: 2020, month: 05, day: 17))
                 .currentFileName,
@@ -37,6 +41,7 @@ class RotatingFileDestinationTests: XCTestCase {
         XCTAssertEqual(
             RotatingFileDestination(
                 rotation: .daily,
+                logDirectoryURL: irrelevantBaseURL,
                 fileName: .init(name: "base", pathExtension: "ext"),
                 clock: ClockDouble(year: 1987, month: 11, day: 09))
                 .currentFileName,
@@ -45,6 +50,7 @@ class RotatingFileDestinationTests: XCTestCase {
         XCTAssertEqual(
             RotatingFileDestination(
                 rotation: .daily,
+                logDirectoryURL: irrelevantBaseURL,
                 fileName: .init(name: "swiftybeaver", pathExtension: "log"),
                 clock: ClockDouble(year: 2017, month: 12, day: 14))
                 .currentFileName,

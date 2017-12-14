@@ -3,26 +3,32 @@
 //  Some rights reserved: http://opensource.org/licenses/MIT
 //
 
+import struct Foundation.URL
 import struct Foundation.Date
 import class Foundation.DateFormatter
 
 public class RotatingFileDestination {
 
     public let rotation: Rotation
+    public var baseURL: URL?
     public let fileName: FileName
     internal let clock: Clock
 
     public convenience init() {
+        let baseURL = defaultBaseURL()
         self.init(rotation: .daily,
+                  logDirectoryURL: baseURL,
                   fileName: FileName(name: "swiftybeaver", pathExtension: "log"),
                   clock: SystemClock())
     }
 
     public init(rotation: Rotation,
+                logDirectoryURL baseURL: URL?,
                 fileName: FileName,
                 clock: Clock) {
 
         self.rotation = rotation
+        self.baseURL = baseURL
         self.fileName = fileName
         self.clock = clock
     }
