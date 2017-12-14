@@ -12,6 +12,16 @@
 		4D331AE01F1E8EA700B1C25E /* Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D331ADE1F1E8E1100B1C25E /* Base64.swift */; };
 		4D331AE11F1E8EAB00B1C25E /* Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D331ADE1F1E8E1100B1C25E /* Base64.swift */; };
 		4D331AE21F1E8EAC00B1C25E /* Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D331ADE1F1E8E1100B1C25E /* Base64.swift */; };
+		50D8F2521FE27143006F3068 /* SwiftyBeaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACE597A61C18832E0031451F /* SwiftyBeaver.framework */; };
+		50D8F2591FE27260006F3068 /* AES256CBCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEAC81D9BB46300F21B1F /* AES256CBCTests.swift */; };
+		50D8F25A1FE27260006F3068 /* BaseDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEAC91D9BB46300F21B1F /* BaseDestinationTests.swift */; };
+		50D8F25B1FE27260006F3068 /* DestinationSetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEACA1D9BB46300F21B1F /* DestinationSetTests.swift */; };
+		50D8F25C1FE27260006F3068 /* FileDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEACB1D9BB46300F21B1F /* FileDestinationTests.swift */; };
+		50D8F25D1FE27260006F3068 /* FilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEACC1D9BB46300F21B1F /* FilterTests.swift */; };
+		50D8F25E1FE27260006F3068 /* SBPlatformDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEACD1D9BB46300F21B1F /* SBPlatformDestinationTests.swift */; };
+		50D8F25F1FE27260006F3068 /* SecretsExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEACF1D9BB46300F21B1F /* SecretsExample.swift */; };
+		50D8F2601FE27260006F3068 /* SwiftyBeaverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEAD01D9BB46300F21B1F /* SwiftyBeaverTests.swift */; };
+		50D8F2611FE27260006F3068 /* GoogleCloudDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1720E71E9C083600AB7833 /* GoogleCloudDestinationTests.swift */; };
 		9E2AEAD11D9BB46300F21B1F /* AES256CBCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEAC81D9BB46300F21B1F /* AES256CBCTests.swift */; };
 		9E2AEAD21D9BB46300F21B1F /* BaseDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEAC91D9BB46300F21B1F /* BaseDestinationTests.swift */; };
 		9E2AEAD31D9BB46300F21B1F /* DestinationSetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEACA1D9BB46300F21B1F /* DestinationSetTests.swift */; };
@@ -60,6 +70,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		50D8F2531FE27143006F3068 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9EDCE3DB1C09D211002FA4A7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = ACE597971C18832E0031451F;
+			remoteInfo = "SwiftyBeaver (macOS)";
+		};
 		9EDCE3F01C09D211002FA4A7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 9EDCE3DB1C09D211002FA4A7 /* Project object */;
@@ -72,6 +89,8 @@
 /* Begin PBXFileReference section */
 		4D1720E71E9C083600AB7833 /* GoogleCloudDestinationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GoogleCloudDestinationTests.swift; path = Tests/SwiftyBeaverTests/GoogleCloudDestinationTests.swift; sourceTree = "<group>"; };
 		4D331ADE1F1E8E1100B1C25E /* Base64.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Base64.swift; sourceTree = "<group>"; };
+		50D8F24D1FE27143006F3068 /* SwiftyBeaverTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftyBeaverTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		50D8F2581FE271F5006F3068 /* Info macOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info macOS.plist"; path = "Tests/Info macOS.plist"; sourceTree = "<group>"; };
 		9E11A1DA1D92654E002112B6 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .swiftlint.yml; sourceTree = "<group>"; };
 		9E195B101C6B766D00D924CB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9E2AEAC51D9BB43C00F21B1F /* LinuxMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LinuxMain.swift; path = Tests/LinuxMain.swift; sourceTree = "<group>"; };
@@ -107,6 +126,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		50D8F24A1FE27143006F3068 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50D8F2521FE27143006F3068 /* SwiftyBeaver.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9EDCE3E01C09D211002FA4A7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -146,10 +173,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		50D8F2471FE270CB006F3068 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		9E2AEAC31D9BB3D000F21B1F /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				9E2AEAC61D9BB44700F21B1F /* Info.plist */,
+				50D8F2581FE271F5006F3068 /* Info macOS.plist */,
 				9E2AEAC51D9BB43C00F21B1F /* LinuxMain.swift */,
 				9E2AEAC41D9BB3E700F21B1F /* SwiftyBeaverTests */,
 			);
@@ -203,6 +238,7 @@
 				9E31D62A1C185ED0004E0980 /* Sources */,
 				9E2AEAC31D9BB3D000F21B1F /* Tests */,
 				9EDCE3E51C09D211002FA4A7 /* Products */,
+				50D8F2471FE270CB006F3068 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -214,6 +250,7 @@
 				ACE597841C1882DF0031451F /* SwiftyBeaver.framework */,
 				ACE597951C18830D0031451F /* SwiftyBeaver.framework */,
 				ACE597A61C18832E0031451F /* SwiftyBeaver.framework */,
+				50D8F24D1FE27143006F3068 /* SwiftyBeaverTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -252,6 +289,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		50D8F24C1FE27143006F3068 /* SwiftyBeaverTests (macOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 50D8F2551FE27143006F3068 /* Build configuration list for PBXNativeTarget "SwiftyBeaverTests (macOS)" */;
+			buildPhases = (
+				50D8F2491FE27143006F3068 /* Sources */,
+				50D8F24A1FE27143006F3068 /* Frameworks */,
+				50D8F24B1FE27143006F3068 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				50D8F2541FE27143006F3068 /* PBXTargetDependency */,
+			);
+			name = "SwiftyBeaverTests (macOS)";
+			productName = "SwiftyBeaverTests (macOS)";
+			productReference = 50D8F24D1FE27143006F3068 /* SwiftyBeaverTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		9EDCE3E31C09D211002FA4A7 /* SwiftyBeaver (iOS) */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9EDCE3F81C09D211002FA4A7 /* Build configuration list for PBXNativeTarget "SwiftyBeaver (iOS)" */;
@@ -348,10 +403,14 @@
 		9EDCE3DB1C09D211002FA4A7 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0710;
+				LastSwiftUpdateCheck = 0920;
 				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Sebastian Kreutzberger";
 				TargetAttributes = {
+					50D8F24C1FE27143006F3068 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
 					9EDCE3E31C09D211002FA4A7 = {
 						CreatedOnToolsVersion = 7.1.1;
 						LastSwiftMigration = 0900;
@@ -390,11 +449,19 @@
 				ACE597751C1882DF0031451F /* SwiftyBeaver (watchOS) */,
 				ACE597861C18830D0031451F /* SwiftyBeaver (tvOS) */,
 				ACE597971C18832E0031451F /* SwiftyBeaver (macOS) */,
+				50D8F24C1FE27143006F3068 /* SwiftyBeaverTests (macOS) */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		50D8F24B1FE27143006F3068 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9EDCE3E21C09D211002FA4A7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -433,6 +500,22 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		50D8F2491FE27143006F3068 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50D8F2601FE27260006F3068 /* SwiftyBeaverTests.swift in Sources */,
+				50D8F25E1FE27260006F3068 /* SBPlatformDestinationTests.swift in Sources */,
+				50D8F25D1FE27260006F3068 /* FilterTests.swift in Sources */,
+				50D8F25B1FE27260006F3068 /* DestinationSetTests.swift in Sources */,
+				50D8F25F1FE27260006F3068 /* SecretsExample.swift in Sources */,
+				50D8F2591FE27260006F3068 /* AES256CBCTests.swift in Sources */,
+				50D8F25C1FE27260006F3068 /* FileDestinationTests.swift in Sources */,
+				50D8F2611FE27260006F3068 /* GoogleCloudDestinationTests.swift in Sources */,
+				50D8F25A1FE27260006F3068 /* BaseDestinationTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9EDCE3DF1C09D211002FA4A7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -520,6 +603,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		50D8F2541FE27143006F3068 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = ACE597971C18832E0031451F /* SwiftyBeaver (macOS) */;
+			targetProxy = 50D8F2531FE27143006F3068 /* PBXContainerItemProxy */;
+		};
 		9EDCE3F11C09D211002FA4A7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 9EDCE3E31C09D211002FA4A7 /* SwiftyBeaver (iOS) */;
@@ -528,6 +616,52 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		50D8F2561FE27143006F3068 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "Tests/Info macOS.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.SwiftyBeaver.SwiftyBeaverTests-macOS";
+				PRODUCT_NAME = SwiftyBeaverTests;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 4.0;
+			};
+			name = Debug;
+		};
+		50D8F2571FE27143006F3068 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "Tests/Info macOS.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.SwiftyBeaver.SwiftyBeaverTests-macOS";
+				PRODUCT_NAME = SwiftyBeaverTests;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Release;
+		};
 		9EDCE3F61C09D211002FA4A7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -867,6 +1001,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		50D8F2551FE27143006F3068 /* Build configuration list for PBXNativeTarget "SwiftyBeaverTests (macOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				50D8F2561FE27143006F3068 /* Debug */,
+				50D8F2571FE27143006F3068 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		9EDCE3DE1C09D211002FA4A7 /* Build configuration list for PBXProject "SwiftyBeaver" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
