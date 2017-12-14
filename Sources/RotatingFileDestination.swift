@@ -33,6 +33,10 @@ public class RotatingFileDestination {
         self.clock = clock
     }
 
+    public var currentURL: URL? {
+        return baseURL.map { $0.appendingPathComponent(currentFileName, isDirectory: false) }
+    }
+
     public var currentFileName: String {
         let formatter = DateFormatter()
         formatter.dateFormat = rotation.dateFormat

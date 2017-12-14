@@ -56,6 +56,45 @@ class RotatingFileDestinationTests: XCTestCase {
                 .currentFileName,
             "swiftybeaver-2017-12-14.log")
     }
+
+    func testCurrentURL_BaseIsNil_ReturnsNil() {
+
+        let irrelevantFileName = RotatingFileDestination.FileName(name: "irrelevant", pathExtension: "irrelevant")
+        let destination = RotatingFileDestination(
+            rotation: .daily,
+            logDirectoryURL: nil,
+            fileName: irrelevantFileName,
+            clock: SystemClock())
+        XCTAssertNil(destination.currentURL)
+    }
+
+    func testCurrentURL_BaseIsRegularFileURL() {
+
+        let baseURL = URL(fileURLWithPath: "/foo/bar")
+        let destination = RotatingFileDestination(
+            rotation: .daily,
+            logDirectoryURL: baseURL,
+            fileName: .init(name: "some", pathExtension: "ext"),
+            clock: ClockDouble(year: 1987, month: 11, day: 09))
+
+        XCTAssertEqual(
+            destination.currentURL,
+            baseURL.appendingPathComponent("some-1987-11-09.ext", isDirectory: false))
+    }
+
+    func testCurrentURL_BaseIsDirectoryURL() {
+
+        let baseURL = URL(fileURLWithPath: "/fizz/buzz", isDirectory: true)
+        let destination = RotatingFileDestination(
+            rotation: .daily,
+            logDirectoryURL: baseURL,
+            fileName: .init(name: "swifty", pathExtension: "beaver"),
+            clock: ClockDouble(year: 2017, month: 12, day: 14))
+
+        XCTAssertEqual(
+            destination.currentURL,
+            baseURL.appendingPathComponent("swifty-2017-12-14.beaver", isDirectory: false))
+    }
 }
 
 class RotationTests: XCTestCase {
