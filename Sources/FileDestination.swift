@@ -19,35 +19,7 @@ public class FileDestination: BaseDestination {
 
     public override init() {
         // platform-dependent logfile directory default
-        var baseURL: URL?
-        #if os(OSX)
-            if let url = fileManager.urls(for:.cachesDirectory, in: .userDomainMask).first {
-                baseURL = url
-                // try to use ~/Library/Caches/APP NAME instead of ~/Library/Caches
-                if let appName = Bundle.main.object(forInfoDictionaryKey: "CFBundleExecutable") as? String {
-                    do {
-                        if let appURL = baseURL?.appendingPathComponent(appName, isDirectory: true) {
-                            try fileManager.createDirectory(at: appURL,
-                                                            withIntermediateDirectories: true, attributes: nil)
-                            baseURL = appURL
-                        }
-                    } catch {
-                        print("Warning! Could not create folder /Library/Caches/\(appName)")
-                    }
-                }
-            }
-        #else
-            #if os(Linux)
-                baseURL = URL(fileURLWithPath: "/var/cache")
-            #else
-                // iOS, watchOS, etc. are using the caches directory
-                if let url = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first {
-                    baseURL = url
-                }
-            #endif
-        #endif
-
-        if let baseURL = baseURL {
+        if let baseURL = defaultBaseURL(fileManager: fileManager) {
             logFileURL = baseURL.appendingPathComponent("swiftybeaver.log", isDirectory: false)
         }
         super.init()
@@ -133,4 +105,39 @@ public class FileDestination: BaseDestination {
             return false
         }
     }
+}
+
+internal func defaultBaseURL(fileManager: FileManager = .default) -> URL? {
+    #if os(OSX)
+        if let url = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first {
+            
+            // try to use ~/Library/Caches/APP NAME instead of ~/Library/Caches
+            if let appName = Bundle.main.object(forInfoDictionaryKey: "CFBundleExecutable") as? String {
+                do {
+                    let appURL = url.appendingPathComponent(appName, isDirectory: true)
+
+                    try fileManager.createDirectory(
+                        at: appURL,
+                        withIntermediateDirectories: true,
+                        attributes: nil)
+                    return appURL
+                } catch {
+                    print("Warning! Could not create folder /Library/Caches/\(appName)")
+                }
+            }
+            
+            return url
+        }
+    #else
+        #if os(Linux)
+            return URL(fileURLWithPath: "/var/cache")
+        #else
+            // iOS, watchOS, etc. are using the caches directory
+            if let url = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first {
+                return url
+            }
+        #endif
+    #endif
+
+    return nil
 }
