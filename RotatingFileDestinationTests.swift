@@ -436,6 +436,37 @@ class RotatingFileDestinationIntegrationTests: XCTestCase {
             XCTAssertEqual(lines[0], "INFO: single line to log")
             XCTAssertEqual(lines[1], "")
         }
+
+        // Ooohhh, rewind the clock in the 3rd rotation!
+
+        clockDouble.changeDate(year: 2014, month: 6, day: 2)
+
+        log.info("additional line to log")
+        _ = log.flush(secondTimeout: 3)
+
+        waitForFilesToBeWritten()
+
+        do {
+            // Old file is untouched
+            let fileLines = linesOfFile(path: firstPath)
+            XCTAssertNotNil(fileLines)
+            guard let lines = fileLines else { return }
+            XCTAssertEqual(lines.count, 5)
+            XCTAssertEqual(lines[0], "VERBOSE: first line to log")
+            XCTAssertEqual(lines[1], "DEBUG: second line to log")
+            XCTAssertEqual(lines[2], "INFO: third line to log")
+            XCTAssertEqual(lines[3], "INFO: additional line to log")
+            XCTAssertEqual(lines[4], "")
+        }
+
+        do {
+            let fileLines = linesOfFile(path: secondPath)
+            XCTAssertNotNil(fileLines)
+            guard let lines = fileLines else { return }
+            XCTAssertEqual(lines.count, 2)
+            XCTAssertEqual(lines[0], "INFO: single line to log")
+            XCTAssertEqual(lines[1], "")
+        }
     }
 }
 
