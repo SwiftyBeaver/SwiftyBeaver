@@ -12,15 +12,6 @@ class RotatingFileDestinationTests: XCTestCase {
     var irrelevantBaseURL: URL { return URL(fileURLWithPath: "irrelevant") }
     var irrelevantFileName: RotatingFileDestination.FileName { return RotatingFileDestination.FileName(name: "irrelevant", pathExtension: "irrelevant") }
 
-    override func setUp() {
-        super.setUp()
-        SwiftyBeaver.removeAllDestinations()
-    }
-
-    override func tearDown() {
-        super.tearDown()
-    }
-
     func testInitializer_DefaultValues() {
         let destination = RotatingFileDestination()
 
@@ -361,6 +352,103 @@ class FileNameTests: XCTestCase {
                 .pathComponent(suffix: "buzz"),
             "fizz-buzz.test")
     }
+}
+
+class RotatingFileDestinationIntegrationTests: XCTestCase {
+
+    override func setUp() {
+        super.setUp()
+        SwiftyBeaver.removeAllDestinations()
+    }
+
+    override func tearDown() {
+        super.tearDown()
+    }
+
+    func testRotatingFilesAreWritten() {
+        let log = SwiftyBeaver.self
+        let baseURL = createTempDirectory()
+        let clockDouble = ClockDouble(year: 2014, month: 6, day: 2)
+        let rotatingDestination = RotatingFileDestination(
+            rotation: .daily,
+            logDirectoryURL: baseURL,
+            fileName: .init(name: "the", pathExtension: "log"),
+            clock: clockDouble)
+        rotatingDestination.format = "$L: $M"
+        _ = log.addDestination(rotatingDestination)
+
+        // First rotation
+
+        log.verbose("first line to log")
+        log.debug("second line to log")
+        log.info("third line to log")
+        _ = log.flush(secondTimeout: 3)
+
+        waitForFilesToBeWritten()
+
+        guard let firstPath = rotatingDestination.currentURL?.path else {
+            XCTFail("Expected first log file's path")
+            return
+        }
+
+        do {
+            let fileLines = linesOfFile(path: firstPath)
+            XCTAssertNotNil(fileLines)
+            guard let lines = fileLines else { return }
+            XCTAssertEqual(lines.count, 4)
+            XCTAssertEqual(lines[0], "VERBOSE: first line to log")
+            XCTAssertEqual(lines[1], "DEBUG: second line to log")
+            XCTAssertEqual(lines[2], "INFO: third line to log")
+            XCTAssertEqual(lines[3], "")
+        }
+
+        // Second rotation
+
+        clockDouble.changeDate(year: 2014, month: 6, day: 3)
+
+        log.info("single line to log")
+        _ = log.flush(secondTimeout: 3)
+
+        waitForFilesToBeWritten()
+
+        guard let secondPath = rotatingDestination.currentURL?.path else {
+            XCTFail("Expected first log file's path")
+            return
+        }
+
+        do {
+            // Old file is untouched
+            let fileLines = linesOfFile(path: firstPath)
+            XCTAssertNotNil(fileLines)
+            guard let lines = fileLines else { return }
+            XCTAssertEqual(lines.count, 4)
+            XCTAssertEqual(lines[0], "VERBOSE: first line to log")
+            XCTAssertEqual(lines[1], "DEBUG: second line to log")
+            XCTAssertEqual(lines[2], "INFO: third line to log")
+            XCTAssertEqual(lines[3], "")
+        }
+
+        do {
+            let fileLines = linesOfFile(path: secondPath)
+            XCTAssertNotNil(fileLines)
+            guard let lines = fileLines else { return }
+            XCTAssertEqual(lines.count, 2)
+            XCTAssertEqual(lines[0], "INFO: single line to log")
+            XCTAssertEqual(lines[1], "")
+        }
+    }
+}
+
+/// Creates a unique and thus empty temporary directory.
+fileprivate func createTempDirectory() -> URL {
+    let fileUrl = generatedTempDirectoryURL()
+    try! FileManager.default.createDirectory(at: fileUrl, withIntermediateDirectories: false, attributes: nil)
+    return fileUrl
+}
+
+fileprivate func generatedTempDirectoryURL() -> URL {
+    let fileName = "swiftybeaver-temp-dir.\(UUID().uuidString)"
+    return URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName, isDirectory: true)
 }
 
 // MARK: - Helpers
