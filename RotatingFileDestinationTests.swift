@@ -34,6 +34,8 @@ class RotatingFileDestinationTests: XCTestCase {
         assertEqualSettings(RotatingFileDestination(), FileDestination())
     }
 
+    // MARK: Rotation
+
     func testCurrentFileName() {
         XCTAssertEqual(
             RotatingFileDestination(
@@ -176,6 +178,42 @@ class RotatingFileDestinationTests: XCTestCase {
 
         XCTAssert(originalFileDestination !== secondFileDestination)
     }
+
+
+    // MARK: Forward logging to `FileDestination`
+
+    func testSend_ForwardsToFileDestination() {
+
+        let fileDestinationDouble = FileDestinationDouble()
+        let destination = MockFactoryRotatingFileDestination(testFileDestination: fileDestinationDouble)
+
+        _ = destination.send(.info, msg: "the message", thread: "the thread", file: "the file", function: "the function", line: 1337, context: "a context")
+
+        XCTAssertNotNil(fileDestinationDouble.didSend)
+        if let values = fileDestinationDouble.didSend {
+            XCTAssertEqual(values.level, .info)
+            XCTAssertEqual(values.msg, "the message")
+            XCTAssertEqual(values.thread, "the thread")
+            XCTAssertEqual(values.file, "the file")
+            XCTAssertEqual(values.function, "the function")
+            XCTAssertEqual(values.line, 1337)
+            XCTAssertEqual(values.context as? String, "a context")
+        }
+    }
+
+    func testSend_ReturnsResultOfFileDestination() {
+
+        let fileDestinationDouble = FileDestinationDouble()
+        let destination = MockFactoryRotatingFileDestination(testFileDestination: fileDestinationDouble)
+        fileDestinationDouble.testSendResult = "the result"
+
+        let result = destination.send(.debug, msg: "irrelevant", thread: "irrelevant", file: "irrelevant", function: "irrelevant", line: 0, context: "irrelevant")
+
+        XCTAssertEqual(result, "the result")
+    }
+
+
+    // MARK: Forwarding settings to `FileDestination`
 
     func testSettingsForwarding_Format() {
 
@@ -368,6 +406,33 @@ fileprivate class ClockDouble: Clock {
     }
 }
 
+/// Use to override the internal factories.
+fileprivate class MockFactoryRotatingFileDestination: RotatingFileDestination {
+    /// Sets up `testFileDestination` before `super.init` sets up its own
+    /// through the settings's `didSet` property observers.
+    required init(testFileDestination: FileDestination) {
+        self.testFileDestination = testFileDestination
+        super.init(
+            rotation: .daily,
+            logDirectoryURL: URL(fileURLWithPath: "irrelevant"),
+            fileName: .init(name: "irrelevant", pathExtension: "irrelevant"),
+            clock: ClockDouble(date: Date(timeIntervalSinceReferenceDate: 12345)))
+    }
+
+    var testFileDestination: FileDestination?
+    override func currentFileDestination() -> FileDestination {
+        return testFileDestination ?? super.currentFileDestination()
+    }
+}
+
+fileprivate class FileDestinationDouble: FileDestination {
+    var testSendResult: String?
+    var didSend: (level: SwiftyBeaver.Level, msg: String, thread: String, file: String, function: String, line: Int, context: Any?)?
+    override func send(_ level: SwiftyBeaver.Level, msg: String, thread: String, file: String, function: String, line: Int, context: Any?) -> String? {
+        didSend = (level, msg, thread, file, function, line, context)
+        return testSendResult
+    }
+}
 
 fileprivate func assertEqualSettings(_ lhs: BaseDestination, _ rhs: BaseDestination, file: StaticString = #file, line: UInt = #line) {
 

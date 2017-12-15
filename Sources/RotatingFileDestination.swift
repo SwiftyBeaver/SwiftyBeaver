@@ -34,7 +34,7 @@ public class RotatingFileDestination: BaseDestination {
 
         super.init()
 
-        // Use the same formatting as `FileDestination` to
+        // Use the same formatting as `FileDestination`
         FileDestination.applyDefaultSettings(destination: self)
     }
 
@@ -127,6 +127,17 @@ public class RotatingFileDestination: BaseDestination {
         }
     }
 
+    // MARK: - Forward log commands to `FileDestination`
+
+    public override func send(
+        _ level: SwiftyBeaver.Level,
+        msg: String,
+        thread: String,
+        file: String, function: String, line: Int,
+        context: Any?) -> String? {
+
+        return fileDestination?.send(level, msg: msg, thread: thread, file: file, function: function, line: line, context: context)
+    }
 
     // MARK: - Forwarding settings to `FileDestination`
 
