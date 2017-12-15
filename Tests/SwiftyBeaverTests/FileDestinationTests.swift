@@ -106,10 +106,7 @@ class FileDestinationTests: XCTestCase {
 // MARK: Helper Functions
 
 internal func waitForFilesToBeWritten() {
-    for i in 1...100000 {
-        let x = sqrt(Double(i))
-        XCTAssertEqual(x, sqrt(Double(i)))
-    }
+    usleep(500000)
 }
 
 /// Deletes a file if it is existing
