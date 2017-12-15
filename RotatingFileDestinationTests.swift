@@ -57,6 +57,22 @@ class RotatingFileDestinationTests: XCTestCase {
             "swiftybeaver-2017-12-14.log")
     }
 
+    func testCurrentFileName_RotatesWithClock() {
+
+        let clockDouble = ClockDouble(year: 1967, month: 6, day: 2)
+        let destination = RotatingFileDestination(
+            rotation: .daily,
+            logDirectoryURL: irrelevantBaseURL,
+            fileName: .init(name: "base", pathExtension: "ext"),
+            clock: clockDouble)
+
+        XCTAssertEqual(destination.currentFileName, "base-1967-06-02.ext")
+
+        clockDouble.changeDate(year: 1967, month: 6, day: 3)
+
+        XCTAssertEqual(destination.currentFileName, "base-1967-06-03.ext")
+    }
+
     func testCurrentURL_BaseIsNil_ReturnsNil() {
 
         let irrelevantFileName = RotatingFileDestination.FileName(name: "irrelevant", pathExtension: "irrelevant")
@@ -127,20 +143,38 @@ class FileNameTests: XCTestCase {
 
 import Foundation
 
-fileprivate struct ClockDouble: Clock {
+fileprivate class ClockDouble: Clock {
 
-    let testDate: Date
+    var testDate: Date
 
-    init(year: Int,
-         month: Int,
-         day: Int,
-         hour: Int = 12,
-         minute: Int = 15,
-         second: Int = 30,
-         calendar: Calendar = Calendar(identifier: .gregorian)) {
+    init(date: Date) {
+        self.testDate = date
+    }
+
+    convenience init(
+        year: Int,
+        month: Int,
+        day: Int,
+        hour: Int = 12,
+        minute: Int = 15,
+        second: Int = 30,
+        calendar: Calendar = Calendar(identifier: .gregorian)) {
 
         let components = DateComponents(calendar: calendar, year: year, month: month, day: day, hour: hour, minute: minute, second: second)
-        testDate = calendar.date(from: components)!
+        self.init(date: calendar.date(from: components)!)
+    }
+
+    func changeDate(
+        year: Int,
+        month: Int,
+        day: Int,
+        hour: Int = 12,
+        minute: Int = 15,
+        second: Int = 30,
+        calendar: Calendar = Calendar(identifier: .gregorian)) {
+
+        let components = DateComponents(calendar: calendar, year: year, month: month, day: day, hour: hour, minute: minute, second: second)
+        self.testDate = calendar.date(from: components)!
     }
 
     func now() -> Date {
