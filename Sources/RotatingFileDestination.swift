@@ -7,14 +7,14 @@ import struct Foundation.URL
 import struct Foundation.Date
 import class Foundation.DateFormatter
 
-public class RotatingFileDestination {
+public class RotatingFileDestination: BaseDestination {
 
     public let rotation: Rotation
     public var baseURL: URL?
     public let fileName: FileName
     internal let clock: Clock
 
-    public convenience init() {
+    public override convenience init() {
         let baseURL = defaultBaseURL()
         self.init(rotation: .daily,
                   logDirectoryURL: baseURL,
@@ -31,6 +31,11 @@ public class RotatingFileDestination {
         self.baseURL = baseURL
         self.fileName = fileName
         self.clock = clock
+
+        super.init()
+
+        // Use the same formatting as `FileDestination` to
+        FileDestination.applyDefaultSettings(destination: self)
     }
 
     public var currentURL: URL? {
@@ -42,6 +47,14 @@ public class RotatingFileDestination {
         formatter.dateFormat = rotation.dateFormat
         let dateSuffix = formatter.string(from: clock.now())
         return fileName.pathComponent(suffix: dateSuffix)
+    }
+
+    /// Creates a new `FileDestination` according to the current rotation. Inherits base settings from `self`.
+    internal func currentFileDestination() -> FileDestination {
+        let fileDestination = FileDestination()
+        copySettings(from: self, to: fileDestination)
+        fileDestination.logFileURL = self.currentURL
+        return fileDestination
     }
 
     public enum Rotation {
@@ -67,4 +80,65 @@ public class RotatingFileDestination {
             return "\(name)-\(suffix).\(pathExtension)"
         }
     }
+
+    // MARK: - Rotation of underlying `FileDestination`
+
+    // Internal visibility to be a testing seam.
+    internal var fileDestination: FileDestination? {
+        get {
+            replaceFileDestinationOnRotation()
+
+            return _currentFileDestination?.fileDestination
+        }
+    }
+
+    fileprivate lazy var _currentFileDestination: CachedFileDestination? = self.currentCachedFileDestination()
+
+    fileprivate func currentCachedFileDestination() -> CachedFileDestination? {
+        guard let currentURL = self.currentURL else { return nil }
+        return CachedFileDestination(
+            fileDestination: self.currentFileDestination(),
+            url: currentURL)
+    }
+
+    fileprivate func replaceFileDestinationOnRotation() {
+        guard let currentURL = self.currentURL else { return }
+
+        let needsRotation = _currentFileDestination?.isOutdated(currentURL: currentURL)
+            ?? true
+
+        guard needsRotation else { return }
+
+        rotateFileDestination()
+    }
+
+    fileprivate func rotateFileDestination() {
+        _currentFileDestination = self.currentCachedFileDestination()
+    }
+
+    /// `FileDestination` and `URL` should vary together, so this type
+    /// represents their combined values.
+    struct CachedFileDestination {
+        let fileDestination: FileDestination
+        let url: URL
+
+        func isOutdated(currentURL: URL) -> Bool {
+            return url != currentURL
+        }
+    }
+
+}
+
+fileprivate func copySettings(from: BaseDestination, to: BaseDestination) {
+
+    to.format = from.format
+    to.reset = from.reset
+    to.escape = from.escape
+
+    to.asynchronously = from.asynchronously
+    to.filters = from.filters
+
+    to.minLevel = from.minLevel
+    to.levelString = from.levelString
+    to.levelColor = from.levelColor
 }

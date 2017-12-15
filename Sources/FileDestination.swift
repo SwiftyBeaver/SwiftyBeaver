@@ -24,16 +24,26 @@ public class FileDestination: BaseDestination {
         }
         super.init()
 
+        FileDestination.applyDefaultSettings(destination: self)
+    }
+
+    /// Default settings for file-based destinations with
+    /// bash font colors formatting.
+    ///
+    /// Made reusable for all file-like destinations.
+    /// See `RotatingFileDestination` for example.
+    internal static func applyDefaultSettings(destination: BaseDestination) {
+
         // bash font color, first value is intensity, second is color
         // see http://bit.ly/1Otu3Zr & for syntax http://bit.ly/1Tp6Fw9
         // uses the 256-color table from http://bit.ly/1W1qJuH
-        reset = "\u{001b}[0m"
-        escape = "\u{001b}[38;5;"
-        levelColor.verbose = "251m"     // silver
-        levelColor.debug = "35m"        // green
-        levelColor.info = "38m"         // blue
-        levelColor.warning = "178m"     // yellow
-        levelColor.error = "197m"       // red
+        destination.reset = "\u{001b}[0m"
+        destination.escape = "\u{001b}[38;5;"
+        destination.levelColor.verbose = "251m" // silver
+        destination.levelColor.debug = "35m"    // green
+        destination.levelColor.info = "38m"     // blue
+        destination.levelColor.warning = "178m" // yellow
+        destination.levelColor.error = "197m"   // red
     }
 
     // append to file. uses full base class functionality

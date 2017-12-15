@@ -8,6 +8,10 @@ import XCTest
 
 class RotatingFileDestinationTests: XCTestCase {
 
+    var irrelevantClock: Clock { return SystemClock() }
+    var irrelevantBaseURL: URL { return URL(fileURLWithPath: "irrelevant") }
+    var irrelevantFileName: RotatingFileDestination.FileName { return RotatingFileDestination.FileName(name: "irrelevant", pathExtension: "irrelevant") }
+
     override func setUp() {
         super.setUp()
         SwiftyBeaver.removeAllDestinations()
@@ -17,7 +21,7 @@ class RotatingFileDestinationTests: XCTestCase {
         super.tearDown()
     }
 
-    func testInitializerDefaultValues() {
+    func testInitializer_DefaultValues() {
         let destination = RotatingFileDestination()
 
         XCTAssertEqual(destination.fileName.name, "swiftybeaver")
@@ -26,9 +30,11 @@ class RotatingFileDestinationTests: XCTestCase {
         XCTAssertEqual(destination.rotation, .daily)
     }
 
-    func testCurrentFileName() {
-        let irrelevantBaseURL: URL? = URL(fileURLWithPath: "irrelevant")
+    func testInitializer_UsesSameSettingsAsFileDestination() {
+        assertEqualSettings(RotatingFileDestination(), FileDestination())
+    }
 
+    func testCurrentFileName() {
         XCTAssertEqual(
             RotatingFileDestination(
                 rotation: .daily,
@@ -75,12 +81,11 @@ class RotatingFileDestinationTests: XCTestCase {
 
     func testCurrentURL_BaseIsNil_ReturnsNil() {
 
-        let irrelevantFileName = RotatingFileDestination.FileName(name: "irrelevant", pathExtension: "irrelevant")
         let destination = RotatingFileDestination(
             rotation: .daily,
             logDirectoryURL: nil,
             fileName: irrelevantFileName,
-            clock: SystemClock())
+            clock: irrelevantClock)
         XCTAssertNil(destination.currentURL)
     }
 
@@ -110,6 +115,66 @@ class RotatingFileDestinationTests: XCTestCase {
         XCTAssertEqual(
             destination.currentURL,
             baseURL.appendingPathComponent("swifty-2017-12-14.beaver", isDirectory: false))
+    }
+
+    func testFileDestination_ConvenienceInitializer_ReturnsFileDestination() {
+
+        let destination = RotatingFileDestination()
+
+        XCTAssertNotNil(destination.fileDestination)
+        if let fileDestination = destination.fileDestination {
+            assertEqualSettings(fileDestination, destination)
+            XCTAssertEqual(fileDestination.logFileURL, destination.currentURL)
+        }
+    }
+
+    func testFileDestination_BaseIsNil_ReturnsNil() {
+
+        let destination = RotatingFileDestination(
+            rotation: .daily,
+            logDirectoryURL: nil,
+            fileName: irrelevantFileName,
+            clock: irrelevantClock)
+        XCTAssertNil(destination.fileDestination)
+    }
+
+    func testFileDestination_BaseIsNotNil_ReturnsFileDestinationWithSameSettings() {
+
+        let baseURL = URL(fileURLWithPath: "/fizz/buzz", isDirectory: true)
+        let destination = RotatingFileDestination(
+            rotation: .daily,
+            logDirectoryURL: baseURL,
+            fileName: .init(name: "as", pathExtension: "df"),
+            clock: ClockDouble(year: 2000, month: 06, day: 18))
+
+        XCTAssertNotNil(destination.fileDestination)
+        if let fileDestination = destination.fileDestination {
+            assertEqualSettings(fileDestination, destination)
+            XCTAssertEqual(fileDestination.logFileURL, destination.currentURL)
+        }
+    }
+
+    func testFileDestination_BaseIsNotNil_ChangesOnRotation() {
+
+        let baseURL = URL(fileURLWithPath: "/foo/bar", isDirectory: true)
+        let clockDouble = ClockDouble(year: 1998, month: 04, day: 12)
+        let destination = RotatingFileDestination(
+            rotation: .daily,
+            logDirectoryURL: baseURL,
+            fileName: .init(name: "file", pathExtension: "txt"),
+            clock: clockDouble)
+
+        let originalFileDestination = destination.fileDestination
+        XCTAssertNotNil(originalFileDestination)
+        XCTAssertEqual(originalFileDestination?.logFileURL, destination.currentURL)
+
+        clockDouble.changeDate(year: 1998, month: 04, day: 13)
+
+        let secondFileDestination = destination.fileDestination
+        XCTAssertNotNil(secondFileDestination)
+        XCTAssertEqual(secondFileDestination?.logFileURL, destination.currentURL)
+
+        XCTAssert(originalFileDestination !== secondFileDestination)
     }
 }
 
@@ -181,3 +246,41 @@ fileprivate class ClockDouble: Clock {
         return testDate
     }
 }
+
+
+fileprivate func assertEqualSettings(_ lhs: BaseDestination, _ rhs: BaseDestination, file: StaticString = #file, line: UInt = #line) {
+
+    XCTAssertEqual(lhs.format, rhs.format, file: file, line: line)
+    XCTAssertEqual(lhs.reset, rhs.reset, file: file, line: line)
+    XCTAssertEqual(lhs.escape, rhs.escape, file: file, line: line)
+    XCTAssertEqual(lhs.asynchronously, rhs.asynchronously, file: file, line: line)
+    XCTAssert(lhs.filters == rhs.filters, file: file, line: line)
+    XCTAssertEqual(lhs.minLevel, rhs.minLevel, file: file, line: line)
+    XCTAssert(lhs.levelString == rhs.levelString, file: file, line: line)
+    XCTAssert(lhs.levelColor == rhs.levelColor, file: file, line: line)
+}
+
+fileprivate func ==(lhs: BaseDestination.LevelString, rhs: BaseDestination.LevelString) -> Bool {
+    return lhs.debug == rhs.debug
+        && lhs.error == rhs.error
+        && lhs.info == rhs.info
+        && lhs.verbose == rhs.verbose
+        && lhs.warning == rhs.warning
+}
+
+fileprivate func ==(lhs: BaseDestination.LevelColor, rhs: BaseDestination.LevelColor) -> Bool {
+    return lhs.debug == rhs.debug
+        && lhs.error == rhs.error
+        && lhs.info == rhs.info
+        && lhs.verbose == rhs.verbose
+        && lhs.warning == rhs.warning
+}
+
+fileprivate func ==(lhs: [FilterType], rhs: [FilterType]) -> Bool {
+    guard lhs.count == rhs.count else { return false }
+    for (lElement, rElement) in zip(lhs, rhs) {
+        if lElement !== rElement { return false }
+    }
+    return true
+}
+
