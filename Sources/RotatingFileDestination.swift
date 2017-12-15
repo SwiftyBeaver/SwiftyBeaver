@@ -127,6 +127,62 @@ public class RotatingFileDestination: BaseDestination {
         }
     }
 
+
+    // MARK: - Forwarding settings to `FileDestination`
+
+    public override var format: String {
+        didSet {
+            fileDestination?.format = format
+        }
+    }
+
+    public override var asynchronously: Bool {
+        didSet {
+            fileDestination?.asynchronously = asynchronously
+        }
+    }
+
+    public override var minLevel: SwiftyBeaver.Level {
+        didSet {
+            fileDestination?.minLevel = minLevel
+        }
+    }
+
+    public override var levelString: BaseDestination.LevelString {
+        didSet {
+            fileDestination?.levelString = levelString
+        }
+    }
+
+    public override var levelColor: BaseDestination.LevelColor {
+        didSet {
+            fileDestination?.levelColor = levelColor
+        }
+    }
+
+    override var reset: String {
+        didSet {
+            fileDestination?.reset = reset
+        }
+    }
+
+    override var escape: String {
+        didSet {
+            fileDestination?.escape = escape
+        }
+    }
+
+    override var filters: [FilterType] {
+        didSet {
+            fileDestination?.filters = filters
+        }
+    }
+
+    override var debugPrint: Bool {
+        didSet {
+            fileDestination?.debugPrint = debugPrint
+        }
+    }
 }
 
 fileprivate func copySettings(from: BaseDestination, to: BaseDestination) {

@@ -176,6 +176,127 @@ class RotatingFileDestinationTests: XCTestCase {
 
         XCTAssert(originalFileDestination !== secondFileDestination)
     }
+
+    func testSettingsForwarding_Format() {
+
+        let destination = RotatingFileDestination()
+        guard let fileDestination = destination.fileDestination else { XCTFail("Expected fileDestination"); return }
+
+        assertEqualSettings(destination, fileDestination)
+
+        let format = "new format"
+        destination.format = format
+
+        XCTAssertEqual(fileDestination.format, format)
+        assertEqualSettings(destination, fileDestination)
+    }
+
+    func testSettingsForwarding_Asynchrony() {
+
+        let destination = RotatingFileDestination()
+        guard let fileDestination = destination.fileDestination else { XCTFail("Expected fileDestination"); return }
+
+        assertEqualSettings(destination, fileDestination)
+
+        destination.asynchronously = !destination.asynchronously
+
+        assertEqualSettings(destination, fileDestination)
+    }
+
+    func testSettingsForwarding_MinLevel() {
+
+        let destination = RotatingFileDestination()
+        guard let fileDestination = destination.fileDestination else { XCTFail("Expected fileDestination"); return }
+
+        assertEqualSettings(destination, fileDestination)
+
+        destination.minLevel = .error
+
+        XCTAssertEqual(fileDestination.minLevel, .error)
+        assertEqualSettings(destination, fileDestination)
+    }
+
+    func testSettingsForwarding_LevelString() {
+
+        let destination = RotatingFileDestination()
+        guard let fileDestination = destination.fileDestination else { XCTFail("Expected fileDestination"); return }
+
+        assertEqualSettings(destination, fileDestination)
+
+        let levelString = BaseDestination.LevelString(verbose: "1", debug: "2", info: "3", warning: "4", error: "5")
+        destination.levelString = levelString
+
+        XCTAssert(fileDestination.levelString == levelString)
+        assertEqualSettings(destination, fileDestination)
+    }
+
+    func testSettingsForwarding_LevelColor() {
+
+        let destination = RotatingFileDestination()
+        guard let fileDestination = destination.fileDestination else { XCTFail("Expected fileDestination"); return }
+
+        assertEqualSettings(destination, fileDestination)
+
+        let levelColor = BaseDestination.LevelColor(verbose: "a", debug: "b", info: "c", warning: "d", error: "e")
+        destination.levelColor = levelColor
+
+        XCTAssert(fileDestination.levelColor == levelColor)
+        assertEqualSettings(destination, fileDestination)
+    }
+
+    func testSettingsForwarding_Reset() {
+
+        let destination = RotatingFileDestination()
+        guard let fileDestination = destination.fileDestination else { XCTFail("Expected fileDestination"); return }
+
+        assertEqualSettings(destination, fileDestination)
+
+        let reset = "new reset"
+        destination.reset = reset
+
+        XCTAssertEqual(fileDestination.reset, reset)
+        assertEqualSettings(destination, fileDestination)
+    }
+
+    func testSettingsForwarding_Escape() {
+
+        let destination = RotatingFileDestination()
+        guard let fileDestination = destination.fileDestination else { XCTFail("Expected fileDestination"); return }
+
+        assertEqualSettings(destination, fileDestination)
+
+        let escape = "new escape"
+        destination.escape = escape
+
+        XCTAssertEqual(fileDestination.escape, escape)
+        assertEqualSettings(destination, fileDestination)
+    }
+
+    func testSettingsForwarding_Filters() {
+
+        let destination = RotatingFileDestination()
+        guard let fileDestination = destination.fileDestination else { XCTFail("Expected fileDestination"); return }
+
+        assertEqualSettings(destination, fileDestination)
+
+        let filters = [Filters.Message.contains("something")]
+        destination.filters = filters
+
+        XCTAssert(fileDestination.filters == filters)
+        assertEqualSettings(destination, fileDestination)
+    }
+
+    func testSettingsForwarding_DebugPrint() {
+
+        let destination = RotatingFileDestination()
+        guard let fileDestination = destination.fileDestination else { XCTFail("Expected fileDestination"); return }
+
+        assertEqualSettings(destination, fileDestination)
+
+        destination.debugPrint = !destination.debugPrint
+
+        assertEqualSettings(destination, fileDestination)
+    }
 }
 
 class RotationTests: XCTestCase {
