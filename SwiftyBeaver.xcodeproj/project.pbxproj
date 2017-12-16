@@ -95,7 +95,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4D1720E71E9C083600AB7833 /* GoogleCloudDestinationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GoogleCloudDestinationTests.swift; path = Tests/SwiftyBeaverTests/GoogleCloudDestinationTests.swift; sourceTree = "<group>"; };
+		4D1720E71E9C083600AB7833 /* GoogleCloudDestinationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleCloudDestinationTests.swift; sourceTree = "<group>"; };
 		4D331ADE1F1E8E1100B1C25E /* Base64.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Base64.swift; sourceTree = "<group>"; };
 		50932F401FE4FE460023C5E3 /* RemoveLogFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveLogFiles.swift; sourceTree = "<group>"; };
 		50932F421FE520290023C5E3 /* RemoveLogFilesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveLogFilesTests.swift; sourceTree = "<group>"; };
@@ -111,14 +111,14 @@
 		9E195B101C6B766D00D924CB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9E2AEAC51D9BB43C00F21B1F /* LinuxMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LinuxMain.swift; path = Tests/LinuxMain.swift; sourceTree = "<group>"; };
 		9E2AEAC61D9BB44700F21B1F /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Tests/Info.plist; sourceTree = "<group>"; };
-		9E2AEAC81D9BB46300F21B1F /* AES256CBCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AES256CBCTests.swift; path = Tests/SwiftyBeaverTests/AES256CBCTests.swift; sourceTree = "<group>"; };
-		9E2AEAC91D9BB46300F21B1F /* BaseDestinationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseDestinationTests.swift; path = Tests/SwiftyBeaverTests/BaseDestinationTests.swift; sourceTree = "<group>"; };
-		9E2AEACA1D9BB46300F21B1F /* DestinationSetTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DestinationSetTests.swift; path = Tests/SwiftyBeaverTests/DestinationSetTests.swift; sourceTree = "<group>"; };
-		9E2AEACB1D9BB46300F21B1F /* FileDestinationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FileDestinationTests.swift; path = Tests/SwiftyBeaverTests/FileDestinationTests.swift; sourceTree = "<group>"; };
-		9E2AEACC1D9BB46300F21B1F /* FilterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FilterTests.swift; path = Tests/SwiftyBeaverTests/FilterTests.swift; sourceTree = "<group>"; };
-		9E2AEACD1D9BB46300F21B1F /* SBPlatformDestinationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBPlatformDestinationTests.swift; path = Tests/SwiftyBeaverTests/SBPlatformDestinationTests.swift; sourceTree = "<group>"; };
-		9E2AEACF1D9BB46300F21B1F /* SecretsExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SecretsExample.swift; path = Tests/SwiftyBeaverTests/SecretsExample.swift; sourceTree = "<group>"; };
-		9E2AEAD01D9BB46300F21B1F /* SwiftyBeaverTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyBeaverTests.swift; path = Tests/SwiftyBeaverTests/SwiftyBeaverTests.swift; sourceTree = "<group>"; };
+		9E2AEAC81D9BB46300F21B1F /* AES256CBCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AES256CBCTests.swift; sourceTree = "<group>"; };
+		9E2AEAC91D9BB46300F21B1F /* BaseDestinationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDestinationTests.swift; sourceTree = "<group>"; };
+		9E2AEACA1D9BB46300F21B1F /* DestinationSetTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DestinationSetTests.swift; sourceTree = "<group>"; };
+		9E2AEACB1D9BB46300F21B1F /* FileDestinationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileDestinationTests.swift; sourceTree = "<group>"; };
+		9E2AEACC1D9BB46300F21B1F /* FilterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterTests.swift; sourceTree = "<group>"; };
+		9E2AEACD1D9BB46300F21B1F /* SBPlatformDestinationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBPlatformDestinationTests.swift; sourceTree = "<group>"; };
+		9E2AEACF1D9BB46300F21B1F /* SecretsExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecretsExample.swift; sourceTree = "<group>"; };
+		9E2AEAD01D9BB46300F21B1F /* SwiftyBeaverTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyBeaverTests.swift; sourceTree = "<group>"; };
 		9E4BBDFA1C09EB7F00220716 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		9E4BBDFE1C0A01D000220716 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		9E6CAA471C148EC1009D9093 /* SwiftyBeaver.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SwiftyBeaver.podspec; sourceTree = "<group>"; };
@@ -225,6 +225,7 @@
 				4D1720E71E9C083600AB7833 /* GoogleCloudDestinationTests.swift */,
 			);
 			name = SwiftyBeaverTests;
+			path = Tests/SwiftyBeaverTests;
 			sourceTree = "<group>";
 		};
 		9E31D62A1C185ED0004E0980 /* Sources */ = {
