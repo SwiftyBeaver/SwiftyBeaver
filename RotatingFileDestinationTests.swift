@@ -470,17 +470,7 @@ class RotatingFileDestinationIntegrationTests: XCTestCase {
     }
 }
 
-/// Creates a unique and thus empty temporary directory.
-fileprivate func createTempDirectory() -> URL {
-    let fileUrl = generatedTempDirectoryURL()
-    try! FileManager.default.createDirectory(at: fileUrl, withIntermediateDirectories: false, attributes: nil)
-    return fileUrl
-}
 
-fileprivate func generatedTempDirectoryURL() -> URL {
-    let fileName = "swiftybeaver-temp-dir.\(UUID().uuidString)"
-    return URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName, isDirectory: true)
-}
 
 // MARK: - Helpers
 
