@@ -29,8 +29,7 @@ public class RotatingFileDestination: BaseDestination {
         self.init(rotation: .daily,
                   deletionPolicy: .quantity(keep: 5),
                   logDirectoryURL: baseURL,
-                  fileName: FileName(name: "swiftybeaver", pathExtension: "log"),
-                  clock: SystemClock())
+                  fileName: FileName(name: "swiftybeaver", pathExtension: "log"))
     }
 
     public convenience init(
@@ -38,7 +37,7 @@ public class RotatingFileDestination: BaseDestination {
         deletionPolicy: DeletionPolicy,
         logDirectoryURL baseURL: URL?,
         fileName: FileName,
-        clock: Clock) {
+        clock: Clock = SystemClock()) {
 
         let directory = baseURL.flatMap { Directory(url: $0) }
 
@@ -54,7 +53,7 @@ public class RotatingFileDestination: BaseDestination {
         deletionPolicy: DeletionPolicy,
         logDirectory: Directory?,
         fileName: FileName,
-        clock: Clock) {
+        clock: Clock = SystemClock()) {
 
         self.rotation = rotation
         self.deletionPolicy = deletionPolicy
