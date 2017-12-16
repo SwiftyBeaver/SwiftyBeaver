@@ -27,7 +27,7 @@ public class RotatingFileDestination: BaseDestination {
     public override convenience init() {
         let baseURL = defaultBaseURL()
         self.init(rotation: .daily,
-                  deletionPolicy: .quantity(5),
+                  deletionPolicy: .quantity(keep: 5),
                   logDirectoryURL: baseURL,
                   fileName: FileName(name: "swiftybeaver", pathExtension: "log"),
                   clock: SystemClock())
@@ -130,7 +130,7 @@ public class RotatingFileDestination: BaseDestination {
 
     public enum DeletionPolicy: Equatable {
         /// Keeps this amount of files, removing the rest; 0 does not remove any.
-        case quantity(UInt)
+        case quantity(keep: UInt)
 
         public func filterRemovable(
             assumingFileExistsAt currentURL: URL,
@@ -138,7 +138,7 @@ public class RotatingFileDestination: BaseDestination {
             fileName: FileName) -> [URL] {
 
             switch self {
-            case .quantity(let capacity):
+            case .quantity(keep: let capacity):
                 guard capacity > 0 else { return [] }
                 return fileName
                     .matchingFiles(in: directory, sortedBy: .fileName)
@@ -150,8 +150,8 @@ public class RotatingFileDestination: BaseDestination {
 
         public static func ==(lhs: DeletionPolicy, rhs: DeletionPolicy) -> Bool {
             switch (lhs, rhs) {
-            case let (.quantity(lQuantity),
-                      .quantity(rQuantity)):
+            case let (.quantity(keep: lQuantity),
+                      .quantity(keep: rQuantity)):
                 return lQuantity == rQuantity
             }
         }

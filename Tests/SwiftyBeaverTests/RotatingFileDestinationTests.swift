@@ -11,7 +11,7 @@ class RotatingFileDestinationTests: XCTestCase {
     var irrelevantClock: Clock { return SystemClock() }
     var irrelevantURL: URL { return URL(fileURLWithPath: "irrelevant") }
     var irrelevantFileName: RotatingFileDestination.FileName { return RotatingFileDestination.FileName(name: "irrelevant", pathExtension: "irrelevant") }
-    var irrelevantDeletionPolicy: RotatingFileDestination.DeletionPolicy { return .quantity(123) }
+    var irrelevantDeletionPolicy: RotatingFileDestination.DeletionPolicy { return .quantity(keep: 123) }
 
     func testInitializer_DefaultValues() {
         let destination = RotatingFileDestination()
@@ -20,7 +20,7 @@ class RotatingFileDestinationTests: XCTestCase {
         XCTAssertEqual(destination.baseURL, defaultBaseURL())
         XCTAssertEqual(destination.fileName.pathExtension, "log")
         XCTAssertEqual(destination.rotation, .daily)
-        XCTAssertEqual(destination.deletionPolicy, .quantity(5))
+        XCTAssertEqual(destination.deletionPolicy, .quantity(keep: 5))
     }
 
     func testInitializer_UsesSameSettingsAsFileDestination() {
@@ -197,7 +197,7 @@ class RotatingFileDestinationTests: XCTestCase {
         let removalDouble = LogFileRemovalDouble()
         let destination = RotatingFileDestination(
             rotation: .daily,
-            deletionPolicy: .quantity(2),
+            deletionPolicy: .quantity(keep: 2),
             logDirectory: Directory(url: irrelevantURL, inspector: inspectorStub),
             fileName: .init(name: "swifty", pathExtension: "beaver"),
             clock: clockDouble)
@@ -521,7 +521,7 @@ class DeletionPolicyTests: XCTestCase {
 
         func removableURLsForPolicy(keeping amount: UInt) -> [URL] {
             return RotatingFileDestination.DeletionPolicy
-                .quantity(amount)
+                .quantity(keep: amount)
                 .filterRemovable(
                     assumingFileExistsAt: nonexistingFileToBeWrittenTo,
                     logDirectory: directory,
@@ -621,7 +621,7 @@ class RotatingFileDestinationIntegrationTests: XCTestCase {
         let clockDouble = ClockDouble(year: 2014, month: 6, day: 2)
         let rotatingDestination = RotatingFileDestination(
             rotation: .daily,
-            deletionPolicy: .quantity(2),
+            deletionPolicy: .quantity(keep: 2),
             logDirectory: Directory(url: createTempDirectory()),
             fileName: .init(name: "the", pathExtension: "log"),
             clock: clockDouble)
@@ -822,7 +822,7 @@ fileprivate class MockFactoryRotatingFileDestination: RotatingFileDestination {
         let directoryStub = createDirectoryStub(fileURLs: [])
         super.init(
             rotation: .daily,
-            deletionPolicy: .quantity(5),
+            deletionPolicy: .quantity(keep: 5),
             logDirectory: directoryStub,
             fileName: .init(name: "irrelevant", pathExtension: "irrelevant"),
             clock: ClockDouble(date: Date(timeIntervalSinceReferenceDate: 12345)))
