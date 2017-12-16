@@ -15,7 +15,7 @@ public class RotatingFileDestination: BaseDestination {
     public let rotation: Rotation
     public let deletionPolicy: DeletionPolicy
     /// - Warning: Is optional only because `defaultBaseURL()` is. `nil` is a misconfiguration and the behavior undefined.
-    public let directory: Directory?
+    public let directory: LogDirectory?
     public var baseURL: URL? { return directory?.url }
     public let fileName: FileName
     internal let clock: Clock
@@ -39,7 +39,7 @@ public class RotatingFileDestination: BaseDestination {
         fileName: FileName,
         clock: Clock = SystemClock()) {
 
-        let directory = baseURL.flatMap { Directory(url: $0) }
+        let directory = baseURL.flatMap { LogDirectory(url: $0) }
 
         self.init(rotation: rotation,
                   deletionPolicy: deletionPolicy,
@@ -51,7 +51,7 @@ public class RotatingFileDestination: BaseDestination {
     public init(
         rotation: Rotation,
         deletionPolicy: DeletionPolicy,
-        logDirectory: Directory?,
+        logDirectory: LogDirectory?,
         fileName: FileName,
         clock: Clock = SystemClock()) {
 
@@ -113,8 +113,8 @@ public class RotatingFileDestination: BaseDestination {
         }
 
         public func matchingFiles(
-            in directory: Directory,
-            sortedBy sortOrder: Directory.SortOrder = .fileName) -> [URL] {
+            in directory: LogDirectory,
+            sortedBy sortOrder: LogDirectory.SortOrder = .fileName) -> [URL] {
             let fileURLs = (try? directory.fileURLs(sortedBy: sortOrder)) ?? []
             return filterMatching(fileURLs: fileURLs)
         }
@@ -133,7 +133,7 @@ public class RotatingFileDestination: BaseDestination {
 
         public func filterRemovable(
             assumingFileExistsAt currentURL: URL,
-            logDirectory directory: Directory,
+            logDirectory directory: LogDirectory,
             fileName: FileName) -> [URL] {
 
             switch self {

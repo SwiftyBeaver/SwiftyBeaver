@@ -5,7 +5,7 @@
 
 import Foundation
 
-public struct Directory {
+public struct LogDirectory {
     public let url: URL
     public let inspector: DirectoryInspector
 

@@ -198,7 +198,7 @@ class RotatingFileDestinationTests: XCTestCase {
         let destination = RotatingFileDestination(
             rotation: .daily,
             deletionPolicy: .quantity(keep: 2),
-            logDirectory: Directory(url: irrelevantURL, inspector: inspectorStub),
+            logDirectory: LogDirectory(url: irrelevantURL, inspector: inspectorStub),
             fileName: .init(name: "swifty", pathExtension: "beaver"),
             clock: clockDouble)
         destination.removeLogFiles = removalDouble
@@ -563,9 +563,9 @@ class DeletionPolicyTests: XCTestCase {
 /// - parameter fileURLs: Array of URLs to return, or nil to throw an error.
 fileprivate func createDirectoryStub(
     baseURL: URL = URL(fileURLWithPath: "irrelevant"),
-    fileURLs: [URL]? = []) -> Directory {
+    fileURLs: [URL]? = []) -> LogDirectory {
 
-    return Directory(
+    return LogDirectory(
         url: baseURL,
         inspector: DirectoryInspectorStub(urls: fileURLs))!
 }
@@ -622,7 +622,7 @@ class RotatingFileDestinationIntegrationTests: XCTestCase {
         let rotatingDestination = RotatingFileDestination(
             rotation: .daily,
             deletionPolicy: .quantity(keep: 2),
-            logDirectory: Directory(url: createTempDirectory()),
+            logDirectory: LogDirectory(url: createTempDirectory()),
             fileName: .init(name: "the", pathExtension: "log"),
             clock: clockDouble)
         rotatingDestination.format = "$L: $M"

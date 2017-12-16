@@ -6,7 +6,7 @@
 import XCTest
 @testable import SwiftyBeaver
 
-class DirectoryTests: XCTestCase {
+class LogDirectoryTests: XCTestCase {
 
     var irrelevantURL: URL { return URL(fileURLWithPath: "irrelevant") }
 
@@ -14,7 +14,7 @@ class DirectoryTests: XCTestCase {
         let inspectorDouble = DirectoryInspectorDouble()
         let url = URL(fileURLWithPath: "the url")
 
-        _ = Directory(url: url, inspector: inspectorDouble)
+        _ = LogDirectory(url: url, inspector: inspectorDouble)
 
         XCTAssertEqual(inspectorDouble.didCheckExistence, url)
     }
@@ -22,7 +22,7 @@ class DirectoryTests: XCTestCase {
     func testInitializer_NotADirectoryAtURL_ReturnsNil() {
         let inspectorDouble = DirectoryInspectorDouble()
         inspectorDouble.testDirectoryExists = false
-        XCTAssertNil(Directory(url: URL(fileURLWithPath: "new url"), inspector: inspectorDouble))
+        XCTAssertNil(LogDirectory(url: URL(fileURLWithPath: "new url"), inspector: inspectorDouble))
     }
 
     func testInitializer_IsADirectoryAtURL_ReturnsInstance() {
@@ -30,7 +30,7 @@ class DirectoryTests: XCTestCase {
         inspectorDouble.testDirectoryExists = true
         let url = URL(fileURLWithPath: "another url")
 
-        let directory = Directory(url: url, inspector: inspectorDouble)
+        let directory = LogDirectory(url: url, inspector: inspectorDouble)
 
         XCTAssertNotNil(directory)
         XCTAssertEqual(directory?.url, url)
@@ -42,7 +42,7 @@ class DirectoryTests: XCTestCase {
         inspectorDouble.testDirectoryExists = true
         let url = URL(fileURLWithPath: "directory URL")
 
-        guard let directory = Directory(url: url, inspector: inspectorDouble) else { XCTFail("Expected directory"); return }
+        guard let directory = LogDirectory(url: url, inspector: inspectorDouble) else { XCTFail("Expected directory"); return }
 
         do {
             _ = try directory.fileURLs(sortedBy: .fileName)
@@ -57,7 +57,7 @@ class DirectoryTests: XCTestCase {
         inspectorDouble.testDirectoryExists = true
         let irrelevantURL = URL(fileURLWithPath: "irrelevant")
 
-        guard let directory = Directory(url: irrelevantURL, inspector: inspectorDouble) else { XCTFail("Expected directory"); return }
+        guard let directory = LogDirectory(url: irrelevantURL, inspector: inspectorDouble) else { XCTFail("Expected directory"); return }
 
         do {
             inspectorDouble.filesInDirectoryError = "the error"
@@ -74,7 +74,7 @@ class DirectoryTests: XCTestCase {
         let inspectorDouble = DirectoryInspectorDouble()
         inspectorDouble.testDirectoryExists = true
 
-        guard let directory = Directory(url: irrelevantURL, inspector: inspectorDouble) else { XCTFail("Expected directory"); return }
+        guard let directory = LogDirectory(url: irrelevantURL, inspector: inspectorDouble) else { XCTFail("Expected directory"); return }
 
         let result: [URL]
 
@@ -94,7 +94,7 @@ class DirectoryTests: XCTestCase {
         let inspectorDouble = DirectoryInspectorDouble()
         inspectorDouble.testDirectoryExists = true
 
-        guard let directory = Directory(url: irrelevantURL, inspector: inspectorDouble) else { XCTFail("Expected directory"); return }
+        guard let directory = LogDirectory(url: irrelevantURL, inspector: inspectorDouble) else { XCTFail("Expected directory"); return }
 
         let result: [URL]
 
