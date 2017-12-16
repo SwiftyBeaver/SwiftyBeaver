@@ -6,31 +6,59 @@
 import struct Foundation.URL
 import struct Foundation.Date
 import class Foundation.DateFormatter
+import class Foundation.FileManager
 
 /// A logging destination that acts like a `FileDestination` with a changing URL
 /// based on its `Rotation` setting.
 public class RotatingFileDestination: BaseDestination {
 
     public let rotation: Rotation
-    public var baseURL: URL?
+    public let deletionPolicy: DeletionPolicy
+    /// - Warning: Is optional only because `defaultBaseURL()` is. `nil` is a misconfiguration and the behavior undefined.
+    public let directory: Directory?
+    public var baseURL: URL? { return directory?.url }
     public let fileName: FileName
     internal let clock: Clock
 
+    public lazy var removeLogFiles: RemoveLogFiles = FileManager.default
+
+    /// Sets up daily rotation, keeping at most 5 log entries.
+    /// Files are names `swiftybeaver-YYYY-MM-DD.log`
     public override convenience init() {
         let baseURL = defaultBaseURL()
         self.init(rotation: .daily,
+                  deletionPolicy: .quantity(5),
                   logDirectoryURL: baseURL,
                   fileName: FileName(name: "swiftybeaver", pathExtension: "log"),
                   clock: SystemClock())
     }
 
-    public init(rotation: Rotation,
-                logDirectoryURL baseURL: URL?,
-                fileName: FileName,
-                clock: Clock) {
+    public convenience init(
+        rotation: Rotation,
+        deletionPolicy: DeletionPolicy,
+        logDirectoryURL baseURL: URL?,
+        fileName: FileName,
+        clock: Clock) {
+
+        let directory = baseURL.flatMap { Directory(url: $0) }
+
+        self.init(rotation: rotation,
+                  deletionPolicy: deletionPolicy,
+                  logDirectory: directory,
+                  fileName: fileName,
+                  clock: clock)
+    }
+
+    public init(
+        rotation: Rotation,
+        deletionPolicy: DeletionPolicy,
+        logDirectory: Directory?,
+        fileName: FileName,
+        clock: Clock) {
 
         self.rotation = rotation
-        self.baseURL = baseURL
+        self.deletionPolicy = deletionPolicy
+        self.directory = logDirectory
         self.fileName = fileName
         self.clock = clock
 
@@ -100,21 +128,31 @@ public class RotatingFileDestination: BaseDestination {
         }
     }
 
-    public enum DeletionPolicy {
+    public enum DeletionPolicy: Equatable {
+        /// Keeps this amount of files, removing the rest; 0 does not remove any.
         case quantity(UInt)
 
         public func filterRemovable(
+            assumingFileExistsAt currentURL: URL,
             logDirectory directory: Directory,
             fileName: FileName) -> [URL] {
 
             switch self {
             case .quantity(let capacity):
+                guard capacity > 0 else { return [] }
                 return fileName
-                    .matchingFiles(
-                        in: directory,
-                        sortedBy: .fileName)
+                    .matchingFiles(in: directory, sortedBy: .fileName)
+                    .appendingIfNotExists(currentURL)
                     .dropLast(capacity)
                     .asArray()
+            }
+        }
+
+        public static func ==(lhs: DeletionPolicy, rhs: DeletionPolicy) -> Bool {
+            switch (lhs, rhs) {
+            case let (.quantity(lQuantity),
+                      .quantity(rQuantity)):
+                return lQuantity == rQuantity
             }
         }
     }
@@ -126,11 +164,9 @@ public class RotatingFileDestination: BaseDestination {
         get {
             replaceFileDestinationOnRotation()
 
-            return _currentFileDestination?.fileDestination
+            return _currentCachedFileDestination?.fileDestination
         }
     }
-
-    fileprivate lazy var _currentFileDestination: CachedFileDestination? = self.currentCachedFileDestination()
 
     fileprivate func currentCachedFileDestination() -> CachedFileDestination? {
         guard let currentURL = self.currentURL else { return nil }
@@ -139,10 +175,13 @@ public class RotatingFileDestination: BaseDestination {
             url: currentURL)
     }
 
+    // Start with `nil` so the first access triggers a regular rotation.
+    fileprivate var _currentCachedFileDestination: CachedFileDestination? = nil
+
     fileprivate func replaceFileDestinationOnRotation() {
         guard let currentURL = self.currentURL else { return }
 
-        let needsRotation = _currentFileDestination?.isOutdated(currentURL: currentURL)
+        let needsRotation = _currentCachedFileDestination?.isOutdated(currentURL: currentURL)
             ?? true
 
         guard needsRotation else { return }
@@ -151,7 +190,27 @@ public class RotatingFileDestination: BaseDestination {
     }
 
     fileprivate func rotateFileDestination() {
-        _currentFileDestination = self.currentCachedFileDestination()
+        _currentCachedFileDestination = self.currentCachedFileDestination()
+
+        cleanupLogDirectory()
+    }
+
+    fileprivate func cleanupLogDirectory() {
+        guard let directory = self.directory else { return }
+        guard let currentURL = self.currentURL else { return }
+
+        let removableURLs = deletionPolicy.filterRemovable(
+            assumingFileExistsAt: currentURL,
+            logDirectory: directory,
+            fileName: fileName)
+
+        for url in removableURLs {
+            do {
+                try removeLogFiles.removeLogFile(at: url)
+            } catch {
+                print("Removing log file failed: \(error)")
+            }
+        }
     }
 
     /// `FileDestination` and `URL` should vary together, so this type
@@ -248,6 +307,17 @@ public class RotatingFileDestination: BaseDestination {
 fileprivate extension Array {
     func dropLast(_ n: UInt) -> ArraySlice<Element> {
         return dropLast(Int(n))
+    }
+}
+
+fileprivate extension Array where Element == URL {
+    func appendingIfNotExists(_ element: Element) -> [Element] {
+        guard !contains(where: { $0.resolvingSymlinksInPath() == element.resolvingSymlinksInPath() })
+            else { return self }
+
+        var result = self
+        result.append(element)
+        return result
     }
 }
 

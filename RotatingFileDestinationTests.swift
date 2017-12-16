@@ -9,8 +9,9 @@ import XCTest
 class RotatingFileDestinationTests: XCTestCase {
 
     var irrelevantClock: Clock { return SystemClock() }
-    var irrelevantBaseURL: URL { return URL(fileURLWithPath: "irrelevant") }
+    var irrelevantURL: URL { return URL(fileURLWithPath: "irrelevant") }
     var irrelevantFileName: RotatingFileDestination.FileName { return RotatingFileDestination.FileName(name: "irrelevant", pathExtension: "irrelevant") }
+    var irrelevantDeletionPolicy: RotatingFileDestination.DeletionPolicy { return .quantity(123) }
 
     func testInitializer_DefaultValues() {
         let destination = RotatingFileDestination()
@@ -19,6 +20,7 @@ class RotatingFileDestinationTests: XCTestCase {
         XCTAssertEqual(destination.baseURL, defaultBaseURL())
         XCTAssertEqual(destination.fileName.pathExtension, "log")
         XCTAssertEqual(destination.rotation, .daily)
+        XCTAssertEqual(destination.deletionPolicy, .quantity(5))
     }
 
     func testInitializer_UsesSameSettingsAsFileDestination() {
@@ -31,7 +33,8 @@ class RotatingFileDestinationTests: XCTestCase {
         XCTAssertEqual(
             RotatingFileDestination(
                 rotation: .daily,
-                logDirectoryURL: irrelevantBaseURL,
+                deletionPolicy: irrelevantDeletionPolicy,
+                logDirectoryURL: irrelevantURL,
                 fileName: .init(name: "base", pathExtension: "ext"),
                 clock: ClockDouble(year: 2020, month: 05, day: 17))
                 .currentFileName,
@@ -40,7 +43,8 @@ class RotatingFileDestinationTests: XCTestCase {
         XCTAssertEqual(
             RotatingFileDestination(
                 rotation: .daily,
-                logDirectoryURL: irrelevantBaseURL,
+                deletionPolicy: irrelevantDeletionPolicy,
+                logDirectoryURL: irrelevantURL,
                 fileName: .init(name: "base", pathExtension: "ext"),
                 clock: ClockDouble(year: 1987, month: 11, day: 09))
                 .currentFileName,
@@ -49,7 +53,8 @@ class RotatingFileDestinationTests: XCTestCase {
         XCTAssertEqual(
             RotatingFileDestination(
                 rotation: .daily,
-                logDirectoryURL: irrelevantBaseURL,
+                deletionPolicy: irrelevantDeletionPolicy,
+                logDirectoryURL: irrelevantURL,
                 fileName: .init(name: "swiftybeaver", pathExtension: "log"),
                 clock: ClockDouble(year: 2017, month: 12, day: 14))
                 .currentFileName,
@@ -61,7 +66,8 @@ class RotatingFileDestinationTests: XCTestCase {
         let clockDouble = ClockDouble(year: 1967, month: 6, day: 2)
         let destination = RotatingFileDestination(
             rotation: .daily,
-            logDirectoryURL: irrelevantBaseURL,
+            deletionPolicy: irrelevantDeletionPolicy,
+            logDirectoryURL: irrelevantURL,
             fileName: .init(name: "base", pathExtension: "ext"),
             clock: clockDouble)
 
@@ -76,7 +82,8 @@ class RotatingFileDestinationTests: XCTestCase {
 
         let destination = RotatingFileDestination(
             rotation: .daily,
-            logDirectoryURL: nil,
+            deletionPolicy: irrelevantDeletionPolicy,
+            logDirectory: nil,
             fileName: irrelevantFileName,
             clock: irrelevantClock)
         XCTAssertNil(destination.currentURL)
@@ -87,7 +94,8 @@ class RotatingFileDestinationTests: XCTestCase {
         let baseURL = URL(fileURLWithPath: "/foo/bar")
         let destination = RotatingFileDestination(
             rotation: .daily,
-            logDirectoryURL: baseURL,
+            deletionPolicy: irrelevantDeletionPolicy,
+            logDirectory: createDirectoryStub(baseURL: baseURL),
             fileName: .init(name: "some", pathExtension: "ext"),
             clock: ClockDouble(year: 1987, month: 11, day: 09))
 
@@ -101,7 +109,8 @@ class RotatingFileDestinationTests: XCTestCase {
         let baseURL = URL(fileURLWithPath: "/fizz/buzz", isDirectory: true)
         let destination = RotatingFileDestination(
             rotation: .daily,
-            logDirectoryURL: baseURL,
+            deletionPolicy: irrelevantDeletionPolicy,
+            logDirectory: createDirectoryStub(baseURL: baseURL),
             fileName: .init(name: "swifty", pathExtension: "beaver"),
             clock: ClockDouble(year: 2017, month: 12, day: 14))
 
@@ -125,6 +134,7 @@ class RotatingFileDestinationTests: XCTestCase {
 
         let destination = RotatingFileDestination(
             rotation: .daily,
+            deletionPolicy: irrelevantDeletionPolicy,
             logDirectoryURL: nil,
             fileName: irrelevantFileName,
             clock: irrelevantClock)
@@ -136,7 +146,8 @@ class RotatingFileDestinationTests: XCTestCase {
         let baseURL = URL(fileURLWithPath: "/fizz/buzz", isDirectory: true)
         let destination = RotatingFileDestination(
             rotation: .daily,
-            logDirectoryURL: baseURL,
+            deletionPolicy: irrelevantDeletionPolicy,
+            logDirectory: createDirectoryStub(baseURL: baseURL),
             fileName: .init(name: "as", pathExtension: "df"),
             clock: ClockDouble(year: 2000, month: 06, day: 18))
 
@@ -153,7 +164,8 @@ class RotatingFileDestinationTests: XCTestCase {
         let clockDouble = ClockDouble(year: 1998, month: 04, day: 12)
         let destination = RotatingFileDestination(
             rotation: .daily,
-            logDirectoryURL: baseURL,
+            deletionPolicy: irrelevantDeletionPolicy,
+            logDirectory: createDirectoryStub(baseURL: baseURL),
             fileName: .init(name: "file", pathExtension: "txt"),
             clock: clockDouble)
 
@@ -168,6 +180,113 @@ class RotatingFileDestinationTests: XCTestCase {
         XCTAssertEqual(secondFileDestination?.logFileURL, destination.currentURL)
 
         XCTAssert(originalFileDestination !== secondFileDestination)
+    }
+
+
+    // MARK: Exercising deletion policy
+
+    func testFileDestination_RotationCleansUpOutdatedFiles() {
+        let clockDouble = ClockDouble(year: 2010, month: 10, day: 20)
+        let existingLogFilesFromThePast = [
+            fileURL("swifty-2010-10-10.beaver"),
+            fileURL("swifty-2010-10-11.beaver"),
+            fileURL("swifty-2010-10-12.beaver")
+        ]
+        let inspectorStub = DirectoryInspectorStub(urls: existingLogFilesFromThePast)
+
+        let removalDouble = LogFileRemovalDouble()
+        let destination = RotatingFileDestination(
+            rotation: .daily,
+            deletionPolicy: .quantity(2),
+            logDirectory: Directory(url: irrelevantURL, inspector: inspectorStub),
+            fileName: .init(name: "swifty", pathExtension: "beaver"),
+            clock: clockDouble)
+        destination.removeLogFiles = removalDouble
+
+        func simulateLoggingAtCurrentDate() {
+            // Event that triggers the cleanup
+            _ = destination.fileDestination
+
+            // Simulates writing to file (prevent duplicates)
+            inspectorStub.addIfNotExists(url: fileURL(destination.currentFileName))
+        }
+
+        // Precondition
+        XCTAssert(removalDouble.removedLogFiles.isEmpty)
+
+        do {
+            // First access (set up)
+
+            simulateLoggingAtCurrentDate()
+
+            XCTAssertEqual(removalDouble.removedLogFiles, [
+                fileURL("swifty-2010-10-10.beaver"),
+                fileURL("swifty-2010-10-11.beaver")
+                ])
+        }
+
+        do {
+            // Access in same rotation does not trigger another cleanup
+
+            simulateLoggingAtCurrentDate()
+
+            // `removalDouble` *appends* reported URLs, so if they are the same,
+            // nothing happened. (Continue reading this exciting story arc
+            // to see what would happen!)
+            XCTAssertEqual(removalDouble.removedLogFiles, [
+                fileURL("swifty-2010-10-10.beaver"),
+                fileURL("swifty-2010-10-11.beaver")
+                ])
+        }
+
+        // Next day, next rotation
+        clockDouble.changeDate(year: 2010, month: 10, day: 21)
+
+        do {
+            // Access in new rotation triggers cleanup again, picking up files
+            // that were previously marked but not seem to be removed as well.
+
+            simulateLoggingAtCurrentDate()
+
+            XCTAssertEqual(removalDouble.removedLogFiles, [
+                // Reported in last rotation
+                fileURL("swifty-2010-10-10.beaver"),
+                fileURL("swifty-2010-10-11.beaver"),
+
+                // Reported in this rotation
+                fileURL("swifty-2010-10-10.beaver"),
+                fileURL("swifty-2010-10-11.beaver"),
+                fileURL("swifty-2010-10-12.beaver")
+                ])
+
+            // Simulate deletion of the outdated files
+            inspectorStub.remove(urls: [
+                fileURL("swifty-2010-10-10.beaver"),
+                fileURL("swifty-2010-10-11.beaver"),
+                fileURL("swifty-2010-10-12.beaver")
+                ])
+        }
+
+        // Another day, another rotation
+        clockDouble.changeDate(year: 2010, month: 10, day: 22)
+
+        do {
+            simulateLoggingAtCurrentDate()
+
+            XCTAssertEqual(removalDouble.removedLogFiles, [
+                // Reported in the first rotation
+                fileURL("swifty-2010-10-10.beaver"),
+                fileURL("swifty-2010-10-11.beaver"),
+
+                // Reported in the second rotation
+                fileURL("swifty-2010-10-10.beaver"),
+                fileURL("swifty-2010-10-11.beaver"),
+                fileURL("swifty-2010-10-12.beaver"),
+
+                // Reported in this rotation: the file we created at the beginning
+                fileURL("swifty-2010-10-20.beaver")
+                ])
+        }
     }
 
 
@@ -390,24 +509,31 @@ fileprivate func fileURL(_ path: String) -> URL {
 class DeletionPolicyTests: XCTestCase {
     func testRemovable_ByQuantity() {
         let fileName = RotatingFileDestination.FileName(name: "rainbow", pathExtension: "txt")
-        let directory = createDirectory(fileURLs: [
+        let directory = createDirectoryStub(fileURLs: [
             fileURL("somewhere/rainbow-2.txt"),
             fileURL("nowhere/rainbow-0.txt"),
             fileURL("totally/different/file.exe"),
             fileURL("somewhere/over/rainbow-1.txt"),
             fileURL("somewhere/over/the/rainbow-3.txt"),
             fileURL("even/more/rainbow-4.txt")])
+        // Not part of the directory, so assume this file _will_ be written into.
+        let nonexistingFileToBeWrittenTo = fileURL("tom/clancy's/rainbow-6.txt")
 
         func removableURLsForPolicy(keeping amount: UInt) -> [URL] {
             return RotatingFileDestination.DeletionPolicy
                 .quantity(amount)
                 .filterRemovable(
+                    assumingFileExistsAt: nonexistingFileToBeWrittenTo,
                     logDirectory: directory,
                     fileName: fileName)
         }
 
         XCTAssertEqual(
             removableURLsForPolicy(keeping: 0),
+            [])
+
+        XCTAssertEqual(
+            removableURLsForPolicy(keeping: 1),
             [
                 fileURL("nowhere/rainbow-0.txt"),
                 fileURL("somewhere/over/rainbow-1.txt"),
@@ -417,19 +543,11 @@ class DeletionPolicyTests: XCTestCase {
             ])
 
         XCTAssertEqual(
-            removableURLsForPolicy(keeping: 1),
-            [
-                fileURL("nowhere/rainbow-0.txt"),
-                fileURL("somewhere/over/rainbow-1.txt"),
-                fileURL("somewhere/rainbow-2.txt"),
-                fileURL("somewhere/over/the/rainbow-3.txt")
-            ])
-
-        XCTAssertEqual(
             removableURLsForPolicy(keeping: 3),
             [
                 fileURL("nowhere/rainbow-0.txt"),
-                fileURL("somewhere/over/rainbow-1.txt")
+                fileURL("somewhere/over/rainbow-1.txt"),
+                fileURL("somewhere/rainbow-2.txt")
             ])
 
         XCTAssertEqual(
@@ -441,31 +559,50 @@ class DeletionPolicyTests: XCTestCase {
 /// Creates a fake `Directory` without a file-system representation
 /// that returns a static `fileURLs` (or throws).
 ///
+/// - parameter baseURL: URL of the directory itself.
 /// - parameter fileURLs: Array of URLs to return, or nil to throw an error.
-fileprivate func createDirectory(fileURLs: [URL]?) -> Directory {
-    class InspectorDouble: DirectoryInspector {
-        var urls: [URL]?
-
-        init(urls: [URL]?) {
-            self.urls = urls
-        }
-
-        func directoryExists(at url: URL) -> Bool {
-            return true
-        }
-
-        func filesInDirectory(at url: URL) throws -> [URL] {
-            guard let fileURLs = urls else {
-                throw "some error"
-            }
-
-            return fileURLs
-        }
-    }
+fileprivate func createDirectoryStub(
+    baseURL: URL = URL(fileURLWithPath: "irrelevant"),
+    fileURLs: [URL]? = []) -> Directory {
 
     return Directory(
-        url: URL(fileURLWithPath: "irrelevant"),
-        inspector: InspectorDouble(urls: fileURLs))!
+        url: baseURL,
+        inspector: DirectoryInspectorStub(urls: fileURLs))!
+}
+
+fileprivate class DirectoryInspectorStub: DirectoryInspector {
+    var urls: [URL]?
+
+    init(urls: [URL]?) {
+        self.urls = urls
+    }
+
+    func directoryExists(at url: URL) -> Bool {
+        return true
+    }
+
+    func filesInDirectory(at url: URL) throws -> [URL] {
+        guard let fileURLs = urls else {
+            throw "some error"
+        }
+
+        return fileURLs
+    }
+
+    func addIfNotExists(url: URL) {
+        guard let existingURLs = urls,
+            !existingURLs.contains(url)
+            else { return }
+        urls?.append(url)
+    }
+
+    func remove(urls removedURLs: [URL]) {
+        for url in removedURLs {
+            if let index = urls?.index(where: { $0 == url }) {
+                urls?.remove(at: index)
+            }
+        }
+    }
 }
 
 class RotatingFileDestinationIntegrationTests: XCTestCase {
@@ -481,11 +618,11 @@ class RotatingFileDestinationIntegrationTests: XCTestCase {
 
     func testRotatingFilesAreWritten() {
         let log = SwiftyBeaver.self
-        let baseURL = createTempDirectory()
         let clockDouble = ClockDouble(year: 2014, month: 6, day: 2)
         let rotatingDestination = RotatingFileDestination(
             rotation: .daily,
-            logDirectoryURL: baseURL,
+            deletionPolicy: .quantity(2),
+            logDirectory: Directory(url: createTempDirectory()),
             fileName: .init(name: "the", pathExtension: "log"),
             clock: clockDouble)
         rotatingDestination.format = "$L: $M"
@@ -510,10 +647,10 @@ class RotatingFileDestinationIntegrationTests: XCTestCase {
             XCTAssertNotNil(fileLines)
             guard let lines = fileLines else { return }
             XCTAssertEqual(lines.count, 4)
-            XCTAssertEqual(lines[0], "VERBOSE: first line to log")
-            XCTAssertEqual(lines[1], "DEBUG: second line to log")
-            XCTAssertEqual(lines[2], "INFO: third line to log")
-            XCTAssertEqual(lines[3], "")
+            XCTAssertEqual(lines[safe: 0], "VERBOSE: first line to log")
+            XCTAssertEqual(lines[safe: 1], "DEBUG: second line to log")
+            XCTAssertEqual(lines[safe: 2], "INFO: third line to log")
+            XCTAssertEqual(lines[safe: 3], "")
         }
 
         // Second rotation
@@ -526,7 +663,7 @@ class RotatingFileDestinationIntegrationTests: XCTestCase {
         waitForFilesToBeWritten()
 
         guard let secondPath = rotatingDestination.currentURL?.path else {
-            XCTFail("Expected first log file's path")
+            XCTFail("Expected second log file's path")
             return
         }
 
@@ -536,10 +673,10 @@ class RotatingFileDestinationIntegrationTests: XCTestCase {
             XCTAssertNotNil(fileLines)
             guard let lines = fileLines else { return }
             XCTAssertEqual(lines.count, 4)
-            XCTAssertEqual(lines[0], "VERBOSE: first line to log")
-            XCTAssertEqual(lines[1], "DEBUG: second line to log")
-            XCTAssertEqual(lines[2], "INFO: third line to log")
-            XCTAssertEqual(lines[3], "")
+            XCTAssertEqual(lines[safe: 0], "VERBOSE: first line to log")
+            XCTAssertEqual(lines[safe: 1], "DEBUG: second line to log")
+            XCTAssertEqual(lines[safe: 2], "INFO: third line to log")
+            XCTAssertEqual(lines[safe: 3], "")
         }
 
         do {
@@ -547,8 +684,8 @@ class RotatingFileDestinationIntegrationTests: XCTestCase {
             XCTAssertNotNil(fileLines)
             guard let lines = fileLines else { return }
             XCTAssertEqual(lines.count, 2)
-            XCTAssertEqual(lines[0], "INFO: single line to log")
-            XCTAssertEqual(lines[1], "")
+            XCTAssertEqual(lines[safe: 0], "INFO: single line to log")
+            XCTAssertEqual(lines[safe: 1], "")
         }
 
         // Ooohhh, rewind the clock in the 3rd rotation!
@@ -566,11 +703,11 @@ class RotatingFileDestinationIntegrationTests: XCTestCase {
             XCTAssertNotNil(fileLines)
             guard let lines = fileLines else { return }
             XCTAssertEqual(lines.count, 5)
-            XCTAssertEqual(lines[0], "VERBOSE: first line to log")
-            XCTAssertEqual(lines[1], "DEBUG: second line to log")
-            XCTAssertEqual(lines[2], "INFO: third line to log")
-            XCTAssertEqual(lines[3], "INFO: additional line to log")
-            XCTAssertEqual(lines[4], "")
+            XCTAssertEqual(lines[safe: 0], "VERBOSE: first line to log")
+            XCTAssertEqual(lines[safe: 1], "DEBUG: second line to log")
+            XCTAssertEqual(lines[safe: 2], "INFO: third line to log")
+            XCTAssertEqual(lines[safe: 3], "INFO: additional line to log")
+            XCTAssertEqual(lines[safe: 4], "")
         }
 
         do {
@@ -578,12 +715,58 @@ class RotatingFileDestinationIntegrationTests: XCTestCase {
             XCTAssertNotNil(fileLines)
             guard let lines = fileLines else { return }
             XCTAssertEqual(lines.count, 2)
-            XCTAssertEqual(lines[0], "INFO: single line to log")
-            XCTAssertEqual(lines[1], "")
+            XCTAssertEqual(lines[safe: 0], "INFO: single line to log")
+            XCTAssertEqual(lines[safe: 1], "")
+        }
+
+        // Fourth rotation, creating a 3rd file, triggering the deletion policy
+
+        clockDouble.changeDate(year: 2014, month: 6, day: 4)
+
+        log.verbose("new file started")
+        log.debug("interesting stuff to log")
+        _ = log.flush(secondTimeout: 3)
+
+        waitForFilesToBeWritten()
+
+        guard let thirdPath = rotatingDestination.currentURL?.path else {
+            XCTFail("Expected third log file's path")
+            return
+        }
+
+        do {
+            // First file is removed
+            XCTAssertFalse(FileManager.default.fileExists(atPath: firstPath))
+        }
+
+        do {
+            // Second file is untouched
+            let fileLines = linesOfFile(path: secondPath)
+            XCTAssertNotNil(fileLines)
+            guard let lines = fileLines else { return }
+            XCTAssertEqual(lines.count, 2)
+            XCTAssertEqual(lines[safe: 0], "INFO: single line to log")
+            XCTAssertEqual(lines[safe: 1], "")
+        }
+
+        do {
+            // Third file is new
+            let fileLines = linesOfFile(path: thirdPath)
+            XCTAssertNotNil(fileLines)
+            guard let lines = fileLines else { return }
+            XCTAssertEqual(lines.count, 3)
+            XCTAssertEqual(lines[safe: 0], "VERBOSE: new file started")
+            XCTAssertEqual(lines[safe: 1], "DEBUG: interesting stuff to log")
+            XCTAssertEqual(lines[safe: 2], "")
         }
     }
 }
 
+fileprivate extension Collection {
+    subscript (safe index: Self.Index) -> Self.Iterator.Element? {
+        return index < endIndex ? self[index] : nil
+    }
+}
 
 
 // MARK: - Helpers
@@ -635,9 +818,12 @@ fileprivate class MockFactoryRotatingFileDestination: RotatingFileDestination {
     /// through the settings's `didSet` property observers.
     required init(testFileDestination: FileDestination) {
         self.testFileDestination = testFileDestination
+        // Initializer parameters are irrelevant:
+        let directoryStub = createDirectoryStub(fileURLs: [])
         super.init(
             rotation: .daily,
-            logDirectoryURL: URL(fileURLWithPath: "irrelevant"),
+            deletionPolicy: .quantity(5),
+            logDirectory: directoryStub,
             fileName: .init(name: "irrelevant", pathExtension: "irrelevant"),
             clock: ClockDouble(date: Date(timeIntervalSinceReferenceDate: 12345)))
     }
@@ -673,6 +859,13 @@ fileprivate class FileDestinationSettingForwardingMock: FileDestination {
     override var minLevel: SwiftyBeaver.Level { didSet { didForward = true } }
     override var levelString: BaseDestination.LevelString { didSet { didForward = true } }
     override var levelColor: BaseDestination.LevelColor   { didSet { didForward = true } }
+}
+
+fileprivate class LogFileRemovalDouble: RemoveLogFiles {
+    var removedLogFiles: [URL] = []
+    func removeLogFile(at url: URL) throws {
+        removedLogFiles.append(url)
+    }
 }
 
 fileprivate func assertEqualSettings(_ lhs: BaseDestination, _ rhs: BaseDestination, file: StaticString = #file, line: UInt = #line) {
