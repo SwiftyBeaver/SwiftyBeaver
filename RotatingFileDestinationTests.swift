@@ -175,7 +175,7 @@ class RotatingFileDestinationTests: XCTestCase {
 
     func testSend_ForwardsToFileDestination() {
 
-        let fileDestinationDouble = FileDestinationDouble()
+        let fileDestinationDouble = FileDestinationSendingMock()
         let destination = MockFactoryRotatingFileDestination(testFileDestination: fileDestinationDouble)
 
         _ = destination.send(.info, msg: "the message", thread: "the thread", file: "the file", function: "the function", line: 1337, context: "a context")
@@ -194,7 +194,7 @@ class RotatingFileDestinationTests: XCTestCase {
 
     func testSend_ReturnsResultOfFileDestination() {
 
-        let fileDestinationDouble = FileDestinationDouble()
+        let fileDestinationDouble = FileDestinationSendingMock()
         let destination = MockFactoryRotatingFileDestination(testFileDestination: fileDestinationDouble)
         fileDestinationDouble.testSendResult = "the result"
 
@@ -205,6 +205,12 @@ class RotatingFileDestinationTests: XCTestCase {
 
 
     // MARK: Forwarding settings to `FileDestination`
+
+    func testInitializer_DoesNotForward() {
+        let fileDestinationDouble = FileDestinationSettingForwardingMock()
+        _ = MockFactoryRotatingFileDestination(testFileDestination: fileDestinationDouble)
+        XCTAssertFalse(fileDestinationDouble.didForward)
+    }
 
     func testSettingsForwarding_Format() {
 
@@ -642,13 +648,31 @@ fileprivate class MockFactoryRotatingFileDestination: RotatingFileDestination {
     }
 }
 
-fileprivate class FileDestinationDouble: FileDestination {
+fileprivate class FileDestinationSendingMock: FileDestination {
     var testSendResult: String?
     var didSend: (level: SwiftyBeaver.Level, msg: String, thread: String, file: String, function: String, line: Int, context: Any?)?
     override func send(_ level: SwiftyBeaver.Level, msg: String, thread: String, file: String, function: String, line: Int, context: Any?) -> String? {
         didSend = (level, msg, thread, file, function, line, context)
         return testSendResult
     }
+}
+
+fileprivate class FileDestinationSettingForwardingMock: FileDestination {
+    override init() {
+        // Main initializer applies default settings, so reset `didForward` afterwards
+        super.init()
+        didForward = false
+    }
+    var didForward = false
+
+    override var format: String { didSet { didForward = true } }
+    override var reset: String  { didSet { didForward = true } }
+    override var escape: String { didSet { didForward = true } }
+    override var asynchronously: Bool  { didSet { didForward = true } }
+    override var filters: [FilterType] { didSet { didForward = true } }
+    override var minLevel: SwiftyBeaver.Level { didSet { didForward = true } }
+    override var levelString: BaseDestination.LevelString { didSet { didForward = true } }
+    override var levelColor: BaseDestination.LevelColor   { didSet { didForward = true } }
 }
 
 fileprivate func assertEqualSettings(_ lhs: BaseDestination, _ rhs: BaseDestination, file: StaticString = #file, line: UInt = #line) {

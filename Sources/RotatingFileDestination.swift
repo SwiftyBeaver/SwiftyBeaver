@@ -37,7 +37,10 @@ public class RotatingFileDestination: BaseDestination {
         super.init()
 
         // Use the same formatting as `FileDestination`
+        // but do not forward them now, during initialization
+        self.shouldForwardSettings = false
         FileDestination.applyDefaultSettings(destination: self)
+        self.shouldForwardSettings = true
     }
 
     public var currentURL: URL? {
@@ -176,56 +179,67 @@ public class RotatingFileDestination: BaseDestination {
 
     // MARK: - Forwarding settings to `FileDestination`
 
+    fileprivate var shouldForwardSettings = false
+
     public override var format: String {
         didSet {
+            guard shouldForwardSettings else { return }
             fileDestination?.format = format
         }
     }
 
     public override var asynchronously: Bool {
         didSet {
+            guard shouldForwardSettings else { return }
             fileDestination?.asynchronously = asynchronously
         }
     }
 
     public override var minLevel: SwiftyBeaver.Level {
         didSet {
+            guard shouldForwardSettings else { return }
             fileDestination?.minLevel = minLevel
         }
     }
 
     public override var levelString: BaseDestination.LevelString {
         didSet {
+            guard shouldForwardSettings else { return }
             fileDestination?.levelString = levelString
         }
     }
 
     public override var levelColor: BaseDestination.LevelColor {
         didSet {
+            guard shouldForwardSettings else { return }
             fileDestination?.levelColor = levelColor
         }
     }
 
     override var reset: String {
         didSet {
+            guard shouldForwardSettings else { return }
             fileDestination?.reset = reset
         }
     }
 
     override var escape: String {
         didSet {
+            guard shouldForwardSettings else { return }
             fileDestination?.escape = escape
         }
     }
 
     override var filters: [FilterType] {
         didSet {
+            guard shouldForwardSettings else { return }
             fileDestination?.filters = filters
         }
     }
 
     override var debugPrint: Bool {
         didSet {
+            guard shouldForwardSettings else { return }
             fileDestination?.debugPrint = debugPrint
         }
     }
