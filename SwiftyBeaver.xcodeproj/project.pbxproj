@@ -12,6 +12,8 @@
 		4D331AE01F1E8EA700B1C25E /* Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D331ADE1F1E8E1100B1C25E /* Base64.swift */; };
 		4D331AE11F1E8EAB00B1C25E /* Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D331ADE1F1E8E1100B1C25E /* Base64.swift */; };
 		4D331AE21F1E8EAC00B1C25E /* Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D331ADE1F1E8E1100B1C25E /* Base64.swift */; };
+		50932F411FE4FE460023C5E3 /* RemoveLogFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50932F401FE4FE460023C5E3 /* RemoveLogFiles.swift */; };
+		50932F431FE520290023C5E3 /* RemoveLogFilesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50932F421FE520290023C5E3 /* RemoveLogFilesTests.swift */; };
 		50D8F2521FE27143006F3068 /* SwiftyBeaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACE597A61C18832E0031451F /* SwiftyBeaver.framework */; };
 		50D8F2591FE27260006F3068 /* AES256CBCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEAC81D9BB46300F21B1F /* AES256CBCTests.swift */; };
 		50D8F25A1FE27260006F3068 /* BaseDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEAC91D9BB46300F21B1F /* BaseDestinationTests.swift */; };
@@ -95,6 +97,8 @@
 /* Begin PBXFileReference section */
 		4D1720E71E9C083600AB7833 /* GoogleCloudDestinationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GoogleCloudDestinationTests.swift; path = Tests/SwiftyBeaverTests/GoogleCloudDestinationTests.swift; sourceTree = "<group>"; };
 		4D331ADE1F1E8E1100B1C25E /* Base64.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Base64.swift; sourceTree = "<group>"; };
+		50932F401FE4FE460023C5E3 /* RemoveLogFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveLogFiles.swift; sourceTree = "<group>"; };
+		50932F421FE520290023C5E3 /* RemoveLogFilesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveLogFilesTests.swift; sourceTree = "<group>"; };
 		50D8F24D1FE27143006F3068 /* SwiftyBeaverTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftyBeaverTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		50D8F2581FE271F5006F3068 /* Info macOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info macOS.plist"; path = "Tests/Info macOS.plist"; sourceTree = "<group>"; };
 		50D8F2621FE272A4006F3068 /* RotatingFileDestinationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotatingFileDestinationTests.swift; sourceTree = "<group>"; };
@@ -213,6 +217,7 @@
 				50D8F26A1FE403BE006F3068 /* DirectoryTests.swift */,
 				9E2AEACB1D9BB46300F21B1F /* FileDestinationTests.swift */,
 				9E2AEACC1D9BB46300F21B1F /* FilterTests.swift */,
+				50932F421FE520290023C5E3 /* RemoveLogFilesTests.swift */,
 				50D8F2621FE272A4006F3068 /* RotatingFileDestinationTests.swift */,
 				9E2AEACD1D9BB46300F21B1F /* SBPlatformDestinationTests.swift */,
 				9E2AEACF1D9BB46300F21B1F /* SecretsExample.swift */,
@@ -233,6 +238,7 @@
 				CB5234011EB0EB4600739CFB /* FileDestination.swift */,
 				CB5234021EB0EB4600739CFB /* Filter.swift */,
 				CB5234031EB0EB4600739CFB /* GoogleCloudDestination.swift */,
+				50932F401FE4FE460023C5E3 /* RemoveLogFiles.swift */,
 				50D8F2661FE274B2006F3068 /* RotatingFileDestination.swift */,
 				CB5234041EB0EB4600739CFB /* SBPlatformDestination.swift */,
 				CB5234051EB0EB4600739CFB /* SwiftyBeaver.swift */,
@@ -530,6 +536,7 @@
 				50D8F25B1FE27260006F3068 /* DestinationSetTests.swift in Sources */,
 				50D8F25F1FE27260006F3068 /* SecretsExample.swift in Sources */,
 				50D8F2591FE27260006F3068 /* AES256CBCTests.swift in Sources */,
+				50932F431FE520290023C5E3 /* RemoveLogFilesTests.swift in Sources */,
 				50D8F25C1FE27260006F3068 /* FileDestinationTests.swift in Sources */,
 				50D8F2611FE27260006F3068 /* GoogleCloudDestinationTests.swift in Sources */,
 				50D8F25A1FE27260006F3068 /* BaseDestinationTests.swift in Sources */,
@@ -616,6 +623,7 @@
 				4D331ADF1F1E8E1100B1C25E /* Base64.swift in Sources */,
 				9E8F38BA1FE12E9800BE9A80 /* Extensions.swift in Sources */,
 				CB0FC3171EB8ABA10094E03A /* AES256CBC.swift in Sources */,
+				50932F411FE4FE460023C5E3 /* RemoveLogFiles.swift in Sources */,
 				CB0FC31A1EB8ABA10094E03A /* FileDestination.swift in Sources */,
 				CB0FC31D1EB8ABA10094E03A /* SBPlatformDestination.swift in Sources */,
 				CB0FC3181EB8ABA10094E03A /* BaseDestination.swift in Sources */,
