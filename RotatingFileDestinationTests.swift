@@ -352,6 +352,33 @@ class FileNameTests: XCTestCase {
                 .pathComponent(suffix: "buzz"),
             "fizz-buzz.test")
     }
+
+    func testFilterMatching() {
+        let fileName = RotatingFileDestination.FileName(name: "foo", pathExtension: "log")
+
+        XCTAssertEqual(fileName.filterMatching(fileURLs: []), [])
+        XCTAssertEqual(
+            fileName.filterMatching(fileURLs: [
+                fileURL("/irrelevant/foo123.log"),
+                fileURL("/fooBAR.log"),
+                fileURL("/foo.differentExtension"),
+                fileURL("relative/path/foo.log"),
+                fileURL(".log"),
+                fileURL("foo"),
+                fileURL("foo."),
+                fileURL("foo.log")
+                ]),
+            [
+                fileURL("/irrelevant/foo123.log"),
+                fileURL("/fooBAR.log"),
+                fileURL("relative/path/foo.log"),
+                fileURL("foo.log")
+            ])
+    }
+}
+
+fileprivate func fileURL(_ path: String) -> URL {
+    return URL(fileURLWithPath: path)
 }
 
 class RotatingFileDestinationIntegrationTests: XCTestCase {

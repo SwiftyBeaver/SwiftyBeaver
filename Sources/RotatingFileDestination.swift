@@ -79,6 +79,13 @@ public class RotatingFileDestination: BaseDestination {
         public func pathComponent(suffix: String) -> String {
             return "\(name)-\(suffix).\(pathExtension)"
         }
+
+        public func filterMatching(fileURLs: [URL]) -> [URL] {
+            return fileURLs.filter { fileURL -> Bool in
+                return fileURL.lastPathComponent.hasPrefix(self.name)
+                    && fileURL.pathExtension == self.pathExtension
+            }
+        }
     }
 
     // MARK: - Rotation of underlying `FileDestination`
