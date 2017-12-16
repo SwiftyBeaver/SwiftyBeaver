@@ -219,9 +219,10 @@ class FileManager_DirectoryInspectorTests: XCTestCase {
             return
         }
 
+        // Making sure that the /var/ and /private/var/ aliases are irrelevant:
         let fileURLs = results.map({ $0.resolvingSymlinksInPath() })
-        XCTAssertEqual(results.count, 2)
-        XCTAssert(results.contains(firstFileUrl))
-        XCTAssert(results.contains(secondFileUrl))
+        XCTAssertEqual(fileURLs.count, 2)
+        XCTAssert(fileURLs.contains(firstFileUrl))
+        XCTAssert(fileURLs.contains(secondFileUrl))
     }
 }
