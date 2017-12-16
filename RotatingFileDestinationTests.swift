@@ -381,6 +381,57 @@ fileprivate func fileURL(_ path: String) -> URL {
     return URL(fileURLWithPath: path)
 }
 
+class DeletionPolicyTests: XCTestCase {
+    func testRemovable_ByQuantity() {
+        let fileName = RotatingFileDestination.FileName(name: "rainbow", pathExtension: "txt")
+        let directory = createDirectory(fileURLs: [
+            fileURL("somewhere/rainbow-2.txt"),
+            fileURL("nowhere/rainbow-0.txt"),
+            fileURL("totally/different/file.exe"),
+            fileURL("somewhere/over/rainbow-1.txt"),
+            fileURL("somewhere/over/the/rainbow-3.txt"),
+            fileURL("even/more/rainbow-4.txt")])
+        let policy = RotatingFileDestination.DeletionPolicy.quantity(3)
+
+        let result = policy.filterRemovable(logDirectory: directory, fileName: fileName)
+
+        XCTAssertEqual(result, [
+            fileURL("nowhere/rainbow-0.txt"),
+            fileURL("somewhere/over/rainbow-1.txt")
+            ])
+    }
+}
+
+/// Creates a fake `Directory` without a file-system representation
+/// that returns a static `fileURLs` (or throws).
+///
+/// - parameter fileURLs: Array of URLs to return, or nil to throw an error.
+fileprivate func createDirectory(fileURLs: [URL]?) -> Directory {
+    class InspectorDouble: DirectoryInspector {
+        var urls: [URL]?
+
+        init(urls: [URL]?) {
+            self.urls = urls
+        }
+
+        func directoryExists(at url: URL) -> Bool {
+            return true
+        }
+
+        func filesInDirectory(at url: URL) throws -> [URL] {
+            guard let fileURLs = urls else {
+                throw "some error"
+            }
+
+            return fileURLs
+        }
+    }
+
+    return Directory(
+        url: URL(fileURLWithPath: "irrelevant"),
+        inspector: InspectorDouble(urls: fileURLs))!
+}
+
 class RotatingFileDestinationIntegrationTests: XCTestCase {
 
     override func setUp() {

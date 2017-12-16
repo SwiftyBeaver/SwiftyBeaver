@@ -7,6 +7,8 @@ import struct Foundation.URL
 import struct Foundation.Date
 import class Foundation.DateFormatter
 
+/// A logging destination that acts like a `FileDestination` with a changing URL
+/// based on its `Rotation` setting.
 public class RotatingFileDestination: BaseDestination {
 
     public let rotation: Rotation
@@ -80,10 +82,36 @@ public class RotatingFileDestination: BaseDestination {
             return "\(name)-\(suffix).\(pathExtension)"
         }
 
+        public func matchingFiles(
+            in directory: Directory,
+            sortedBy sortOrder: Directory.SortOrder = .fileName) -> [URL] {
+            let fileURLs = (try? directory.fileURLs(sortedBy: sortOrder)) ?? []
+            return filterMatching(fileURLs: fileURLs)
+        }
+
         public func filterMatching(fileURLs: [URL]) -> [URL] {
             return fileURLs.filter { fileURL -> Bool in
                 return fileURL.lastPathComponent.hasPrefix(self.name)
                     && fileURL.pathExtension == self.pathExtension
+            }
+        }
+    }
+
+    public enum DeletionPolicy {
+        case quantity(UInt)
+
+        public func filterRemovable(
+            logDirectory directory: Directory,
+            fileName: FileName) -> [URL] {
+
+            switch self {
+            case .quantity(let capacity):
+                return fileName
+                    .matchingFiles(
+                        in: directory,
+                        sortedBy: .fileName)
+                    .dropLast(capacity)
+                    .asArray()
             }
         }
     }
@@ -200,6 +228,18 @@ public class RotatingFileDestination: BaseDestination {
         didSet {
             fileDestination?.debugPrint = debugPrint
         }
+    }
+}
+
+fileprivate extension Array {
+    func dropLast(_ n: UInt) -> ArraySlice<Element> {
+        return dropLast(Int(n))
+    }
+}
+
+fileprivate extension ArraySlice {
+    func asArray() -> [Element] {
+        return Array(self)
     }
 }
 
