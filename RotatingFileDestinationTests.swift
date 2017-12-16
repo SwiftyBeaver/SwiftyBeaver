@@ -391,14 +391,44 @@ class DeletionPolicyTests: XCTestCase {
             fileURL("somewhere/over/rainbow-1.txt"),
             fileURL("somewhere/over/the/rainbow-3.txt"),
             fileURL("even/more/rainbow-4.txt")])
-        let policy = RotatingFileDestination.DeletionPolicy.quantity(3)
 
-        let result = policy.filterRemovable(logDirectory: directory, fileName: fileName)
+        func removableURLsForPolicy(keeping amount: UInt) -> [URL] {
+            return RotatingFileDestination.DeletionPolicy
+                .quantity(amount)
+                .filterRemovable(
+                    logDirectory: directory,
+                    fileName: fileName)
+        }
 
-        XCTAssertEqual(result, [
-            fileURL("nowhere/rainbow-0.txt"),
-            fileURL("somewhere/over/rainbow-1.txt")
+        XCTAssertEqual(
+            removableURLsForPolicy(keeping: 0),
+            [
+                fileURL("nowhere/rainbow-0.txt"),
+                fileURL("somewhere/over/rainbow-1.txt"),
+                fileURL("somewhere/rainbow-2.txt"),
+                fileURL("somewhere/over/the/rainbow-3.txt"),
+                fileURL("even/more/rainbow-4.txt")
             ])
+
+        XCTAssertEqual(
+            removableURLsForPolicy(keeping: 1),
+            [
+                fileURL("nowhere/rainbow-0.txt"),
+                fileURL("somewhere/over/rainbow-1.txt"),
+                fileURL("somewhere/rainbow-2.txt"),
+                fileURL("somewhere/over/the/rainbow-3.txt")
+            ])
+
+        XCTAssertEqual(
+            removableURLsForPolicy(keeping: 3),
+            [
+                fileURL("nowhere/rainbow-0.txt"),
+                fileURL("somewhere/over/rainbow-1.txt")
+            ])
+
+        XCTAssertEqual(
+            removableURLsForPolicy(keeping: 100),
+            [])
     }
 }
 
