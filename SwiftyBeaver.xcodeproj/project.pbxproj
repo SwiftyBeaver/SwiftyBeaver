@@ -89,7 +89,7 @@
 		9E6CAA471C148EC1009D9093 /* SwiftyBeaver.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SwiftyBeaver.podspec; sourceTree = "<group>"; };
 		9E6CAA491C149579009D9093 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		9E74FEA81CD74AFA0024DD76 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
-		9E8F38B51FE12E9800BE9A80 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = sources/Extensions.swift; sourceTree = SOURCE_ROOT; };
+		9E8F38B51FE12E9800BE9A80 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = Sources/Extensions.swift; sourceTree = SOURCE_ROOT; };
 		9EA8054D1D9BB54100348BC6 /* Dockerfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Dockerfile; sourceTree = "<group>"; };
 		9EDCE3E41C09D211002FA4A7 /* SwiftyBeaver.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyBeaver.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EDCE3EE1C09D211002FA4A7 /* SwiftyBeaverTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftyBeaverTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
