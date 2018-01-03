@@ -199,6 +199,8 @@ Best: for the popular server-side Swift web framework [Vapor](https://github.com
 - [Colored Logging to Xcode Console](http://docs.swiftybeaver.com/article/9-log-to-xcode-console)
 - [Colored Logging to File](http://docs.swiftybeaver.com/article/10-log-to-file)
 - [Encrypted Logging & Analytics to SwiftyBeaver Platform](http://docs.swiftybeaver.com/article/11-log-to-swiftybeaver-platform)
+- [Encrypted Logging & Analytics to Elasticsearch & Kibana](http://docs.swiftybeaver.com/article/34-enterprise-quick-start-via-docker)
+
 
 **Advanced Topics:**
 
