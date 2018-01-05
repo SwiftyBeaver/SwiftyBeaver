@@ -173,7 +173,7 @@ open class BaseDestination: Hashable, Equatable {
                     text += phrase
                 }
         }
-        return text
+        return text.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     /// returns the log payload as optional JSON string

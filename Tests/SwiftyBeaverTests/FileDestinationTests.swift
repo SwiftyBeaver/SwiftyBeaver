@@ -30,12 +30,13 @@ class FileDestinationTests: XCTestCase {
         // add file
         let file = FileDestination()
         file.logFileURL = URL(string: "file://" + path)!
-        file.format = "$L: $M"
+        file.format = "$L: $M $X"
         _ = log.addDestination(file)
 
         log.verbose("first line to log")
         log.debug("second line to log")
         log.info("third line to log")
+        log.warning("fourth line with context", context: 123)
         _ = log.flush(secondTimeout: 3)
 
         // wait a bit until the logs are written to file
@@ -48,11 +49,12 @@ class FileDestinationTests: XCTestCase {
         let fileLines = self.linesOfFile(path: path)
         XCTAssertNotNil(fileLines)
         guard let lines = fileLines else { return }
-        XCTAssertEqual(lines.count, 4)
+        XCTAssertEqual(lines.count, 5)
         XCTAssertEqual(lines[0], "VERBOSE: first line to log")
         XCTAssertEqual(lines[1], "DEBUG: second line to log")
         XCTAssertEqual(lines[2], "INFO: third line to log")
-        XCTAssertEqual(lines[3], "")
+        XCTAssertEqual(lines[3], "WARNING: fourth line with context 123")
+        XCTAssertEqual(lines[4], "")
     }
 
     func testFileIsWrittenToFolderWithSpaces() {

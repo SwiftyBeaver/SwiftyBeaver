@@ -103,7 +103,7 @@ class BaseDestinationTests: XCTestCase {
 
         str = obj4.formatMessage(format, level: .verbose, msg: "Hello", thread: "main",
                                 file: "/path/to/ViewController.swift", function: "testFunction()", line: 50, context: nil)
-        XCTAssertEqual(str, "VERBOSE: Hello ")
+        XCTAssertEqual(str, "VERBOSE: Hello")
     }
 
     func testMessageToJSON() {
