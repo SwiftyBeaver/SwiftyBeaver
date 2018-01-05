@@ -168,7 +168,7 @@ log.error(["name": "Mr Beaver", "address": "7 Beaver Lodge"])
 // optionally add context to a log message
 console.format = "$L: $M $X"
 log.debug("age", 123)  // "DEBUG: age 123"
-log.info("my data", context: [1, "a", 2]) // INFO: my data [1, \"a\", 2]
+log.info("my data", context: [1, "a", 2]) // "INFO: my data [1, \"a\", 2]"
 
 ```
 
