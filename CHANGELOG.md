@@ -6,6 +6,20 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 <br/>
 
+## 1.5.1 (2018-01-05)
+
+##### Added
+
+- Integration test for context format variable `$X` by [@skreutzberger](https://github.com/skreutzberger)
+- Logging output string is trimmed by [@skreutzberger](https://github.com/skreutzberger)
+
+##### Fixed
+
+- Fixed issue with Xcode and folder name on case-sensitive file systems by [@konstantinbe](https://github.com/konstantinbe)
+
+
+<br/>
+
 ## 1.5.0 (2017-12-13)
 
 ##### Added
