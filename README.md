@@ -164,6 +164,12 @@ log.info(-123.45678)
 log.warning(Date())
 log.error(["I", "like", "logs!"])
 log.error(["name": "Mr Beaver", "address": "7 Beaver Lodge"])
+
+// optionally add context to a log message
+console.format = "$L: $M $X"
+log.debug("age", 123)  // "DEBUG: age 123"
+log.info("my data", context: [1, "a", 2]) // INFO: my data [1, \"a\", 2]
+
 ```
 
 <br/>
@@ -204,7 +210,7 @@ Best: for the popular server-side Swift web framework [Vapor](https://github.com
 
 **Advanced Topics:**
 
-- [Custom Format](http://docs.swiftybeaver.com/article/20-custom-format)
+- [Custom Format & Context](http://docs.swiftybeaver.com/article/20-custom-format)
 - [Filters](http://docs.swiftybeaver.com/article/21-filters)
 
 **Stay Informed:**
