@@ -22,5 +22,5 @@ Great for development & release due to its support for many logging destinations
   s.tvos.deployment_target = "9.0"
   s.osx.deployment_target = "10.10"
   s.source       = { :git => "https://github.com/SwiftyBeaver/SwiftyBeaver.git", :tag => "1.5.0" }
-  s.source_files  = "sources"
+  s.source_files  = "Sources"
 end

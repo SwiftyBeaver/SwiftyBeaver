@@ -1,4 +1,4 @@
-<p align="center"><a href="https://swiftybeaver.com"><img src="https://cloud.githubusercontent.com/assets/564725/19889302/73b1ee84-a034-11e6-8753-2d060502397c.jpg" style="width: 888px;" alt="SwiftyBeaver"></a><br/><b>Colorful</b>, flexible, <b>lightweight</b> logging for Swift 2, Swift 3 & <b>Swift 4</b>.<br/>Great for <b>development & release</b> with support for Console, File & cloud platforms.<br/>NEW: Log <b>during release</b> to the conveniently built-in SwiftyBeaver Platform and Mac App!<br/><br/><a href="http://docs.swiftybeaver.com">Docs</a> | <a href="https://swiftybeaver.com">Website</a> | <a href="https://slack.swiftybeaver.com">Slack</a> | <a href="https://twitter.com/SwiftyBeaver">Twitter</a> | <a href="https://github.com/SwiftyBeaver/SwiftyBeaver/blob/master/LICENSE">License</a><br/></p>
+<p align="center"><a href="https://swiftybeaver.com"><img src="https://cloud.githubusercontent.com/assets/564725/19889302/73b1ee84-a034-11e6-8753-2d060502397c.jpg" style="width: 888px;" alt="SwiftyBeaver"></a><br/><b>Colorful</b>, flexible, <b>lightweight</b> logging for Swift 2, Swift 3 & <b>Swift 4</b>.<br/>Great for <b>development & release</b> with support for Console, File & cloud platforms.<br/>Log <b>during release</b> to the conveniently built-in SwiftyBeaver Platform, the <b>dedicated Mac App</b> & <b>Elasticsearch</b>!<br/><br/><a href="http://docs.swiftybeaver.com">Docs</a> | <a href="https://swiftybeaver.com">Website</a> | <a href="https://slack.swiftybeaver.com">Slack</a> | <a href="https://twitter.com/SwiftyBeaver">Twitter</a> | <a href="https://github.com/SwiftyBeaver/SwiftyBeaver/blob/master/LICENSE">License</a><br/></p>
 
 <p align="center"><a href="https://swift.org" target="_blank"><img src="https://img.shields.io/badge/Language-Swift%202,%203%20&%204-orange.svg" alt="Language Swift 3 & 4"></a> <a href="https://circleci.com/gh/SwiftyBeaver/SwiftyBeaver" target="_blank"><img src="https://circleci.com/gh/SwiftyBeaver/SwiftyBeaver/tree/master.svg?style=shield" alt="CircleCI"/></a> <a href="https://slack.swiftybeaver.com" target="_blank"><img src="https://img.shields.io/badge/Join-Our%20Slack%20Chat-blue.svg" alt="Slack Status"/></a><br/><p>
 
@@ -40,11 +40,25 @@ Conveniently access your logs during development & release with our [free Mac Ap
 
 <br/>
 
+
+### On Release: Enterprise-ready Logging to Your Elasticsearch & Kibana (on-premise)
+
+<img src="https://user-images.githubusercontent.com/564725/34486363-dc501aec-efcf-11e7-92b2-1163cca9e7aa.jpg" width="700">
+
+[Learn more](http://docs.swiftybeaver.com/article/34-enterprise-quick-start-via-docker) about **legally compliant**, end-to-end encrypted logging to Elasticsearch with **SwiftyBeaver Enterprise**. Install via Docker or manual, fully-featured free trial included!
+
+<br/>
+
 ### Google Cloud & More
 
 You can fully customize your log format, turn it into JSON, or create your own destinations. For example our [Google Cloud Destination](https://github.com/SwiftyBeaver/SwiftyBeaver/blob/master/Sources/GoogleCloudDestination.swift) is just another customized logging format which adds the powerful functionality of automatic server-side Swift logging when hosted on Google Cloud Platform.
 
-<br/><br/>
+<br/>
+
+----
+
+<br/>
+<br/>
 
 ## Installation
 
@@ -185,6 +199,8 @@ Best: for the popular server-side Swift web framework [Vapor](https://github.com
 - [Colored Logging to Xcode Console](http://docs.swiftybeaver.com/article/9-log-to-xcode-console)
 - [Colored Logging to File](http://docs.swiftybeaver.com/article/10-log-to-file)
 - [Encrypted Logging & Analytics to SwiftyBeaver Platform](http://docs.swiftybeaver.com/article/11-log-to-swiftybeaver-platform)
+- [Encrypted Logging & Analytics to Elasticsearch & Kibana](http://docs.swiftybeaver.com/article/34-enterprise-quick-start-via-docker)
+
 
 **Advanced Topics:**
 
