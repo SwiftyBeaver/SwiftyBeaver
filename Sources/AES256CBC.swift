@@ -759,8 +759,13 @@ fileprivate func arrayOfBytes<T>(value: T, length: Int? = nil) -> Array<UInt8> {
         bytes[totalBytes - 1 - j] = (bytesPointer + j).pointee
     }
 
+    #if swift(>=4.1)
+    valuePointer.deinitialize(count: 1)
+    valuePointer.deallocate()
+    #else
     valuePointer.deinitialize()
     valuePointer.deallocate(capacity: 1)
+    #endif
 
     return bytes
 }
