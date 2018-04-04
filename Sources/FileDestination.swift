@@ -19,49 +19,31 @@ public class FileDestination: BaseDestination {
 
     public override init() {
         // platform-dependent logfile directory default
-        var baseURL: URL?
-        #if os(OSX)
-            if let url = fileManager.urls(for:.cachesDirectory, in: .userDomainMask).first {
-                baseURL = url
-                // try to use ~/Library/Caches/APP NAME instead of ~/Library/Caches
-                if let appName = Bundle.main.object(forInfoDictionaryKey: "CFBundleExecutable") as? String {
-                    do {
-                        if let appURL = baseURL?.appendingPathComponent(appName, isDirectory: true) {
-                            try fileManager.createDirectory(at: appURL,
-                                                            withIntermediateDirectories: true, attributes: nil)
-                            baseURL = appURL
-                        }
-                    } catch {
-                        print("Warning! Could not create folder /Library/Caches/\(appName)")
-                    }
-                }
-            }
-        #else
-            #if os(Linux)
-                baseURL = URL(fileURLWithPath: "/var/cache")
-            #else
-                // iOS, watchOS, etc. are using the caches directory
-                if let url = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first {
-                    baseURL = url
-                }
-            #endif
-        #endif
-
-        if let baseURL = baseURL {
+        if let baseURL = defaultBaseURL(fileManager: fileManager) {
             logFileURL = baseURL.appendingPathComponent("swiftybeaver.log", isDirectory: false)
         }
         super.init()
 
+        FileDestination.applyDefaultSettings(destination: self)
+    }
+
+    /// Default settings for file-based destinations with
+    /// bash font colors formatting.
+    ///
+    /// Made reusable for all file-like destinations.
+    /// See `RotatingFileDestination` for example.
+    internal static func applyDefaultSettings(destination: BaseDestination) {
+
         // bash font color, first value is intensity, second is color
         // see http://bit.ly/1Otu3Zr & for syntax http://bit.ly/1Tp6Fw9
         // uses the 256-color table from http://bit.ly/1W1qJuH
-        reset = "\u{001b}[0m"
-        escape = "\u{001b}[38;5;"
-        levelColor.verbose = "251m"     // silver
-        levelColor.debug = "35m"        // green
-        levelColor.info = "38m"         // blue
-        levelColor.warning = "178m"     // yellow
-        levelColor.error = "197m"       // red
+        destination.reset = "\u{001b}[0m"
+        destination.escape = "\u{001b}[38;5;"
+        destination.levelColor.verbose = "251m" // silver
+        destination.levelColor.debug = "35m"    // green
+        destination.levelColor.info = "38m"     // blue
+        destination.levelColor.warning = "178m" // yellow
+        destination.levelColor.error = "197m"   // red
     }
 
     // append to file. uses full base class functionality
@@ -133,4 +115,32 @@ public class FileDestination: BaseDestination {
             return false
         }
     }
+}
+
+internal func defaultBaseURL(fileManager: FileManager = .default) -> URL? {
+    #if os(Linux)
+        return URL(fileURLWithPath: "/var/cache")
+    #else
+        guard let cachesURL = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first else { return nil }
+
+        #if os(OSX)
+            // try to use ~/Library/Caches/APP NAME instead of ~/Library/Caches
+            guard let appName = Bundle.main.object(forInfoDictionaryKey: "CFBundleExecutable") as? String else { return cachesURL }
+
+            do {
+                let appURL = cachesURL.appendingPathComponent(appName, isDirectory: true)
+                try fileManager.createDirectory(
+                    at: appURL,
+                    withIntermediateDirectories: true,
+                    attributes: nil)
+                return appURL
+            } catch {
+                print("Warning! Could not create folder /Library/Caches/\(appName)")
+                return cachesURL
+            }
+        #else
+            // iOS, watchOS, etc. are using the caches directory
+            return cachesURL
+        #endif
+    #endif
 }

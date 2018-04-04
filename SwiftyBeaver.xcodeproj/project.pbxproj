@@ -12,6 +12,24 @@
 		4D331AE01F1E8EA700B1C25E /* Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D331ADE1F1E8E1100B1C25E /* Base64.swift */; };
 		4D331AE11F1E8EAB00B1C25E /* Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D331ADE1F1E8E1100B1C25E /* Base64.swift */; };
 		4D331AE21F1E8EAC00B1C25E /* Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D331ADE1F1E8E1100B1C25E /* Base64.swift */; };
+		50932F411FE4FE460023C5E3 /* RemoveLogFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50932F401FE4FE460023C5E3 /* RemoveLogFiles.swift */; };
+		50932F431FE520290023C5E3 /* RemoveLogFilesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50932F421FE520290023C5E3 /* RemoveLogFilesTests.swift */; };
+		50D8F2521FE27143006F3068 /* SwiftyBeaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACE597A61C18832E0031451F /* SwiftyBeaver.framework */; };
+		50D8F2591FE27260006F3068 /* AES256CBCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEAC81D9BB46300F21B1F /* AES256CBCTests.swift */; };
+		50D8F25A1FE27260006F3068 /* BaseDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEAC91D9BB46300F21B1F /* BaseDestinationTests.swift */; };
+		50D8F25B1FE27260006F3068 /* DestinationSetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEACA1D9BB46300F21B1F /* DestinationSetTests.swift */; };
+		50D8F25C1FE27260006F3068 /* FileDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEACB1D9BB46300F21B1F /* FileDestinationTests.swift */; };
+		50D8F25D1FE27260006F3068 /* FilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEACC1D9BB46300F21B1F /* FilterTests.swift */; };
+		50D8F25E1FE27260006F3068 /* SBPlatformDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEACD1D9BB46300F21B1F /* SBPlatformDestinationTests.swift */; };
+		50D8F25F1FE27260006F3068 /* SecretsExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEACF1D9BB46300F21B1F /* SecretsExample.swift */; };
+		50D8F2601FE27260006F3068 /* SwiftyBeaverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEAD01D9BB46300F21B1F /* SwiftyBeaverTests.swift */; };
+		50D8F2611FE27260006F3068 /* GoogleCloudDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1720E71E9C083600AB7833 /* GoogleCloudDestinationTests.swift */; };
+		50D8F2631FE272A4006F3068 /* RotatingFileDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D8F2621FE272A4006F3068 /* RotatingFileDestinationTests.swift */; };
+		50D8F2651FE27481006F3068 /* Clock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D8F2641FE27481006F3068 /* Clock.swift */; };
+		50D8F2671FE274B2006F3068 /* RotatingFileDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D8F2661FE274B2006F3068 /* RotatingFileDestination.swift */; };
+		50D8F2691FE4037D006F3068 /* LogDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D8F2681FE4037D006F3068 /* LogDirectory.swift */; };
+		50D8F26C1FE403C4006F3068 /* LogDirectoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D8F26A1FE403BE006F3068 /* LogDirectoryTests.swift */; };
+		50D8F26E1FE40549006F3068 /* TemporaryFileHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D8F26D1FE40549006F3068 /* TemporaryFileHelpers.swift */; };
 		9E2AEAD11D9BB46300F21B1F /* AES256CBCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEAC81D9BB46300F21B1F /* AES256CBCTests.swift */; };
 		9E2AEAD21D9BB46300F21B1F /* BaseDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEAC91D9BB46300F21B1F /* BaseDestinationTests.swift */; };
 		9E2AEAD31D9BB46300F21B1F /* DestinationSetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2AEACA1D9BB46300F21B1F /* DestinationSetTests.swift */; };
@@ -60,6 +78,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		50D8F2531FE27143006F3068 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9EDCE3DB1C09D211002FA4A7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = ACE597971C18832E0031451F;
+			remoteInfo = "SwiftyBeaver (macOS)";
+		};
 		9EDCE3F01C09D211002FA4A7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 9EDCE3DB1C09D211002FA4A7 /* Project object */;
@@ -70,20 +95,30 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4D1720E71E9C083600AB7833 /* GoogleCloudDestinationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GoogleCloudDestinationTests.swift; path = Tests/SwiftyBeaverTests/GoogleCloudDestinationTests.swift; sourceTree = "<group>"; };
+		4D1720E71E9C083600AB7833 /* GoogleCloudDestinationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleCloudDestinationTests.swift; sourceTree = "<group>"; };
 		4D331ADE1F1E8E1100B1C25E /* Base64.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Base64.swift; sourceTree = "<group>"; };
+		50932F401FE4FE460023C5E3 /* RemoveLogFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveLogFiles.swift; sourceTree = "<group>"; };
+		50932F421FE520290023C5E3 /* RemoveLogFilesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveLogFilesTests.swift; sourceTree = "<group>"; };
+		50D8F24D1FE27143006F3068 /* SwiftyBeaverTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftyBeaverTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		50D8F2581FE271F5006F3068 /* Info macOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info macOS.plist"; path = "Tests/Info macOS.plist"; sourceTree = "<group>"; };
+		50D8F2621FE272A4006F3068 /* RotatingFileDestinationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotatingFileDestinationTests.swift; sourceTree = "<group>"; };
+		50D8F2641FE27481006F3068 /* Clock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clock.swift; sourceTree = "<group>"; };
+		50D8F2661FE274B2006F3068 /* RotatingFileDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotatingFileDestination.swift; sourceTree = "<group>"; };
+		50D8F2681FE4037D006F3068 /* LogDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDirectory.swift; sourceTree = "<group>"; };
+		50D8F26A1FE403BE006F3068 /* LogDirectoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDirectoryTests.swift; sourceTree = "<group>"; };
+		50D8F26D1FE40549006F3068 /* TemporaryFileHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryFileHelpers.swift; sourceTree = "<group>"; };
 		9E11A1DA1D92654E002112B6 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .swiftlint.yml; sourceTree = "<group>"; };
 		9E195B101C6B766D00D924CB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9E2AEAC51D9BB43C00F21B1F /* LinuxMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LinuxMain.swift; path = Tests/LinuxMain.swift; sourceTree = "<group>"; };
 		9E2AEAC61D9BB44700F21B1F /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Tests/Info.plist; sourceTree = "<group>"; };
-		9E2AEAC81D9BB46300F21B1F /* AES256CBCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AES256CBCTests.swift; path = Tests/SwiftyBeaverTests/AES256CBCTests.swift; sourceTree = "<group>"; };
-		9E2AEAC91D9BB46300F21B1F /* BaseDestinationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseDestinationTests.swift; path = Tests/SwiftyBeaverTests/BaseDestinationTests.swift; sourceTree = "<group>"; };
-		9E2AEACA1D9BB46300F21B1F /* DestinationSetTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DestinationSetTests.swift; path = Tests/SwiftyBeaverTests/DestinationSetTests.swift; sourceTree = "<group>"; };
-		9E2AEACB1D9BB46300F21B1F /* FileDestinationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FileDestinationTests.swift; path = Tests/SwiftyBeaverTests/FileDestinationTests.swift; sourceTree = "<group>"; };
-		9E2AEACC1D9BB46300F21B1F /* FilterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FilterTests.swift; path = Tests/SwiftyBeaverTests/FilterTests.swift; sourceTree = "<group>"; };
-		9E2AEACD1D9BB46300F21B1F /* SBPlatformDestinationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBPlatformDestinationTests.swift; path = Tests/SwiftyBeaverTests/SBPlatformDestinationTests.swift; sourceTree = "<group>"; };
-		9E2AEACF1D9BB46300F21B1F /* SecretsExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SecretsExample.swift; path = Tests/SwiftyBeaverTests/SecretsExample.swift; sourceTree = "<group>"; };
-		9E2AEAD01D9BB46300F21B1F /* SwiftyBeaverTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyBeaverTests.swift; path = Tests/SwiftyBeaverTests/SwiftyBeaverTests.swift; sourceTree = "<group>"; };
+		9E2AEAC81D9BB46300F21B1F /* AES256CBCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AES256CBCTests.swift; sourceTree = "<group>"; };
+		9E2AEAC91D9BB46300F21B1F /* BaseDestinationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDestinationTests.swift; sourceTree = "<group>"; };
+		9E2AEACA1D9BB46300F21B1F /* DestinationSetTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DestinationSetTests.swift; sourceTree = "<group>"; };
+		9E2AEACB1D9BB46300F21B1F /* FileDestinationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileDestinationTests.swift; sourceTree = "<group>"; };
+		9E2AEACC1D9BB46300F21B1F /* FilterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterTests.swift; sourceTree = "<group>"; };
+		9E2AEACD1D9BB46300F21B1F /* SBPlatformDestinationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBPlatformDestinationTests.swift; sourceTree = "<group>"; };
+		9E2AEACF1D9BB46300F21B1F /* SecretsExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecretsExample.swift; sourceTree = "<group>"; };
+		9E2AEAD01D9BB46300F21B1F /* SwiftyBeaverTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyBeaverTests.swift; sourceTree = "<group>"; };
 		9E4BBDFA1C09EB7F00220716 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		9E4BBDFE1C0A01D000220716 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		9E6CAA471C148EC1009D9093 /* SwiftyBeaver.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SwiftyBeaver.podspec; sourceTree = "<group>"; };
@@ -107,6 +142,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		50D8F24A1FE27143006F3068 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50D8F2521FE27143006F3068 /* SwiftyBeaver.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9EDCE3E01C09D211002FA4A7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -146,11 +189,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		50D8F2471FE270CB006F3068 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		9E2AEAC31D9BB3D000F21B1F /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				9E2AEAC61D9BB44700F21B1F /* Info.plist */,
+				50D8F2581FE271F5006F3068 /* Info macOS.plist */,
 				9E2AEAC51D9BB43C00F21B1F /* LinuxMain.swift */,
+				50D8F26D1FE40549006F3068 /* TemporaryFileHelpers.swift */,
 				9E2AEAC41D9BB3E700F21B1F /* SwiftyBeaverTests */,
 			);
 			name = Tests;
@@ -164,12 +216,16 @@
 				9E2AEACA1D9BB46300F21B1F /* DestinationSetTests.swift */,
 				9E2AEACB1D9BB46300F21B1F /* FileDestinationTests.swift */,
 				9E2AEACC1D9BB46300F21B1F /* FilterTests.swift */,
+				50D8F26A1FE403BE006F3068 /* LogDirectoryTests.swift */,
+				50932F421FE520290023C5E3 /* RemoveLogFilesTests.swift */,
+				50D8F2621FE272A4006F3068 /* RotatingFileDestinationTests.swift */,
 				9E2AEACD1D9BB46300F21B1F /* SBPlatformDestinationTests.swift */,
 				9E2AEACF1D9BB46300F21B1F /* SecretsExample.swift */,
 				9E2AEAD01D9BB46300F21B1F /* SwiftyBeaverTests.swift */,
 				4D1720E71E9C083600AB7833 /* GoogleCloudDestinationTests.swift */,
 			);
 			name = SwiftyBeaverTests;
+			path = Tests/SwiftyBeaverTests;
 			sourceTree = "<group>";
 		};
 		9E31D62A1C185ED0004E0980 /* Sources */ = {
@@ -177,10 +233,14 @@
 			children = (
 				CB5233FE1EB0EB4600739CFB /* AES256CBC.swift */,
 				CB5233FF1EB0EB4600739CFB /* BaseDestination.swift */,
+				50D8F2641FE27481006F3068 /* Clock.swift */,
 				CB5234001EB0EB4600739CFB /* ConsoleDestination.swift */,
+				50D8F2681FE4037D006F3068 /* LogDirectory.swift */,
 				CB5234011EB0EB4600739CFB /* FileDestination.swift */,
 				CB5234021EB0EB4600739CFB /* Filter.swift */,
 				CB5234031EB0EB4600739CFB /* GoogleCloudDestination.swift */,
+				50932F401FE4FE460023C5E3 /* RemoveLogFiles.swift */,
+				50D8F2661FE274B2006F3068 /* RotatingFileDestination.swift */,
 				CB5234041EB0EB4600739CFB /* SBPlatformDestination.swift */,
 				CB5234051EB0EB4600739CFB /* SwiftyBeaver.swift */,
 				4D331ADE1F1E8E1100B1C25E /* Base64.swift */,
@@ -203,6 +263,7 @@
 				9E31D62A1C185ED0004E0980 /* Sources */,
 				9E2AEAC31D9BB3D000F21B1F /* Tests */,
 				9EDCE3E51C09D211002FA4A7 /* Products */,
+				50D8F2471FE270CB006F3068 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -214,6 +275,7 @@
 				ACE597841C1882DF0031451F /* SwiftyBeaver.framework */,
 				ACE597951C18830D0031451F /* SwiftyBeaver.framework */,
 				ACE597A61C18832E0031451F /* SwiftyBeaver.framework */,
+				50D8F24D1FE27143006F3068 /* SwiftyBeaverTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -252,6 +314,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		50D8F24C1FE27143006F3068 /* SwiftyBeaverTests (macOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 50D8F2551FE27143006F3068 /* Build configuration list for PBXNativeTarget "SwiftyBeaverTests (macOS)" */;
+			buildPhases = (
+				50D8F2491FE27143006F3068 /* Sources */,
+				50D8F24A1FE27143006F3068 /* Frameworks */,
+				50D8F24B1FE27143006F3068 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				50D8F2541FE27143006F3068 /* PBXTargetDependency */,
+			);
+			name = "SwiftyBeaverTests (macOS)";
+			productName = "SwiftyBeaverTests (macOS)";
+			productReference = 50D8F24D1FE27143006F3068 /* SwiftyBeaverTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		9EDCE3E31C09D211002FA4A7 /* SwiftyBeaver (iOS) */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9EDCE3F81C09D211002FA4A7 /* Build configuration list for PBXNativeTarget "SwiftyBeaver (iOS)" */;
@@ -348,10 +428,14 @@
 		9EDCE3DB1C09D211002FA4A7 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0710;
+				LastSwiftUpdateCheck = 0920;
 				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Sebastian Kreutzberger";
 				TargetAttributes = {
+					50D8F24C1FE27143006F3068 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
 					9EDCE3E31C09D211002FA4A7 = {
 						CreatedOnToolsVersion = 7.1.1;
 						LastSwiftMigration = 0900;
@@ -390,11 +474,19 @@
 				ACE597751C1882DF0031451F /* SwiftyBeaver (watchOS) */,
 				ACE597861C18830D0031451F /* SwiftyBeaver (tvOS) */,
 				ACE597971C18832E0031451F /* SwiftyBeaver (macOS) */,
+				50D8F24C1FE27143006F3068 /* SwiftyBeaverTests (macOS) */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		50D8F24B1FE27143006F3068 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9EDCE3E21C09D211002FA4A7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -433,6 +525,26 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		50D8F2491FE27143006F3068 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50D8F26C1FE403C4006F3068 /* LogDirectoryTests.swift in Sources */,
+				50D8F2601FE27260006F3068 /* SwiftyBeaverTests.swift in Sources */,
+				50D8F25E1FE27260006F3068 /* SBPlatformDestinationTests.swift in Sources */,
+				50D8F2631FE272A4006F3068 /* RotatingFileDestinationTests.swift in Sources */,
+				50D8F25D1FE27260006F3068 /* FilterTests.swift in Sources */,
+				50D8F25B1FE27260006F3068 /* DestinationSetTests.swift in Sources */,
+				50D8F25F1FE27260006F3068 /* SecretsExample.swift in Sources */,
+				50D8F2591FE27260006F3068 /* AES256CBCTests.swift in Sources */,
+				50932F431FE520290023C5E3 /* RemoveLogFilesTests.swift in Sources */,
+				50D8F25C1FE27260006F3068 /* FileDestinationTests.swift in Sources */,
+				50D8F2611FE27260006F3068 /* GoogleCloudDestinationTests.swift in Sources */,
+				50D8F25A1FE27260006F3068 /* BaseDestinationTests.swift in Sources */,
+				50D8F26E1FE40549006F3068 /* TemporaryFileHelpers.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9EDCE3DF1C09D211002FA4A7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -508,18 +620,27 @@
 				CB0FC3191EB8ABA10094E03A /* ConsoleDestination.swift in Sources */,
 				CB0FC31C1EB8ABA10094E03A /* GoogleCloudDestination.swift in Sources */,
 				CB0FC31B1EB8ABA10094E03A /* Filter.swift in Sources */,
+				50D8F2691FE4037D006F3068 /* LogDirectory.swift in Sources */,
 				4D331ADF1F1E8E1100B1C25E /* Base64.swift in Sources */,
 				9E8F38BA1FE12E9800BE9A80 /* Extensions.swift in Sources */,
 				CB0FC3171EB8ABA10094E03A /* AES256CBC.swift in Sources */,
+				50932F411FE4FE460023C5E3 /* RemoveLogFiles.swift in Sources */,
 				CB0FC31A1EB8ABA10094E03A /* FileDestination.swift in Sources */,
 				CB0FC31D1EB8ABA10094E03A /* SBPlatformDestination.swift in Sources */,
 				CB0FC3181EB8ABA10094E03A /* BaseDestination.swift in Sources */,
+				50D8F2671FE274B2006F3068 /* RotatingFileDestination.swift in Sources */,
+				50D8F2651FE27481006F3068 /* Clock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		50D8F2541FE27143006F3068 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = ACE597971C18832E0031451F /* SwiftyBeaver (macOS) */;
+			targetProxy = 50D8F2531FE27143006F3068 /* PBXContainerItemProxy */;
+		};
 		9EDCE3F11C09D211002FA4A7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 9EDCE3E31C09D211002FA4A7 /* SwiftyBeaver (iOS) */;
@@ -528,6 +649,52 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		50D8F2561FE27143006F3068 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "Tests/Info macOS.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.SwiftyBeaver.SwiftyBeaverTests-macOS";
+				PRODUCT_NAME = SwiftyBeaverTests;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 4.0;
+			};
+			name = Debug;
+		};
+		50D8F2571FE27143006F3068 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "Tests/Info macOS.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.SwiftyBeaver.SwiftyBeaverTests-macOS";
+				PRODUCT_NAME = SwiftyBeaverTests;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Release;
+		};
 		9EDCE3F61C09D211002FA4A7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -867,6 +1034,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		50D8F2551FE27143006F3068 /* Build configuration list for PBXNativeTarget "SwiftyBeaverTests (macOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				50D8F2561FE27143006F3068 /* Debug */,
+				50D8F2571FE27143006F3068 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		9EDCE3DE1C09D211002FA4A7 /* Build configuration list for PBXProject "SwiftyBeaver" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
