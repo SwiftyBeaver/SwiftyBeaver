@@ -6,6 +6,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 <br/>
 
+## 1.5.2 (2018-05-05)
+
+##### Added
+
+- Support for Xcode 9.3 and Swift 4.1 by [@jimmya](https://github.com/jimmya)
+
+<br/>
+
 ## 1.5.1 (2018-01-05)
 
 ##### Added
