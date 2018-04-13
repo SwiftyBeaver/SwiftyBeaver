@@ -378,9 +378,11 @@ open class BaseDestination: Hashable, Equatable {
         }
 
         // If a non-required filter matches, the log is validated
-        if allNonRequired > 0 && matchedNonRequired > 0 {
-            return true
-        }
+		if allNonRequired > 0 {  // Non-required filters exist
+
+			if matchedNonRequired > 0 { return true }  // At least one non-required filter matched
+			else { return false }  // No non-required filters matched
+		}
 
         if level.rawValue < minLevel.rawValue {
             if debugPrint {
