@@ -859,6 +859,8 @@ class FilterTests: XCTestCase {
 
         case let .Equals(_, caseSensitive):
             isCaseSensitive = caseSensitive
+        case .Custom(_):
+            isCaseSensitive = false
         }
 
         return isCaseSensitive
