@@ -47,6 +47,7 @@ public class Filter {
         case Excludes([String], Bool)
         case EndsWith([String], Bool)
         case Equals([String], Bool)
+        case Custom((String) -> Bool)
     }
 
     let targetType: Filter.TargetType
@@ -145,6 +146,8 @@ public class CompareFilter: Filter, FilterType {
                 return caseSensitive ? value == string :
                     value.lowercased() == string.lowercased()
                 }.isEmpty
+        case let .Custom(predicate):
+            matches = predicate(value)
         }
 
         return matches
@@ -188,6 +191,10 @@ public class FunctionFilterFactory {
                               required: Bool = false, minLevel: SwiftyBeaver.Level = .verbose) -> FilterType {
         return CompareFilter(.Function(.Equals(strings, caseSensitive)), required: required, minLevel: minLevel)
     }
+
+    public static func custom(required: Bool = false, minLevel: SwiftyBeaver.Level = .verbose, filterPredicate: @escaping (String) -> Bool) -> FilterType {
+        return CompareFilter(.Function(.Custom(filterPredicate)), required: required, minLevel: minLevel)
+    }
 }
 
 // Syntactic sugar for creating a message comparison filter
@@ -216,6 +223,10 @@ public class MessageFilterFactory {
                               required: Bool = false, minLevel: SwiftyBeaver.Level = .verbose) -> FilterType {
         return CompareFilter(.Message(.Equals(strings, caseSensitive)), required: required, minLevel: minLevel)
     }
+
+    public static func custom(required: Bool = false, minLevel: SwiftyBeaver.Level = .verbose, filterPredicate: @escaping (String) -> Bool) -> FilterType {
+        return CompareFilter(.Message(.Custom(filterPredicate)), required: required, minLevel: minLevel)
+    }
 }
 
 // Syntactic sugar for creating a path comparison filter
@@ -243,6 +254,10 @@ public class PathFilterFactory {
     public static func equals(_ strings: String..., caseSensitive: Bool = false,
                               required: Bool = false, minLevel: SwiftyBeaver.Level = .verbose) -> FilterType {
         return CompareFilter(.Path(.Equals(strings, caseSensitive)), required: required, minLevel: minLevel)
+    }
+
+    public static func custom(required: Bool = false, minLevel: SwiftyBeaver.Level = .verbose, filterPredicate: @escaping (String) -> Bool) -> FilterType {
+        return CompareFilter(.Path(.Custom(filterPredicate)), required: required, minLevel: minLevel)
     }
 }
 
