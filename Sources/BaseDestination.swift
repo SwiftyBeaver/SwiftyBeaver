@@ -72,6 +72,7 @@ open class BaseDestination: Hashable, Equatable {
 
     var filters = [FilterType]()
     let formatter = DateFormatter()
+    let startDate = Date()
 
     // each destination class must have an own hashValue Int
     lazy public var hashValue: Int = self.defaultHashValue
@@ -146,6 +147,8 @@ open class BaseDestination: Hashable, Equatable {
                     #endif
                 case "d":
                     text += remainingPhrase
+                case "U":
+                    text += uptime() + remainingPhrase
                 case "Z":
                     // start of datetime format in UTC timezone
                     #if swift(>=3.2)
@@ -274,6 +277,18 @@ open class BaseDestination: Hashable, Equatable {
         //let dateStr = formatter.string(from: NSDate() as Date)
         let dateStr = formatter.string(from: Date())
         return dateStr
+    }
+    
+    /// returns a uptime string
+    func uptime() -> String {
+        let interval = Date().timeIntervalSince(startDate)
+        
+        let hours = Int(interval) / 3600
+        let minutes = Int(interval / 60) - Int(hours * 60)
+        let seconds = Int(interval) - (Int(interval / 60) * 60)
+        let milliseconds = Int(interval.truncatingRemainder(dividingBy: 1) * 1000)
+        
+        return String(format: "%0.2d:%0.2d:%0.2d.%03d", arguments: [hours, minutes, seconds, milliseconds])
     }
 
     /// returns the json-encoded string value
