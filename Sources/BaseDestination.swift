@@ -114,14 +114,18 @@ open class BaseDestination: Hashable, Equatable {
         file: String, function: String, line: Int, context: Any? = nil) -> String {
 
         var text = ""
-        let phrases: [String] = format.components(separatedBy: "$")
+        // Prepend a $I for 'ignore' or else the first character is interpreted as a format character
+        // even if the format string did not start with a $.
+        let phrases: [String] = ("$I" + format).components(separatedBy: "$")
 
         for phrase in phrases where !phrase.isEmpty {
-                let firstChar = phrase[phrase.startIndex]
-                let rangeAfterFirstChar = phrase.index(phrase.startIndex, offsetBy: 1)..<phrase.endIndex
-                let remainingPhrase = phrase[rangeAfterFirstChar]
-
-                switch firstChar {
+                let formatChar = phrase[phrase.startIndex]
+                let rangeAfterFormatChar = phrase.index(phrase.startIndex, offsetBy: 1)..<phrase.endIndex
+                let remainingPhrase = phrase[rangeAfterFormatChar]
+            
+                switch formatChar {
+                case "I":  // ignore
+                    text += remainingPhrase
                 case "L":
                     text += levelWord(level) + remainingPhrase
                 case "M":

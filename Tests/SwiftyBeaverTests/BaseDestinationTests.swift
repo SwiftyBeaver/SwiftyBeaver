@@ -46,6 +46,16 @@ class BaseDestinationTests: XCTestCase {
                                 file: "/path/to/ViewController.swift", function: "testFunction()", line: 50)
         XCTAssertEqual(str, "Hello")
 
+        // format without variables (make sure the L is not interpreted as format character)
+        format = "Linda"
+        str = obj.formatMessage(format, level: .verbose, msg: "Hello", thread: "main",
+                                file: "/path/to/ViewController.swift", function: "testFunction()", line: 50)
+        XCTAssertEqual(str, "Linda")
+        format = "$Linda $M"
+        str = obj.formatMessage(format, level: .verbose, msg: "Hello", thread: "main",
+                                file: "/path/to/ViewController.swift", function: "testFunction()", line: 50)
+        XCTAssertEqual(str, "VERBOSEinda Hello")
+
         // weird format
         format = "$"
         str = obj.formatMessage(format, level: .verbose, msg: "Hello", thread: "main",
