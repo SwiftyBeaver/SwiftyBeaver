@@ -13,28 +13,28 @@ import Foundation
 // valid values for os(): OSX, iOS, watchOS, tvOS, Linux
 // in Swift 3 the following were added: FreeBSD, Windows, Android
 #if os(iOS) || os(tvOS) || os(watchOS)
-    import UIKit
-    var DEVICE_MODEL: String {
-        get {
-            var systemInfo = utsname()
-            uname(&systemInfo)
-            let machineMirror = Mirror(reflecting: systemInfo.machine)
-            let identifier = machineMirror.children.reduce("") { identifier, element in
-                guard let value = element.value as? Int8, value != 0 else { return identifier }
-                return identifier + String(UnicodeScalar(UInt8(value)))
-            }
-            return identifier
+import UIKit
+var DEVICE_MODEL: String {
+    get {
+        var systemInfo = utsname()
+        uname(&systemInfo)
+        let machineMirror = Mirror(reflecting: systemInfo.machine)
+        let identifier = machineMirror.children.reduce("") { identifier, element in
+            guard let value = element.value as? Int8, value != 0 else { return identifier }
+            return identifier + String(UnicodeScalar(UInt8(value)))
         }
+        return identifier
     }
+}
 #else
-    let DEVICE_MODEL = ""
+let DEVICE_MODEL = ""
 #endif
 
 #if os(iOS) || os(tvOS)
-    var DEVICE_NAME = UIDevice.current.name
+var DEVICE_NAME = UIDevice.current.name
 #else
-    // under watchOS UIDevice is not existing, http://apple.co/26ch5J1
-    let DEVICE_NAME = ""
+// under watchOS UIDevice is not existing, http://apple.co/26ch5J1
+let DEVICE_NAME = ""
 #endif
 
 public class SBPlatformDestination: BaseDestination {
@@ -77,8 +77,47 @@ public class SBPlatformDestination: BaseDestination {
     let isoDateFormatter = DateFormatter()
 
     /// init platform with default internal filenames
-    public init(appID: String, appSecret: String, encryptionKey: String,
+
+    #if os(Linux)
+    public convenience init(appID: String, appSecret: String, encryptionKey: String,
                 serverURL: URL? = URL(string: "https://api.swiftybeaver.com/api/entries/"),
+                baseDirectory: String = "/var/cache/",
+                entriesFileName: String = "sbplatform_entries.json",
+                sendingfileName: String = "sbplatform_entries_sending.json",
+                analyticsFileName: String = "sbplatform_analytics.json") {
+
+        let baseDirectoryURL = URL(fileURLWithPath: "/var/cache/", isDirectory: true)
+        self.init(appID: appID, appSecret: appSecret, encryptionKey: encryptionKey, baseDirectoryURL: baseDirectoryURL)
+    }
+    #else
+    public static func baseDirectoryDefault() -> FileManager.SearchPathDirectory {
+        #if os(OSX)
+        return .applicationSupportDirectory
+        #elseif os(tvOS)
+        return .cachesDirectory
+        #else // iOS and watchOS are using the app’s document directory
+        return .documentDirectory
+        #endif
+    }
+
+    public convenience init(appID: String, appSecret: String, encryptionKey: String,
+                serverURL: URL? = URL(string: "https://api.swiftybeaver.com/api/entries/"),
+                baseDirectory: FileManager.SearchPathDirectory = SBPlatformDestination.baseDirectoryDefault(),
+                entriesFileName: String = "sbplatform_entries.json",
+                sendingfileName: String = "sbplatform_entries_sending.json",
+                analyticsFileName: String = "sbplatform_analytics.json") {
+
+
+        let directoryURL = try! FileManager.default.url(for: baseDirectory ,
+                                                        in: .userDomainMask, appropriateFor: nil,
+                                                        create: true)
+        self.init(appID: appID, appSecret: appSecret, encryptionKey: encryptionKey, baseDirectoryURL: directoryURL)
+    }
+    #endif
+
+    private init(appID: String, appSecret: String, encryptionKey: String,
+                serverURL: URL? = URL(string: "https://api.swiftybeaver.com/api/entries/"),
+                baseDirectoryURL: URL,
                 entriesFileName: String = "sbplatform_entries.json",
                 sendingfileName: String = "sbplatform_entries_sending.json",
                 analyticsFileName: String = "sbplatform_analytics.json") {
@@ -89,68 +128,53 @@ public class SBPlatformDestination: BaseDestination {
         self.encryptionKey = encryptionKey
 
         // setup where to write the json files
-        var baseURL: URL?
+        var baseURL = baseDirectoryURL
         #if os(OSX)
-            if let url = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first {
-                baseURL = url
-                // try to use ~/Library/Application Support/APP NAME instead of ~/Library/Application Support
-                if let appName = Bundle.main.object(forInfoDictionaryKey: "CFBundleExecutable") as? String {
-                    do {
-                        if let appURL = baseURL?.appendingPathComponent(appName, isDirectory: true) {
-                            try fileManager.createDirectory(at: appURL,
-                                                            withIntermediateDirectories: true, attributes: nil)
-                            baseURL = appURL
-                        }
-                    } catch {
-                        // it is too early in the class lifetime to be able to use toNSLog()
-                        print("Warning! Could not create folder ~/Library/Application Support/\(appName).")
-                    }
+        // try to use ~/Library/Application Support/APP NAME instead of ~/Library/Application Support
+        if let appName = Bundle.main.object(forInfoDictionaryKey: "CFBundleExecutable") as? String {
+            do {
+                if let appURL = baseURL?.appendingPathComponent(appName, isDirectory: true) {
+                    try fileManager.createDirectory(at: appURL,
+                                                    withIntermediateDirectories: true, attributes: nil)
+                    baseURL = appURL
                 }
+            } catch {
+                // it is too early in the class lifetime to be able to use toNSLog()
+                print("Warning! Could not create folder ~/Library/Application Support/\(appName).")
             }
-        #else
-            #if os(tvOS)
-                // tvOS can just use the caches directory
-                if let url = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first {
-                    baseURL = url
-                }
-            #elseif os(Linux)
-                // Linux is using /var/cache
-                let baseDir = "/var/cache/"
-                entriesFileURL = URL(fileURLWithPath: baseDir + entriesFileName)
-                sendingFileURL = URL(fileURLWithPath: baseDir + sendingfileName)
-                analyticsFileURL = URL(fileURLWithPath: baseDir + analyticsFileName)
-            #else
-                // iOS and watchOS are using the app’s document directory
-                if let url = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first {
-                    baseURL = url
-                }
-            #endif
+        }
+        #elseif os(Linux)
+        // Linux is using /var/cache
+        let baseDir = baseURL.path//"/var/cache/"
+        entriesFileURL = URL(fileURLWithPath: baseDir + entriesFileName)
+        sendingFileURL = URL(fileURLWithPath: baseDir + sendingfileName)
+        analyticsFileURL = URL(fileURLWithPath: baseDir + analyticsFileName)
         #endif
 
         #if os(Linux)
-            // get, update loaded and save analytics data to file on start
-            let dict = analytics(analyticsFileURL, update: true)
-            _ = saveDictToFile(dict, url: analyticsFileURL)
+        // get, update loaded and save analytics data to file on start
+        let dict = analytics(analyticsFileURL, update: true)
+        _ = saveDictToFile(dict, url: analyticsFileURL)
         #else
-            if let baseURL = baseURL {
-                // is just set for everything but not Linux
-                entriesFileURL = baseURL.appendingPathComponent(entriesFileName,
-                                                                isDirectory: false)
-                sendingFileURL = baseURL.appendingPathComponent(sendingfileName,
-                                                                isDirectory: false)
-                analyticsFileURL = baseURL.appendingPathComponent(analyticsFileName,
-                                                                  isDirectory: false)
+        //            if let baseURL = baseURL {
+        // is just set for everything but not Linux
+        entriesFileURL = baseURL.appendingPathComponent(entriesFileName,
+                                                        isDirectory: false)
+        sendingFileURL = baseURL.appendingPathComponent(sendingfileName,
+                                                        isDirectory: false)
+        analyticsFileURL = baseURL.appendingPathComponent(analyticsFileName,
+                                                          isDirectory: false)
 
-                // get, update loaded and save analytics data to file on start
-                let dict = analytics(analyticsFileURL, update: true)
-                _ = saveDictToFile(dict, url: analyticsFileURL)
-            }
+        // get, update loaded and save analytics data to file on start
+        let dict = analytics(analyticsFileURL, update: true)
+        _ = saveDictToFile(dict, url: analyticsFileURL)
+        //            }
         #endif
     }
 
     // append to file, each line is a JSON dict
     override public func send(_ level: SwiftyBeaver.Level, msg: String, thread: String,
-        file: String, function: String, line: Int, context: Any? = nil) -> String? {
+                              file: String, function: String, line: Int, context: Any? = nil) -> String? {
 
         var jsonString: String?
 
@@ -276,12 +300,12 @@ public class SBPlatformDestination: BaseDestination {
 
             let session = URLSession(configuration:
                 URLSessionConfiguration.default,
-                delegate: nil, delegateQueue: operationQueue)
+                                     delegate: nil, delegateQueue: operationQueue)
 
             toNSLog("assembling request ...")
 
-             // assemble request
-             var request = URLRequest(url: serverURL,
+            // assemble request
+            var request = URLRequest(url: serverURL,
                                      cachePolicy: .reloadIgnoringLocalAndRemoteCacheData,
                                      timeoutInterval: timeout)
             request.httpMethod = "POST"
@@ -290,8 +314,8 @@ public class SBPlatformDestination: BaseDestination {
 
             // basic auth header (just works on Linux for Swift 3.1+, macOS is fine)
             guard let credentials = "\(appID):\(appSecret)".data(using: String.Encoding.utf8) else {
-                    toNSLog("Error! Could not set basic auth header")
-                    return complete(false, 0)
+                toNSLog("Error! Could not set basic auth header")
+                return complete(false, 0)
             }
 
             #if os(Linux)
@@ -420,7 +444,7 @@ public class SBPlatformDestination: BaseDestination {
                     if let data = lineJSON.data(using: .utf8) {
                         do {
                             if let dict = try JSONSerialization.jsonObject(with: data,
-                                options: .mutableContainers) as? [String:Any] {
+                                                                           options: .mutableContainers) as? [String:Any] {
                                 if !dict.isEmpty {
                                     dicts.append(dict)
                                 }
@@ -544,7 +568,7 @@ public class SBPlatformDestination: BaseDestination {
     /// Returns the current app version string (like 1.2.5) or empty string on error
     func appVersion() -> String {
         if let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String {
-                return version
+            return version
         }
         return ""
     }
@@ -565,7 +589,7 @@ public class SBPlatformDestination: BaseDestination {
             let fileContent = try String(contentsOfFile: url.path, encoding: .utf8)
             if let data = fileContent.data(using: .utf8) {
                 return try JSONSerialization.jsonObject(with: data,
-                                    options: .mutableContainers) as? [String:Any]
+                                                        options: .mutableContainers) as? [String:Any]
             }
         } catch {
             toNSLog("SwiftyBeaver Platform Destination could not read file \(url)")
@@ -590,9 +614,9 @@ public class SBPlatformDestination: BaseDestination {
     func toNSLog(_ str: String) {
         if showNSLog {
             #if os(Linux)
-                print("SBPlatform: \(str)")
+            print("SBPlatform: \(str)")
             #else
-                NSLog("SBPlatform: \(str)")
+            NSLog("SBPlatform: \(str)")
             #endif
         }
     }
@@ -601,21 +625,21 @@ public class SBPlatformDestination: BaseDestination {
     class func threadName() -> String {
 
         #if os(Linux)
-            // on 9/30/2016 not yet implemented in server-side Swift:
-            // > import Foundation
-            // > Thread.isMainThread
-            return ""
+        // on 9/30/2016 not yet implemented in server-side Swift:
+        // > import Foundation
+        // > Thread.isMainThread
+        return ""
         #else
-            if Thread.isMainThread {
-                return ""
+        if Thread.isMainThread {
+            return ""
+        } else {
+            let threadName = Thread.current.name
+            if let threadName = threadName, !threadName.isEmpty {
+                return threadName
             } else {
-                let threadName = Thread.current.name
-                if let threadName = threadName, !threadName.isEmpty {
-                    return threadName
-                } else {
-                    return String(format: "%p", Thread.current)
-                }
+                return String(format: "%p", Thread.current)
             }
+        }
         #endif
     }
 }
