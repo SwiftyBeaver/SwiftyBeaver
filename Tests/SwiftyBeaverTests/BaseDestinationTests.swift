@@ -542,11 +542,17 @@ class BaseDestinationTests: XCTestCase {
                                                        function: "otherFunc",
                                                        message: "Hello World"))
 
-        // not excluded, but above minLevel
-        XCTAssertTrue(destination.shouldLevelBeLogged(.error,
+        // not excluded, above minLevel but at least 1 non-required filtter has to match!
+        XCTAssertFalse(destination.shouldLevelBeLogged(.error,
                                                       path: "/world/OtherViewController.swift",
                                                       function: "otherFunc",
                                                       message: "Hello World"))
+        
+        XCTAssertTrue(destination.shouldLevelBeLogged(.error,
+                                                       path: "/ViewController.swift",
+                                                       function: "otherFunc",
+                                                       message: "Hello World"))
+        
     }
 
     /// turns dict into JSON-encoded string
