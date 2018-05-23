@@ -104,6 +104,15 @@ class BaseDestinationTests: XCTestCase {
         str = obj4.formatMessage(format, level: .verbose, msg: "Hello", thread: "main",
                                 file: "/path/to/ViewController.swift", function: "testFunction()", line: 50, context: nil)
         XCTAssertEqual(str, "VERBOSE: Hello")
+        
+        // context in the middle
+        let obj5 = BaseDestination()
+        format = "$L: [$X] $M"
+        str = obj5.formatMessage(format, level: .verbose, msg: "Hello", thread: "main", file: "/path/to/ViewController.swift", function: "testFunction()", line: 50, context: "Context!")
+        XCTAssertEqual(str, "VERBOSE: [Context!] Hello")
+        // no context
+        str = obj5.formatMessage(format, level: .verbose, msg: "Hello", thread: "main", file: "/path/to/ViewController.swift", function: "testFunction()", line: 50)
+        XCTAssertEqual(str, "VERBOSE: [] Hello")
     }
 
     func testMessageToJSON() {

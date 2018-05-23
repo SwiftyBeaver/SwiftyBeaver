@@ -167,6 +167,8 @@ open class BaseDestination: Hashable, Equatable {
                     // add the context
                     if let cx = context {
                         text += String(describing: cx).trimmingCharacters(in: .whitespacesAndNewlines) + remainingPhrase
+                    } else {
+                        text += remainingPhrase
                     }
                     /*
                     if let contextString = context as? String {
