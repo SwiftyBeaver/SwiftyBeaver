@@ -6,7 +6,19 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 <br/>
 
-## 1.5.2 (2018-05-05)
+## 1.6.0 (2018-05-23)
+
+##### Added
+
+- Custom filters by [@Mordil ](https://github.com/Mordil )
+- App uptime format variable `$U` by [@LordNali ](https://github.com/LordNali )
+
+##### Changed
+- Filter behavior which requires now at least one passing non-required filter by [@cconway](https://github.com/cconway)
+
+<br/>
+
+## 1.5.2 (2018-04-05)
 
 ##### Added
 

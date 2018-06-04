@@ -34,8 +34,9 @@ class BaseDestinationTests: XCTestCase {
         let obj = BaseDestination()
         var str = ""
         var format = ""
-
+        
         // empty format
+        format = ""
         str = obj.formatMessage(format, level: .verbose, msg: "Hello", thread: "main",
             file: "/path/to/ViewController.swift", function: "testFunction()", line: 50)
         XCTAssertEqual(str, "")
@@ -45,6 +46,16 @@ class BaseDestinationTests: XCTestCase {
         str = obj.formatMessage(format, level: .verbose, msg: "Hello", thread: "main",
                                 file: "/path/to/ViewController.swift", function: "testFunction()", line: 50)
         XCTAssertEqual(str, "Hello")
+
+        // format without variables (make sure the L is not interpreted as format character)
+        format = "Linda"
+        str = obj.formatMessage(format, level: .verbose, msg: "Hello", thread: "main",
+                                file: "/path/to/ViewController.swift", function: "testFunction()", line: 50)
+        XCTAssertEqual(str, "Linda")
+        format = "$Linda $M"
+        str = obj.formatMessage(format, level: .verbose, msg: "Hello", thread: "main",
+                                file: "/path/to/ViewController.swift", function: "testFunction()", line: 50)
+        XCTAssertEqual(str, "VERBOSEinda Hello")
 
         // weird format
         format = "$"
@@ -104,6 +115,39 @@ class BaseDestinationTests: XCTestCase {
         str = obj4.formatMessage(format, level: .verbose, msg: "Hello", thread: "main",
                                 file: "/path/to/ViewController.swift", function: "testFunction()", line: 50, context: nil)
         XCTAssertEqual(str, "VERBOSE: Hello")
+        
+        // context in the middle
+        let obj5 = BaseDestination()
+        format = "$L: [$X] $M"
+        str = obj5.formatMessage(format, level: .verbose, msg: "Hello", thread: "main", file: "/path/to/ViewController.swift", function: "testFunction()", line: 50, context: "Context!")
+        XCTAssertEqual(str, "VERBOSE: [Context!] Hello")
+        // no context
+        str = obj5.formatMessage(format, level: .verbose, msg: "Hello", thread: "main", file: "/path/to/ViewController.swift", function: "testFunction()", line: 50)
+        XCTAssertEqual(str, "VERBOSE: [] Hello")
+        
+        
+        // misc. paddings
+        let obj6 = BaseDestination()
+        format = "[$-8L]"
+        str = obj6.formatMessage(format, level: .debug, msg: "Hello", thread: "main", file: "/path/to/ViewController.swift", function: "testFunction()", line: 50)
+        XCTAssertEqual(str, "[DEBUG   ]")
+        format = "$-8L"
+        str = obj6.formatMessage(format, level: .debug, msg: "Hello", thread: "main", file: "/path/to/ViewController.swift", function: "testFunction()", line: 50)
+        XCTAssertEqual(str, "DEBUG")
+        format = "$8L"
+        str = obj6.formatMessage(format, level: .debug, msg: "Hello", thread: "main", file: "/path/to/ViewController.swift", function: "testFunction()", line: 50)
+        XCTAssertEqual(str, "   DEBUG")
+        format = "$-8L:_$10X___$M"
+        str = obj6.formatMessage(format, level: .debug, msg: "Hello", thread: "main", file: "/path/to/ViewController.swift", function: "testFunction()", line: 50, context: "Context!")
+
+        obj6.levelColor.verbose = "?"
+        obj6.escape = ">"
+        obj6.reset = "<"
+        XCTAssertEqual(str, "DEBUG   :_  Context!___Hello")
+        format = "[$Dyyyy-MM-dd HH:mm:ss$d] |$T| $N.$F:$l $C$L$c: $M"
+        str = obj6.formatMessage(format, level: .verbose, msg: "Hello", thread: "main",
+                                 file: "/path/to/ViewController.swift", function: "testFunction()", line: 50)
+        XCTAssertEqual(str, "[\(dateStr)] |main| ViewController.testFunction():50 >?VERBOSE<: Hello")
     }
 
     func testMessageToJSON() {
@@ -542,11 +586,17 @@ class BaseDestinationTests: XCTestCase {
                                                        function: "otherFunc",
                                                        message: "Hello World"))
 
-        // not excluded, but above minLevel
-        XCTAssertTrue(destination.shouldLevelBeLogged(.error,
+        // not excluded, above minLevel but at least 1 non-required filtter has to match!
+        XCTAssertFalse(destination.shouldLevelBeLogged(.error,
                                                       path: "/world/OtherViewController.swift",
                                                       function: "otherFunc",
                                                       message: "Hello World"))
+        
+        XCTAssertTrue(destination.shouldLevelBeLogged(.error,
+                                                       path: "/ViewController.swift",
+                                                       function: "otherFunc",
+                                                       message: "Hello World"))
+        
     }
 
     /// turns dict into JSON-encoded string
