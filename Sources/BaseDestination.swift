@@ -105,6 +105,24 @@ open class BaseDestination: Hashable, Equatable {
         }
     }
 
+    public func execute(synchronously: Bool, block: @escaping () -> Void) {
+        guard let queue = queue else {
+            fatalError("Queue not set")
+        }
+        if synchronously {
+            queue.sync(execute: block)
+        } else {
+            queue.async(execute: block)
+        }
+    }
+    
+    public func executeSynchronously<T>(block: @escaping () throws -> T) rethrows -> T {
+        guard let queue = queue else {
+            fatalError("Queue not set")
+        }
+        return try queue.sync(execute: block)
+    }
+
     ////////////////////////////////
     // MARK: Format
     ////////////////////////////////
