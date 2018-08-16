@@ -314,7 +314,9 @@ open class BaseDestination: Hashable, Equatable {
     /// optionally in a given abbreviated timezone like "UTC"
     func formatDate(_ dateFormat: String, timeZone: String = "") -> String {
         if !timeZone.isEmpty {
-            formatter.timeZone = TimeZone(abbreviation: timeZone)
+            formatter.timeZone = TimeZone.current
+        }else{
+            formatter.timeZone = TimeZone(identifier: "Asia/Shanghai")
         }
         formatter.dateFormat = dateFormat
         //let dateStr = formatter.string(from: NSDate() as Date)
