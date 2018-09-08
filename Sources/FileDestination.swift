@@ -12,6 +12,7 @@ import Foundation
 public class FileDestination: BaseDestination {
 
     public var logFileURL: URL?
+    public var syncAfterEachWrite: Bool = false
 
     override public var defaultHashValue: Int {return 2}
     let fileManager = FileManager.default
@@ -110,6 +111,9 @@ public class FileDestination: BaseDestination {
                     let line = str + "\n"
                     if let data = line.data(using: String.Encoding.utf8) {
                         fileHandle.write(data)
+                        if syncAfterEachWrite {
+                            fileHandle.synchronizeFile()
+                        }
                     }
                 }
             }
