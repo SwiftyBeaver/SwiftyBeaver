@@ -264,16 +264,16 @@ open class BaseDestination: Hashable, Equatable {
         var str = ""
 
         switch level {
-        case SwiftyBeaver.Level.debug:
+        case .debug:
             str = levelString.debug
 
-        case SwiftyBeaver.Level.info:
+        case .info:
             str = levelString.info
 
-        case SwiftyBeaver.Level.warning:
+        case .warning:
             str = levelString.warning
 
-        case SwiftyBeaver.Level.error:
+        case .error:
             str = levelString.error
 
         default:
@@ -288,16 +288,16 @@ open class BaseDestination: Hashable, Equatable {
         var color = ""
 
         switch level {
-        case SwiftyBeaver.Level.debug:
+        case .debug:
             color = levelColor.debug
 
-        case SwiftyBeaver.Level.info:
+        case .info:
             color = levelColor.info
 
-        case SwiftyBeaver.Level.warning:
+        case .warning:
             color = levelColor.warning
 
-        case SwiftyBeaver.Level.error:
+        case .error:
             color = levelColor.error
 
         default:
