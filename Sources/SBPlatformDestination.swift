@@ -351,13 +351,13 @@ public class SBPlatformDestination: BaseDestination {
     func sendingPointsForLevel(_ level: SwiftyBeaver.Level) -> Int {
 
         switch level {
-        case SwiftyBeaver.Level.debug:
+        case .debug:
             return sendingPoints.debug
-        case SwiftyBeaver.Level.info:
+        case .info:
             return sendingPoints.info
-        case SwiftyBeaver.Level.warning:
+        case .warning:
             return sendingPoints.warning
-        case SwiftyBeaver.Level.error:
+        case .error:
             return sendingPoints.error
         default:
             return sendingPoints.verbose

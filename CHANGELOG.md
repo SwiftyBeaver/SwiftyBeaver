@@ -6,6 +6,21 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 <br/>
 
+## 1.6.1 (2018-09-18)
+
+##### Added
+
+- Optional sync after each file write by [@crspybits ](https://github.com/crspybits)
+- Execute methods to run in dest queue by [@keeshux ](https://github.com/keeshux)
+- Padded format option (see [PR for details](https://github.com/SwiftyBeaver/SwiftyBeaver/pull/298)) by [@htb ](https://github.com/htb)
+
+
+##### Fixed
+- Warning caused by iOS 12 by [@lgaches](https://github.com/lgaches)
+- Issues with formating by [@htb ](https://github.com/htb)
+
+<br/>
+
 ## 1.6.0 (2018-05-23)
 
 ##### Added

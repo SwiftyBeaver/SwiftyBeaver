@@ -12,9 +12,9 @@ import Foundation
 open class SwiftyBeaver {
 
     /// version string of framework
-    public static let version = "1.6.0"  // UPDATE ON RELEASE!
+    public static let version = "1.6.1"  // UPDATE ON RELEASE!
     /// build number of framework
-    public static let build = 1600 // version 0.7.1 -> 710, UPDATE ON RELEASE!
+    public static let build = 1610 // version 0.7.1 -> 710, UPDATE ON RELEASE!
 
     public enum Level: Int {
         case verbose = 0
@@ -25,7 +25,7 @@ open class SwiftyBeaver {
     }
 
     // a set of active destinations
-    open private(set) static var destinations = Set<BaseDestination>()
+    public private(set) static var destinations = Set<BaseDestination>()
 
     // MARK: Destination Handling
 
