@@ -6,6 +6,17 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 <br/>
 
+## 1.6.2 (2019-02-11)
+
+##### Added
+
+- Improved SPM support for Swift 4.2 by [@heyzooi ](https://github.com/heyzooi)
+- Improved Carthage support for Swift 4.2 by [@iachievedit ](https://github.com/iachievedit)
+- Swift type inference by [@rafalmq ](https://github.com/rafalmq)
+
+
+<br/>
+
 ## 1.6.1 (2018-09-18)
 
 ##### Added
