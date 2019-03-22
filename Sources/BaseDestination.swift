@@ -74,9 +74,12 @@ open class BaseDestination: Hashable, Equatable {
     let formatter = DateFormatter()
     let startDate = Date()
 
-    // each destination class must have an own hashValue Int
-    lazy public var hashValue: Int = self.defaultHashValue
+    // each destination class must have an own hashValue Int    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(defaultHashValue)
+    }
     open var defaultHashValue: Int {return 0}
+
 
     // each destination instance must have an own serial queue to ensure serial output
     // GCD gives it a prioritization between User Initiated and Utility
