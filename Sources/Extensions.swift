@@ -11,29 +11,17 @@ import Foundation
 extension String {
     /// cross-Swift compatible characters count
     var length: Int {
-        #if swift(>=3.2)
-            return self.count
-        #else
-            return self.characters.count
-        #endif
+        return self.count
     }
     
     /// cross-Swift-compatible first character
     var firstChar: Character? {
-        #if swift(>=3.2)
-            return self.first
-        #else
-            return self.characters.first
-        #endif
+        return self.first
     }
     
     /// cross-Swift-compatible last character
     var lastChar: Character? {
-        #if swift(>=3.2)
-            return self.last
-        #else
-            return self.characters.last
-        #endif
+        return self.last
     }
     
     /// cross-Swift-compatible index

@@ -1,9 +1,9 @@
-# use the latest stable Swift 3.1
-FROM swift:3.1
+ARG swift_version=4
+FROM swift:$swift_version
 
 WORKDIR /code 
 
-COPY Package.swift /code/
+COPY Package.swift /code/Package.swift
 COPY ./Sources /code/Sources
 COPY ./Tests /code/Tests
 

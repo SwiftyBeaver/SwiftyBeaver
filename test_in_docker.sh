@@ -6,9 +6,9 @@ set -o pipefail
 
 echo ""
 echo "Running Tests in Docker Container"
-echo "Swift 4.0"
+echo "Swift 4"
 echo "================================="
-docker build -t swiftybeaver_s4 -f Dockerfile~swift4 .
+docker build -t swiftybeaver_s4 -f Dockerfile .
 
 docker run -e SBPLATFORM_APP_ID=$SBPLATFORM_APP_ID \
 -e SBPLATFORM_APP_SECRET=$SBPLATFORM_APP_SECRET \
