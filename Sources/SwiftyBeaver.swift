@@ -86,38 +86,63 @@ open class SwiftyBeaver {
     /// log something generally unimportant (lowest priority)
     open class func verbose(_ message: @autoclosure () -> Any, _
         file: String = #file, _ function: String = #function, line: Int = #line, context: Any? = nil) {
+        #if swift(>=5)
+        custom(level: .verbose, message: message(), file: file, function: function, line: line, context: context)
+        #else
         custom(level: .verbose, message: message, file: file, function: function, line: line, context: context)
+        #endif
     }
 
     /// log something which help during debugging (low priority)
     open class func debug(_ message: @autoclosure () -> Any, _
         file: String = #file, _ function: String = #function, line: Int = #line, context: Any? = nil) {
+        #if swift(>=5)
+        custom(level: .debug, message: message(), file: file, function: function, line: line, context: context)
+        #else
         custom(level: .debug, message: message, file: file, function: function, line: line, context: context)
+        #endif
     }
 
     /// log something which you are really interested but which is not an issue or error (normal priority)
     open class func info(_ message: @autoclosure () -> Any, _
         file: String = #file, _ function: String = #function, line: Int = #line, context: Any? = nil) {
+        #if swift(>=5)
+        custom(level: .info, message: message(), file: file, function: function, line: line, context: context)
+        #else
         custom(level: .info, message: message, file: file, function: function, line: line, context: context)
+        #endif
     }
 
     /// log something which may cause big trouble soon (high priority)
     open class func warning(_ message: @autoclosure () -> Any, _
         file: String = #file, _ function: String = #function, line: Int = #line, context: Any? = nil) {
+        #if swift(>=5)
+        custom(level: .warning, message: message(), file: file, function: function, line: line, context: context)
+        #else
         custom(level: .warning, message: message, file: file, function: function, line: line, context: context)
+        #endif
     }
 
     /// log something which will keep you awake at night (highest priority)
     open class func error(_ message: @autoclosure () -> Any, _
         file: String = #file, _ function: String = #function, line: Int = #line, context: Any? = nil) {
+        #if swift(>=5)
+        custom(level: .error, message: message(), file: file, function: function, line: line, context: context)
+        #else
         custom(level: .error, message: message, file: file, function: function, line: line, context: context)
+        #endif
     }
 
     /// custom logging to manually adjust values, should just be used by other frameworks
     public class func custom(level: SwiftyBeaver.Level, message: @autoclosure () -> Any,
                              file: String = #file, function: String = #function, line: Int = #line, context: Any? = nil) {
+        #if swift(>=5)
+        dispatch_send(level: level, message: message(), thread: threadName(),
+                      file: file, function: function, line: line, context: context)
+        #else
         dispatch_send(level: level, message: message, thread: threadName(),
                       file: file, function: function, line: line, context: context)
+        #endif
     }
 
     /// internal helper which dispatches send to dedicated queue if minLevel is ok
