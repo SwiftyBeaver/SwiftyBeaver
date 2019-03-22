@@ -74,10 +74,15 @@ open class BaseDestination: Hashable, Equatable {
     let formatter = DateFormatter()
     let startDate = Date()
 
-    // each destination class must have an own hashValue Int    
+    // each destination class must have an own hashValue Int
+    #if swift(>=4.2)
     public func hash(into hasher: inout Hasher) {
         hasher.combine(defaultHashValue)
     }
+    #else
+    lazy public var hashValue: Int = self.defaultHashValue
+    #endif
+
     open var defaultHashValue: Int {return 0}
 
 
