@@ -123,8 +123,13 @@ final class AES256CBC {
         let keyData = key.data(using: String.Encoding.utf8)!
         let ivData = iv.data(using: String.Encoding.utf8)!
         let data = str.data(using: String.Encoding.utf8)!
+        #if swift(>=5)
+        let enc = try Data(AESCipher(key: keyData.bytes,
+                                            iv: ivData.bytes).encrypt(bytes: data.bytes))
+        #else
         let enc = try Data(bytes: AESCipher(key: keyData.bytes,
                                             iv: ivData.bytes).encrypt(bytes: data.bytes))
+        #endif
         // Swift 3.1.x has a bug with base64encoding under Linux, so we are using our own
         #if os(Linux)
             return Base64.encode([UInt8](enc))
@@ -138,8 +143,13 @@ final class AES256CBC {
         let keyData = key.data(using: String.Encoding.utf8)!
         let ivData = iv.data(using: String.Encoding.utf8)!
         let data = Data(base64Encoded: str)!
+        #if swift(>=5)
+        let dec = try Data(AESCipher(key: keyData.bytes,
+                                            iv: ivData.bytes).decrypt(bytes: data.bytes))
+        #else
         let dec = try Data(bytes: AESCipher(key: keyData.bytes,
                                             iv: ivData.bytes).decrypt(bytes: data.bytes))
+        #endif
         guard let decryptStr = String(data: dec, encoding: String.Encoding.utf8) else {
             throw NSError(domain: "Invalid utf8 data", code: 0, userInfo: nil)
         }
