@@ -75,8 +75,16 @@ open class BaseDestination: Hashable, Equatable {
     let startDate = Date()
 
     // each destination class must have an own hashValue Int
+    #if swift(>=4.2)
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(defaultHashValue)
+    }
+    #else
     lazy public var hashValue: Int = self.defaultHashValue
+    #endif
+
     open var defaultHashValue: Int {return 0}
+
 
     // each destination instance must have an own serial queue to ensure serial output
     // GCD gives it a prioritization between User Initiated and Utility
@@ -396,9 +404,15 @@ open class BaseDestination: Hashable, Equatable {
 
     /// Remove a filter from the list of filters
     public func removeFilter(_ filter: FilterType) {
+        #if swift(>=5)
+        let index = filters.firstIndex {
+            return ObjectIdentifier($0) == ObjectIdentifier(filter)
+        }
+        #else
         let index = filters.index {
             return ObjectIdentifier($0) == ObjectIdentifier(filter)
         }
+        #endif
 
         guard let filterIndex = index else {
             return

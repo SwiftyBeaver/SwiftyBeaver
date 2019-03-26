@@ -1,0 +1,9 @@
+version: 2
+jobs:
+  build:
+    machine: true      
+    steps:
+      - checkout
+      - run:
+          name: Run Tests
+          command: './test_in_docker.sh'
