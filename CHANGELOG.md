@@ -6,6 +6,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 <br/>
 
+## 1.7.0 (2019-03-26)
+
+##### Added
+
+- Support for Swift 5 and Xcode 10.2 by [@lgaches](https://github.com/lgaches)
+- Support for CircleCI 2.0 by [@lgaches](https://github.com/lgaches)
+
+
+<br/>
+
 ## 1.6.2 (2019-02-11)
 
 ##### Added
