@@ -363,12 +363,15 @@
 						ProvisioningStyle = Manual;
 					};
 					ACE597751C1882DF0031451F = {
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Manual;
 					};
 					ACE597861C18830D0031451F = {
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Manual;
 					};
 					ACE597971C18832E0031451F = {
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Manual;
 					};
 				};
@@ -735,7 +738,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "watchsimulator watchos";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				VALID_ARCHS = "$(ARCHS_STANDARD)";
 				WATCHOS_DEPLOYMENT_TARGET = 3.0;
 			};
@@ -761,7 +764,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "watchsimulator watchos";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				VALID_ARCHS = "$(ARCHS_STANDARD)";
 				WATCHOS_DEPLOYMENT_TARGET = 3.0;
 			};
@@ -787,7 +790,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "appletvsimulator appletvos";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VALID_ARCHS = "$(ARCHS_STANDARD)";
 			};
@@ -813,7 +816,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "appletvsimulator appletvos";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VALID_ARCHS = "$(ARCHS_STANDARD)";
 			};
@@ -840,7 +843,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				VALID_ARCHS = "$(ARCHS_STANDARD)";
 			};
 			name = Debug;
@@ -866,7 +869,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				VALID_ARCHS = "$(ARCHS_STANDARD)";
 			};
 			name = Release;
