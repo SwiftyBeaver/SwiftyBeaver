@@ -95,8 +95,6 @@ For [Swift Package Manager](https://swift.org/package-manager/) add the followin
 
 ### CocoaPods
 
-We plan to discontinue the support for CocoaPods due to its issues with latest Xcode and Swift versions latest at the end of 2018. Please use Carthage or SPM instead to stay on top of new SwiftyBeaver releases.
-
 To use [CocoaPods](https://cocoapods.org) just add this to your Podfile:
 
 Swift 3, 4 & 5:
