@@ -9,7 +9,7 @@
 import Foundation
 
 /// cross-platform random numbers generator
-fileprivate struct Random {
+private struct Random {
     #if os(Linux)
     static var initialized = false
     #endif
@@ -179,7 +179,7 @@ final class AES256CBC {
 
 // MARK: - AESCipher
 
-fileprivate typealias Key = Array<UInt8>
+private typealias Key = Array<UInt8>
 
 final private class AESCipher {
 
@@ -700,7 +700,7 @@ private struct PKCS7 {
 
 // MARK: - Utils
 
-fileprivate func xor(_ a: Array<UInt8>, _ b: Array<UInt8>) -> Array<UInt8> {
+private func xor(_ a: Array<UInt8>, _ b: Array<UInt8>) -> Array<UInt8> {
     var xored = Array<UInt8>(repeating: 0, count: min(a.count, b.count))
     for i in 0..<xored.count {
         xored[i] = a[i] ^ b[i]
@@ -708,26 +708,26 @@ fileprivate func xor(_ a: Array<UInt8>, _ b: Array<UInt8>) -> Array<UInt8> {
     return xored
 }
 
-fileprivate func rotateLeft(_ value: UInt8, by: UInt8) -> UInt8 {
+private func rotateLeft(_ value: UInt8, by: UInt8) -> UInt8 {
     return ((value << by) & 0xFF) | (value >> (8 - by))
 }
 
-fileprivate func rotateLeft(_ value: UInt32, by: UInt32) -> UInt32 {
+private func rotateLeft(_ value: UInt32, by: UInt32) -> UInt32 {
     return ((value << by) & 0xFFFFFFFF) | (value >> (32 - by))
 }
 
-fileprivate protocol BitshiftOperationsType {
+private protocol BitshiftOperationsType {
     static func << (lhs: Self, rhs: Self) -> Self
 }
 
-fileprivate protocol ByteConvertible {
+private protocol ByteConvertible {
     init(_ value: UInt8)
     init(truncatingBitPattern: UInt64)
 }
 
 #if swift(>=4.0)
 #else
-    extension UInt32 : BitshiftOperationsType, ByteConvertible { }
+    extension UInt32: BitshiftOperationsType, ByteConvertible { }
 #endif
 
 fileprivate extension UInt32 {
@@ -740,7 +740,7 @@ fileprivate extension UInt32 {
     }
 }
 
-fileprivate func toUInt32Array(slice: ArraySlice<UInt8>) -> Array<UInt32> {
+private func toUInt32Array(slice: ArraySlice<UInt8>) -> Array<UInt32> {
     var result = Array<UInt32>()
     result.reserveCapacity(16)
     for idx in stride(from: slice.startIndex, to: slice.endIndex, by: MemoryLayout<UInt32>.size) {
@@ -757,7 +757,7 @@ fileprivate func toUInt32Array(slice: ArraySlice<UInt8>) -> Array<UInt32> {
 
 /// Array of bytes, little-endian representation. Don't use if not necessary.
 /// I found this method slow
-fileprivate func arrayOfBytes<T>(value: T, length: Int? = nil) -> Array<UInt8> {
+private func arrayOfBytes<T>(value: T, length: Int? = nil) -> Array<UInt8> {
     let totalBytes = length ?? MemoryLayout<T>.size
 
     let valuePointer = UnsafeMutablePointer<T>.allocate(capacity: 1)
@@ -854,4 +854,3 @@ fileprivate extension Data {
         return Array(self)
     }
 }
-

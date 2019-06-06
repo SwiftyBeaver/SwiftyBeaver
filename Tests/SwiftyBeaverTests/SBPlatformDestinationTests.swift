@@ -35,10 +35,10 @@ class SBPlatformDestinationTests: XCTestCase {
         super.setUp()
         SwiftyBeaver.removeAllDestinations()
         platform = SBPlatformDestination(
-            appID:          SBPlatformCredentials.appID,
-            appSecret:      SBPlatformCredentials.appSecret,
-            encryptionKey:  SBPlatformCredentials.encryptionKey,
-            serverURL:      URL(string: SBPlatformCredentials.serverURL)
+            appID: SBPlatformCredentials.appID,
+            appSecret: SBPlatformCredentials.appSecret,
+            encryptionKey: SBPlatformCredentials.encryptionKey,
+            serverURL: URL(string: SBPlatformCredentials.serverURL)
         )
         // uncomment to verify that the env vars "arrive" in the tests
         print("\nTesting SBPlatform using")
@@ -182,7 +182,7 @@ class SBPlatformDestinationTests: XCTestCase {
         log.debug("a debug message 2")
         log.info("an info message 3")
         log.error("an error message 4")
-        
+
         print("waiting")
         // do some further waiting for sending to complete
         for _ in 1...platform.sendingPoints.threshold + 3 {
@@ -196,25 +196,25 @@ class SBPlatformDestinationTests: XCTestCase {
         sleep(5)
         print("finished")
     }
-    
+
     func testIntegration() {
         let log = SwiftyBeaver.self
         let formatter = DateFormatter()
-        
+
         // add logging to SwiftyBeaver Platform
         platform.showNSLog = true
         //let jsonFile = NSURL(fileURLWithPath: "/tmp/testSBPlatform.json")!
         //deleteFile(NSURL(string: String(jsonFile) + ".send")!)
-        
+
         if platform.appID.isEmpty || platform.appSecret.isEmpty || platform.encryptionKey.isEmpty {
             // leave the test on missing credentials
             print("leaving SBPlatform test testIntegration() due to empty credentials")
             return
         }
-        
+
         XCTAssertTrue(log.addDestination(platform))
         //XCTAssertEqual(log.countDestinations(), 2)
-        
+
         // send logs in chunks, use high threshold value to test performance
         platform.sendingPoints.threshold = 10
         for index in 1...platform.sendingPoints.threshold + 3 {
@@ -224,14 +224,14 @@ class SBPlatformDestinationTests: XCTestCase {
                 x = sqrt(Double(index2))
                 XCTAssertEqual(x, sqrt(Double(index2)))
             }
-            
+
             formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
             let dateStr = formatter.string(from: Date())
-            
+
             log.debug("msg \(index) - \(dateStr)")
         }
         XCTAssertTrue(log.flush(secondTimeout: 3))
-        
+
         // do some further waiting for sending to complete
         for _ in 1...platform.sendingPoints.threshold + 3 {
             // simulate work by doing a computing
