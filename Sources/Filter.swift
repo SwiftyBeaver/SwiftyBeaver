@@ -18,7 +18,7 @@ import Foundation
 /// A filter can be required meaning that all required filters against a specific
 /// target must pass in order for the message to be logged. At least one non-required
 /// filter must pass in order for the message to be logged
-public protocol FilterType : class {
+public protocol FilterType: class {
     func apply(_ value: Any) -> Bool
     func getTarget() -> Filter.TargetType
     func isRequired() -> Bool
@@ -157,7 +157,7 @@ public class CompareFilter: Filter, FilterType {
         guard let filterComparisonType = self.filterComparisonType else { return false }
 
         switch filterComparisonType {
-        case .Excludes(_, _):
+        case .Excludes:
             return true
         default:
             return false
@@ -261,7 +261,7 @@ public class PathFilterFactory {
     }
 }
 
-extension Filter.TargetType : Equatable {
+extension Filter.TargetType: Equatable {
 }
 
 // The == does not compare associated values for each enum. Instead == evaluates to true
@@ -269,13 +269,13 @@ extension Filter.TargetType : Equatable {
 public func == (lhs: Filter.TargetType, rhs: Filter.TargetType) -> Bool {
     switch (lhs, rhs) {
 
-    case (.Path(_), .Path(_)):
+    case (.Path, .Path):
         return true
 
-    case (.Function(_), .Function(_)):
+    case (.Function, .Function):
         return true
 
-    case (.Message(_), .Message(_)):
+    case (.Message, .Message):
         return true
 
     default:
