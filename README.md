@@ -231,9 +231,11 @@ The only sending to servers is done if you use the `SBPlatformDestination`. That
 
 Instead, you install our Mac App and that Mac App downloads the encrypted logs from the cloud and decrypts and shows them to you. Additionally, the Mac App stores all data that it downloads in a local SQLite database file on your computer so that you actually "physically" own your data.
 
-The business model of the SwiftyBeaver cloud service is to provide the most secure logging solution in the market. On purpose we do not provide a web UI for you because it would go against our end-to-end encryption policy. **Only you can see the logging and device data** which is sent from your users' devices. Our servers just see encrypted data and do not know your decryption key.
+The business model of the SwiftyBeaver cloud service is to provide the most secure logging solution in the market. On purpose we do not provide a web UI for you because it would require us to store your encryption key on our servers.
 
-SwiftyBeaver is **fully GDPR compliant** due to that focus on encryption and transparency in what data is collected and also meets Apple’s latest requirements on the privacy of 3rd party frameworks.
+**Only you can see the logging and device data** which is sent from your users' devices. Our servers just see encrypted data and do not know your decryption key.
+
+SwiftyBeaver is **fully GDPR compliant** due to its focus on encryption and transparency in what data is collected and also meets **Apple’s latest requirements** on the privacy of 3rd party frameworks.
 
 Our Enterprise offering is an even more secure solution where you are not using anymore our cloud service and Mac App but you send your end-to-end encrypted logs directly to your own servers and you store them in your Elasticsearch cluster. The **Enterprise offering is used by health tech** and governmental institutions which require the highest level of privacy and security.
 
