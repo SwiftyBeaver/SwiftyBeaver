@@ -529,7 +529,7 @@ class BaseDestinationTests: XCTestCase {
 
     func test_shouldLevelBeLogged_hasNoMatchingNonRequiredFilterAndMinLevel_False() {
         let destination = BaseDestination()
-        destination.minLevel = .info
+        destination.minLevel = .verbose
         destination.addFilter(Filters.Path.contains("/ViewController", minLevel: .debug))
         XCTAssertFalse(destination.shouldLevelBeLogged(.verbose,
                                                        path: "/world/ViewController.swift",
@@ -546,6 +546,17 @@ class BaseDestinationTests: XCTestCase {
                                                       path: "/world/beaver.swift",
                                                       function: "myFunc",
                                                       message: "Hello World"))
+    }
+
+    func test_shouldLevelBeLogged_hasMultipleNonMatchingNonRequiredFilterAndMinLevel_False() {
+        let destination = BaseDestination()
+        destination.minLevel = .verbose
+        destination.addFilter(Filters.Path.contains("/ViewController", minLevel: .debug))
+        destination.addFilter(Filters.Path.contains("/test", minLevel: .verbose))
+        XCTAssertFalse(destination.shouldLevelBeLogged(.verbose,
+                                                       path: "/world/ViewController.swift",
+                                                       function: "myFunc",
+                                                       message: "Hello World"))
     }
 
     func test_shouldLevelBeLogged_noFilters_True() {
