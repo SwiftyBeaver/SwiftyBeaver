@@ -57,6 +57,10 @@
 		CB52340B1EB0EB4600739CFB /* GoogleCloudDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5234031EB0EB4600739CFB /* GoogleCloudDestination.swift */; };
 		CB52340C1EB0EB4600739CFB /* SBPlatformDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5234041EB0EB4600739CFB /* SBPlatformDestination.swift */; };
 		CB52340D1EB0EB4600739CFB /* SwiftyBeaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5234051EB0EB4600739CFB /* SwiftyBeaver.swift */; };
+		DCC4D45E22D21920002B14E4 /* FilterValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC4D45D22D21920002B14E4 /* FilterValidator.swift */; };
+		DCC4D45F22D2192B002B14E4 /* FilterValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC4D45D22D21920002B14E4 /* FilterValidator.swift */; };
+		DCC4D46022D2192B002B14E4 /* FilterValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC4D45D22D21920002B14E4 /* FilterValidator.swift */; };
+		DCC4D46122D2192C002B14E4 /* FilterValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC4D45D22D21920002B14E4 /* FilterValidator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,6 +108,7 @@
 		CB5234031EB0EB4600739CFB /* GoogleCloudDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleCloudDestination.swift; sourceTree = "<group>"; };
 		CB5234041EB0EB4600739CFB /* SBPlatformDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBPlatformDestination.swift; sourceTree = "<group>"; };
 		CB5234051EB0EB4600739CFB /* SwiftyBeaver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyBeaver.swift; sourceTree = "<group>"; };
+		DCC4D45D22D21920002B14E4 /* FilterValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterValidator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,15 +181,16 @@
 			isa = PBXGroup;
 			children = (
 				CB5233FE1EB0EB4600739CFB /* AES256CBC.swift */,
+				4D331ADE1F1E8E1100B1C25E /* Base64.swift */,
 				CB5233FF1EB0EB4600739CFB /* BaseDestination.swift */,
 				CB5234001EB0EB4600739CFB /* ConsoleDestination.swift */,
+				9E8F38B51FE12E9800BE9A80 /* Extensions.swift */,
 				CB5234011EB0EB4600739CFB /* FileDestination.swift */,
 				CB5234021EB0EB4600739CFB /* Filter.swift */,
+				DCC4D45D22D21920002B14E4 /* FilterValidator.swift */,
 				CB5234031EB0EB4600739CFB /* GoogleCloudDestination.swift */,
 				CB5234041EB0EB4600739CFB /* SBPlatformDestination.swift */,
 				CB5234051EB0EB4600739CFB /* SwiftyBeaver.swift */,
-				4D331ADE1F1E8E1100B1C25E /* Base64.swift */,
-				9E8F38B51FE12E9800BE9A80 /* Extensions.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -447,6 +453,7 @@
 				CB52340D1EB0EB4600739CFB /* SwiftyBeaver.swift in Sources */,
 				4D331AE01F1E8EA700B1C25E /* Base64.swift in Sources */,
 				9E8F38B61FE12E9800BE9A80 /* Extensions.swift in Sources */,
+				DCC4D45E22D21920002B14E4 /* FilterValidator.swift in Sources */,
 				CB5234081EB0EB4600739CFB /* ConsoleDestination.swift in Sources */,
 				CB52340A1EB0EB4600739CFB /* Filter.swift in Sources */,
 				CB5234091EB0EB4600739CFB /* FileDestination.swift in Sources */,
@@ -480,6 +487,7 @@
 				CB0FC30B1EB8ABA00094E03A /* Filter.swift in Sources */,
 				4D331AE21F1E8EAC00B1C25E /* Base64.swift in Sources */,
 				9E8F38B81FE12E9800BE9A80 /* Extensions.swift in Sources */,
+				DCC4D45F22D2192B002B14E4 /* FilterValidator.swift in Sources */,
 				CB0FC3071EB8ABA00094E03A /* AES256CBC.swift in Sources */,
 				CB0FC30A1EB8ABA00094E03A /* FileDestination.swift in Sources */,
 				CB0FC30D1EB8ABA00094E03A /* SBPlatformDestination.swift in Sources */,
@@ -497,6 +505,7 @@
 				CB0FC3131EB8ABA10094E03A /* Filter.swift in Sources */,
 				4D331AE11F1E8EAB00B1C25E /* Base64.swift in Sources */,
 				9E8F38B91FE12E9800BE9A80 /* Extensions.swift in Sources */,
+				DCC4D46022D2192B002B14E4 /* FilterValidator.swift in Sources */,
 				CB0FC30F1EB8ABA10094E03A /* AES256CBC.swift in Sources */,
 				CB0FC3121EB8ABA10094E03A /* FileDestination.swift in Sources */,
 				CB0FC3151EB8ABA10094E03A /* SBPlatformDestination.swift in Sources */,
@@ -514,6 +523,7 @@
 				CB0FC31B1EB8ABA10094E03A /* Filter.swift in Sources */,
 				4D331ADF1F1E8E1100B1C25E /* Base64.swift in Sources */,
 				9E8F38BA1FE12E9800BE9A80 /* Extensions.swift in Sources */,
+				DCC4D46122D2192C002B14E4 /* FilterValidator.swift in Sources */,
 				CB0FC3171EB8ABA10094E03A /* AES256CBC.swift in Sources */,
 				CB0FC31A1EB8ABA10094E03A /* FileDestination.swift in Sources */,
 				CB0FC31D1EB8ABA10094E03A /* SBPlatformDestination.swift in Sources */,

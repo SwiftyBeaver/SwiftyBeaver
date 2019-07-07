@@ -517,6 +517,16 @@ class BaseDestinationTests: XCTestCase {
                                                        message: "Hello World"))
     }
 
+    func test_shouldLevelBeLogged_hasNoMatchingNonRequiredFilterAndMinLevel_True() {
+        let destination = BaseDestination()
+        destination.minLevel = .debug
+        destination.addFilter(Filters.Path.contains("/ViewController", minLevel: .info))
+        XCTAssertTrue(destination.shouldLevelBeLogged(.debug,
+                                                       path: "/world/beaver.swift",
+                                                       function: "myFunc",
+                                                       message: "Hello World"))
+    }
+
     func test_shouldLevelBeLogged_hasNoMatchingNonRequiredFilterAndMinLevel_False() {
         let destination = BaseDestination()
         destination.minLevel = .info
@@ -525,6 +535,17 @@ class BaseDestinationTests: XCTestCase {
                                                        path: "/world/ViewController.swift",
                                                        function: "myFunc",
                                                        message: "Hello World"))
+    }
+
+    func test_shouldLevelBeLogged_hasMultipleNonMatchingNonRequiredFilterAndMinLevel_True() {
+        let destination = BaseDestination()
+        destination.minLevel = .debug
+        destination.addFilter(Filters.Path.contains("/ViewController", minLevel: .info))
+        destination.addFilter(Filters.Path.contains("/test", minLevel: .debug))
+        XCTAssertTrue(destination.shouldLevelBeLogged(.debug,
+                                                      path: "/world/beaver.swift",
+                                                      function: "myFunc",
+                                                      message: "Hello World"))
     }
 
     func test_shouldLevelBeLogged_noFilters_True() {
@@ -586,12 +607,13 @@ class BaseDestinationTests: XCTestCase {
                                                        function: "otherFunc",
                                                        message: "Hello World"))
 
-        // not excluded, above minLevel but at least 1 non-required filtter has to match!
-        XCTAssertFalse(destination.shouldLevelBeLogged(.error,
+        // not excluded, above minLevel, no matching filter
+        XCTAssertTrue(destination.shouldLevelBeLogged(.error,
                                                       path: "/world/OtherViewController.swift",
                                                       function: "otherFunc",
                                                       message: "Hello World"))
-        
+
+        // not excluded, above minLevel, matching path filter
         XCTAssertTrue(destination.shouldLevelBeLogged(.error,
                                                        path: "/ViewController.swift",
                                                        function: "otherFunc",

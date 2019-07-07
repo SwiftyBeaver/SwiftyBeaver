@@ -16,8 +16,8 @@ import Foundation
 ///
 /// A filter must contain a target, which identifies what it filters against
 /// A filter can be required meaning that all required filters against a specific
-/// target must pass in order for the message to be logged. At least one non-required
-/// filter must pass in order for the message to be logged
+/// target must pass in order for the message to be logged.
+
 public protocol FilterType : class {
     func apply(_ value: Any) -> Bool
     func getTarget() -> Filter.TargetType

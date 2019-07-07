@@ -437,132 +437,64 @@ open class BaseDestination: Hashable, Equatable {
         if filters.isEmpty {
             if level.rawValue >= minLevel.rawValue {
                 if debugPrint {
-                    print("filters is empty and level >= minLevel")
+                    print("filters are empty and level >= minLevel")
                 }
                 return true
             } else {
                 if debugPrint {
-                    print("filters is empty and level < minLevel")
+                    print("filters are empty and level < minLevel")
                 }
                 return false
             }
         }
 
-        let (matchedExclude, allExclude) = passedExcludedFilters(level, path: path,
-                                                                 function: function, message: message)
-        if allExclude > 0 && matchedExclude != allExclude {
+        let filterCheckResult = FilterValidator.validate(input: .init(filters: self.filters, level: level, path: path, function: function, message: message))
+
+        // Exclusion filters match if they do NOT meet the filter condition (see Filter.apply(_:) method)
+        switch filterCheckResult[.excluded] {
+        case .some(.someFiltersMatch):
+            // Exclusion filters are present and at least one of them matches the log entry
             if debugPrint {
-                print("filters is not empty and message was excluded")
+                print("filters are not empty and message was excluded")
             }
             return false
+        case .some(.allFiltersMatch), .some(.noFiltersMatchingType), .none: break
         }
-
-        let (matchedRequired, allRequired) = passedRequiredFilters(level, path: path,
-                                                                   function: function, message: message)
-        let (matchedNonRequired, allNonRequired) = passedNonRequiredFilters(level, path: path,
-                                                                    function: function, message: message)
 
         // If required filters exist, we should validate or invalidate the log if all of them pass or not
-        if allRequired > 0 {
-            return matchedRequired == allRequired
+        switch filterCheckResult[.required] {
+        case .some(.allFiltersMatch): return true
+        case .some(.someFiltersMatch): return false
+        case .some(.noFiltersMatchingType), .none: break
         }
 
-        // If a non-required filter matches, the log is validated
-		if allNonRequired > 0 {  // Non-required filters exist
+        let checkLogLevel: () -> Bool = {
+            // Check if the log message's level matches or exceeds the minLevel of the destination
+            return level.rawValue >= self.minLevel.rawValue
+        }
 
-			if matchedNonRequired > 0 { return true }  // At least one non-required filter matched
-			else { return false }  // No non-required filters matched
-		}
-
-        if level.rawValue < minLevel.rawValue {
-            if debugPrint {
-                print("filters is not empty and level < minLevel")
+        // Non-required filters should only be applied if the log entry matches the filter condition (e.g. path)
+        switch filterCheckResult[.nonRequired] {
+        case .some(.allFiltersMatch): return true
+        case .some(.noFiltersMatchingType), .none: return checkLogLevel()
+        case .some(.someFiltersMatch(let partialMatchData)):
+            if partialMatchData.fullMatchCount > 0 {
+                // The log entry matches at least one filter condition and the destination's log level
+                return true
+            } else if partialMatchData.conditionMatchCount > 0 {
+                // The log entry matches at least one filter condition, but does not match or exceed the destination's log level
+                return false
+            } else {
+                // There is no filter with a matching filter condition. Check the destination's log level
+                return checkLogLevel()
             }
-            return false
         }
-
-        return true
     }
 
     func getFiltersTargeting(_ target: Filter.TargetType, fromFilters: [FilterType]) -> [FilterType] {
         return fromFilters.filter { filter in
             return filter.getTarget() == target
         }
-    }
-
-    /// returns a tuple of matched and all filters
-    func passedRequiredFilters(_ level: SwiftyBeaver.Level, path: String,
-                               function: String, message: String?) -> (Int, Int) {
-        let requiredFilters = self.filters.filter { filter in
-            return filter.isRequired() && !filter.isExcluded()
-        }
-
-        let matchingFilters = applyFilters(requiredFilters, level: level, path: path,
-                                           function: function, message: message)
-        if debugPrint {
-            print("matched \(matchingFilters) of \(requiredFilters.count) required filters")
-        }
-
-        return (matchingFilters, requiredFilters.count)
-    }
-
-    /// returns a tuple of matched and all filters
-    func passedNonRequiredFilters(_ level: SwiftyBeaver.Level,
-                                  path: String, function: String, message: String?) -> (Int, Int) {
-        let nonRequiredFilters = self.filters.filter { filter in
-            return !filter.isRequired() && !filter.isExcluded()
-        }
-
-        let matchingFilters = applyFilters(nonRequiredFilters, level: level,
-                                           path: path, function: function, message: message)
-        if debugPrint {
-            print("matched \(matchingFilters) of \(nonRequiredFilters.count) non-required filters")
-        }
-        return (matchingFilters, nonRequiredFilters.count)
-    }
-
-    /// returns a tuple of matched and all exclude filters
-    func passedExcludedFilters(_ level: SwiftyBeaver.Level,
-                               path: String, function: String, message: String?) -> (Int, Int) {
-        let excludeFilters = self.filters.filter { filter in
-            return filter.isExcluded()
-        }
-
-        let matchingFilters = applyFilters(excludeFilters, level: level,
-                                           path: path, function: function, message: message)
-        if debugPrint {
-            print("matched \(matchingFilters) of \(excludeFilters.count) exclude filters")
-        }
-        return (matchingFilters, excludeFilters.count)
-    }
-
-    func applyFilters(_ targetFilters: [FilterType], level: SwiftyBeaver.Level,
-                      path: String, function: String, message: String?) -> Int {
-        return targetFilters.filter { filter in
-
-            let passes: Bool
-
-            if !filter.reachedMinLevel(level) {
-                return false
-            }
-
-            switch filter.getTarget() {
-            case .Path(_):
-                passes = filter.apply(path)
-
-            case .Function(_):
-                passes = filter.apply(function)
-
-            case .Message(_):
-                guard let message = message else {
-                    return false
-                }
-
-                passes = filter.apply(message)
-            }
-
-            return passes
-            }.count
     }
 
   /**
