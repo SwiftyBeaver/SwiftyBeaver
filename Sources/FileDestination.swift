@@ -89,6 +89,15 @@ public class FileDestination: BaseDestination {
         guard let url = logFileURL else { return false }
         do {
             if fileManager.fileExists(atPath: url.path) == false {
+                
+                let directoryURL = url.deletingLastPathComponent()
+                if fileManager.fileExists(atPath: directoryURL.path) == false {
+                    try fileManager.createDirectory(
+                        at: directoryURL,
+                        withIntermediateDirectories: true
+                    )
+                }
+                
                 // create file if not existing
                 let line = str + "\n"
                 try line.write(to: url, atomically: true, encoding: .utf8)
