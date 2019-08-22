@@ -6,6 +6,20 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 <br/>
 
+## 1.7.1 (2019-08-22)
+
+##### Added
+- Improved file destination by [@CognitiveDisson](https://github.com/CognitiveDisson)
+- Improved README by [@skreutzberger](https://github.com/skreutzberger)
+- All build targets can use Swift 5 by [@DivineDominion](https://github.com/DivineDominion)
+
+
+##### Fixed
+- Issue in BaseDestination with non-required filters by [@FelixII ](https://github.com/FelixII)
+
+
+<br/>
+
 ## 1.7.0 (2019-03-26)
 
 ##### Added
