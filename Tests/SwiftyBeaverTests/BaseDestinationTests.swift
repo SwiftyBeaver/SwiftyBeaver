@@ -34,7 +34,7 @@ class BaseDestinationTests: XCTestCase {
         let obj = BaseDestination()
         var str = ""
         var format = ""
-        
+
         // empty format
         format = ""
         str = obj.formatMessage(format, level: .verbose, msg: "Hello", thread: "main",
@@ -115,7 +115,7 @@ class BaseDestinationTests: XCTestCase {
         str = obj4.formatMessage(format, level: .verbose, msg: "Hello", thread: "main",
                                 file: "/path/to/ViewController.swift", function: "testFunction()", line: 50, context: nil)
         XCTAssertEqual(str, "VERBOSE: Hello")
-        
+
         // context in the middle
         let obj5 = BaseDestination()
         format = "$L: [$X] $M"
@@ -124,8 +124,7 @@ class BaseDestinationTests: XCTestCase {
         // no context
         str = obj5.formatMessage(format, level: .verbose, msg: "Hello", thread: "main", file: "/path/to/ViewController.swift", function: "testFunction()", line: 50)
         XCTAssertEqual(str, "VERBOSE: [] Hello")
-        
-        
+
         // misc. paddings
         let obj6 = BaseDestination()
         format = "[$-8L]"
@@ -160,7 +159,7 @@ class BaseDestinationTests: XCTestCase {
         // decode JSON string into dict and compare if it is the the same
         guard let data = str.data(using: .utf8),
             let json = try? JSONSerialization.jsonObject(with: data, options: []),
-            let dict = json as? [String:Any],
+            let dict = json as? [String: Any],
             let timestamp = dict["timestamp"] as? Double,
             let level = dict["level"] as? Int,
             let message = dict["message"] as? String,
@@ -629,7 +628,7 @@ class BaseDestinationTests: XCTestCase {
                                                        path: "/ViewController.swift",
                                                        function: "otherFunc",
                                                        message: "Hello World"))
-        
+
     }
 
     /// turns dict into JSON-encoded string

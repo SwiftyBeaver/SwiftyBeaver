@@ -59,7 +59,7 @@ class GoogleCloudDestinationTests: XCTestCase {
         let gcd = GoogleCloudDestination(serviceName: "SwiftyBeaver")
 
         let str = gcd.send(.verbose, msg: msg, thread: thread, file: file, function: function, line: line,
-                           context:  ["user": "Beaver", "httpRequest": ["method": "GET", "responseStatusCode": 200]])
+                           context: ["user": "Beaver", "httpRequest": ["method": "GET", "responseStatusCode": 200]])
 
         XCTAssertNotNil(str)
         if let str = str {

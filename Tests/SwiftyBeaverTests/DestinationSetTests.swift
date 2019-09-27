@@ -11,6 +11,11 @@ import SwiftyBeaver
 
 class DestinationSetTests: XCTestCase {
 
+    override func setUp() {
+        super.setUp()
+        SwiftyBeaver.removeAllDestinations()
+    }
+
     override func tearDown() {
         super.tearDown()
         SwiftyBeaver.removeAllDestinations()

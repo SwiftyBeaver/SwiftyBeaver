@@ -22,7 +22,7 @@ public class FileDestination: BaseDestination {
         // platform-dependent logfile directory default
         var baseURL: URL?
         #if os(OSX)
-            if let url = fileManager.urls(for:.cachesDirectory, in: .userDomainMask).first {
+            if let url = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first {
                 baseURL = url
                 // try to use ~/Library/Caches/APP NAME instead of ~/Library/Caches
                 if let appName = Bundle.main.object(forInfoDictionaryKey: "CFBundleExecutable") as? String {
@@ -101,7 +101,7 @@ public class FileDestination: BaseDestination {
                 // create file if not existing
                 let line = str + "\n"
                 try line.write(to: url, atomically: true, encoding: .utf8)
-                
+
                 #if os(iOS) || os(watchOS)
                 if #available(iOS 10.0, watchOS 3.0, *) {
                     var attributes = try fileManager.attributesOfItem(atPath: url.path)

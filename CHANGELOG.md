@@ -6,6 +6,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 <br/>
 
+## 1.8.0 (2019-09-27)
+
+##### Added
+- Support for Xcode 11 and iOS 13 by [@lgaches](https://github.com/lgaches)
+
+<br/>
+
 ## 1.7.1 (2019-08-22)
 
 ##### Added
