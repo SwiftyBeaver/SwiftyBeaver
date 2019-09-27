@@ -3,12 +3,20 @@
 
 import PackageDescription
 
-let package = Package(name: "SwiftyBeaver")
-
-package.platforms = [.macOS(.v10_12), .iOS(.v11), .tvOS(.v11), .watchOS(.v2)]
-package.products = [.library(name: "SwiftyBeaver", targets: ["SwiftyBeaver"])]
-package.swiftLanguageVersions = [.v5]
-package.targets = [
-    .target(name: "SwiftyBeaver", dependencies: [], path: "Sources"),
-    .testTarget(name: "SwiftyBeaverTests", dependencies: ["SwiftyBeaver"])
-]
+let package = Package(
+    name: "SwiftyBeaver",
+    platforms: [
+        .macOS(.v10_12),
+        .iOS(.v11),
+        .tvOS(.v11),
+        .watchOS(.v2)
+    ],
+    products: [
+        .library(name: "SwiftyBeaver", targets: ["SwiftyBeaver"])
+    ],
+    targets: [
+        .target(name: "SwiftyBeaver", path: "Sources"),
+        .testTarget(name: "SwiftyBeaverTests", dependencies: ["SwiftyBeaver"]),
+    ],
+    swiftLanguageVersions: [.v5]
+)
