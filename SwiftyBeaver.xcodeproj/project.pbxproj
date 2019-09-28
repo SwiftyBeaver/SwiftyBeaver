@@ -1,0 +1,567 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		"SwiftyBeaver::SwiftyBeaverPackageTests::ProductTarget" /* SwiftyBeaverPackageTests */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = OBJ_64 /* Build configuration list for PBXAggregateTarget "SwiftyBeaverPackageTests" */;
+			buildPhases = (
+			);
+			dependencies = (
+				OBJ_67 /* PBXTargetDependency */,
+			);
+			name = SwiftyBeaverPackageTests;
+			productName = SwiftyBeaverPackageTests;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		OBJ_45 /* AES256CBC.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_8 /* AES256CBC.swift */; };
+		OBJ_46 /* Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* Base64.swift */; };
+		OBJ_47 /* BaseDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* BaseDestination.swift */; };
+		OBJ_48 /* ConsoleDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* ConsoleDestination.swift */; };
+		OBJ_49 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* Extensions.swift */; };
+		OBJ_50 /* FileDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* FileDestination.swift */; };
+		OBJ_51 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* Filter.swift */; };
+		OBJ_52 /* FilterValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_15 /* FilterValidator.swift */; };
+		OBJ_53 /* GoogleCloudDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_16 /* GoogleCloudDestination.swift */; };
+		OBJ_54 /* SBPlatformDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_17 /* SBPlatformDestination.swift */; };
+		OBJ_55 /* SwiftyBeaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_18 /* SwiftyBeaver.swift */; };
+		OBJ_62 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
+		OBJ_73 /* AES256CBCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_21 /* AES256CBCTests.swift */; };
+		OBJ_74 /* BaseDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_22 /* BaseDestinationTests.swift */; };
+		OBJ_75 /* ConsoleDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_23 /* ConsoleDestinationTests.swift */; };
+		OBJ_76 /* DestinationSetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_24 /* DestinationSetTests.swift */; };
+		OBJ_77 /* FileDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_25 /* FileDestinationTests.swift */; };
+		OBJ_78 /* FilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_26 /* FilterTests.swift */; };
+		OBJ_79 /* GoogleCloudDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_27 /* GoogleCloudDestinationTests.swift */; };
+		OBJ_80 /* SBPlatformDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_28 /* SBPlatformDestinationTests.swift */; };
+		OBJ_81 /* SecretsExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_29 /* SecretsExample.swift */; };
+		OBJ_82 /* SwiftyBeaverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_30 /* SwiftyBeaverTests.swift */; };
+		OBJ_84 /* SwiftyBeaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "SwiftyBeaver::SwiftyBeaver::Product" /* SwiftyBeaver.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4DA3E2F1233F2D4C006A7285 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "SwiftyBeaver::SwiftyBeaver";
+			remoteInfo = SwiftyBeaver;
+		};
+		4DA3E2F2233F2D4D006A7285 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "SwiftyBeaver::SwiftyBeaverTests";
+			remoteInfo = SwiftyBeaverTests;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		OBJ_10 /* BaseDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseDestination.swift; sourceTree = "<group>"; };
+		OBJ_11 /* ConsoleDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleDestination.swift; sourceTree = "<group>"; };
+		OBJ_12 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		OBJ_13 /* FileDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileDestination.swift; sourceTree = "<group>"; };
+		OBJ_14 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
+		OBJ_15 /* FilterValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterValidator.swift; sourceTree = "<group>"; };
+		OBJ_16 /* GoogleCloudDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleCloudDestination.swift; sourceTree = "<group>"; };
+		OBJ_17 /* SBPlatformDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBPlatformDestination.swift; sourceTree = "<group>"; };
+		OBJ_18 /* SwiftyBeaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyBeaver.swift; sourceTree = "<group>"; };
+		OBJ_21 /* AES256CBCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AES256CBCTests.swift; sourceTree = "<group>"; };
+		OBJ_22 /* BaseDestinationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseDestinationTests.swift; sourceTree = "<group>"; };
+		OBJ_23 /* ConsoleDestinationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleDestinationTests.swift; sourceTree = "<group>"; };
+		OBJ_24 /* DestinationSetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationSetTests.swift; sourceTree = "<group>"; };
+		OBJ_25 /* FileDestinationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileDestinationTests.swift; sourceTree = "<group>"; };
+		OBJ_26 /* FilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTests.swift; sourceTree = "<group>"; };
+		OBJ_27 /* GoogleCloudDestinationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleCloudDestinationTests.swift; sourceTree = "<group>"; };
+		OBJ_28 /* SBPlatformDestinationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBPlatformDestinationTests.swift; sourceTree = "<group>"; };
+		OBJ_29 /* SecretsExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretsExample.swift; sourceTree = "<group>"; };
+		OBJ_30 /* SwiftyBeaverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyBeaverTests.swift; sourceTree = "<group>"; };
+		OBJ_34 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		OBJ_35 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
+		OBJ_36 /* Dockerfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Dockerfile; sourceTree = "<group>"; };
+		OBJ_37 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		OBJ_38 /* test_in_docker.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = test_in_docker.sh; sourceTree = "<group>"; };
+		OBJ_39 /* SwiftyBeaver.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = SwiftyBeaver.podspec; sourceTree = "<group>"; };
+		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+		OBJ_8 /* AES256CBC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AES256CBC.swift; sourceTree = "<group>"; };
+		OBJ_9 /* Base64.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Base64.swift; sourceTree = "<group>"; };
+		"SwiftyBeaver::SwiftyBeaver::Product" /* SwiftyBeaver.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyBeaver.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		"SwiftyBeaver::SwiftyBeaverTests::Product" /* SwiftyBeaverTests.xctest */ = {isa = PBXFileReference; lastKnownFileType = file; path = SwiftyBeaverTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		OBJ_56 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_83 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_84 /* SwiftyBeaver.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		OBJ_19 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_20 /* SwiftyBeaverTests */,
+			);
+			name = Tests;
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_20 /* SwiftyBeaverTests */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_21 /* AES256CBCTests.swift */,
+				OBJ_22 /* BaseDestinationTests.swift */,
+				OBJ_23 /* ConsoleDestinationTests.swift */,
+				OBJ_24 /* DestinationSetTests.swift */,
+				OBJ_25 /* FileDestinationTests.swift */,
+				OBJ_26 /* FilterTests.swift */,
+				OBJ_27 /* GoogleCloudDestinationTests.swift */,
+				OBJ_28 /* SBPlatformDestinationTests.swift */,
+				OBJ_29 /* SecretsExample.swift */,
+				OBJ_30 /* SwiftyBeaverTests.swift */,
+			);
+			name = SwiftyBeaverTests;
+			path = Tests/SwiftyBeaverTests;
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_31 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				"SwiftyBeaver::SwiftyBeaverTests::Product" /* SwiftyBeaverTests.xctest */,
+				"SwiftyBeaver::SwiftyBeaver::Product" /* SwiftyBeaver.framework */,
+			);
+			name = Products;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		OBJ_5 /*  */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_6 /* Package.swift */,
+				OBJ_7 /* Sources */,
+				OBJ_19 /* Tests */,
+				OBJ_31 /* Products */,
+				OBJ_34 /* LICENSE */,
+				OBJ_35 /* CHANGELOG.md */,
+				OBJ_36 /* Dockerfile */,
+				OBJ_37 /* README.md */,
+				OBJ_38 /* test_in_docker.sh */,
+				OBJ_39 /* SwiftyBeaver.podspec */,
+			);
+			name = "";
+			sourceTree = "<group>";
+		};
+		OBJ_7 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_8 /* AES256CBC.swift */,
+				OBJ_9 /* Base64.swift */,
+				OBJ_10 /* BaseDestination.swift */,
+				OBJ_11 /* ConsoleDestination.swift */,
+				OBJ_12 /* Extensions.swift */,
+				OBJ_13 /* FileDestination.swift */,
+				OBJ_14 /* Filter.swift */,
+				OBJ_15 /* FilterValidator.swift */,
+				OBJ_16 /* GoogleCloudDestination.swift */,
+				OBJ_17 /* SBPlatformDestination.swift */,
+				OBJ_18 /* SwiftyBeaver.swift */,
+			);
+			path = Sources;
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		"SwiftyBeaver::SwiftPMPackageDescription" /* SwiftyBeaverPackageDescription */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_58 /* Build configuration list for PBXNativeTarget "SwiftyBeaverPackageDescription" */;
+			buildPhases = (
+				OBJ_61 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SwiftyBeaverPackageDescription;
+			productName = SwiftyBeaverPackageDescription;
+			productType = "com.apple.product-type.framework";
+		};
+		"SwiftyBeaver::SwiftyBeaver" /* SwiftyBeaver */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_41 /* Build configuration list for PBXNativeTarget "SwiftyBeaver" */;
+			buildPhases = (
+				OBJ_44 /* Sources */,
+				OBJ_56 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SwiftyBeaver;
+			productName = SwiftyBeaver;
+			productReference = "SwiftyBeaver::SwiftyBeaver::Product" /* SwiftyBeaver.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		"SwiftyBeaver::SwiftyBeaverTests" /* SwiftyBeaverTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_69 /* Build configuration list for PBXNativeTarget "SwiftyBeaverTests" */;
+			buildPhases = (
+				OBJ_72 /* Sources */,
+				OBJ_83 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				OBJ_85 /* PBXTargetDependency */,
+			);
+			name = SwiftyBeaverTests;
+			productName = SwiftyBeaverTests;
+			productReference = "SwiftyBeaver::SwiftyBeaverTests::Product" /* SwiftyBeaverTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		OBJ_1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftMigration = 9999;
+				LastUpgradeCheck = 9999;
+			};
+			buildConfigurationList = OBJ_2 /* Build configuration list for PBXProject "SwiftyBeaver" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = OBJ_5 /*  */;
+			productRefGroup = OBJ_31 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				"SwiftyBeaver::SwiftyBeaver" /* SwiftyBeaver */,
+				"SwiftyBeaver::SwiftPMPackageDescription" /* SwiftyBeaverPackageDescription */,
+				"SwiftyBeaver::SwiftyBeaverPackageTests::ProductTarget" /* SwiftyBeaverPackageTests */,
+				"SwiftyBeaver::SwiftyBeaverTests" /* SwiftyBeaverTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		OBJ_44 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_45 /* AES256CBC.swift in Sources */,
+				OBJ_46 /* Base64.swift in Sources */,
+				OBJ_47 /* BaseDestination.swift in Sources */,
+				OBJ_48 /* ConsoleDestination.swift in Sources */,
+				OBJ_49 /* Extensions.swift in Sources */,
+				OBJ_50 /* FileDestination.swift in Sources */,
+				OBJ_51 /* Filter.swift in Sources */,
+				OBJ_52 /* FilterValidator.swift in Sources */,
+				OBJ_53 /* GoogleCloudDestination.swift in Sources */,
+				OBJ_54 /* SBPlatformDestination.swift in Sources */,
+				OBJ_55 /* SwiftyBeaver.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_61 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_62 /* Package.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_72 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_73 /* AES256CBCTests.swift in Sources */,
+				OBJ_74 /* BaseDestinationTests.swift in Sources */,
+				OBJ_75 /* ConsoleDestinationTests.swift in Sources */,
+				OBJ_76 /* DestinationSetTests.swift in Sources */,
+				OBJ_77 /* FileDestinationTests.swift in Sources */,
+				OBJ_78 /* FilterTests.swift in Sources */,
+				OBJ_79 /* GoogleCloudDestinationTests.swift in Sources */,
+				OBJ_80 /* SBPlatformDestinationTests.swift in Sources */,
+				OBJ_81 /* SecretsExample.swift in Sources */,
+				OBJ_82 /* SwiftyBeaverTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		OBJ_67 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "SwiftyBeaver::SwiftyBeaverTests" /* SwiftyBeaverTests */;
+			targetProxy = 4DA3E2F2233F2D4D006A7285 /* PBXContainerItemProxy */;
+		};
+		OBJ_85 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "SwiftyBeaver::SwiftyBeaver" /* SwiftyBeaver */;
+			targetProxy = 4DA3E2F1233F2D4C006A7285 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		OBJ_3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_NS_ASSERTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"SWIFT_PACKAGE=1",
+					"DEBUG=1",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_SWIFT_FLAGS = "$(inherited) -DXcode";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) SWIFT_PACKAGE DEBUG";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				USE_HEADERMAP = NO;
+			};
+			name = Debug;
+		};
+		OBJ_4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"SWIFT_PACKAGE=1",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				OTHER_SWIFT_FLAGS = "$(inherited) -DXcode";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) SWIFT_PACKAGE";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				USE_HEADERMAP = NO;
+			};
+			name = Release;
+		};
+		OBJ_42 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = SwiftyBeaver.xcodeproj/SwiftyBeaver_Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MARKETING_VERSION = 1.8.0;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = SwiftyBeaver;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_VERSION = 5.0;
+				TARGET_NAME = SwiftyBeaver;
+				TVOS_DEPLOYMENT_TARGET = 11.0;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Debug;
+		};
+		OBJ_43 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = SwiftyBeaver.xcodeproj/SwiftyBeaver_Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MARKETING_VERSION = 1.8.0;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = SwiftyBeaver;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_VERSION = 5.0;
+				TARGET_NAME = SwiftyBeaver;
+				TVOS_DEPLOYMENT_TARGET = 11.0;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Release;
+		};
+		OBJ_59 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 5 -I $(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -package-description-version 5";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		OBJ_60 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 5 -I $(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -package-description-version 5";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		OBJ_65 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		OBJ_66 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		OBJ_70 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = SwiftyBeaver.xcodeproj/SwiftyBeaverTests_Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_VERSION = 5.0;
+				TARGET_NAME = SwiftyBeaverTests;
+				TVOS_DEPLOYMENT_TARGET = 11.0;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Debug;
+		};
+		OBJ_71 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = SwiftyBeaver.xcodeproj/SwiftyBeaverTests_Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_VERSION = 5.0;
+				TARGET_NAME = SwiftyBeaverTests;
+				TVOS_DEPLOYMENT_TARGET = 11.0;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		OBJ_2 /* Build configuration list for PBXProject "SwiftyBeaver" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_3 /* Debug */,
+				OBJ_4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_41 /* Build configuration list for PBXNativeTarget "SwiftyBeaver" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_42 /* Debug */,
+				OBJ_43 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_58 /* Build configuration list for PBXNativeTarget "SwiftyBeaverPackageDescription" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_59 /* Debug */,
+				OBJ_60 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_64 /* Build configuration list for PBXAggregateTarget "SwiftyBeaverPackageTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_65 /* Debug */,
+				OBJ_66 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_69 /* Build configuration list for PBXNativeTarget "SwiftyBeaverTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_70 /* Debug */,
+				OBJ_71 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = OBJ_1 /* Project object */;
+}
