@@ -6,6 +6,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 <br/>
 
+## 1.8.1 (2019-09-30)
+
+##### Fixed
+- Added missing key to `info.plist` by [@lgaches](https://github.com/lgaches)
+
+<br/>
+
 ## 1.8.0 (2019-09-27)
 
 ##### Added
