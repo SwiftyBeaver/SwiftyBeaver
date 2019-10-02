@@ -6,6 +6,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 <br/>
 
+## 1.8.2 (2019-10-02)
+
+##### Fixed
+- Key value in `info.plist` by [@Sidetalker](https://github.com/Sidetalker)
+
+<br/>
+
 ## 1.8.1 (2019-09-30)
 
 ##### Fixed
