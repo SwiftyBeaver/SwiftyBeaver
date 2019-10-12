@@ -9,6 +9,10 @@
 
 import Foundation
 
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
+
 // platform-dependent import frameworks to get device details
 // valid values for os(): OSX, iOS, watchOS, tvOS, Linux
 // in Swift 3 the following were added: FreeBSD, Windows, Android
