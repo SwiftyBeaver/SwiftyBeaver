@@ -6,9 +6,9 @@ import PackageDescription
 let package = Package(
     name: "SwiftyBeaver",
     platforms: [
-        .macOS(.v10_12),
-        .iOS(.v11),
-        .tvOS(.v11),
+        .macOS(.v10_10),
+        .iOS(.v8),
+        .tvOS(.v9),
         .watchOS(.v2)
     ],
     products: [
