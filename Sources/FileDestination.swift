@@ -13,6 +13,30 @@ public class FileDestination: BaseDestination {
 
     public var logFileURL: URL?
     public var syncAfterEachWrite: Bool = false
+    public var colored: Bool = false {
+        didSet {
+            if colored {
+                // bash font color, first value is intensity, second is color
+                // see http://bit.ly/1Otu3Zr & for syntax http://bit.ly/1Tp6Fw9
+                // uses the 256-color table from http://bit.ly/1W1qJuH
+                reset = "\u{001b}[0m"
+                escape = "\u{001b}[38;5;"
+                levelColor.verbose = "251m"     // silver
+                levelColor.debug = "35m"        // green
+                levelColor.info = "38m"         // blue
+                levelColor.warning = "178m"     // yellow
+                levelColor.error = "197m"       // red
+            } else {
+                reset = ""
+                escape = ""
+                levelColor.verbose = ""
+                levelColor.debug = ""
+                levelColor.info = ""
+                levelColor.warning = ""
+                levelColor.error = ""
+            }
+        }
+    }
 
     override public var defaultHashValue: Int {return 2}
     let fileManager = FileManager.default
@@ -52,17 +76,6 @@ public class FileDestination: BaseDestination {
             logFileURL = baseURL.appendingPathComponent("swiftybeaver.log", isDirectory: false)
         }
         super.init()
-
-        // bash font color, first value is intensity, second is color
-        // see http://bit.ly/1Otu3Zr & for syntax http://bit.ly/1Tp6Fw9
-        // uses the 256-color table from http://bit.ly/1W1qJuH
-        reset = "\u{001b}[0m"
-        escape = "\u{001b}[38;5;"
-        levelColor.verbose = "251m"     // silver
-        levelColor.debug = "35m"        // green
-        levelColor.info = "38m"         // blue
-        levelColor.warning = "178m"     // yellow
-        levelColor.error = "197m"       // red
     }
 
     // append to file. uses full base class functionality
