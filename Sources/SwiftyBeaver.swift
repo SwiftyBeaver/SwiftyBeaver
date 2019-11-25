@@ -71,12 +71,8 @@ open class SwiftyBeaver {
             if Thread.isMainThread {
                 return ""
             } else {
-                let threadName = Thread.current.name
-                if let threadName = threadName, !threadName.isEmpty {
-                    return threadName
-                } else {
-                    return String(format: "%p", Thread.current)
-                }
+                let name = __dispatch_queue_get_label(nil)
+                return String(cString: name, encoding: .utf8) ?? Thread.current.description
             }
         #endif
     }
