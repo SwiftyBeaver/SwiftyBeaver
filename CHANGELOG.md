@@ -1,9 +1,19 @@
 # Change Log
 
-All notable changes to this project will be documented in this file following the style described at [Keep a Changelog](http://keepachangelog.com) by [@olivierlacan](https://github.com/olivierlacan). 
+All notable changes to this project will be documented in this file following the style described at [Keep a Changelog](http://keepachangelog.com) by [@olivierlacan](https://github.com/olivierlacan).
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ----
+<br/>
+
+## 1.8.4 (2019-12-06)
+
+##### Added
+- Enabled "Allow app extension API only" flag by [@FelixII](https://github.com/FelixII)
+- Support for older Swift version with Cocoapods by [@RomanPodymov](https://github.com/RomanPodymov)
+- Support for colors in FileDestination by [@FabioTacke](https://github.com/FabioTacke)
+- More human-readable thread names by [@robowen5mac](https://github.com/robowen5mac)
+
 <br/>
 
 ## 1.8.3 (2019-10-23)
