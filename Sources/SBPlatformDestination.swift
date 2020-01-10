@@ -276,7 +276,9 @@ public class SBPlatformDestination: BaseDestination {
 
             // create operation queue which uses current serial queue of destination
             let operationQueue = OperationQueue()
-            operationQueue.underlyingQueue = queue
+            if #available(OSX 10.10, *) {
+                operationQueue.underlyingQueue = queue
+            }
 
             let session = URLSession(configuration:
                 URLSessionConfiguration.default,
@@ -468,11 +470,19 @@ public class SBPlatformDestination: BaseDestination {
         var details = [String: String]()
 
         details["os"] = OS
-        let osVersion = ProcessInfo.processInfo.operatingSystemVersion
-        // becomes for example 10.11.2 for El Capitan
-        var osVersionStr = String(osVersion.majorVersion)
-        osVersionStr += "." + String(osVersion.minorVersion)
-        osVersionStr += "." + String(osVersion.patchVersion)
+        
+        var osVersionStr: String
+        if #available(OSX 10.10, *) {
+            // becomes for example 10.11.2 for El Capitan
+            let osVersion = ProcessInfo.processInfo.operatingSystemVersion
+            osVersionStr = String(osVersion.majorVersion)
+            osVersionStr += "." + String(osVersion.minorVersion)
+            osVersionStr += "." + String(osVersion.patchVersion)
+        } else {
+            // Fallback for macOS 10.9
+            osVersionStr = "10.9"
+        }
+        
         details["osVersion"] = osVersionStr
         details["hostName"] = ProcessInfo.processInfo.hostName
         details["deviceName"] = ""

@@ -20,7 +20,7 @@ Great for development & release due to its support for many logging destinations
   s.ios.deployment_target = "8.0"
   s.watchos.deployment_target = "2.0"
   s.tvos.deployment_target = "9.0"
-  s.osx.deployment_target = "10.10"
+  s.osx.deployment_target = "10.9"
   s.source       = { :git => "https://github.com/SwiftyBeaver/SwiftyBeaver.git", :tag => "1.8.4" }
   s.source_files  = "Sources"
   s.swift_versions = ['3.0', '4.0', '4.2', '5.0', '5.1']
