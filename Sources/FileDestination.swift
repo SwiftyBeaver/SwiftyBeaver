@@ -102,40 +102,35 @@ public class FileDestination: BaseDestination {
         let line = str + "\n"
         guard let data = line.data(using: String.Encoding.utf8) else { return false }
 
-        do {
-            if fileManager.fileExists(atPath: url.path) == false {
-                
-                let directoryURL = url.deletingLastPathComponent()
-                if fileManager.fileExists(atPath: directoryURL.path) == false {
-                    try fileManager.createDirectory(
-                        at: directoryURL,
-                        withIntermediateDirectories: true
-                    )
-                }
-                fileManager.createFile(atPath: url.path, contents: nil)
-
-                #if os(iOS) || os(watchOS)
-                if #available(iOS 10.0, watchOS 3.0, *) {
-                    var attributes = try fileManager.attributesOfItem(atPath: url.path)
-                    attributes[FileAttributeKey.protectionKey] = FileProtectionType.none
-                    try fileManager.setAttributes(attributes, ofItemAtPath: url.path)
-                }
-                #endif
-            }
-            write(data: data, to: url)
-
-            return true
-        } catch {
-            print("SwiftyBeaver File Destination could not write to file \(url).")
-            return false
-        }
+        return write(data: data, to: url)
     }
 
-    private func write(data: Data, to url: URL) {
+    private func write(data: Data, to url: URL) -> Bool {
+        var success = false
         let coordinator = NSFileCoordinator(filePresenter: nil)
         var error: NSError?
         coordinator.coordinate(writingItemAt: url, error: &error) { url in
             do {
+                if fileManager.fileExists(atPath: url.path) == false {
+
+                    let directoryURL = url.deletingLastPathComponent()
+                    if fileManager.fileExists(atPath: directoryURL.path) == false {
+                        try fileManager.createDirectory(
+                            at: directoryURL,
+                            withIntermediateDirectories: true
+                        )
+                    }
+                    fileManager.createFile(atPath: url.path, contents: nil)
+
+                    #if os(iOS) || os(watchOS)
+                    if #available(iOS 10.0, watchOS 3.0, *) {
+                        var attributes = try fileManager.attributesOfItem(atPath: url.path)
+                        attributes[FileAttributeKey.protectionKey] = FileProtectionType.none
+                        try fileManager.setAttributes(attributes, ofItemAtPath: url.path)
+                    }
+                    #endif
+                }
+
                 let fileHandle = try FileHandle(forWritingTo: url)
                 fileHandle.seekToEndOfFile()
                 fileHandle.write(data)
@@ -143,15 +138,18 @@ public class FileDestination: BaseDestination {
                     fileHandle.synchronizeFile()
                 }
                 fileHandle.closeFile()
+                success = true
             } catch {
                 print("SwiftyBeaver File Destination could not write to file \(url).")
-                return
             }
         }
 
         if let error = error {
             print("Failed writing file with error: \(String(describing: error))")
+            return false
         }
+
+        return success
     }
 
     /// deletes log file.
