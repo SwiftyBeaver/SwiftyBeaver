@@ -9,7 +9,7 @@
 
 import Foundation
 import XCTest
-@testable import SwiftyBeaver
+@testable import SwiftyBeaverKit
 
 class SBPlatformDestinationTests: XCTestCase {
 
@@ -33,7 +33,7 @@ class SBPlatformDestinationTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        SwiftyBeaver.removeAllDestinations()
+        SwiftyBeaverKit.removeAllDestinations()
         platform = SBPlatformDestination(
             appID: SBPlatformCredentials.appID,
             appSecret: SBPlatformCredentials.appSecret,
@@ -53,7 +53,7 @@ class SBPlatformDestinationTests: XCTestCase {
     }
 
     func testLoggingWithoutDestination() {
-        let log = SwiftyBeaver.self
+        let log = SwiftyBeaverKit.self
         // no destination was set, yet
         log.verbose("Where do I log to?")
     }
@@ -83,15 +83,15 @@ class SBPlatformDestinationTests: XCTestCase {
     }
 
     func testSendingPointsFromLevel() {
-        var points = platform.sendingPointsForLevel(SwiftyBeaver.Level.verbose)
+        var points = platform.sendingPointsForLevel(SwiftyBeaverKit.Level.verbose)
         XCTAssertEqual(points, platform.sendingPoints.verbose)
-        points = platform.sendingPointsForLevel(SwiftyBeaver.Level.debug)
+        points = platform.sendingPointsForLevel(SwiftyBeaverKit.Level.debug)
         XCTAssertEqual(points, platform.sendingPoints.debug)
-        points = platform.sendingPointsForLevel(SwiftyBeaver.Level.info)
+        points = platform.sendingPointsForLevel(SwiftyBeaverKit.Level.info)
         XCTAssertEqual(points, platform.sendingPoints.info)
-        points = platform.sendingPointsForLevel(SwiftyBeaver.Level.warning)
+        points = platform.sendingPointsForLevel(SwiftyBeaverKit.Level.warning)
         XCTAssertEqual(points, platform.sendingPoints.warning)
-        points = platform.sendingPointsForLevel(SwiftyBeaver.Level.error)
+        points = platform.sendingPointsForLevel(SwiftyBeaverKit.Level.error)
         XCTAssertEqual(points, platform.sendingPoints.error)
     }
 
@@ -160,7 +160,7 @@ class SBPlatformDestinationTests: XCTestCase {
     }
 
     func testSingleSending() {
-        let log = SwiftyBeaver.self
+        let log = SwiftyBeaverKit.self
 
         // add logging to SwiftyBeaver Platform
         platform.showNSLog = true
@@ -198,7 +198,7 @@ class SBPlatformDestinationTests: XCTestCase {
     }
 
     func testIntegration() {
-        let log = SwiftyBeaver.self
+        let log = SwiftyBeaverKit.self
         let formatter = DateFormatter()
 
         // add logging to SwiftyBeaver Platform

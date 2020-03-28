@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "SwiftyBeaver",
+    name: "SwiftyBeaverKit",
     platforms: [
         .macOS(.v10_10),
         .iOS(.v8),
@@ -12,11 +12,11 @@ let package = Package(
         .watchOS(.v2)
     ],
     products: [
-        .library(name: "SwiftyBeaver", targets: ["SwiftyBeaver"])
+        .library(name: "SwiftyBeaverKit", targets: ["SwiftyBeaverKit"])
     ],
     targets: [
-        .target(name: "SwiftyBeaver", path: "Sources"),
-        .testTarget(name: "SwiftyBeaverTests", dependencies: ["SwiftyBeaver"]),
+        .target(name: "SwiftyBeaverKit", path: "Sources"),
+        .testTarget(name: "SwiftyBeaverTests", dependencies: ["SwiftyBeaverKit"]),
     ],
     swiftLanguageVersions: [.v5]
 )

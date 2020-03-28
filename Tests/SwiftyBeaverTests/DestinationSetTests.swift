@@ -7,22 +7,22 @@
 //
 
 import XCTest
-import SwiftyBeaver
+import SwiftyBeaverKit
 
 class DestinationSetTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        SwiftyBeaver.removeAllDestinations()
+        SwiftyBeaverKit.removeAllDestinations()
     }
 
     override func tearDown() {
         super.tearDown()
-        SwiftyBeaver.removeAllDestinations()
+        SwiftyBeaverKit.removeAllDestinations()
     }
 
     func testChangeDestinationsMinLogLevels() {
-        let log = SwiftyBeaver.self
+        let log = SwiftyBeaverKit.self
 
         // Test for default state
         XCTAssertEqual(log.countDestinations(), 0)
@@ -41,7 +41,7 @@ class DestinationSetTests: XCTestCase {
 
         // Test default log level of destinations
         log.destinations.forEach {
-            XCTAssertEqual($0.minLevel, SwiftyBeaver.Level.verbose)
+            XCTAssertEqual($0.minLevel, SwiftyBeaverKit.Level.verbose)
         }
 
         // Change min log level for all destinations
@@ -49,12 +49,12 @@ class DestinationSetTests: XCTestCase {
 
         // Test min level of destinations has changed
         log.destinations.forEach {
-            XCTAssertEqual($0.minLevel, SwiftyBeaver.Level.info)
+            XCTAssertEqual($0.minLevel, SwiftyBeaverKit.Level.info)
         }
     }
 
     func testRemoveConsoleDestinations() {
-        let log = SwiftyBeaver.self
+        let log = SwiftyBeaverKit.self
 
         // Test for default state
         XCTAssertEqual(log.countDestinations(), 0)

@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import SwiftyBeaver
+@testable import SwiftyBeaverKit
 
 class AES256CBCTests: XCTestCase {
 

@@ -40,7 +40,7 @@ struct FilterValidator {
     // Wrapper object for input parameters
     struct Input {
         let filters: [FilterType]
-        let level: SwiftyBeaver.Level
+        let level: SwiftyBeaverKit.Level
         let path: String
         let function: String
         let message: String?
@@ -101,7 +101,7 @@ struct FilterValidator {
         return results
     }
 
-    private static func filterMatchesCondition(_ filter: FilterType, level: SwiftyBeaver.Level,
+    private static func filterMatchesCondition(_ filter: FilterType, level: SwiftyBeaverKit.Level,
                                                 path: String, function: String, message: String?) -> Bool {
             let passes: Bool
 
@@ -123,7 +123,7 @@ struct FilterValidator {
             return passes
     }
 
-    private static func filterMatchesMinLogLevel(_ filter: FilterType, level: SwiftyBeaver.Level) -> Bool {
+    private static func filterMatchesMinLogLevel(_ filter: FilterType, level: SwiftyBeaverKit.Level) -> Bool {
         return filter.reachedMinLevel(level)
     }
 }

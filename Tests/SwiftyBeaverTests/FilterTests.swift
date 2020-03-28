@@ -5,7 +5,7 @@
 
 import Foundation
 import XCTest
-@testable import SwiftyBeaver
+@testable import SwiftyBeaverKit
 
 class FilterTests: XCTestCase {
 

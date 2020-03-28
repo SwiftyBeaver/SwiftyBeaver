@@ -7,13 +7,13 @@
 //
 import Foundation
 import XCTest
-@testable import SwiftyBeaver
+@testable import SwiftyBeaverKit
 
 class GoogleCloudDestinationTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        SwiftyBeaver.removeAllDestinations()
+        SwiftyBeaverKit.removeAllDestinations()
     }
 
     override func tearDown() {
@@ -21,7 +21,7 @@ class GoogleCloudDestinationTests: XCTestCase {
     }
 
     func testUseGoogleCloudPDestination() {
-        let log = SwiftyBeaver.self
+        let log = SwiftyBeaverKit.self
         let gcpDestination = GoogleCloudDestination(serviceName: "TEST")
         gcpDestination.minLevel = .verbose
         XCTAssertTrue(log.addDestination(gcpDestination))

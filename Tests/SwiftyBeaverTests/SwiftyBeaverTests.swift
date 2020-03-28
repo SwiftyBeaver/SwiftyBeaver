@@ -9,7 +9,7 @@
 
 import Foundation
 import XCTest
-@testable import SwiftyBeaver
+@testable import SwiftyBeaverKit
 
 class SwiftyBeaverTests: XCTestCase {
 
@@ -17,7 +17,7 @@ class SwiftyBeaverTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        SwiftyBeaver.removeAllDestinations()
+        SwiftyBeaverKit.removeAllDestinations()
     }
 
     override func tearDown() {
@@ -25,7 +25,7 @@ class SwiftyBeaverTests: XCTestCase {
     }
 
     func testAddDestination() {
-        let log = SwiftyBeaver.self
+        let log = SwiftyBeaverKit.self
 
         // add invalid destination
         XCTAssertEqual(log.countDestinations(), 0)
@@ -48,7 +48,7 @@ class SwiftyBeaverTests: XCTestCase {
     }
 
     func testRemoveDestination() {
-        let log = SwiftyBeaver.self
+        let log = SwiftyBeaverKit.self
 
         // remove invalid destination
         XCTAssertEqual(log.countDestinations(), 0)
@@ -76,7 +76,7 @@ class SwiftyBeaverTests: XCTestCase {
     }
 
     func testLogVerifiesIfShouldLogOnAllDestinations() {
-        let log = SwiftyBeaver.self
+        let log = SwiftyBeaverKit.self
 
         let dest1 = MockDestination()
         dest1.asynchronously = false
@@ -88,8 +88,8 @@ class SwiftyBeaverTests: XCTestCase {
 
         log.dispatch_send(level: .warning, message: "Message", thread: "Thread", file: "File", function: "Function()", line: 123, context: "Context")
 
-        XCTAssertEqual(dest1.shouldLogToLevel, SwiftyBeaver.Level.warning)
-        XCTAssertEqual(dest2.shouldLogToLevel, SwiftyBeaver.Level.warning)
+        XCTAssertEqual(dest1.shouldLogToLevel, SwiftyBeaverKit.Level.warning)
+        XCTAssertEqual(dest2.shouldLogToLevel, SwiftyBeaverKit.Level.warning)
 
         XCTAssertEqual(dest1.shouldLogPath, "File")
         XCTAssertEqual(dest2.shouldLogPath, "File")
@@ -102,7 +102,7 @@ class SwiftyBeaverTests: XCTestCase {
     }
 
     func testLogCallsAllDestinations() {
-        let log = SwiftyBeaver.self
+        let log = SwiftyBeaverKit.self
 
         let dest1 = MockDestination()
         dest1.asynchronously = false
@@ -114,8 +114,8 @@ class SwiftyBeaverTests: XCTestCase {
 
         log.dispatch_send(level: .warning, message: "Message", thread: "Thread", file: "File", function: "Function()", line: 123, context: "Context")
 
-        XCTAssertEqual(dest1.didSendToLevel, SwiftyBeaver.Level.warning)
-        XCTAssertEqual(dest2.didSendToLevel, SwiftyBeaver.Level.warning)
+        XCTAssertEqual(dest1.didSendToLevel, SwiftyBeaverKit.Level.warning)
+        XCTAssertEqual(dest2.didSendToLevel, SwiftyBeaverKit.Level.warning)
 
         XCTAssertEqual(dest1.didSendMessage, "Message")
         XCTAssertEqual(dest2.didSendMessage, "Message")
@@ -137,13 +137,13 @@ class SwiftyBeaverTests: XCTestCase {
     }
 
     func testLoggingWithoutDestination() {
-        let log = SwiftyBeaver.self
+        let log = SwiftyBeaverKit.self
         // no destination was set, yet
         log.verbose("Where do I log to?")
     }
 
     func testDestinationIntegration() {
-        let log = SwiftyBeaver.self
+        let log = SwiftyBeaverKit.self
         log.verbose("that should lead to nowhere")
 
         // add console
@@ -155,7 +155,7 @@ class SwiftyBeaverTests: XCTestCase {
         XCTAssertTrue(log.addDestination(console2))
         XCTAssertEqual(log.countDestinations(), 2)
         console2.format = "$L: $M"
-        console2.minLevel = SwiftyBeaver.Level.debug
+        console2.minLevel = SwiftyBeaverKit.Level.debug
         log.verbose("a verbose hello from hopefully just 1 console!")
         log.debug("a debug hello from 2 different consoles!")
 
@@ -172,7 +172,7 @@ class SwiftyBeaverTests: XCTestCase {
         let file2 = FileDestination()
         file2.logFileURL = URL(string: "file:///tmp/testSwiftyBeaver2.log")!
         console2.format = "$L: $M"
-        file2.minLevel = SwiftyBeaver.Level.debug
+        file2.minLevel = SwiftyBeaverKit.Level.debug
         XCTAssertTrue(log.addDestination(file2))
         XCTAssertEqual(log.countDestinations(), 4)
         log.verbose("this should be in file 1")
@@ -191,7 +191,7 @@ class SwiftyBeaverTests: XCTestCase {
     }
 
     func testColors() {
-        let log = SwiftyBeaver.self
+        let log = SwiftyBeaverKit.self
         log.verbose("that should lead to nowhere")
 
         // add console
@@ -214,7 +214,7 @@ class SwiftyBeaverTests: XCTestCase {
     }
 
     func testUptime() {
-        let log = SwiftyBeaver.self
+        let log = SwiftyBeaverKit.self
         log.verbose("that should lead to nowhere")
 
         // add console
@@ -238,7 +238,7 @@ class SwiftyBeaverTests: XCTestCase {
     }
 
     func testModifiedColors() {
-        let log = SwiftyBeaver.self
+        let log = SwiftyBeaverKit.self
 
         // add console
         let console = ConsoleDestination()
@@ -259,7 +259,7 @@ class SwiftyBeaverTests: XCTestCase {
     }
 
     func testDifferentMessageTypes() {
-        let log = SwiftyBeaver.self
+        let log = SwiftyBeaverKit.self
 
         // add console
         let console = ConsoleDestination()
@@ -290,7 +290,7 @@ class SwiftyBeaverTests: XCTestCase {
     }
 
     func testAutoClosure() {
-        let log = SwiftyBeaver.self
+        let log = SwiftyBeaverKit.self
         // add console
         let console = ConsoleDestination()
         XCTAssertTrue(log.addDestination(console))
@@ -300,7 +300,7 @@ class SwiftyBeaverTests: XCTestCase {
 
     func testLongRunningTaskIsNotExecutedWhenLoggingUnderMinLevel() {
 
-        let log = SwiftyBeaver.self
+        let log = SwiftyBeaverKit.self
 
         // add console
         let console = ConsoleDestination()
@@ -318,21 +318,21 @@ class SwiftyBeaverTests: XCTestCase {
     }
 
     func testVersionAndBuild() {
-        XCTAssertGreaterThan(SwiftyBeaver.version.length, 4)
-        XCTAssertGreaterThan(SwiftyBeaver.build, 500)
+        XCTAssertGreaterThan(SwiftyBeaverKit.version.length, 4)
+        XCTAssertGreaterThan(SwiftyBeaverKit.build, 500)
     }
 
     func testStripParams() {
         var f = "singleParam"
-        XCTAssertEqual(SwiftyBeaver.stripParams(function: f), "singleParam()")
+        XCTAssertEqual(SwiftyBeaverKit.stripParams(function: f), "singleParam()")
         f = "logWithParamFunc(_:foo:hello:)"
-        XCTAssertEqual(SwiftyBeaver.stripParams(function: f), "logWithParamFunc()")
+        XCTAssertEqual(SwiftyBeaverKit.stripParams(function: f), "logWithParamFunc()")
         f = "aFunc()"
-        XCTAssertEqual(SwiftyBeaver.stripParams(function: f), "aFunc()")
+        XCTAssertEqual(SwiftyBeaverKit.stripParams(function: f), "aFunc()")
     }
 
     func testGetCorrectThread() {
-        let log = SwiftyBeaver.self
+        let log = SwiftyBeaverKit.self
         let mock = MockDestination()
         // set info level on default
         mock.minLevel = .verbose
@@ -408,7 +408,7 @@ class SwiftyBeaverTests: XCTestCase {
 }
 
 private class MockDestination: BaseDestination {
-    var didSendToLevel: SwiftyBeaver.Level?
+    var didSendToLevel: SwiftyBeaverKit.Level?
     var didSendMessage: String?
     var didSendToThread: String?
     var didSendFile: String?
@@ -416,7 +416,7 @@ private class MockDestination: BaseDestination {
     var didSendLine: Int?
     var didSendContext: (Any?)?
 
-    override func send(_ level: SwiftyBeaver.Level, msg: String, thread: String, file: String, function: String, line: Int, context: Any?) -> String? {
+    override func send(_ level: SwiftyBeaverKit.Level, msg: String, thread: String, file: String, function: String, line: Int, context: Any?) -> String? {
         didSendToLevel = level
         didSendMessage = msg
         didSendToThread = thread
@@ -428,11 +428,11 @@ private class MockDestination: BaseDestination {
         return ""
     }
 
-    var shouldLogToLevel: SwiftyBeaver.Level?
+    var shouldLogToLevel: SwiftyBeaverKit.Level?
     var shouldLogPath: String?
     var shouldLogFunction: String?
     var shouldLogMessage: String?
-    override func shouldLevelBeLogged(_ level: SwiftyBeaver.Level, path: String, function: String, message: String?) -> Bool {
+    override func shouldLevelBeLogged(_ level: SwiftyBeaverKit.Level, path: String, function: String, message: String?) -> Bool {
         shouldLogToLevel = level
         shouldLogPath = path
         shouldLogFunction = function

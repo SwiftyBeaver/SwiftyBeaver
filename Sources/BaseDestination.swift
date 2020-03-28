@@ -41,7 +41,7 @@ open class BaseDestination: Hashable, Equatable {
     open var asynchronously = true
 
     /// do not log any message which has a lower level than this one
-    open var minLevel = SwiftyBeaver.Level.verbose
+    open var minLevel = SwiftyBeaverKit.Level.verbose
 
     /// set custom log level words for each level
     open var levelString = LevelString()
@@ -99,7 +99,7 @@ open class BaseDestination: Hashable, Equatable {
     /// send / store the formatted log message to the destination
     /// returns the formatted log message for processing by inheriting method
     /// and for unit tests (nil if error)
-    open func send(_ level: SwiftyBeaver.Level, msg: String, thread: String, file: String,
+    open func send(_ level: SwiftyBeaverKit.Level, msg: String, thread: String, file: String,
                    function: String, line: Int, context: Any? = nil) -> String? {
 
         if format.hasPrefix("$J") {
@@ -172,7 +172,7 @@ open class BaseDestination: Hashable, Equatable {
     }
 
     /// returns the log message based on the format pattern
-    func formatMessage(_ format: String, level: SwiftyBeaver.Level, msg: String, thread: String,
+    func formatMessage(_ format: String, level: SwiftyBeaverKit.Level, msg: String, thread: String,
         file: String, function: String, line: Int, context: Any? = nil) -> String {
 
         var text = ""
@@ -247,7 +247,7 @@ open class BaseDestination: Hashable, Equatable {
     }
 
     /// returns the log payload as optional JSON string
-    func messageToJSON(_ level: SwiftyBeaver.Level, msg: String,
+    func messageToJSON(_ level: SwiftyBeaverKit.Level, msg: String,
         thread: String, file: String, function: String, line: Int, context: Any? = nil) -> String? {
         var dict: [String: Any] = [
             "timestamp": Date().timeIntervalSince1970,
@@ -265,7 +265,7 @@ open class BaseDestination: Hashable, Equatable {
     }
 
     /// returns the string of a level
-    func levelWord(_ level: SwiftyBeaver.Level) -> String {
+    func levelWord(_ level: SwiftyBeaverKit.Level) -> String {
 
         var str = ""
 
@@ -290,7 +290,7 @@ open class BaseDestination: Hashable, Equatable {
     }
 
     /// returns color string for level
-    func colorForLevel(_ level: SwiftyBeaver.Level) -> String {
+    func colorForLevel(_ level: SwiftyBeaverKit.Level) -> String {
         var color = ""
 
         switch level {
@@ -429,7 +429,7 @@ open class BaseDestination: Hashable, Equatable {
 
     /// checks if level is at least minLevel or if a minLevel filter for that path does exist
     /// returns boolean and can be used to decide if a message should be logged or not
-    func shouldLevelBeLogged(_ level: SwiftyBeaver.Level, path: String,
+    func shouldLevelBeLogged(_ level: SwiftyBeaverKit.Level, path: String,
                              function: String, message: String? = nil) -> Bool {
 
         if filters.isEmpty {
