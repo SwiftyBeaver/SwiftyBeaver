@@ -25,7 +25,7 @@ public final class GoogleCloudDestination: BaseDestination {
         }
     }
 
-    override public func send(_ level: SwiftyBeaverKit.Level, msg: String, thread: String,
+    override public func send(_ level: SwiftyBeaver.Level, msg: String, thread: String,
                               file: String, function: String, line: Int, context: Any? = nil) -> String? {
 
         let reportLocation: [String: Any] = ["filePath": file, "lineNumber": line, "functionName": function]
@@ -76,7 +76,7 @@ public final class GoogleCloudDestination: BaseDestination {
 
 ///
 /// https://cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry#LogSeverity
-extension SwiftyBeaverKit.Level {
+extension SwiftyBeaver.Level {
 
     /// Verbose is reported as Debug to GCP.
     /// Recommend you don't bother using it.

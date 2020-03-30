@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "SwiftyBeaver::SwiftyBeaver"
-               BuildableName = "SwiftyBeaver.framework"
+               BuildableName = "SwiftyBeaverKit.framework"
                BlueprintName = "SwiftyBeaverKit"
                ReferencedContainer = "container:SwiftyBeaver.xcodeproj">
             </BuildableReference>

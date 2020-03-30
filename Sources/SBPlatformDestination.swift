@@ -153,7 +153,7 @@ public class SBPlatformDestination: BaseDestination {
     }
 
     // append to file, each line is a JSON dict
-    override public func send(_ level: SwiftyBeaverKit.Level, msg: String, thread: String,
+    override public func send(_ level: SwiftyBeaver.Level, msg: String, thread: String,
         file: String, function: String, line: Int, context: Any? = nil) -> String? {
 
         var jsonString: String?
@@ -352,7 +352,7 @@ public class SBPlatformDestination: BaseDestination {
     }
 
     /// returns sending points based on level
-    func sendingPointsForLevel(_ level: SwiftyBeaverKit.Level) -> Int {
+    func sendingPointsForLevel(_ level: SwiftyBeaver.Level) -> Int {
 
         switch level {
         case .debug:
