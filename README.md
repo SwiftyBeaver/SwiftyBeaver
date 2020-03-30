@@ -62,7 +62,8 @@ You can fully customize your log format, turn it into JSON, or create your own d
 
 ## Installation
 
-- For **Swift 3, 4 & 5** install the latest SwiftyBeaver version
+- For **Swift 4 & 5** install the latest SwiftyBeaver version
+- For **Swift 3** install SwiftyBeaver 1.8.4
 - For **Swift 2** install SwiftyBeaver 0.7.0
 
 <br/>
@@ -71,9 +72,15 @@ You can fully customize your log format, turn it into JSON, or create your own d
 
 You can use [Carthage](https://github.com/Carthage/Carthage) to install SwiftyBeaver by adding that to your Cartfile:
 
-Swift 3, 4 & 5:
+Swift 4 & 5:
 ``` Swift
 github "SwiftyBeaver/SwiftyBeaver"
+```
+
+
+Swift 3:
+``` Swift
+github "SwiftyBeaver/SwiftyBeaver" ~> 1.8.4
 ```
 
 Swift 2:
@@ -85,10 +92,10 @@ github "SwiftyBeaver/SwiftyBeaver" ~> 0.7
 
 ### Swift Package Manager
 
-For [Swift Package Manager](https://swift.org/package-manager/) add the following package to your Package.swift file. Just Swift 3, 4 & 5 are supported:
+For [Swift Package Manager](https://swift.org/package-manager/) add the following package to your Package.swift file. Just Swift 4 & 5 are supported:
 
 ``` Swift
-.package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git", .upToNextMajor(from: "1.7.0")),
+.package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git", .upToNextMajor(from: "1.9.0")),
 ```
 
 <br/>
@@ -97,9 +104,19 @@ For [Swift Package Manager](https://swift.org/package-manager/) add the followin
 
 To use [CocoaPods](https://cocoapods.org) just add this to your Podfile:
 
-Swift 3, 4 & 5:
+Swift 4 & 5:
 ``` Swift
 pod 'SwiftyBeaver'
+```
+
+Swift 3:
+``` Ruby
+target 'MyProject' do
+  use_frameworks!
+
+  # Pods for MyProject
+  pod 'SwiftyBeaver', '~> 1.8.4'
+end
 ```
 
 Swift 2:
@@ -175,7 +192,7 @@ log.info("my data", context: [1, "a", 2]) // "INFO: my data [1, \"a\", 2]"
 
 ## Server-side Swift
 
-We ❤️ server-side Swift 3, 4 & 5 and SwiftyBeaver supports it **out-of-the-box**! Try for yourself and run SwiftyBeaver inside a Ubuntu Docker container. Just install Docker and then go to your the project folder on macOS or Ubuntu and type:
+We ❤️ server-side Swift 4 & 5 and SwiftyBeaver supports it **out-of-the-box**! Try for yourself and run SwiftyBeaver inside a Ubuntu Docker container. Just install Docker and then go to your the project folder on macOS or Ubuntu and type:
 
 ```shell
 # create docker image, build SwiftyBeaver and run unit tests
@@ -235,6 +252,16 @@ SwiftyBeaver is **fully GDPR compliant** due to its focus on encryption and tran
 
 Our Enterprise offering is an even more secure solution where you are not using anymore our cloud service and Mac App but you send your end-to-end encrypted logs directly to your own servers and you store them in your Elasticsearch cluster. The **Enterprise offering is used by health tech** and governmental institutions which require the highest level of privacy and security.
 
+<br/>
+<br/>
+
+## End-to-End Encryption
+
+SwiftyBeaver is using symmetric AES256CBC encryption in the `SBPlatformDestination` destination. No other officially supported destination uses encryption. 
+
+The encryption used in the `SBPlatformDestination` destination is end-to-end. The open-source SwiftyBeaver logging framework symmetrically encrypts all logging data on your client's device inside your app (iPhone, iPad, ...) before it is sent to the SwiftyBeaver Crypto Cloud. The decryption is done on your Mac which has the SwiftyBeaver Mac App installed. All logging data stays encrypted in the SwiftyBeaver Crypto Cloud due to the lack of the password.
+
+You are using the encryption at your own risk. SwiftyBeaver’s authors and contributors do not take over any guarantee about the absence of potential security or cryptopgraphy issues, weaknesses, etc.; please also read the LICENSE file for details. Also if you are interested in cryptography in general, please have a look at the file AES256CBC.swift to learn more about the cryptographical implementation.
 <br/>
 <br/>
 
