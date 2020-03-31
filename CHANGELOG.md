@@ -6,6 +6,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 <br/>
 
+## 1.9.0 (2020-03-30)
+
+##### Fixed
+- More cryptographically secure random text generator by [@skreutzberger](https://github.com/skreutzberger)
+
+##### Removed
+- Support for Swift 3 by [@skreutzberger](https://github.com/skreutzberger)
+
+<br/>
+
 ## 1.8.4 (2019-12-06)
 
 ##### Added
