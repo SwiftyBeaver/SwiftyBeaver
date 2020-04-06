@@ -600,16 +600,9 @@ private struct PKCS7 {
     func add(bytes: [UInt8], blockSize: Int) -> [UInt8] {
         let padding = UInt8(blockSize - (bytes.count % blockSize))
         var withPadding = bytes
-        if padding == 0 {
-            // If the original data is a multiple of N bytes, then an extra block of bytes with value N is added.
-            for _ in 0..<blockSize {
-                withPadding.append(contentsOf: [UInt8(blockSize)])
-            }
-        } else {
-            // The value of each added byte is the number of bytes that are added
-            for _ in 0..<padding {
-                withPadding.append(contentsOf: [UInt8(padding)])
-            }
+        // The value of each added byte is the number of bytes that are added
+        for _ in 0..<padding {
+            withPadding.append(contentsOf: [UInt8(padding)])
         }
         return withPadding
     }
