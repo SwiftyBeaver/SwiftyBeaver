@@ -6,6 +6,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 <br/>
 
+## 1.9.1 (2020-04-17)
+
+##### Fixed
+- dylib linking issue by [@CodySchrank](https://github.com/CodySchrank)
+
+##### Removed
+- Unreachable code in crypto logic by [@ladeiko](https://github.com/ladeiko)
+
+<br/>
+
 ## 1.9.0 (2020-03-30)
 
 ##### Fixed
