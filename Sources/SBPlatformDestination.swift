@@ -476,7 +476,7 @@ public class SBPlatformDestination: BaseDestination {
         details["osVersion"] = osVersionStr
         details["deviceName"] = ""
         details["deviceModel"] = ""
-
+        details["hostName"] = ""
         if DEVICE_NAME != "" {
             details["deviceName"] = DEVICE_NAME
         }
