@@ -110,7 +110,7 @@ public class FileDestination: BaseDestination {
         #if os(Linux)
             // not supported under Linux since NSFileCoordinator is not existing
             return true
-        #endif
+        #else
         
         var success = false
         let coordinator = NSFileCoordinator(filePresenter: nil)
@@ -156,6 +156,7 @@ public class FileDestination: BaseDestination {
         }
 
         return success
+        #endif
     }
 
     /// deletes log file.
