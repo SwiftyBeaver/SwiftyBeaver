@@ -6,6 +6,17 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 <br/>
 
+## 1.9.2 (2020-09-17)
+
+##### Fixed
+- fixed Xcode warning under iOS 14 by [@gabors](https://github.com/gabors)
+- fixed issue with iOS 14 beta by [@preobrazhenskiy](https://github.com/preobrazhenskiy)
+
+##### Removed
+- process hostname logging to avoid iOS 14 Permission dialog by [@alexanderlucas](https://github.com/alexanderlucas)
+
+<br/>
+
 ## 1.9.1 (2020-04-17)
 
 ##### Fixed
