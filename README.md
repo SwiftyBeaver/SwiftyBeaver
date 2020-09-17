@@ -196,7 +196,7 @@ We ❤️ server-side Swift 4 & 5 and SwiftyBeaver supports it **out-of-the-box*
 
 ```shell
 # create docker image, build SwiftyBeaver and run unit tests
-swift build --clean && docker build --rm -t swiftybeaver .
+docker run --rm -it -v $PWD:/app swiftybeaver /bin/bash -c "cd /app ; swift build ; swift test"
 
 # optionally log into container to run Swift CLI and do more stuff
 docker run --rm -it --privileged=true -v $PWD:/app swiftybeaver
