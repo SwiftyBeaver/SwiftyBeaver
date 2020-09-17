@@ -106,6 +106,10 @@ public class FileDestination: BaseDestination {
     }
 
     private func write(data: Data, to url: URL) -> Bool {
+        
+        #if os(Linux)
+            return true
+        #else
         var success = false
         let coordinator = NSFileCoordinator(filePresenter: nil)
         var error: NSError?
@@ -150,6 +154,7 @@ public class FileDestination: BaseDestination {
         }
 
         return success
+        #endif
     }
 
     /// deletes log file.

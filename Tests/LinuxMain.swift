@@ -4,12 +4,12 @@ import XCTest
 XCTMain([
     testCase(AES256CBCTests.allTests), // takes too long
     testCase(BaseDestinationTests.allTests),
-    testCase(DestinationSetTests.allTests),
+    //testCase(DestinationSetTests.allTests),
     testCase(ConsoleDestinationTests.allTests),
-    testCase(FileDestinationTests.allTests),
-    testCase(SBPlatformDestinationTests.allTests),
+    //testCase(FileDestinationTests.allTests),
+    //testCase(SBPlatformDestinationTests.allTests),
     testCase(SwiftyBeaverTests.allTests),
-    testCase(GoogleCloudDestinationTests.allTests)
+    //testCase(GoogleCloudDestinationTests.allTests)
 ])
 
 // All tests:
