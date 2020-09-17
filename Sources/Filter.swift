@@ -18,7 +18,7 @@ import Foundation
 /// A filter can be required meaning that all required filters against a specific
 /// target must pass in order for the message to be logged.
 public protocol FilterType : class {
-    func apply(_ value: Any) -> Bool
+    func apply(_ value: String?) -> Bool
     func getTarget() -> Filter.TargetType
     func isRequired() -> Bool
     func isExcluded() -> Bool
@@ -105,8 +105,8 @@ public class CompareFilter: Filter, FilterType {
         self.filterComparisonType = comparisonType
     }
 
-    public func apply(_ value: Any) -> Bool {
-        guard let value = value as? String else {
+    public func apply(_ value: String?) -> Bool {
+        guard let value = value else {
             return false
         }
 

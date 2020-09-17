@@ -145,8 +145,8 @@ open class BaseDestination: Hashable, Equatable {
         } else {
             s = text
         }
-        let numStr = s.prefix { $0 >= "0" && $0 <= "9" }
-        if let num = Int(String(numStr)) {
+        let numStr = String(s.prefix { $0 >= "0" && $0 <= "9" })
+        if let num = Int(numStr) {
             return (sign * num, (sign == -1 ? 1 : 0) + numStr.count)
         } else {
             return (0, 0)
