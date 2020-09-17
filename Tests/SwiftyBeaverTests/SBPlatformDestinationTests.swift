@@ -251,6 +251,7 @@ class SBPlatformDestinationTests: XCTestCase {
         XCTAssertEqual(device["os"], OS)
         XCTAssertGreaterThan(device["os"]!.length, 0)
         XCTAssertGreaterThan(device["osVersion"]!.length, 4)
+        XCTAssertEqual(device["hostName"], "")
         XCTAssertEqual(device["deviceName"], DEVICE_NAME)
         XCTAssertEqual(device["deviceModel"], DEVICE_MODEL)
         //NSLog(stats)
