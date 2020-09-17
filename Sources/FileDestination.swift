@@ -106,6 +106,12 @@ public class FileDestination: BaseDestination {
     }
 
     private func write(data: Data, to url: URL) -> Bool {
+        
+        #if os(Linux)
+            // not supported under Linux since NSFileCoordinator is not existing
+            return true
+        #endif
+        
         var success = false
         let coordinator = NSFileCoordinator(filePresenter: nil)
         var error: NSError?

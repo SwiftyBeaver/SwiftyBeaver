@@ -22,8 +22,12 @@ class FileDestinationTests: XCTestCase {
     }
 
     func testFileIsWritten() {
+        
+        #if os(Linux)
+            return
+        #endif
+        
         let log = SwiftyBeaver.self
-
         let path = "/tmp/testSBF.log"
         deleteFile(path: path)
 
