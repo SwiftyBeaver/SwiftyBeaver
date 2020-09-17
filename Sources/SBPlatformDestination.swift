@@ -474,10 +474,9 @@ public class SBPlatformDestination: BaseDestination {
         osVersionStr += "." + String(osVersion.minorVersion)
         osVersionStr += "." + String(osVersion.patchVersion)
         details["osVersion"] = osVersionStr
-        details["hostName"] = ProcessInfo.processInfo.hostName
         details["deviceName"] = ""
         details["deviceModel"] = ""
-
+        details["hostName"] = ""
         if DEVICE_NAME != "" {
             details["deviceName"] = DEVICE_NAME
         }
