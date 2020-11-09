@@ -230,7 +230,7 @@ Best: for the popular server-side Swift web framework [Vapor](https://github.com
 
 **Stay Informed:**
 
-- [Official Website](https://swiftybeaver.com))
+- [Official Website](https://swiftybeaver.com)
 - [On Twitter](https://twitter.com/SwiftyBeaver)
 
 <br/>
