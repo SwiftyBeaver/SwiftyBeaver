@@ -6,6 +6,17 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 <br/>
 
+## 1.9.3 (2020-11-10)
+
+##### Added
+-  Ability to extend custom formatting options by [@adamwulf](https://github.com/adamwulf)
+
+##### Fixed
+- Warning iOS version warning on building via CocoaPods by [@uypanha](https://github.com/uypanha)
+- CI build pipeline by [@skreutzberger](https://github.com/skreutzberger)
+
+<br/>
+
 ## 1.9.2 (2020-09-17)
 
 ##### Fixed
