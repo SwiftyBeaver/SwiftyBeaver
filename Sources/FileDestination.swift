@@ -116,7 +116,6 @@ public class FileDestination: BaseDestination {
     }
     
     private func rotateFile(_ filePath: String) {
-
        let lastIndex = (noOfLogFiles-1)
        let firstIndex = 1
        do {
