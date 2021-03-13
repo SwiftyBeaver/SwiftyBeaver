@@ -14,7 +14,7 @@ pod 'SwiftyBeaver/CloudWatch'
 
 Note that other Swift package managers are not supported for this subspec.
 
-##Usage
+## Usage
 
 To create a log destination for AWS Cloudwatch on iOS you must use the included class wrappers to authenticate to AWS using  Cognito Identity pool, and either create a log stream or use a log stream which is already created in your AWS account.
 
