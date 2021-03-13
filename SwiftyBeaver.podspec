@@ -21,7 +21,40 @@ Great for development & release due to its support for many logging destinations
   s.watchos.deployment_target = "2.0"
   s.tvos.deployment_target = "9.0"
   s.osx.deployment_target = "10.10"
-  s.source       = { :git => "https://github.com/SwiftyBeaver/SwiftyBeaver.git", :tag => "1.9.3" }
+  s.source       = { :git => "https://github.com/smileatom/SwiftyBeaver.git" }
   s.source_files  = "Sources"
   s.swift_versions = ['4.0', '4.2', '5.0', '5.1']
+  s.default_subspec = 'Lite'
+
+  s.subspec 'Lite' do |lite|
+  # used to exclude additional dependencies by default
+    lite.source_files = "Sources"
+  end
+  
+  s.subspec 'CloudWatch' do |cloudwatch|
+    cloudwatch.platform= :ios, '9.0'
+    cloudwatch.source_files = "Sources", "Sources/CloudWatch"
+    cloudwatch.xcconfig    =
+        { 'OTHER_SWIFT_FLAGS' => '$(inherited) -DCLOUD_WATCH' }
+    cloudwatch.dependency    'AWSCore'
+    cloudwatch.dependency    'AWSLogs'
+    
+    cloudwatch.test_spec 'CloudWatchTests' do |test_spec|
+        test_spec.source_files = 'Tests/SwiftyBeaverTests/CloudWatch/CloudWatchLogGroupTests.swift',
+            'Tests/SwiftyBeaverTests/CloudWatch/AAWSServiceConfigTests.swift',
+            'Tests/SwiftyBeaverTests/CloudWatch/CloudWatchLogEventsTests.swift',
+            'Tests/SwiftyBeaverTests/CloudWatch/mocks/AWSServiceConfigMock.swift',
+            'Tests/SwiftyBeaverTests/CloudWatch/mocks/CloudWatchLogsMock.swift',
+            'Tests/SwiftyBeaverTests/CloudWatch/CloudWatchLogStreamTests.swift',
+            'Tests/SwiftyBeaverTests/CloudWatch/CloudWatchLogsTests.swift',
+            'Tests/SwiftyBeaverTests/CloudWatch/AWSCloudWatchDestinationTests.swift'
+        
+        test_spec.dependency 'AWSCore'
+        test_spec.dependency 'AWSLogs'
+
+        test_spec.xcconfig    =
+            { 'OTHER_SWIFT_FLAGS' => '$(inherited) -DCLOUD_WATCH' }
+    end
+  end
+  
 end

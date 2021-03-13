@@ -21,6 +21,20 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		A9B5CB3225FD7D4000B2915B /* AWSCloudWatchDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B5CB2C25FD7D4000B2915B /* AWSCloudWatchDestination.swift */; };
+		A9B5CB3325FD7D4000B2915B /* CloudWatchLogStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B5CB2D25FD7D4000B2915B /* CloudWatchLogStream.swift */; };
+		A9B5CB3425FD7D4000B2915B /* CloudWatchLogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B5CB2E25FD7D4000B2915B /* CloudWatchLogs.swift */; };
+		A9B5CB3525FD7D4000B2915B /* CloudWatchLogGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B5CB2F25FD7D4000B2915B /* CloudWatchLogGroup.swift */; };
+		A9B5CB3625FD7D4000B2915B /* AWSServiceConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B5CB3025FD7D4000B2915B /* AWSServiceConfig.swift */; };
+		A9B5CB3725FD7D4000B2915B /* CloudWatchLogEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B5CB3125FD7D4000B2915B /* CloudWatchLogEvents.swift */; };
+		A9B5CB4625FD7D4D00B2915B /* AWSServiceConfigMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B5CB3E25FD7D4D00B2915B /* AWSServiceConfigMock.swift */; };
+		A9B5CB4725FD7D4D00B2915B /* CloudWatchLogsMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B5CB3F25FD7D4D00B2915B /* CloudWatchLogsMock.swift */; };
+		A9B5CB4825FD7D4D00B2915B /* AAWSServiceConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B5CB4025FD7D4D00B2915B /* AAWSServiceConfigTests.swift */; };
+		A9B5CB4925FD7D4D00B2915B /* CloudWatchLogEventsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B5CB4125FD7D4D00B2915B /* CloudWatchLogEventsTests.swift */; };
+		A9B5CB4A25FD7D4D00B2915B /* CloudWatchLogStreamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B5CB4225FD7D4D00B2915B /* CloudWatchLogStreamTests.swift */; };
+		A9B5CB4B25FD7D4D00B2915B /* CloudWatchLogsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B5CB4325FD7D4D00B2915B /* CloudWatchLogsTests.swift */; };
+		A9B5CB4C25FD7D4D00B2915B /* AWSCloudWatchDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B5CB4425FD7D4D00B2915B /* AWSCloudWatchDestinationTests.swift */; };
+		A9B5CB4D25FD7D4D00B2915B /* CloudWatchLogGroupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B5CB4525FD7D4D00B2915B /* CloudWatchLogGroupTests.swift */; };
 		OBJ_45 /* AES256CBC.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_8 /* AES256CBC.swift */; };
 		OBJ_46 /* Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* Base64.swift */; };
 		OBJ_47 /* BaseDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* BaseDestination.swift */; };
@@ -64,6 +78,22 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A9B5CB2C25FD7D4000B2915B /* AWSCloudWatchDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AWSCloudWatchDestination.swift; sourceTree = "<group>"; };
+		A9B5CB2D25FD7D4000B2915B /* CloudWatchLogStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudWatchLogStream.swift; sourceTree = "<group>"; };
+		A9B5CB2E25FD7D4000B2915B /* CloudWatchLogs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudWatchLogs.swift; sourceTree = "<group>"; };
+		A9B5CB2F25FD7D4000B2915B /* CloudWatchLogGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudWatchLogGroup.swift; sourceTree = "<group>"; };
+		A9B5CB3025FD7D4000B2915B /* AWSServiceConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AWSServiceConfig.swift; sourceTree = "<group>"; };
+		A9B5CB3125FD7D4000B2915B /* CloudWatchLogEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudWatchLogEvents.swift; sourceTree = "<group>"; };
+		A9B5CB3E25FD7D4D00B2915B /* AWSServiceConfigMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AWSServiceConfigMock.swift; sourceTree = "<group>"; };
+		A9B5CB3F25FD7D4D00B2915B /* CloudWatchLogsMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudWatchLogsMock.swift; sourceTree = "<group>"; };
+		A9B5CB4025FD7D4D00B2915B /* AAWSServiceConfigTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AAWSServiceConfigTests.swift; sourceTree = "<group>"; };
+		A9B5CB4125FD7D4D00B2915B /* CloudWatchLogEventsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudWatchLogEventsTests.swift; sourceTree = "<group>"; };
+		A9B5CB4225FD7D4D00B2915B /* CloudWatchLogStreamTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudWatchLogStreamTests.swift; sourceTree = "<group>"; };
+		A9B5CB4325FD7D4D00B2915B /* CloudWatchLogsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudWatchLogsTests.swift; sourceTree = "<group>"; };
+		A9B5CB4425FD7D4D00B2915B /* AWSCloudWatchDestinationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AWSCloudWatchDestinationTests.swift; sourceTree = "<group>"; };
+		A9B5CB4525FD7D4D00B2915B /* CloudWatchLogGroupTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudWatchLogGroupTests.swift; sourceTree = "<group>"; };
+		A9B5CB5225FD836300B2915B /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		A9B5CB5325FD83C600B2915B /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		OBJ_10 /* BaseDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseDestination.swift; sourceTree = "<group>"; };
 		OBJ_11 /* ConsoleDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleDestination.swift; sourceTree = "<group>"; };
 		OBJ_12 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -115,6 +145,44 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A9B5CB2B25FD7D4000B2915B /* CloudWatch */ = {
+			isa = PBXGroup;
+			children = (
+				A9B5CB5225FD836300B2915B /* README.md */,
+				A9B5CB2C25FD7D4000B2915B /* AWSCloudWatchDestination.swift */,
+				A9B5CB2D25FD7D4000B2915B /* CloudWatchLogStream.swift */,
+				A9B5CB2E25FD7D4000B2915B /* CloudWatchLogs.swift */,
+				A9B5CB2F25FD7D4000B2915B /* CloudWatchLogGroup.swift */,
+				A9B5CB3025FD7D4000B2915B /* AWSServiceConfig.swift */,
+				A9B5CB3125FD7D4000B2915B /* CloudWatchLogEvents.swift */,
+			);
+			path = CloudWatch;
+			sourceTree = "<group>";
+		};
+		A9B5CB3C25FD7D4D00B2915B /* CloudWatch */ = {
+			isa = PBXGroup;
+			children = (
+				A9B5CB5325FD83C600B2915B /* README.md */,
+				A9B5CB3D25FD7D4D00B2915B /* mocks */,
+				A9B5CB4025FD7D4D00B2915B /* AAWSServiceConfigTests.swift */,
+				A9B5CB4425FD7D4D00B2915B /* AWSCloudWatchDestinationTests.swift */,
+				A9B5CB4125FD7D4D00B2915B /* CloudWatchLogEventsTests.swift */,
+				A9B5CB4325FD7D4D00B2915B /* CloudWatchLogsTests.swift */,
+				A9B5CB4525FD7D4D00B2915B /* CloudWatchLogGroupTests.swift */,
+				A9B5CB4225FD7D4D00B2915B /* CloudWatchLogStreamTests.swift */,
+			);
+			path = CloudWatch;
+			sourceTree = "<group>";
+		};
+		A9B5CB3D25FD7D4D00B2915B /* mocks */ = {
+			isa = PBXGroup;
+			children = (
+				A9B5CB3E25FD7D4D00B2915B /* AWSServiceConfigMock.swift */,
+				A9B5CB3F25FD7D4D00B2915B /* CloudWatchLogsMock.swift */,
+			);
+			path = mocks;
+			sourceTree = "<group>";
+		};
 		OBJ_19 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -126,6 +194,7 @@
 		OBJ_20 /* SwiftyBeaverTests */ = {
 			isa = PBXGroup;
 			children = (
+				A9B5CB3C25FD7D4D00B2915B /* CloudWatch */,
 				OBJ_21 /* AES256CBCTests.swift */,
 				OBJ_22 /* BaseDestinationTests.swift */,
 				OBJ_23 /* ConsoleDestinationTests.swift */,
@@ -169,6 +238,7 @@
 		OBJ_7 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				A9B5CB2B25FD7D4000B2915B /* CloudWatch */,
 				OBJ_8 /* AES256CBC.swift */,
 				OBJ_9 /* Base64.swift */,
 				OBJ_10 /* BaseDestination.swift */,
@@ -268,16 +338,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
+				A9B5CB4D25FD7D4D00B2915B /* CloudWatchLogGroupTests.swift in Sources */,
+				A9B5CB4725FD7D4D00B2915B /* CloudWatchLogsMock.swift in Sources */,
+				A9B5CB3525FD7D4000B2915B /* CloudWatchLogGroup.swift in Sources */,
 				OBJ_45 /* AES256CBC.swift in Sources */,
 				OBJ_46 /* Base64.swift in Sources */,
+				A9B5CB3625FD7D4000B2915B /* AWSServiceConfig.swift in Sources */,
+				A9B5CB3425FD7D4000B2915B /* CloudWatchLogs.swift in Sources */,
 				OBJ_47 /* BaseDestination.swift in Sources */,
+				A9B5CB3325FD7D4000B2915B /* CloudWatchLogStream.swift in Sources */,
+				A9B5CB4B25FD7D4D00B2915B /* CloudWatchLogsTests.swift in Sources */,
 				OBJ_48 /* ConsoleDestination.swift in Sources */,
+				A9B5CB4825FD7D4D00B2915B /* AAWSServiceConfigTests.swift in Sources */,
 				OBJ_49 /* Extensions.swift in Sources */,
+				A9B5CB4625FD7D4D00B2915B /* AWSServiceConfigMock.swift in Sources */,
 				OBJ_50 /* FileDestination.swift in Sources */,
 				OBJ_51 /* Filter.swift in Sources */,
 				OBJ_52 /* FilterValidator.swift in Sources */,
+				A9B5CB3225FD7D4000B2915B /* AWSCloudWatchDestination.swift in Sources */,
+				A9B5CB4A25FD7D4D00B2915B /* CloudWatchLogStreamTests.swift in Sources */,
 				OBJ_53 /* GoogleCloudDestination.swift in Sources */,
+				A9B5CB4925FD7D4D00B2915B /* CloudWatchLogEventsTests.swift in Sources */,
+				A9B5CB4C25FD7D4D00B2915B /* AWSCloudWatchDestinationTests.swift in Sources */,
 				OBJ_54 /* SBPlatformDestination.swift in Sources */,
+				A9B5CB3725FD7D4000B2915B /* CloudWatchLogEvents.swift in Sources */,
 				OBJ_55 /* SwiftyBeaver.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
