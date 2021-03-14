@@ -23,7 +23,7 @@ public class AWSCloudWatchDestination: BaseDestination {
         
         logEvents.add(message: jsonString)
         
-        if ((logEvents.events.count >= 2 || (logEvents.events.count > 0 &&
+        if ((logEvents.events.count >= 10 || (logEvents.events.count > 0 &&
             Date().timeIntervalSince1970 - lastSend > 15.0)) && !sendInProgress) {
            sendEvents()
         } else {
