@@ -2,7 +2,7 @@
 
 SwiftyBeaver/CloudWatch cocoapods subspec creates a SwiftyBeaver log destination for AWS Cloudwatch.
 
-###NOTE: AWS CloudWatch cocoapod dependencies do *not* support tvos, watchos, or macos at this time.
+### NOTE: AWS CloudWatch cocoapod dependencies do *not* support tvos, watchos, or macos at this time.
 ### This POD subspec currently *only* supports iOS and only Cocoapods package manager.
 
 ## Installation
