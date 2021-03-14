@@ -29,7 +29,7 @@ Here is an example of setting up the SwiftyBeaver destination for AWS CloudWatch
 
 func initializeLog(completion: @escaping () -> Void) {
     let serviceConfig = AWSServiceConfig(cognitoPoolId: "somePoolId", regionType: .USWest1).create()
-    let cloudWatchLogs = CloudWatchLogs(config: serviceConfig, clientKey: "someClientKey")
+    let cloudWatchLogs = CloudWatchLogs(config: serviceConfig, clientKey: "someClientKey").initialize()
     let group = CloudWatchLogGroup(name: "/my/log/group/name")
     let cloudWatchStream = CloudWatchLogStream(cloudWatchLogs: cloudWatchLogs, group: cloudWatchLogGroup, name: "/my/Log/stream/name")
 
