@@ -45,7 +45,7 @@ Conveniently access your logs during development & release with our [free Mac Ap
 
 <img src="https://user-images.githubusercontent.com/564725/34486363-dc501aec-efcf-11e7-92b2-1163cca9e7aa.jpg" width="700">
 
-[Learn more](https://swiftybeaver.com/unlimited.html) about **legally compliant**, end-to-end encrypted logging your own cloud with **SwiftyBeaver Unlimited**. Install via Docker or manual, fully-featured free trial included!
+[Learn more](https://swiftybeaver.com/enterprise.html) about **legally compliant**, end-to-end encrypted logging your own cloud with **SwiftyBeaver Enterprise**. Install via Docker or manual, fully-featured free trial included!
 
 <br/>
 
