@@ -309,10 +309,14 @@ public class SBPlatformDestination: BaseDestination {
 
             // POST parameters
             let params = ["payload": payload]
-            do {
-                request.httpBody = try JSONSerialization.data(withJSONObject: params, options: [])
-            } catch {
-                toNSLog("Error! Could not create JSON for server payload.")
+            if(JSONSerialization.isValidJSONObject(params)){
+                do {
+                    request.httpBody = try JSONSerialization.data(withJSONObject: params, options: [])
+                } catch {
+                    toNSLog("Error! Could not create JSON for server payload.")
+                    return complete(false, 0)
+                }
+            }else{
                 return complete(false, 0)
             }
             toNSLog("sending params: \(params)")
