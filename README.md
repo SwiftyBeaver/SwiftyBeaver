@@ -257,6 +257,8 @@ Our Enterprise offering is an even more secure solution where you are not using 
 
 ## End-to-End Encryption
 
+![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) **Warning** If your app transmits sensitive data, you should not rely on Swifty Beaver encryption alone. Swifty Beaver encryption is not compliant with any major security standards (HIPPA, ISO Standards, etc). Why? Your encryption key is stored within your app's binary. While the logs are end-to-end encrypted, the encryption key itself is not secured to sufficient standards. Anyone who has access to your app (such as through TestFlight, App Store, or Enterprise Distribution) can easily extract your encryption key from the bianry using a tool such as IDA, Hopper, or other binary dissasembly tool. It can also be extracted from a jailbroken device using method swizzling. Access to this encryption key will allow for plain-text viewing of your logs. The Swifty Beaver team CAN access your plain text logs even if you use encryption if your app is available publically for download.
+
 SwiftyBeaver is using symmetric AES256CBC encryption in the `SBPlatformDestination` destination. No other officially supported destination uses encryption. 
 
 The encryption used in the `SBPlatformDestination` destination is end-to-end. The open-source SwiftyBeaver logging framework symmetrically encrypts all logging data on your client's device inside your app (iPhone, iPad, ...) before it is sent to the SwiftyBeaver Crypto Cloud. The decryption is done on your Mac which has the SwiftyBeaver Mac App installed. All logging data stays encrypted in the SwiftyBeaver Crypto Cloud due to the lack of the password.
