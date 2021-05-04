@@ -9,7 +9,7 @@
 
 import Foundation
 
-public open class FileDestination: BaseDestination {
+open class FileDestination: BaseDestination {
 
     public var logFileURL: URL?
     public var syncAfterEachWrite: Bool = false
