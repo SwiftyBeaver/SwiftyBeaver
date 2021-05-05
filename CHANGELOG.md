@@ -6,6 +6,18 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 <br/>
 
+## 1.9.4 (2021-05-05)
+
+##### Added
+- Log file rotation by [@mikeumus](https://github.com/mikeumus)
+- Subclassing of of FileDestination by [@simonseyer](https://github.com/simonseyer)
+- Safer JSON conversion by [@vishal-iosdeveloper](https://github.com/vishal-iosdeveloper)
+
+##### Fixed
+- Xcode 12.5 build error and warning by [@gabors](https://github.com/gabors)
+
+<br/>
+
 ## 1.9.3 (2020-11-10)
 
 ##### Added
