@@ -105,14 +105,16 @@ class FileDestinationTests: XCTestCase {
         
         let path = "/tmp/\(UUID().uuidString)/testSBF.log"
         deleteFile(path: path)
+        deleteFile(path: "/tmp/\(UUID().uuidString)/testSBF.log.1")
+
         
         // add file
         let file = FileDestination()
         file.logFileURL = URL(string: "file://" + path)!
         file.format = "$L: $M $X"
-        // test logfile rotation
+        // active logfile rotation
         file.logFileAmount = 2
-        file.logFileMaxSize = 10  // rotate already after first log message
+        file.logFileMaxSize = 1000
         _ = log.addDestination(file)
         
         log.verbose("first line to log")
@@ -131,12 +133,12 @@ class FileDestinationTests: XCTestCase {
         let fileLines = self.linesOfFile(path: path)
         XCTAssertNotNil(fileLines)
         guard let lines = fileLines else { return }
-        XCTAssertEqual(lines.count, 4)
-        //XCTAssertEqual(lines[0], "VERBOSE: first line to log") // is in first rotation file
-        XCTAssertEqual(lines[0], "DEBUG: second line to log")
-        XCTAssertEqual(lines[1], "INFO: third line to log")
-        XCTAssertEqual(lines[2], "WARNING: fourth line with context 123")
-        XCTAssertEqual(lines[3], "")
+        XCTAssertEqual(lines.count, 5)
+        XCTAssertEqual(lines[0], "VERBOSE: first line to log") // is in first rotation file
+        XCTAssertEqual(lines[1], "DEBUG: second line to log")
+        XCTAssertEqual(lines[2], "INFO: third line to log")
+        XCTAssertEqual(lines[3], "WARNING: fourth line with context 123")
+        XCTAssertEqual(lines[4], "")
     }
 
     // MARK: Helper Functions

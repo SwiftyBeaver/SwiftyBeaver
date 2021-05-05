@@ -130,20 +130,22 @@ open class FileDestination: BaseDestination {
        do {
            for index in stride(from: lastIndex, to: firstIndex, by: -1) {
                let oldFile = String.init(format: "%@.%d", filePath, index)
-               if FileManager.default.fileExists(atPath: oldFile) == true {
+
+               if FileManager.default.fileExists(atPath: oldFile) {
                    if index == lastIndex {
                        // Delete the last file
                        try FileManager.default.removeItem(atPath: oldFile)
                    } else {
                        // Move the current file to next index
                        let newFile = String.init(format: "%@.%d", filePath, index+1)
-                       try FileManager.default.moveItem(atPath: oldFile, toPath: newFile )
+                       try FileManager.default.moveItem(atPath: oldFile, toPath: newFile)
                    }
                }
            }
+        
            // Finally, move the current file
-           let newFile = String.init(format: "%@.d", filePath, firstIndex)
-           try FileManager.default.moveItem(atPath: filePath, toPath: newFile )
+           let newFile = String.init(format: "%@.%d", filePath, firstIndex)
+           try FileManager.default.moveItem(atPath: filePath, toPath: newFile)
        } catch {
            print("rotateFile error: \(error)")
        }
