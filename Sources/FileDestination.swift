@@ -37,11 +37,17 @@ open class FileDestination: BaseDestination {
             }
         }
     }
+    
+    // LOGFILE ROTATION
+    // ho many bytes should a logfile have until it is rotated?
+    // default is 5 MB. Just is used if logFileAmount > 1
+    public var logFileMaxSize = (5 * 1024 * 1024)
+    // Number of log files used in rotation, default is 1 which deactivates file rotation
+    public var logFileAmount = 1
 
     override public var defaultHashValue: Int {return 2}
     let fileManager = FileManager.default
-    let maxLogFilesize = (5 * 1024 * 1024) // 5MB
-    let noOfLogFiles = 2 // Number of log files used in rotation
+
 
     public init(logFileURL: URL? = nil) {
         if let logFileURL = logFileURL {
@@ -96,27 +102,30 @@ open class FileDestination: BaseDestination {
         return formattedString
     }
     
+    // check if filesize is bigger than wanted and if yes then rotate them
     func validateSaveFile(str: String) -> Bool {
-        guard let url = logFileURL else { return false }
-        let filePath = url.path
-        if FileManager.default.fileExists(atPath: filePath) == true {
-            do {
-                // Get file size
-                let attr = try FileManager.default.attributesOfItem(atPath: filePath)
-                let fileSize = attr[FileAttributeKey.size] as! UInt64
-                // Do file rotation
-                if fileSize > maxLogFilesize {
-                    rotateFile(filePath)
+        if self.logFileAmount > 1 {
+            guard let url = logFileURL else { return false }
+            let filePath = url.path
+            if FileManager.default.fileExists(atPath: filePath) == true {
+                do {
+                    // Get file size
+                    let attr = try FileManager.default.attributesOfItem(atPath: filePath)
+                    let fileSize = attr[FileAttributeKey.size] as! UInt64
+                    // Do file rotation
+                    if fileSize > logFileMaxSize {
+                        rotateFile(filePath)
+                    }
+                } catch {
+                    print("validateSaveFile error: \(error)")
                 }
-            } catch {
-                print("validateSaveFile error: \(error)")
             }
         }
         return saveToFile(str: str)
     }
     
     private func rotateFile(_ filePath: String) {
-       let lastIndex = (noOfLogFiles-1)
+       let lastIndex = (logFileAmount-1)
        let firstIndex = 1
        do {
            for index in stride(from: lastIndex, to: firstIndex, by: -1) {
