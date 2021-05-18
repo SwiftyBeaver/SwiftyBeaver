@@ -128,7 +128,7 @@ open class FileDestination: BaseDestination {
        let lastIndex = (logFileAmount-1)
        let firstIndex = 1
        do {
-           for index in stride(from: lastIndex, to: firstIndex, by: -1) {
+           for index in stride(from: lastIndex, through: firstIndex, by: -1) {
                let oldFile = String.init(format: "%@.%d", filePath, index)
 
                if FileManager.default.fileExists(atPath: oldFile) {
