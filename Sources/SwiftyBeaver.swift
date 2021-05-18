@@ -14,7 +14,7 @@ open class SwiftyBeaver {
     /// version string of framework
     public static let version = "1.9.4"  // UPDATE ON RELEASE!
     /// build number of framework
-    public static let build = 1940 // version 1.6.2 -> 1620, UPDATE ON RELEASE!
+    public static let build = 1950 // version 1.6.2 -> 1620, UPDATE ON RELEASE!
 
     public enum Level: Int {
         case verbose = 0

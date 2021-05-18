@@ -6,6 +6,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 <br/>
 
+## 1.9.5 (2021-05-18)
+
+##### Fixed
+- Issue with file rotation logic by [@ekurutepe](https://github.com/ekurutepe)
+
+<br/>
+
 ## 1.9.4 (2021-05-05)
 
 ##### Added
