@@ -60,7 +60,7 @@ open class SwiftyBeaver {
     }
 
     /// returns the current thread name
-    class func threadName() -> String {
+    open class func threadName() -> String {
 
         #if os(Linux)
             // on 9/30/2016 not yet implemented in server-side Swift:
