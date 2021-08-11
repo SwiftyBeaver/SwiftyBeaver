@@ -9,7 +9,7 @@
 
 import Foundation
 
-public class ConsoleDestination: BaseDestination {
+open class ConsoleDestination: BaseDestination {
 
     /// use NSLog instead of print, default is false
     public var useNSLog = false
@@ -51,7 +51,7 @@ public class ConsoleDestination: BaseDestination {
     }
 
     // print to Xcode Console. uses full base class functionality
-    override public func send(_ level: SwiftyBeaver.Level, msg: String, thread: String,
+    override open func send(_ level: SwiftyBeaver.Level, msg: String, thread: String,
                                 file: String, function: String, line: Int, context: Any? = nil) -> String? {
         let formattedString = super.send(level, msg: msg, thread: thread, file: file, function: function, line: line, context: context)
 
