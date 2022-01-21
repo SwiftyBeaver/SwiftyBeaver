@@ -194,7 +194,11 @@ open class FileDestination: BaseDestination {
 
                 let fileHandle = try FileHandle(forWritingTo: url)
                 fileHandle.seekToEndOfFile()
-                fileHandle.write(data)
+                if #available(iOS 13.4, *) {
+                    try fileHandle.write(contentsOf: data)
+                } else {
+                    fileHandle.write(data)
+                }
                 if syncAfterEachWrite {
                     fileHandle.synchronizeFile()
                 }
