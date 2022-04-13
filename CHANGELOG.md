@@ -6,6 +6,19 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 <br/>
 
+## 1.9.6 (2022-04-13)
+
+##### Added
+- Ability to customize the thread name by [@adamwulf](https://github.com/adamwulf)
+- Ability to customize the used calendar by [@tatsuz0u](https://github.com/tatsuz0u)
+- Ability to subclass destinations by [@FelixLisczyk](https://github.com/FelixLisczyk)
+- Flush functionality for Swift 5 by [@VasilyKrainov](https://github.com/VasilyKrainov)
+
+##### Fixed
+- Potential issue when a file could not be written by [@mumuWorld](https://github.com/mumuWorld)
+
+<br/>
+
 ## 1.9.5 (2021-05-18)
 
 ##### Fixed
