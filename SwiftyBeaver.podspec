@@ -17,10 +17,10 @@ Great for development & release due to its support for many logging destinations
   s.screenshots  = "https://cloud.githubusercontent.com/assets/564725/11452558/17fd5f04-95ec-11e5-96d2-427f62ed4f05.jpg", "https://cloud.githubusercontent.com/assets/564725/11452560/33225d16-95ec-11e5-8461-78f50b9e8da7.jpg"
   s.license      = "MIT"
   s.author       = { "Sebastian Kreutzberger" => "s.kreutzberger@googlemail.com" }
-  s.ios.deployment_target = "9.0"
-  s.watchos.deployment_target = "2.0"
-  s.tvos.deployment_target = "9.0"
-  s.osx.deployment_target = "10.10"
+  s.ios.deployment_target = "13.4"
+  s.watchos.deployment_target = "6.2"
+  s.tvos.deployment_target = "13.4"
+  s.osx.deployment_target = "10.15.4"
   s.source       = { :git => "https://github.com/SwiftyBeaver/SwiftyBeaver.git", :tag => "1.9.6" }
   s.source_files  = "Sources"
   s.swift_versions = ['4.0', '4.2', '5.0', '5.1']
