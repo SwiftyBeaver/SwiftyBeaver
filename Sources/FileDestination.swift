@@ -194,7 +194,7 @@ open class FileDestination: BaseDestination {
 
                 let fileHandle = try FileHandle(forWritingTo: url)
                 fileHandle.seekToEndOfFile()
-                if #available(iOS 13.4, *) {
+                if #available(iOS 13.4, watchOS 6.2, tvOS 13.4, macOS 10.15.4, *) {
                     try fileHandle.write(contentsOf: data)
                 } else {
                     fileHandle.write(data)
