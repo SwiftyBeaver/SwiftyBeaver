@@ -6,6 +6,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 <br/>
 
+## 1.9.6-svmk (2022-11-29)
+#### SurveyMonkey
+- Changes required for Appstore Export Declaration for France (Removed non-Apple Encryption)
+
+#### Removed
+- AESCrypto 
+- SwiftyBeaver Log Destination
+
 ## 1.9.6 (2022-04-13)
 
 ##### Added

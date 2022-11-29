@@ -4,9 +4,9 @@
 import PackageDescription
 
 let package = Package(
-    name: "SwiftyBeaver",
+    name: "SwiftyBeaver-SVMK",
     products: [
-        .library(name: "SwiftyBeaver", targets: ["SwiftyBeaver"])
+        .library(name: "SwiftyBeaver-SVMK", targets: ["SwiftyBeaver"])
     ],
     targets: [
         .target(name: "SwiftyBeaver", path: "Sources"),
