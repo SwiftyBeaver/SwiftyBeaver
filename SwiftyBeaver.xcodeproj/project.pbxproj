@@ -21,7 +21,6 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		OBJ_45 /* AES256CBC.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_8 /* AES256CBC.swift */; };
 		OBJ_46 /* Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* Base64.swift */; };
 		OBJ_47 /* BaseDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* BaseDestination.swift */; };
 		OBJ_48 /* ConsoleDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* ConsoleDestination.swift */; };
@@ -30,17 +29,14 @@
 		OBJ_51 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* Filter.swift */; };
 		OBJ_52 /* FilterValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_15 /* FilterValidator.swift */; };
 		OBJ_53 /* GoogleCloudDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_16 /* GoogleCloudDestination.swift */; };
-		OBJ_54 /* SBPlatformDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_17 /* SBPlatformDestination.swift */; };
 		OBJ_55 /* SwiftyBeaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_18 /* SwiftyBeaver.swift */; };
 		OBJ_62 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
-		OBJ_73 /* AES256CBCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_21 /* AES256CBCTests.swift */; };
 		OBJ_74 /* BaseDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_22 /* BaseDestinationTests.swift */; };
 		OBJ_75 /* ConsoleDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_23 /* ConsoleDestinationTests.swift */; };
 		OBJ_76 /* DestinationSetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_24 /* DestinationSetTests.swift */; };
 		OBJ_77 /* FileDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_25 /* FileDestinationTests.swift */; };
 		OBJ_78 /* FilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_26 /* FilterTests.swift */; };
 		OBJ_79 /* GoogleCloudDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_27 /* GoogleCloudDestinationTests.swift */; };
-		OBJ_80 /* SBPlatformDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_28 /* SBPlatformDestinationTests.swift */; };
 		OBJ_81 /* SecretsExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_29 /* SecretsExample.swift */; };
 		OBJ_82 /* SwiftyBeaverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_30 /* SwiftyBeaverTests.swift */; };
 		OBJ_84 /* SwiftyBeaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "SwiftyBeaver::SwiftyBeaver::Product" /* SwiftyBeaver.framework */; };
@@ -71,16 +67,13 @@
 		OBJ_14 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		OBJ_15 /* FilterValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterValidator.swift; sourceTree = "<group>"; };
 		OBJ_16 /* GoogleCloudDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleCloudDestination.swift; sourceTree = "<group>"; };
-		OBJ_17 /* SBPlatformDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBPlatformDestination.swift; sourceTree = "<group>"; };
 		OBJ_18 /* SwiftyBeaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyBeaver.swift; sourceTree = "<group>"; };
-		OBJ_21 /* AES256CBCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AES256CBCTests.swift; sourceTree = "<group>"; };
 		OBJ_22 /* BaseDestinationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseDestinationTests.swift; sourceTree = "<group>"; };
 		OBJ_23 /* ConsoleDestinationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleDestinationTests.swift; sourceTree = "<group>"; };
 		OBJ_24 /* DestinationSetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationSetTests.swift; sourceTree = "<group>"; };
 		OBJ_25 /* FileDestinationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileDestinationTests.swift; sourceTree = "<group>"; };
 		OBJ_26 /* FilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTests.swift; sourceTree = "<group>"; };
 		OBJ_27 /* GoogleCloudDestinationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleCloudDestinationTests.swift; sourceTree = "<group>"; };
-		OBJ_28 /* SBPlatformDestinationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBPlatformDestinationTests.swift; sourceTree = "<group>"; };
 		OBJ_29 /* SecretsExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretsExample.swift; sourceTree = "<group>"; };
 		OBJ_30 /* SwiftyBeaverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyBeaverTests.swift; sourceTree = "<group>"; };
 		OBJ_34 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -90,10 +83,9 @@
 		OBJ_38 /* test_in_docker.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = test_in_docker.sh; sourceTree = "<group>"; };
 		OBJ_39 /* SwiftyBeaver.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = SwiftyBeaver.podspec; sourceTree = "<group>"; };
 		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
-		OBJ_8 /* AES256CBC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AES256CBC.swift; sourceTree = "<group>"; };
 		OBJ_9 /* Base64.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Base64.swift; sourceTree = "<group>"; };
 		"SwiftyBeaver::SwiftyBeaver::Product" /* SwiftyBeaver.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyBeaver.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		"SwiftyBeaver::SwiftyBeaverTests::Product" /* SwiftyBeaverTests.xctest */ = {isa = PBXFileReference; lastKnownFileType = file; path = SwiftyBeaverTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		"SwiftyBeaver::SwiftyBeaverTests::Product" /* SwiftyBeaverTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = SwiftyBeaverTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,14 +118,12 @@
 		OBJ_20 /* SwiftyBeaverTests */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_21 /* AES256CBCTests.swift */,
 				OBJ_22 /* BaseDestinationTests.swift */,
 				OBJ_23 /* ConsoleDestinationTests.swift */,
 				OBJ_24 /* DestinationSetTests.swift */,
 				OBJ_25 /* FileDestinationTests.swift */,
 				OBJ_26 /* FilterTests.swift */,
 				OBJ_27 /* GoogleCloudDestinationTests.swift */,
-				OBJ_28 /* SBPlatformDestinationTests.swift */,
 				OBJ_29 /* SecretsExample.swift */,
 				OBJ_30 /* SwiftyBeaverTests.swift */,
 			);
@@ -169,7 +159,6 @@
 		OBJ_7 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_8 /* AES256CBC.swift */,
 				OBJ_9 /* Base64.swift */,
 				OBJ_10 /* BaseDestination.swift */,
 				OBJ_11 /* ConsoleDestination.swift */,
@@ -178,7 +167,6 @@
 				OBJ_14 /* Filter.swift */,
 				OBJ_15 /* FilterValidator.swift */,
 				OBJ_16 /* GoogleCloudDestination.swift */,
-				OBJ_17 /* SBPlatformDestination.swift */,
 				OBJ_18 /* SwiftyBeaver.swift */,
 			);
 			path = Sources;
@@ -268,7 +256,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_45 /* AES256CBC.swift in Sources */,
 				OBJ_46 /* Base64.swift in Sources */,
 				OBJ_47 /* BaseDestination.swift in Sources */,
 				OBJ_48 /* ConsoleDestination.swift in Sources */,
@@ -277,7 +264,6 @@
 				OBJ_51 /* Filter.swift in Sources */,
 				OBJ_52 /* FilterValidator.swift in Sources */,
 				OBJ_53 /* GoogleCloudDestination.swift in Sources */,
-				OBJ_54 /* SBPlatformDestination.swift in Sources */,
 				OBJ_55 /* SwiftyBeaver.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -294,14 +280,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_73 /* AES256CBCTests.swift in Sources */,
 				OBJ_74 /* BaseDestinationTests.swift in Sources */,
 				OBJ_75 /* ConsoleDestinationTests.swift in Sources */,
 				OBJ_76 /* DestinationSetTests.swift in Sources */,
 				OBJ_77 /* FileDestinationTests.swift in Sources */,
 				OBJ_78 /* FilterTests.swift in Sources */,
 				OBJ_79 /* GoogleCloudDestinationTests.swift in Sources */,
-				OBJ_80 /* SBPlatformDestinationTests.swift in Sources */,
 				OBJ_81 /* SecretsExample.swift in Sources */,
 				OBJ_82 /* SwiftyBeaverTests.swift in Sources */,
 			);
@@ -338,6 +322,7 @@
 					"SWIFT_PACKAGE=1",
 					"DEBUG=1",
 				);
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "$(inherited) -DXcode";
@@ -363,6 +348,7 @@
 					"$(inherited)",
 					"SWIFT_PACKAGE=1",
 				);
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_SWIFT_FLAGS = "$(inherited) -DXcode";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -390,7 +376,7 @@
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MARKETING_VERSION = 1.9.2;
@@ -425,7 +411,7 @@
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MARKETING_VERSION = 1.9.2;
@@ -485,7 +471,7 @@
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = SwiftyBeaver.xcodeproj/SwiftyBeaverTests_Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				OTHER_CFLAGS = "$(inherited)";
@@ -510,7 +496,7 @@
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = SwiftyBeaver.xcodeproj/SwiftyBeaverTests_Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_CFLAGS = "$(inherited)";

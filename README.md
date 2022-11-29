@@ -1,3 +1,20 @@
+# Survey Monkey Changes
+
+- The AESCrypto code is not apple-provided, and would require us to declare exports to France (and likely other EU countries.)
+- Removed All code that relied on the AESCrypto
+
+## How to Make Changes
+
+In the event SwiftyBeaver updates for new iOS or 
+
+1. Pull changes from SwiftyBeaver into `master`
+2. merge `master` into `surveymonkey`
+3. remove `AES256CBC.swift`, `SBPlatformDestination.swift`, and `*Tests.swift` files related
+4. Build, and try to run tests on the iPhone Simulator
+
+
+----
+
 <p align="center"><a href="https://swiftybeaver.com"><img src="https://cloud.githubusercontent.com/assets/564725/19889302/73b1ee84-a034-11e6-8753-2d060502397c.jpg" style="width: 888px;" alt="SwiftyBeaver"></a><br/><b>Colorful</b>, flexible, <b>lightweight</b> logging for Swift 3, Swift 4 & <b>Swift 5</b>.<br/>Great for <b>development & release</b> with support for Console, File & cloud platforms.<br/>Log <b>during release</b> to the conveniently built-in SwiftyBeaver Platform, the <b>dedicated Mac App</b> & <b>Elasticsearch</b>!<br/><br/><a href="http://docs.swiftybeaver.com">Docs</a> | <a href="https://swiftybeaver.com">Website</a> | <a href="https://twitter.com/SwiftyBeaver">Twitter</a> | <a href="#privacy">Privacy</a> | <a href="https://github.com/SwiftyBeaver/SwiftyBeaver/blob/master/LICENSE">License</a><br/></p>
 
 <p align="center"><a href="https://swift.org" target="_blank"><img src="https://img.shields.io/badge/Language-Swift%203,%204%20&%205-orange.svg" alt="Language Swift 2, 3, 4 & 5"></a> <a href="https://circleci.com/gh/SwiftyBeaver/SwiftyBeaver" target="_blank"><img src="https://circleci.com/gh/SwiftyBeaver/SwiftyBeaver/tree/master.svg?style=shield" alt="CircleCI"/></a><br/><p>
