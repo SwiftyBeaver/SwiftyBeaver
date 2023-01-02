@@ -141,32 +141,50 @@ end
 
 ## Usage
 
-Add that near the top of your `AppDelegate.swift` to be able to use SwiftyBeaver in your whole project.
+Create a `Logger.swift` file anywhere in your project, and add the following lines to be able to use SwiftyBeaver in your whole project.
 
-``` Swift
-import SwiftyBeaver
-let log = SwiftyBeaver.self
+```swift
+let log: SwiftyBeaver.Type = {
+    let log = SwiftyBeaver.self
+    
+    // add log destinations. at least one is needed!
+    let console = ConsoleDestination()  // log to Xcode Console
+    log.addDestination(console)
 
+    return log
+}()
 ```
 
-At the the beginning of your `AppDelegate:didFinishLaunchingWithOptions()` add the SwiftyBeaver log destinations (console, file, etc.), optionally adjust the [log format](http://docs.swiftybeaver.com/article/20-custom-format) and then you can already do the following log level calls globally:
+Here you can add other log destinations (file, cloud, etc.), optionally adjust the [log format](http://docs.swiftybeaver.com/article/20-custom-format) and then you can already do the following log level calls globally:
 
-``` Swift
-// add log destinations. at least one is needed!
-let console = ConsoleDestination()  // log to Xcode Console
-let file = FileDestination()  // log to default swiftybeaver.log file
-let cloud = SBPlatformDestination(appID: "foo", appSecret: "bar", encryptionKey: "123") // to cloud
+```swift
+let log: SwiftyBeaver.Type = {
+    let log = SwiftyBeaver.self
+    
+    // add log destinations. at least one is needed!
+    let console = ConsoleDestination()  // log to Xcode Console
+    let file = FileDestination()  // log to default swiftybeaver.log file
+    let cloud = SBPlatformDestination(appID: "foo", appSecret: "bar", encryptionKey: "123") // to cloud
 
-// use custom format and set console output to short time, log level & message
-console.format = "$DHH:mm:ss$d $L $M"
-// or use this for JSON output: console.format = "$J"
+    // use custom format and set console output to short time, log level & message
+    console.format = "$DHH:mm:ss$d $L $M"
+    // or use this for JSON output: console.format = "$J"
 
-// add the destinations to SwiftyBeaver
-log.addDestination(console)
-log.addDestination(file)
-log.addDestination(cloud)
+    log.addDestination(console)
 
-// Now let’s log!
+    // add the destinations to SwiftyBeaver
+    log.addDestination(console)
+    log.addDestination(file)
+    log.addDestination(cloud)
+
+    return log
+}()
+```
+
+
+Now, let's log!
+
+```swift
 log.verbose("not so important")  // prio 1, VERBOSE in silver
 log.debug("something to debug")  // prio 2, DEBUG in green
 log.info("a nice information")   // prio 3, INFO in blue
@@ -179,12 +197,6 @@ log.info(-123.45678)
 log.warning(Date())
 log.error(["I", "like", "logs!"])
 log.error(["name": "Mr Beaver", "address": "7 Beaver Lodge"])
-
-// optionally add context to a log message
-console.format = "$L: $M $X"
-log.debug("age", context: 123)  // "DEBUG: age 123"
-log.info("my data", context: [1, "a", 2]) // "INFO: my data [1, \"a\", 2]"
-
 ```
 
 <br/>
