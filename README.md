@@ -170,8 +170,6 @@ let log: SwiftyBeaver.Type = {
     console.format = "$DHH:mm:ss$d $L $M"
     // or use this for JSON output: console.format = "$J"
 
-    log.addDestination(console)
-
     // add the destinations to SwiftyBeaver
     log.addDestination(console)
     log.addDestination(file)
