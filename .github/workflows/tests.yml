@@ -3,7 +3,7 @@ name: Tests
 on:
   workflow_dispatch:
   push:
-    branches: [ "mastet" ]
+    branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
 
