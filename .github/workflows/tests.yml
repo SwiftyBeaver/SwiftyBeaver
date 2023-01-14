@@ -1,0 +1,17 @@
+
+name: Tests
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "mastet" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  test:
+    container:
+      image: swift:5.7
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - run: swift test
