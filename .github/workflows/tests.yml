@@ -15,3 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - run: swift test
+    env:
+      SBPLATFORM_APP_ID: 123456
+      SBPLATFORM_APP_SECRET: secret_test
+      SBPLATFORM_ENCRYPTION_KEY: encryption_key
