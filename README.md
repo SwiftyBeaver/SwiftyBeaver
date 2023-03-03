@@ -1,8 +1,8 @@
-<p align="center"><a href="https://swiftybeaver.com"><img src="https://cloud.githubusercontent.com/assets/564725/19889302/73b1ee84-a034-11e6-8753-2d060502397c.jpg" style="width: 888px;" alt="SwiftyBeaver"></a><br/><b>Colorful</b>, flexible, <b>lightweight</b> logging for Swift 3, Swift 4 & <b>Swift 5</b>.<br/>Great for <b>development & release</b> with support for Console, File & cloud platforms.<br/>Log <b>during release</b> to the conveniently built-in SwiftyBeaver Platform, the <b>dedicated Mac App</b> & <b>Elasticsearch</b>!<br/><br/><a href="http://docs.swiftybeaver.com">Docs</a> | <a href="https://swiftybeaver.com">Website</a> | <a href="https://twitter.com/SwiftyBeaver">Twitter</a> | <a href="#privacy">Privacy</a> | <a href="https://github.com/SwiftyBeaver/SwiftyBeaver/blob/master/LICENSE">License</a><br/></p>
+<p align="center"><b>Colorful</b>, flexible, <b>lightweight</b> logging for Swift 3, Swift 4 & <b>Swift 5</b>.<br/>Great for <b>development & relesae</b> with support for Console, file & cloud destinations for server-side Swift.</p>
 
 <p align="center"><a href="https://swift.org" target="_blank"><img src="https://img.shields.io/badge/Language-Swift%203,%204%20&%205-orange.svg" alt="Language Swift 2, 3, 4 & 5"></a> <a href="https://circleci.com/gh/SwiftyBeaver/SwiftyBeaver" target="_blank"><img src="https://circleci.com/gh/SwiftyBeaver/SwiftyBeaver/tree/master.svg?style=shield" alt="CircleCI"/></a><br/><p>
 
-----
+---
 
 <br/>
 
@@ -22,40 +22,13 @@
 
 <br/>
 
-
-### On Release: Encrypted Logging to SwiftyBeaver Platform
-
-<img src="https://cloud.githubusercontent.com/assets/564725/14281408/38d6a6ba-fb39-11e5-9584-34e3679bb1c5.jpg" width="700">
-
-[Learn more](http://docs.swiftybeaver.com/article/11-log-to-swiftybeaver-platform) about logging to the SwiftyBeaver Platform **during release!**
-
-<br/>
-
-
-### Browse, Search & Filter via Mac App
-
-![swiftybeaver-demo1](https://cloud.githubusercontent.com/assets/564725/14846071/218c0646-0c62-11e6-92cb-e6e963b68724.gif)
-
-Conveniently access your logs during development & release with our [free Mac App](https://swiftybeaver.com).
-
-<br/>
-
-
-### On Release: Enterprise-ready Logging to Your Private and Public Cloud
-
-<img src="https://user-images.githubusercontent.com/564725/34486363-dc501aec-efcf-11e7-92b2-1163cca9e7aa.jpg" width="700">
-
-[Learn more](https://swiftybeaver.com/enterprise.html) about **legally compliant**, end-to-end encrypted logging your own cloud with **SwiftyBeaver Enterprise**. Install via Docker or manual, fully-featured free trial included!
-
-<br/>
-
 ### Google Cloud & More
 
 You can fully customize your log format, turn it into JSON, or create your own destinations. For example our [Google Cloud Destination](https://github.com/SwiftyBeaver/SwiftyBeaver/blob/master/Sources/GoogleCloudDestination.swift) is just another customized logging format which adds the powerful functionality of automatic server-side Swift logging when hosted on Google Cloud Platform.
 
 <br/>
 
-----
+---
 
 <br/>
 <br/>
@@ -73,18 +46,20 @@ You can fully customize your log format, turn it into JSON, or create your own d
 You can use [Carthage](https://github.com/Carthage/Carthage) to install SwiftyBeaver by adding that to your Cartfile:
 
 Swift 4 & 5:
-``` Swift
+
+```Swift
 github "SwiftyBeaver/SwiftyBeaver"
 ```
 
-
 Swift 3:
-``` Swift
+
+```Swift
 github "SwiftyBeaver/SwiftyBeaver" ~> 1.8.4
 ```
 
 Swift 2:
-``` Swift
+
+```Swift
 github "SwiftyBeaver/SwiftyBeaver" ~> 0.7
 ```
 
@@ -94,7 +69,7 @@ github "SwiftyBeaver/SwiftyBeaver" ~> 0.7
 
 For [Swift Package Manager](https://swift.org/package-manager/) add the following package to your Package.swift file. Just Swift 4 & 5 are supported:
 
-``` Swift
+```Swift
 .package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git", .upToNextMajor(from: "1.9.0")),
 ```
 
@@ -105,12 +80,14 @@ For [Swift Package Manager](https://swift.org/package-manager/) add the followin
 To use [CocoaPods](https://cocoapods.org) just add this to your Podfile:
 
 Swift 4 & 5:
-``` Swift
+
+```Swift
 pod 'SwiftyBeaver'
 ```
 
 Swift 3:
-``` Ruby
+
+```Ruby
 target 'MyProject' do
   use_frameworks!
 
@@ -120,7 +97,8 @@ end
 ```
 
 Swift 2:
-``` Ruby
+
+```Ruby
 target 'MyProject' do
   use_frameworks!
 
@@ -141,48 +119,30 @@ end
 
 ## Usage
 
-Create a `Logger.swift` file anywhere in your project, and add the following lines to be able to use SwiftyBeaver in your whole project.
+Add that near the top of your `AppDelegate.swift` to be able to use SwiftyBeaver in your whole project.
 
-```swift
-let log: SwiftyBeaver.Type = {
-    let log = SwiftyBeaver.self
-    
-    // add log destinations. at least one is needed!
-    let console = ConsoleDestination()  // log to Xcode Console
-    log.addDestination(console)
+```Swift
+import SwiftyBeaver
+let log = SwiftyBeaver.self
 
-    return log
-}()
 ```
 
-Here you can add other log destinations (file, cloud, etc.), optionally adjust the [log format](http://docs.swiftybeaver.com/article/20-custom-format) and then you can already do the following log level calls globally:
+At the the beginning of your `AppDelegate:didFinishLaunchingWithOptions()` add the SwiftyBeaver log destinations (console, file, etc.), optionally adjust the [log format](http://docs.swiftybeaver.com/article/20-custom-format) and then you can already do the following log level calls globally:
 
-```swift
-let log: SwiftyBeaver.Type = {
-    let log = SwiftyBeaver.self
-    
-    // add log destinations. at least one is needed!
-    let console = ConsoleDestination()  // log to Xcode Console
-    let file = FileDestination()  // log to default swiftybeaver.log file
-    let cloud = SBPlatformDestination(appID: "foo", appSecret: "bar", encryptionKey: "123") // to cloud
+```Swift
+// add log destinations. at least one is needed!
+let console = ConsoleDestination()  // log to Xcode Console
+let file = FileDestination()  // log to default swiftybeaver.log file
 
-    // use custom format and set console output to short time, log level & message
-    console.format = "$DHH:mm:ss$d $L $M"
-    // or use this for JSON output: console.format = "$J"
+// use custom format and set console output to short time, log level & message
+console.format = "$DHH:mm:ss$d $L $M"
+// or use this for JSON output: console.format = "$J"
 
-    // add the destinations to SwiftyBeaver
-    log.addDestination(console)
-    log.addDestination(file)
-    log.addDestination(cloud)
+// add the destinations to SwiftyBeaver
+log.addDestination(console)
+log.addDestination(file)
 
-    return log
-}()
-```
-
-
-Now, let's log!
-
-```swift
+// Now let’s log!
 log.verbose("not so important")  // prio 1, VERBOSE in silver
 log.debug("something to debug")  // prio 2, DEBUG in green
 log.info("a nice information")   // prio 3, INFO in blue
@@ -195,6 +155,12 @@ log.info(-123.45678)
 log.warning(Date())
 log.error(["I", "like", "logs!"])
 log.error(["name": "Mr Beaver", "address": "7 Beaver Lodge"])
+
+// optionally add context to a log message
+console.format = "$L: $M $X"
+log.debug("age", context: 123)  // "DEBUG: age 123"
+log.info("my data", context: [1, "a", 2]) // "INFO: my data [1, \"a\", 2]"
+
 ```
 
 <br/>
@@ -229,49 +195,12 @@ Best: for the popular server-side Swift web framework [Vapor](https://github.com
 
 - [Colored Logging to Xcode Console](http://docs.swiftybeaver.com/article/9-log-to-xcode-console)
 - [Colored Logging to File](http://docs.swiftybeaver.com/article/10-log-to-file)
-- [Encrypted Logging & Analytics to SwiftyBeaver Platform](http://docs.swiftybeaver.com/article/11-log-to-swiftybeaver-platform)
-- [Encrypted Logging & Analytics to Elasticsearch & Kibana](http://docs.swiftybeaver.com/article/34-enterprise-quick-start-via-docker)
-
 
 **Advanced Topics:**
 
 - [Custom Format & Context](http://docs.swiftybeaver.com/article/20-custom-format)
 - [Filters](http://docs.swiftybeaver.com/article/21-filters)
 
-**Stay Informed:**
-
-- [Official Website](https://swiftybeaver.com)
-- [On Twitter](https://twitter.com/SwiftyBeaver)
-
-<br/>
-<br/>
-
-## Privacy
-
-**SwiftyBeaver is not collecting any data without you as a developer knowing about it**. That's why it is **open-source** and developed in a simple way to be easy to inspect and check what it is actually doing under the hood.
-
-The only sending to servers is done if you use the `SBPlatformDestination`. That destination is meant for production logging and on default it sends your logs plus additional device information **end-to-end encrypted** to our cloud service. Our cloud service **can not decrypt the data**.
-
-Instead, you install our Mac App and that Mac App downloads the encrypted logs from the cloud and decrypts and shows them to you. Additionally, the Mac App stores all data that it downloads in a local SQLite database file on your computer so that you actually "physically" own your data.
-
-The business model of the SwiftyBeaver cloud service is to provide the most secure logging solution in the market. On purpose we do not provide a web UI for you because it would require us to store your encryption key on our servers.
-
-**Only you can see the logging and device data** which is sent from your users' devices. Our servers just see encrypted data and do not know your decryption key.
-
-SwiftyBeaver is **fully GDPR compliant** due to its focus on encryption and transparency in what data is collected and also meets **Apple’s latest requirements** on the privacy of 3rd party frameworks.
-
-Our Enterprise offering is an even more secure solution where you are not using anymore our cloud service and Mac App but you send your end-to-end encrypted logs directly to your own servers and you store them in your Elasticsearch cluster. The **Enterprise offering is used by health tech** and governmental institutions which require the highest level of privacy and security.
-
-<br/>
-<br/>
-
-## End-to-End Encryption
-
-SwiftyBeaver is using symmetric AES256CBC encryption in the `SBPlatformDestination` destination. No other officially supported destination uses encryption. 
-
-The encryption used in the `SBPlatformDestination` destination is end-to-end. The open-source SwiftyBeaver logging framework symmetrically encrypts all logging data on your client's device inside your app (iPhone, iPad, ...) before it is sent to the SwiftyBeaver Crypto Cloud. The decryption is done on your Mac which has the SwiftyBeaver Mac App installed. All logging data stays encrypted in the SwiftyBeaver Crypto Cloud due to the lack of the password.
-
-You are using the encryption at your own risk. SwiftyBeaver’s authors and contributors do not take over any guarantee about the absence of potential security or cryptopgraphy issues, weaknesses, etc.; please also read the LICENSE file for details. Also if you are interested in cryptography in general, please have a look at the file AES256CBC.swift to learn more about the cryptographical implementation.
 <br/>
 <br/>
 
