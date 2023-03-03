@@ -70,7 +70,7 @@ github "SwiftyBeaver/SwiftyBeaver" ~> 0.7
 For [Swift Package Manager](https://swift.org/package-manager/) add the following package to your Package.swift file. Just Swift 4 & 5 are supported:
 
 ```Swift
-.package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git", .upToNextMajor(from: "1.9.0")),
+.package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git", .upToNextMajor(from: "2.0.0")),
 ```
 
 <br/>

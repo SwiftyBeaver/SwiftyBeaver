@@ -29,7 +29,6 @@ class GoogleCloudDestinationTests: XCTestCase {
 
     func testSend() {
         // let dateStr = formatter.stringFromDate(NSDate())
-        //let platform = SBPlatformDestination()
         let msg = "test message\nNewlineäößø"
         let thread = ""
         let file = "/file/path.swift"
