@@ -6,6 +6,20 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 <br/>
 
+## 2.0.0 (2023-03-03)
+
+##### Fixed
+- Race condition in access to destinations by [@remy-bardou-lifeonair](https://github.com/remy-bardou-lifeonair)
+- Project CI (Github Actions, CircleCI, macOS Tests) by [@lgaches](https://github.com/lgaches)
+- README inconsistencies by [@lmarceau](https://github.com/lmarceau)
+
+##### Removed
+- SBPlatformDestination and AES256CBC by [@skreutzberger](https://github.com/skreutzberger)
+- Remove anonymous parameters on file and function by [@lordzsolt](https://github.com/lordzsolt)
+
+
+<br/>
+
 ## 1.9.6 (2022-04-13)
 
 ##### Added
@@ -16,6 +30,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ##### Fixed
 - Potential issue when a file could not be written by [@mumuWorld](https://github.com/mumuWorld)
+
 
 <br/>
 
