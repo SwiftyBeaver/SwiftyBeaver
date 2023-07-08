@@ -1,4 +1,4 @@
-<p align="center"><b>Colorful</b>, flexible, <b>lightweight</b> logging for Swift 3, Swift 4 & <b>Swift 5</b>.<br/>Great for <b>development & relesae</b> with support for Console, file & cloud destinations for server-side Swift.</p>
+<p align="center"><b>Colorful</b>, flexible, <b>lightweight</b> logging for Swift 3, Swift 4 & <b>Swift 5</b>.<br/>Great for <b>development & release</b> with support for Console, file & cloud destinations for server-side Swift.</p>
 
 <p align="center"><a href="https://swift.org" target="_blank"><img src="https://img.shields.io/badge/Language-Swift%203,%204%20&%205-orange.svg" alt="Language Swift 2, 3, 4 & 5"></a> <a href="https://circleci.com/gh/SwiftyBeaver/SwiftyBeaver" target="_blank"><img src="https://circleci.com/gh/SwiftyBeaver/SwiftyBeaver/tree/master.svg?style=shield" alt="CircleCI"/></a><br/><p>
 
@@ -24,7 +24,7 @@
 
 ### Google Cloud & More
 
-You can fully customize your log format, turn it into JSON, or create your own destinations. For example our [Google Cloud Destination](https://github.com/SwiftyBeaver/SwiftyBeaver/blob/master/Sources/GoogleCloudDestination.swift) is just another customized logging format which adds the powerful functionality of automatic server-side Swift logging when hosted on Google Cloud Platform.
+You can fully customize your log format, turn it into JSON, or create your own destinations. For example, our [Google Cloud Destination](https://github.com/SwiftyBeaver/SwiftyBeaver/blob/master/Sources/GoogleCloudDestination.swift) is just another customized logging format that adds the powerful functionality of automatic server-side Swift logging when hosted on Google Cloud Platform.
 
 <br/>
 
@@ -127,7 +127,7 @@ let log = SwiftyBeaver.self
 
 ```
 
-At the the beginning of your `AppDelegate:didFinishLaunchingWithOptions()` add the SwiftyBeaver log destinations (console, file, etc.), optionally adjust the [log format](http://docs.swiftybeaver.com/article/20-custom-format) and then you can already do the following log level calls globally:
+At the beginning of your `AppDelegate:didFinishLaunchingWithOptions()` add the SwiftyBeaver log destinations (console, file, etc.), optionally adjust the [log format](http://docs.swiftybeaver.com/article/20-custom-format) and then you can already do the following log level calls globally:
 
 ```Swift
 // add log destinations. at least one is needed!
@@ -168,7 +168,7 @@ log.info("my data", context: [1, "a", 2]) // "INFO: my data [1, \"a\", 2]"
 
 ## Server-side Swift
 
-We ❤️ server-side Swift 4 & 5 and SwiftyBeaver supports it **out-of-the-box**! Try for yourself and run SwiftyBeaver inside a Ubuntu Docker container. Just install Docker and then go to your the project folder on macOS or Ubuntu and type:
+We ❤️ server-side Swift 4 & 5 and SwiftyBeaver support it **out-of-the-box**! Try for yourself and run SwiftyBeaver inside a Ubuntu Docker container. Just install Docker and then go to your project folder on macOS or Ubuntu and type:
 
 ```shell
 # create docker image, build SwiftyBeaver and run unit tests
