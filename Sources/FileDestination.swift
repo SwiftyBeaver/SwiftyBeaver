@@ -114,7 +114,7 @@ open class FileDestination: BaseDestination {
                     let fileSize = attr[FileAttributeKey.size] as! UInt64
                     // Do file rotation
                     if fileSize > logFileMaxSize {
-                        rotateFile(filePath)
+                        rotateFile(url)
                     }
                 } catch {
                     print("validateSaveFile error: \(error)")
@@ -124,12 +124,13 @@ open class FileDestination: BaseDestination {
         return saveToFile(str: str)
     }
     
-    private func rotateFile(_ filePath: String) {
+    private func rotateFile(_ fileUrl: URL) {
+       let filePath = fileUrl.path
        let lastIndex = (logFileAmount-1)
        let firstIndex = 1
        do {
            for index in stride(from: lastIndex, through: firstIndex, by: -1) {
-               let oldFile = String.init(format: "%@.%d", filePath, index)
+               let oldFile = makeRotatedFileUrl(fileUrl, index: index).path
 
                if FileManager.default.fileExists(atPath: oldFile) {
                    if index == lastIndex {
@@ -137,18 +138,24 @@ open class FileDestination: BaseDestination {
                        try FileManager.default.removeItem(atPath: oldFile)
                    } else {
                        // Move the current file to next index
-                       let newFile = String.init(format: "%@.%d", filePath, index+1)
+                       let newFile = makeRotatedFileUrl(fileUrl, index: index + 1).path
                        try FileManager.default.moveItem(atPath: oldFile, toPath: newFile)
                    }
                }
            }
         
            // Finally, move the current file
-           let newFile = String.init(format: "%@.%d", filePath, firstIndex)
+           let newFile = makeRotatedFileUrl(fileUrl, index: firstIndex).path
            try FileManager.default.moveItem(atPath: filePath, toPath: newFile)
        } catch {
            print("rotateFile error: \(error)")
        }
+    }
+    
+    private func makeRotatedFileUrl(_ fileUrl: URL, index: Int) -> URL {
+        // The index is appended to the file name, to preserve the original extension.
+        fileUrl.deletingPathExtension()
+            .appendingPathExtension("\(index).\(fileUrl.pathExtension)")
     }
 
     /// appends a string as line to a file.
