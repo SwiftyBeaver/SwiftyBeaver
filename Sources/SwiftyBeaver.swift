@@ -22,6 +22,8 @@ open class SwiftyBeaver {
         case info = 2
         case warning = 3
         case error = 4
+        case critical = 5
+        case fault = 6
     }
 
     // a set of active destinations
@@ -137,6 +139,26 @@ open class SwiftyBeaver {
         custom(level: .error, message: message(), file: file, function: function, line: line, context: context)
         #else
         custom(level: .error, message: message, file: file, function: function, line: line, context: context)
+        #endif
+    }
+    
+    /// log something which will keep you awake at night (highest priority)
+    open class func critical(_ message: @autoclosure () -> Any,
+                             file: String = #file, function: String = #function, line: Int = #line, context: Any? = nil) {
+        #if swift(>=5)
+        custom(level: .critical, message: message(), file: file, function: function, line: line, context: context)
+        #else
+        custom(level: .critical, message: message, file: file, function: function, line: line, context: context)
+        #endif
+    }
+    
+    /// log something which will keep you awake at night (highest priority)
+    open class func fault(_ message: @autoclosure () -> Any,
+                          file: String = #file, function: String = #function, line: Int = #line, context: Any? = nil) {
+        #if swift(>=5)
+        custom(level: .fault, message: message(), file: file, function: function, line: line, context: context)
+        #else
+        custom(level: .fault, message: message, file: file, function: function, line: line, context: context)
         #endif
     }
 
