@@ -93,6 +93,7 @@ open class ConsoleDestination: BaseDestination {
     }
 
     private func _logger(message: String, level: SwiftyBeaver.Level, subsystem: String, category: String) {
+#if canImport(OSLog)
         if #available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, *) {
             let logger = Logger(subsystem: subsystem, category: category)
             switch level {
@@ -114,6 +115,9 @@ open class ConsoleDestination: BaseDestination {
         } else {
             _print(message: message)
         }
+#else
+        _print(message: message)
+#endif
     }
     
     private func _nslog(message: String) {
