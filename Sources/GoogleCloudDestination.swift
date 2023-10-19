@@ -88,6 +88,8 @@ extension SwiftyBeaver.Level {
         case .info: return "INFO"
         case .warning: return "WARNING"
         case .error: return "ERROR"
+        case .critical: return "CRITICAL"
+        case .fault: return "FAULT"
         }
     }
 }

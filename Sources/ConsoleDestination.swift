@@ -8,11 +8,27 @@
 //
 
 import Foundation
+#if canImport(OSLog)
+import OSLog
+#endif
 
 open class ConsoleDestination: BaseDestination {
-
+    public enum LogPrintWay {
+        case logger(subsystem: String, category: String)
+        case nslog
+        case print
+    }
+    
+    /// use this to change the way the message is logged to the console, default is .Logger, logger only works on macOS 11.0+
+    public var logPrintWay: LogPrintWay = .logger(subsystem: "Default", category: "Default")
     /// use NSLog instead of print, default is false
-    public var useNSLog = false
+    public var useNSLog = false {
+        didSet {
+            if useNSLog {
+                logPrintWay = .nslog
+            }
+        }
+    }
     /// uses colors compatible to Terminal instead of Xcode, default is false
     public var useTerminalColors: Bool = false {
         didSet {
@@ -25,7 +41,8 @@ open class ConsoleDestination: BaseDestination {
                 levelColor.info = "38m"         // blue
                 levelColor.warning = "178m"     // yellow
                 levelColor.error = "197m"       // red
-
+                levelColor.critical = "197m"    // red
+                levelColor.fault = "197m"       // red
             } else {
                 // use colored Emojis for better visual distinction
                 // of log level for Xcode 8
@@ -34,7 +51,8 @@ open class ConsoleDestination: BaseDestination {
                 levelColor.info = "💙 "         // blue
                 levelColor.warning = "💛 "     // yellow
                 levelColor.error = "❤️ "       // red
-
+                levelColor.critical = "❤️ "    // red
+                levelColor.fault = "❤️ "       // red
             }
         }
     }
@@ -48,6 +66,8 @@ open class ConsoleDestination: BaseDestination {
         levelColor.info = "💙 "         // blue
         levelColor.warning = "💛 "     // yellow
         levelColor.error = "❤️ "       // red
+        levelColor.critical = "❤️ "    // red
+        levelColor.fault = "❤️ "       // red
     }
 
     // print to Xcode Console. uses full base class functionality
@@ -55,18 +75,56 @@ open class ConsoleDestination: BaseDestination {
                                 file: String, function: String, line: Int, context: Any? = nil) -> String? {
         let formattedString = super.send(level, msg: msg, thread: thread, file: file, function: function, line: line, context: context)
 
-        if let str = formattedString {
-            if useNSLog {
-                #if os(Linux)
-                    print(str)
-                #else
-                    NSLog("%@", str)
-                #endif
-            } else {
-                print(str)
+        if let message = formattedString {
+#if os(Linux)
+            print(message)
+#else
+            switch logPrintWay {
+            case let .logger(subsystem, category):
+                _logger(message: message, level: level, subsystem: subsystem, category: category)
+            case .nslog:
+                _nslog(message: message)
+            case .print:
+                _print(message: message)
             }
+#endif
         }
         return formattedString
     }
 
+    private func _logger(message: String, level: SwiftyBeaver.Level, subsystem: String, category: String) {
+#if canImport(OSLog)
+        if #available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, *) {
+            let logger = Logger(subsystem: subsystem, category: category)
+            switch level {
+            case .verbose:
+                logger.trace("\(message)")
+            case .debug:
+                logger.debug("\(message)")
+            case .info:
+                logger.info("\(message)")
+            case .warning:
+                logger.warning("\(message)")
+            case .error:
+                logger.error("\(message)")
+            case .critical:
+                logger.critical("\(message)")
+            case .fault:
+                logger.fault("\(message)")
+            }
+        } else {
+            _print(message: message)
+        }
+#else
+        _print(message: message)
+#endif
+    }
+    
+    private func _nslog(message: String) {
+        NSLog("%@", message)
+    }
+    
+    private func _print(message: String) {
+        print(message)
+    }
 }
