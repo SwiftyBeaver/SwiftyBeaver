@@ -163,6 +163,28 @@ log.info("my data", context: [1, "a", 2]) // "INFO: my data [1, \"a\", 2]"
 
 ```
 
+Alternatively, if you are using SwiftUI, consider using the following setup:
+
+```swift
+import SwiftyBeaver
+let logger = SwiftyBeaver.self
+
+@main
+struct yourApp: App {
+
+    init() {
+        let console = ConsoleDestination()
+        logger.addDestination(console)
+        // etc...
+    }
+
+    var body: some Scene {
+        WindowGroup {
+        }
+    }
+}
+```
+
 <br/>
 <br/>
 
