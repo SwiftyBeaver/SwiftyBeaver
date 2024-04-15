@@ -352,7 +352,7 @@ class SwiftyBeaverTests: XCTestCase {
         log.error("Hi")
         XCTAssertEqual(mock.didSendToThread, "")
 
-        var expectation = XCTestExpectation(description: "thread check")
+        let expectation = XCTestExpectation(description: "thread check")
 
         DispatchQueue.global(qos: .background).async {
             log.verbose("Hi")
@@ -370,7 +370,7 @@ class SwiftyBeaverTests: XCTestCase {
 
         self.wait(for: [expectation], timeout: 2)
         
-        expectation = XCTestExpectation(description: "thread check custom")
+        let expectation2 = XCTestExpectation(description: "thread check custom")
 
         DispatchQueue.init(label: "MyTestLabel").async {
             log.verbose("Hi")
@@ -383,10 +383,10 @@ class SwiftyBeaverTests: XCTestCase {
             XCTAssertEqual(mock.didSendToThread, "MyTestLabel")
             log.error("Hi")
             XCTAssertEqual(mock.didSendToThread, "MyTestLabel")
-            expectation.fulfill()
+            expectation2.fulfill()
         }
 
-        self.wait(for: [expectation], timeout: 2)
+        self.wait(for: [expectation2], timeout: 2)
         
     }
 
