@@ -58,6 +58,8 @@ open class BaseDestination: Hashable, Equatable {
         public var info = "INFO"
         public var warning = "WARNING"
         public var error = "ERROR"
+        public var critical = "CRITICAL"
+        public var fault = "FAULT"
     }
 
     // For a colored log level word in a logged line
@@ -68,6 +70,8 @@ open class BaseDestination: Hashable, Equatable {
         public var info = ""        // blue
         public var warning = ""     // yellow
         public var error = ""       // red
+        public var critical = ""    // red
+        public var fault = ""       // red
     }
 
     var reset = ""
@@ -273,6 +277,9 @@ open class BaseDestination: Hashable, Equatable {
         var str = ""
 
         switch level {
+        case .verbose:
+            str = levelString.verbose
+            
         case .debug:
             str = levelString.debug
 
@@ -285,9 +292,11 @@ open class BaseDestination: Hashable, Equatable {
         case .error:
             str = levelString.error
 
-        default:
-            // Verbose is default
-            str = levelString.verbose
+        case .critical:
+            str = levelString.critical
+
+        case .fault:
+            str = levelString.fault
         }
         return str
     }
@@ -297,6 +306,9 @@ open class BaseDestination: Hashable, Equatable {
         var color = ""
 
         switch level {
+        case .verbose:
+            color = levelColor.verbose
+            
         case .debug:
             color = levelColor.debug
 
@@ -309,8 +321,11 @@ open class BaseDestination: Hashable, Equatable {
         case .error:
             color = levelColor.error
 
-        default:
-            color = levelColor.verbose
+        case .critical:
+            color = levelColor.critical
+            
+        case .fault:
+            color = levelColor.fault
         }
         return color
     }
