@@ -6,11 +6,19 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 <br/>
 
+## 2.1.0 (2024-04-22)
+
+##### Added
+- Support for OSLog API plus 2 new levels [@WillSuo-Github](https://github.com/WillSuo-Github)
+
+<br/>
+
 ## 2.0.2 (2024-04-22)
 
 ##### Added
 - Privacy Manifest to Cocoapods file [@lixiang1994](https://github.com/lixiang1994)
 
+<br/>
 
 ## 2.0.1 (2024-04-15)
 
