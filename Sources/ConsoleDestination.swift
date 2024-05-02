@@ -46,7 +46,7 @@ open class ConsoleDestination: BaseDestination {
             } else {
                 // use colored Emojis for better visual distinction
                 // of log level for Xcode 8
-                levelColor.verbose = "💜 "     // silver
+                levelColor.verbose = "💜 "     // purple
                 levelColor.debug = "💚 "        // green
                 levelColor.info = "💙 "         // blue
                 levelColor.warning = "💛 "     // yellow
@@ -61,7 +61,7 @@ open class ConsoleDestination: BaseDestination {
 
     public override init() {
         super.init()
-        levelColor.verbose = "💜 "     // silver
+        levelColor.verbose = "💜 "     // purple
         levelColor.debug = "💚 "        // green
         levelColor.info = "💙 "         // blue
         levelColor.warning = "💛 "     // yellow
