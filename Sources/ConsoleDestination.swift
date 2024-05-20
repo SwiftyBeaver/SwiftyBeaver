@@ -19,8 +19,8 @@ open class ConsoleDestination: BaseDestination {
         case print
     }
     
-    /// use this to change the way the message is logged to the console, default is .Logger, logger only works on macOS 11.0+
-    public var logPrintWay: LogPrintWay = .logger(subsystem: "Default", category: "Default")
+    /// Use this to change the logging method to the console. By default, it is set to .print. You can switch to .logger(subsystem:category:) to utilize the OSLog API.
+    public var logPrintWay: LogPrintWay = .print
     /// use NSLog instead of print, default is false
     public var useNSLog = false {
         didSet {
