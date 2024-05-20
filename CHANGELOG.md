@@ -3,20 +3,32 @@
 All notable changes to this project will be documented in this file following the style described at [Keep a Changelog](http://keepachangelog.com) by [@olivierlacan](https://github.com/olivierlacan).
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-----
+---
+<br/>
+
+## 2.1.1 (2024-05-20)
+
+##### Changed
+- Default console logging from OSLog API to print by [@WillSuo-Github](https://github.com/WillSuo-Github)
+- NSPrivacyTracking from true to false by [@iLiuChang](https://github.com/iLiuChang)
+
+
+##### Fixed
+- Console color comments by [@richardtop](https://github.com/richardtop)
+
 <br/>
 
 ## 2.1.0 (2024-04-22)
 
 ##### Added
-- Support for OSLog API plus 2 new levels [@WillSuo-Github](https://github.com/WillSuo-Github)
+- Support for OSLog API plus 2 new levels by [@WillSuo-Github](https://github.com/WillSuo-Github)
 
 <br/>
 
 ## 2.0.2 (2024-04-22)
 
 ##### Added
-- Privacy Manifest to Cocoapods file [@lixiang1994](https://github.com/lixiang1994)
+- Privacy Manifest to Cocoapods file by [@lixiang1994](https://github.com/lixiang1994)
 
 <br/>
 
