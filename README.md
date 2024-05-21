@@ -14,6 +14,7 @@
 #### In Xcode 15
 ```Swift
 let console = ConsoleDestination()
+// Note, this method relies on the OSLog API. If you do not want to use it, please replace it with .print.
 console.logPrintWay = .logger(subsystem: "Main", category: "UI")
 ```
 #### In Xcode 8
@@ -145,8 +146,10 @@ let file = FileDestination()  // log to default swiftybeaver.log file
 console.format = "$DHH:mm:ss$d $L $M"
 // or use this for JSON output: console.format = "$J"
 
-// In Xcode 15, specifying the logging method as .logger to display color, subsystem, and category information in the console.
+// In Xcode 15, specifying the logging method as .logger to display color, subsystem, and category information in the console.(Relies on the OSLog API)
 console.logPrintWay = .logger(subsystem: "Main", category: "UI")
+// If you prefer not to use the OSLog API, you can use print instead.
+// console.logPrintWay = .print 
 
 // add the destinations to SwiftyBeaver
 log.addDestination(console)
@@ -184,7 +187,6 @@ struct yourApp: App {
 
     init() {
         let console = ConsoleDestination()
-        console.logPrintWay = .logger(subsystem: "Main", category: "yourApp")
         logger.addDestination(console)
         // etc...
     }
