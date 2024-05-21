@@ -6,16 +6,21 @@
 
 <br/>
 
-### During Development: Colored Logging to Xcode Console
+### During Development: Colored Logging to Xcode Console via OSLog API or Print
 
 <img width="924" alt="image" src="https://github.com/SwiftyBeaver/SwiftyBeaver/assets/15070906/418a6a70-ced4-4000-91c3-8dc8fc235b7c">
 
 
 #### In Xcode 15
 ```Swift
+
+// use Apple's fancy OSLog API:
 let console = ConsoleDestination()
-// Note, this method relies on the OSLog API. If you do not want to use it, please replace it with .print.
 console.logPrintWay = .logger(subsystem: "Main", category: "UI")
+
+// or use good ol' "print" (which is the default):
+let console = ConsoleDestination()
+console.logPrintWay = .print
 ```
 #### In Xcode 8
 [Learn more](http://docs.swiftybeaver.com/article/9-log-to-xcode-console) about colored logging to Xcode 8 Console with Swift 3, 4 & 5. For Swift 2.3 [use this Gist](https://gist.github.com/skreutzberger/7c396573796473ed1be2c6d15cafed34). **No need to hack Xcode 8 anymore** to get color. You can even customize the log level word (ATTENTION instead of ERROR maybe?), the general amount of displayed data and if you want to use the 💜s or replace them with something else 😉
