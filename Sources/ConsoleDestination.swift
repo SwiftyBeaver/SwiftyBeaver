@@ -46,13 +46,13 @@ open class ConsoleDestination: BaseDestination {
             } else {
                 // use colored Emojis for better visual distinction
                 // of log level for Xcode 8
-                levelColor.verbose = "💜 "     // purple
-                levelColor.debug = "💚 "        // green
-                levelColor.info = "💙 "         // blue
-                levelColor.warning = "💛 "     // yellow
-                levelColor.error = "❤️ "       // red
-                levelColor.critical = "❤️ "    // red
-                levelColor.fault = "❤️ "       // red
+                levelColor.verbose = "⬜️ "     // silver
+                levelColor.debug = "🟩 "        // green
+                levelColor.info = "🟦 "         // blue
+                levelColor.warning = "🟨 "     // yellow
+                levelColor.error = "🟥 "       // red
+                levelColor.critical = "🟥 "    // red
+                levelColor.fault = "🟥 "       // red
             }
         }
     }
@@ -61,13 +61,13 @@ open class ConsoleDestination: BaseDestination {
 
     public override init() {
         super.init()
-        levelColor.verbose = "💜 "     // purple
-        levelColor.debug = "💚 "        // green
-        levelColor.info = "💙 "         // blue
-        levelColor.warning = "💛 "     // yellow
-        levelColor.error = "❤️ "       // red
-        levelColor.critical = "❤️ "    // red
-        levelColor.fault = "❤️ "       // red
+        levelColor.verbose = "⬜️ "     // silver
+        levelColor.debug = "🟩 "        // green
+        levelColor.info = "🟦 "         // blue
+        levelColor.warning = "🟨 "     // yellow
+        levelColor.error = "🟥 "       // red
+        levelColor.critical = "🟥 "    // red
+        levelColor.fault = "🟥 "       // red
     }
 
     // print to Xcode Console. uses full base class functionality

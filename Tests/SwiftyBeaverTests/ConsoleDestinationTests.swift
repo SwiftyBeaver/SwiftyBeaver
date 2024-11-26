@@ -30,7 +30,7 @@ class ConsoleDestinationTests: XCTestCase {
 
         // default xcode colors
         XCTAssertFalse(console.useTerminalColors)
-        XCTAssertEqual(console.levelColor.verbose, "💜 ")
+        XCTAssertEqual(console.levelColor.verbose, "⬜️ ")
         XCTAssertEqual(console.reset, "")
         XCTAssertEqual(console.escape, "")
 
