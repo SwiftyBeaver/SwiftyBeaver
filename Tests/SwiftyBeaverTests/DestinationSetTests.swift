@@ -82,7 +82,6 @@ class DestinationSetTests: XCTestCase {
         XCTAssertEqual(log.countDestinations(), 1)
     }
     
-    /*
     func testModifyingDestinationsWhileLoggingFromDifferentThread() {
         let log = SwiftyBeaver.self
         
@@ -100,7 +99,6 @@ class DestinationSetTests: XCTestCase {
         
         wait(for: [expectation], timeout: 10.0)
     }
-    */
     
     private func startMutatingDestinations(log: SwiftyBeaver.Type, queue: DispatchQueue, expectation: XCTestExpectation, onGoingMutationCount: Int = 0) {
         
